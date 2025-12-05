@@ -3468,7 +3468,7 @@
     </header>
 
     <!-- User Profile Badge with Dropdown -->
-    <div class="user-profile-badge" id="userProfileBadge" onclick="toggleProfileMenu(event)" title="Открыть меню">
+    <div class="user-profile-badge" id="userProfileBadge" title="Открыть меню">
         <div class="user-avatar" id="userAvatar">G</div>
         <div class="user-info">
             <div class="user-name" id="userName">Гость</div>
@@ -3481,14 +3481,14 @@
 
     <!-- Profile Dropdown Menu -->
     <div class="profile-dropdown hidden" id="profileDropdown">
-        <button class="dropdown-item" onclick="showSection('profile'); closeProfileMenu()">
+        <button class="dropdown-item" data-action="showSection" data-section='profile'>
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
             </svg>
             <span>Личный кабинет</span>
         </button>
-        <button class="dropdown-item" onclick="addBotForFamily(); closeProfileMenu()">
+        <button class="dropdown-item" data-action="addBotForFamily">
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>
@@ -3498,7 +3498,7 @@
             <span>Бот проекта</span>
         </button>
         <div class="dropdown-divider"></div>
-        <button class="dropdown-item logout-item" onclick="logout(); closeProfileMenu()">
+        <button class="dropdown-item logout-item" data-action="logout">
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
@@ -3896,16 +3896,16 @@
                     <p class="welcome-subtitle">Используя <a href="#">правила сервера</a></p>
                     
                     <div class="quick-questions">
-                        <div class="quick-question" onclick="askQuickQuestion('Что такое Metagaming?')">
+                        <div class="quick-question" data-question='Что такое Metagaming?'>
                             <span class="quick-question-title">Что такое Metagaming?</span>
                         </div>
-                        <div class="quick-question" onclick="askQuickQuestion('Как правильно грабить игроков?')">
+                        <div class="quick-question" data-question='Как правильно грабить игроков?'>
                             <span class="quick-question-title">Как правильно грабить игроков?</span>
                         </div>
-                        <div class="quick-question" onclick="askQuickQuestion('Правила взаимодействия с полицией')">
+                        <div class="quick-question" data-question='Правила взаимодействия с полицией'>
                             <span class="quick-question-title">Правила взаимодействия с полицией</span>
                         </div>
-                        <div class="quick-question" onclick="askQuickQuestion('Что можно делать в зелёной зоне?')">
+                        <div class="quick-question" data-question='Что можно делать в зелёной зоне?'>
                             <span class="quick-question-title">Что можно делать в зелёной зоне?</span>
                         </div>
                     </div>
@@ -4094,7 +4094,7 @@
 
                 <!-- Only Logout Button -->
                 <div class="profile-quick-actions">
-                    <button class="quick-action-btn danger" onclick="logout()">
+                    <button class="quick-action-btn danger" data-action="logout">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                             <polyline points="16 17 21 12 16 7"></polyline>
@@ -4557,8 +4557,16 @@
             gemini: {
                 enabled: true,  // Включить Gemini
                 apiKey: 'AIzaSyCbsZPAQAsdzeEgj56JPImGT1WBrggkL-g',  // Ваш Gemini API ключ
-                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
-                model: 'gemini'
+                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
+                model: 'gemini-2.0-flash-exp'
+            },
+            
+            // Grok API
+            grok: {
+                enabled: false,  // Отключен по умолчанию
+                apiKey: '',  // Ваш Grok API ключ
+                endpoint: 'https://api.x.ai/v1/chat/completions',
+                model: 'grok-beta'
             }
         };
 
@@ -4684,7 +4692,6 @@
 
         let conversationHistory = [];
         let currentModel = 'gemini';
-        let isProcessing = false;
 
         // ═══════════════════════════════════════════════════════════════
         // 🤖 AI API ФУНКЦИИ
@@ -5050,6 +5057,46 @@ ${forumData}
                 guestBtn.addEventListener('click', continueAsGuest);
                 console.log('Guest button handler added');
             }
+            
+            // Добавляем обработчик для badge профиля
+            const badge = document.getElementById('userProfileBadge');
+            if (badge) {
+                badge.addEventListener('click', toggleProfileMenu);
+                console.log('Profile badge handler added');
+            }
+            
+            // Универсальный обработчик для всех кнопок с data-action
+            document.addEventListener('click', function(e) {
+                const target = e.target.closest('[data-action]');
+                if (!target) return;
+                
+                const action = target.getAttribute('data-action');
+                
+                switch(action) {
+                    case 'showSection':
+                        const section = target.getAttribute('data-section').replace(/'/g, '');
+                        showSection(section);
+                        closeProfileMenu();
+                        break;
+                    case 'addBotForFamily':
+                        addBotForFamily();
+                        closeProfileMenu();
+                        break;
+                    case 'logout':
+                        logout();
+                        closeProfileMenu();
+                        break;
+                }
+            });
+            
+            // Обработчик быстрых вопросов
+            document.addEventListener('click', function(e) {
+                const question = e.target.closest('[data-question]');
+                if (!question) return;
+                
+                const text = question.getAttribute('data-question').replace(/'/g, '');
+                askQuickQuestion(text);
+            });
             
             // Добавляем обработчики кнопок меню
             document.querySelectorAll('.logo-menu-item').forEach(item => {
