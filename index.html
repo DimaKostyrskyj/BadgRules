@@ -3375,8 +3375,6 @@
 
         }
     </style>
-    <!-- API Configuration (external file) -->
-    <script src="config.js"></script>
 </head>
 <body>
     <div class="background-grid"></div>
@@ -3954,7 +3952,7 @@
                             <div class="ai-dropdown" id="aiDropdown">
                                 <div class="ai-dropdown-label">Выбрать нейросеть</div>
                                 
-                                <div class="ai-option" data-model="claude" onclick="selectAiModel('claude')">
+                                <div class="ai-option selected" data-model="claude" onclick="selectAiModel('claude')">
                                     <div class="ai-option-content">
                                         <div class="ai-option-name">Claude Sonnet 4</div>
                                     </div>
@@ -3965,7 +3963,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="ai-option selected" data-model="gemini" onclick="selectAiModel('gemini')">
+                                <div class="ai-option" data-model="gemini" onclick="selectAiModel('gemini')">
                                     <div class="ai-option-content">
                                         <div class="ai-option-name">Gemini 2.5</div>
                                     </div>
@@ -4537,116 +4535,35 @@
         // 🤖 API CONFIGURATION - Настройка API ключей
         // ═══════════════════════════════════════════════════════════════
         
-        // ═══════════════════════════════════════════════════════════════
-        // 🤖 AI CONFIGURATION
-        // ═══════════════════════════════════════════════════════════════
-        // API_CONFIG загружается из внешнего файла config.js
-        // Это позволяет не загружать API ключи на GitHub
-        // ═══════════════════════════════════════════════════════════════
-
-        // ═══════════════════════════════════════════════════════════════
-        // 📝 СИСТЕМНЫЙ ПРОМПТ - ВСЕ ПРАВИЛА MAJESTIC GTA 5 RP
-        // ═══════════════════════════════════════════════════════════════
-        
-        const SYSTEM_PROMPT = `Ты - AI-ассистент для форума Majestic GTA 5 RP. Твоя задача - помогать игрокам с правилами сервера.
-
-ТВОИ ОБЯЗАННОСТИ:
-1. Объяснять правила сервера простым языком
-2. Помогать разбираться в игровых ситуациях
-3. Давать советы по ролевой игре
-4. Помогать с оформлением жалоб
-5. Анализировать нарушения
-
-БАЗА ЗНАНИЙ ПРАВИЛ MAJESTIC GTA 5 RP:
-
-📋 FEAR RP (Страх за жизнь):
-- При угрозе оружием ОБЯЗАТЕЛЬНО подчиняться
-- Нельзя убегать если оружие направлено на вас (менее 5 метров)
-- В численном меньшинстве (1 против 2+) обязательно подчиняться
-- Нельзя совершать героические поступки под угрозой
-- Нельзя доставать оружие когда на вас направлено оружие
-- Нарушение: Warn или Ban до 7 дней
-
-🎮 META GAMING (МетаГейминг):
-- Запрещено использовать информацию из Discord, стримов, OOC чата
-- Вся информация должна быть получена в игре (звонки, рация, личное общение)
-- Примеры нарушений: узнал из Discord где банда и приехал туда
-- Нарушение: Warn или Ban до 30 дней
-
-💪 POWER GAMING (ПаверГейминг):
-- Запрещены нереалистичные действия
-- Нужно отыгрывать последствия (ранения, боль, страх)
-- Нельзя использовать баги игры
-- Примеры: прыгнул с 10 этажа и пошел дальше, не отыграл ранения
-- Нарушение: Warn или Ban до 14 дней
-
-🟢 GREENZONE (Зеленая зона):
-ЗОНЫ: больницы, полицейские участки, госучреждения, автосалоны, магазины, spawn точки
-ЗАПРЕЩЕНО: убийства, ограбления, похищения, применение оружия, провокации
-ВАЖНО: если РП ситуация началась ДО входа в GZ, она продолжается
-Нарушение: Warn или Ban до 7 дней
-
-🔴 REDZONE (Красная зона):
-- Можно стрелять без предупреждения
-- Действуют правила gang wars
-- Обычно это территории банд в Ghetto
-
-💰 ОГРАБЛЕНИЕ ИГРОКОВ:
-ТРЕБОВАНИЯ:
-- Минимум 2 человека
-- РП причина (кроме Ghetto/RZ)
-- Запрещено в GreenZone
-- Нельзя грабить чаще 1 раза в час одного человека
-- Максимум 50% денег и вещей
-
-ПРОЦЕСС:
-1. Угроза оружием (Fear RP)
-2. Четкое требование
-3. Обыск (/me обыскивает)
-4. Забрать вещи (/take)
-
-Нарушение: Warn до Ban 14 дней
-
-👮 ПОЛИЦИЯ:
-- Арест только с причиной
-- Обыск с разрешения или ордером
-- Зачитать права при аресте
-- Право на адвоката и один звонок
-- Нельзя сразу стрелять по колесам в погоне
-
-⚠️ ЖАЛОБЫ:
-ТРЕБОВАНИЯ:
-- ID нарушителя (обязательно)
-- Подробное описание
-- Доказательства (видео/скриншот)
-- Дата, время, сервер
-- Рассмотрение до 24 часов
-- Ложные жалобы наказываются
-
-⚖️ НАКАЗАНИЯ:
-- Warn (предупреждение) - 3 варна = бан на 3 дня
-- Kick - принудительный выход
-- Ban - блокировка (от 1 дня до permanent)
-- Jail - тюрьма в игре (IC наказание)
-
-СТИЛЬ ОТВЕТОВ:
-- Отвечай четко и по делу
-- Используй эмодзи для наглядности
-- Приводи конкретные примеры
-- Объясняй простым языком
-- Указывай наказания за нарушения
-- Если не знаешь точно - скажи об этом
-
-ВАЖНО:
-- Всегда ссылайся на правила Majestic GTA 5 RP
-- Не придумывай правила которых нет
-- Помогай игрокам понять ПОЧЕМУ существует правило
-- Будь дружелюбным но строгим к правилам`;
-
-        let conversationHistory = [];
+        const API_CONFIG = {
+            // Anthropic Claude API
+            claude: {
+                enabled: true,  // Включить Claude
+                apiKey: '',  // Вставьте ваш API ключ (или оставьте пустым для встроенного)
+                endpoint: 'https://api.anthropic.com/v1/messages',
+                model: 'claude-sonnet-4-20250514',
+                useBuiltIn: true  // Использовать встроенный API (работает на claude.ai)
+            },
+            
+            // DeepSeek API
+            deepseek: {
+                enabled: true,  // Включить DeepSeek
+                apiKey: 'sk-ca0628e898fd4f62848b640d537c6a82',  // Ваш DeepSeek API ключ
+                endpoint: 'https://api.deepseek.com/chat/completions',
+                model: 'deepseek-chat'
+            },
+            
+            // Google Gemini API
+            gemini: {
+                enabled: true,  // Включить Gemini
+                apiKey: 'AIzaSyCbsZPAQAsdzeEgj56JPImGT1WBrggkL-g',  // Ваш Gemini API ключ
+                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+                model: 'gemini'
+            }
+        };
 
         // Текущая выбранная модель
-        let currentModel = 'gemini';  // gemini работает везде! claude только на claude.ai
+        let currentModel = 'claude';  // claude | deepseek | gemini
 
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
@@ -4703,248 +4620,78 @@
         }
 
         async function sendMessage() {
-            const message = chatInput.value.trim();
-            if (!message || isProcessing) return;
+    const message = chatInput.value.trim();
+    if (!message || isProcessing) return;
 
-            isProcessing = true;
-            sendButton.disabled = true;
-            
-            addMessage(message, false);
-            chatInput.value = '';
-            addTypingIndicator();
+    isProcessing = true;
+    sendButton.disabled = true;
+    
+    addMessage(message, false);
+    chatInput.value = '';
+    
+    addTypingIndicator();
 
-            try {
-                // Вызываем AI напрямую (БЕЗ поиска по форуму - избегаем CORS)
-                const response = await callAISimple(message);
-                
-                removeTypingIndicator();
-                addMessage(response, true);
+    try {
+        // Отправляем запрос через наш прокси-сервер
+        const response = await fetch('/api/deepseek', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: 'deepseek-chat',
+                messages: [{
+                    role: 'user',
+                    content: message
+                }],
+                max_tokens: 2000,
+                temperature: 0.7
+            })
+        });
 
-                conversationHistory.push(
-                    { role: 'user', content: message },
-                    { role: 'assistant', content: response }
-                );
-
-            } catch (error) {
-                console.error('Ошибка:', error);
-                removeTypingIndicator();
-                
-                let errorMessage = '❌ Ошибка: ';
-                
-                if (error.message.includes('429')) {
-                    errorMessage += 'Превышен лимит запросов. Создайте свой API ключ на aistudio.google.com/apikey';
-                } else if (error.message.includes('Failed to fetch')) {
-                    errorMessage += 'Проблема с подключением. Проверьте интернет.';
-                } else {
-                    errorMessage += error.message;
-                }
-                
-                addMessage(errorMessage, true);
-            } finally {
-                isProcessing = false;
-                sendButton.disabled = false;
-                chatInput.focus();
-            }
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            console.error('API Error:', errorData);
+            throw new Error(`HTTP ${response.status}: ${errorData.error || 'Unknown error'}`);
         }
 
-        // Простой вызов AI БЕЗ поиска по форуму
-        async function callAISimple(userMessage) {
-            const config = API_CONFIG[currentModel];
-            
-            if (!config || !config.enabled) {
-                throw new Error(`Модель ${currentModel} не настроена`);
-            }
-
-            // Формируем промпт с правилами из SYSTEM_PROMPT
-            const fullPrompt = `${SYSTEM_PROMPT}
-
-Вопрос пользователя: ${userMessage}
-
-Ответь на основе правил выше. Используй эмодзи, приводи примеры.`;
-
-            // Вызываем AI
-            if (currentModel === 'gemini') {
-                return await callGemini(fullPrompt, config);
-            } else if (currentModel === 'claude') {
-                const messages = [{ role: 'user', content: fullPrompt }];
-                return await callClaude(messages, config);
-            } else if (currentModel === 'grok') {
-                const messages = [{ role: 'user', content: fullPrompt }];
-                return await callGrok(messages, config);
-            }
+        const data = await response.json();
+        removeTypingIndicator();
+        
+        // Проверяем наличие ответа
+        if (data.choices && data.choices[0] && data.choices[0].message) {
+            const botResponse = data.choices[0].message.content;
+            addMessage(botResponse, true);
+        } else {
+            throw new Error('Неверный формат ответа от API');
         }
-
-        // ═══════════════════════════════════════════════════════════════
-        // 🤖 ВЫЗОВ AI API С СИСТЕМНЫМ ПРОМПТОМ
-        // ═══════════════════════════════════════════════════════════════
-
-        async function callAI(userMessage) {
-            const config = API_CONFIG[currentModel];
-            
-            if (!config || !config.enabled) {
-                throw new Error(`Модель ${currentModel} не настроена`);
-            }
-
-            // Формируем сообщения с системным промптом
-            const messages = [
-                { role: 'user', content: SYSTEM_PROMPT },
-                { role: 'assistant', content: 'Понял! Я AI-ассистент для Majestic GTA 5 RP. Готов помогать с правилами!' },
-                ...conversationHistory,
-                { role: 'user', content: userMessage }
-            ];
-
-            // Вызываем соответствующий API
-            if (currentModel === 'claude') {
-                return await callClaude(messages, config);
-            } else if (currentModel === 'gemini') {
-                return await callGemini(userMessage, config);
-            } else if (currentModel === 'grok') {
-                return await callGrok(messages, config);
-            }
+        
+    } catch (error) {
+        console.error('Ошибка:', error);
+        removeTypingIndicator();
+        
+        // Улучшенная обработка ошибок
+        let errorMessage = '❌ Произошла ошибка. ';
+        
+        if (error.message.includes('Failed to fetch')) {
+            errorMessage += 'Не удается подключиться к серверу. Убедитесь, что Node.js сервер запущен (npm start).';
+        } else if (error.message.includes('401')) {
+            errorMessage += 'Ошибка авторизации. Проверьте API ключ DeepSeek.';
+        } else if (error.message.includes('429')) {
+            errorMessage += 'Превышен лимит запросов. Попробуйте через минуту.';
+        } else if (error.message.includes('500')) {
+            errorMessage += 'Ошибка сервера DeepSeek. Попробуйте позже.';
+        } else {
+            errorMessage += error.message;
         }
-
-        // ═══════════════════════════════════════════════════════════════
-        // 🧠 CLAUDE API
-        // ═══════════════════════════════════════════════════════════════
-
-        async function callClaude(messages, config) {
-            if (config.useBuiltIn) {
-                // ВАЖНО: Встроенный Claude API работает ТОЛЬКО на claude.ai
-                // В обычном браузере будет CORS ошибка
-                try {
-                    const response = await fetch('https://api.anthropic.com/v1/messages', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'anthropic-version': '2023-06-01'
-                        },
-                        body: JSON.stringify({
-                            model: config.model,
-                            max_tokens: 2000,
-                            messages: messages
-                        })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    return data.content[0].text;
-                } catch (error) {
-                    // CORS ошибка - Claude API не работает из браузера
-                    throw new Error('❌ Claude API работает только на claude.ai!\n\n✅ Используйте GEMINI (переключите модель слева) - он работает везде и БЕСПЛАТНО!');
-                }
-            } else {
-                // Внешний API ключ
-                const response = await fetch(config.endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': config.apiKey,
-                        'anthropic-version': '2023-06-01'
-                    },
-                    body: JSON.stringify({
-                        model: config.model,
-                        max_tokens: 2000,
-                        messages: messages
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-
-                const data = await response.json();
-                return data.content[0].text;
-            }
-        }
-
-        // ═══════════════════════════════════════════════════════════════
-        // 💎 GEMINI API
-        // ═══════════════════════════════════════════════════════════════
-
-        async function callGemini(userMessage, config) {
-            // Gemini использует другой формат - объединяем промпт с сообщением
-            const fullPrompt = SYSTEM_PROMPT + '\n\nПользователь: ' + userMessage;
-            
-            try {
-                const response = await fetch(`${config.endpoint}?key=${config.apiKey}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: fullPrompt
-                            }]
-                        }],
-                        generationConfig: {
-                            temperature: 0.7,
-                            maxOutputTokens: 2000
-                        }
-                    })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    
-                    if (response.status === 429) {
-                        throw new Error('429: Превышен лимит запросов. Получите свой API ключ на https://aistudio.google.com/apikey (БЕСПЛАТНО!)');
-                    } else if (response.status === 400) {
-                        throw new Error('400: Неверный запрос. Проверьте API ключ.');
-                    } else if (response.status === 403) {
-                        throw new Error('403: API ключ недействителен. Создайте новый на https://aistudio.google.com/apikey');
-                    } else {
-                        throw new Error(`HTTP ${response.status}: ${errorData.error?.message || 'Неизвестная ошибка'}`);
-                    }
-                }
-
-                const data = await response.json();
-                
-                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                    return data.candidates[0].content.parts[0].text;
-                } else {
-                    throw new Error('Неверный формат ответа от Gemini');
-                }
-            } catch (error) {
-                console.error('Gemini Error:', error);
-                throw error;
-            }
-        }
-
-        // ═══════════════════════════════════════════════════════════════
-        // ⚡ GROK API
-        // ═══════════════════════════════════════════════════════════════
-
-        async function callGrok(messages, config) {
-            const response = await fetch(config.endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${config.apiKey}`
-                },
-                body: JSON.stringify({
-                    model: config.model,
-                    messages: messages,
-                    max_tokens: 2000,
-                    temperature: 0.7
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
-            }
-
-            const data = await response.json();
-            
-            if (data.choices && data.choices[0] && data.choices[0].message) {
-                return data.choices[0].message.content;
-            } else {
-                throw new Error('Неверный формат ответа от Grok');
-            }
-        }
+        
+        addMessage(errorMessage, true);
+    } finally {
+        isProcessing = false;
+        sendButton.disabled = false;
+        chatInput.focus();
+    }
+}
 
         // Model Selection
         function selectModel(model) {
