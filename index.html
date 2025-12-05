@@ -45,7 +45,7 @@
             height: 100%;
             background: var(--primary-bg);
             z-index: 1000;
-            display: flex;
+            display: none;  /* СКРЫТО ПО УМОЛЧАНИЮ */
             align-items: center;
             justify-content: center;
             animation: fadeIn 0.5s ease-out;
@@ -3395,26 +3395,26 @@
         </div>
         
         <div class="logo-dropdown" id="logoDropdown">
-            <div class="logo-menu-item active" data-section="home" onclick="selectLogoMenu('home')">
+            <div class="logo-menu-item active" data-section="home" >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                 </svg>
                 <span>Главная</span>
             </div>
-            <div class="logo-menu-item" data-section="chat" onclick="selectLogoMenu('chat')">
+            <div class="logo-menu-item" data-section="chat" >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
                 <span>Чат с AI</span>
             </div>
-            <div class="logo-menu-item" data-section="complaints" onclick="selectLogoMenu('complaints')">
+            <div class="logo-menu-item" data-section="complaints" >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
                 <span>Откат</span>
             </div>
-            <div class="logo-menu-item" data-section="history" onclick="selectLogoMenu('history')">
+            <div class="logo-menu-item" data-section="history" >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
@@ -3468,7 +3468,7 @@
     </header>
 
     <!-- User Profile Badge with Dropdown -->
-    <div class="user-profile-badge hidden" id="userProfileBadge" onclick="toggleProfileMenu(event)" title="Открыть меню">
+    <div class="user-profile-badge" id="userProfileBadge" onclick="toggleProfileMenu(event)" title="Открыть меню">
         <div class="user-avatar" id="userAvatar">G</div>
         <div class="user-info">
             <div class="user-name" id="userName">Гость</div>
@@ -3687,13 +3687,13 @@
                     </p>
                     
                     <div class="hero-cta">
-                        <button class="cta-primary" onclick="selectLogoMenu('chat')">
+                        <button class="cta-primary" >
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                             </svg>
                             Начать чат с AI
                         </button>
-                        <button class="cta-secondary" onclick="selectLogoMenu('complaints')">
+                        <button class="cta-secondary" >
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polygon points="23 7 16 12 23 17 23 7"></polygon>
                                 <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
@@ -3855,7 +3855,7 @@
                     <div class="cta-box">
                         <h2 class="cta-box-title">Готов начать?</h2>
                         <p class="cta-box-subtitle">Присоединяйся к тысячам игроков, которые уже используют BadgRules</p>
-                        <button class="cta-primary" onclick="selectLogoMenu('chat')">
+                        <button class="cta-primary" >
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                             </svg>
@@ -4014,27 +4014,27 @@
                         <span class="profile-tag-minimal" id="profileDiscriminator">#0000</span>
                         <div class="profile-status-minimal">
                             <span class="status-dot online"></span>
-                            В сети
+                            В сети • Рейтинг: <span id="userRank">#1</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Stats Grid - Static -->
+                <!-- Stats Grid - Dynamic -->
                 <div class="profile-stats-grid">
                     <div class="stat-item">
-                        <span class="stat-number">0</span>
+                        <span class="stat-number" id="statQuestions">0</span>
                         <span class="stat-title">Вопросов</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">0</span>
+                        <span class="stat-number" id="statComplaints">0</span>
                         <span class="stat-title">Жалоб</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">12</span>
+                        <span class="stat-number" id="statRules">0</span>
                         <span class="stat-title">Правил</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number">0ч</span>
+                        <span class="stat-number" id="statTime">0ч</span>
                         <span class="stat-title">Онлайн</span>
                     </div>
                 </div>
@@ -4562,9 +4562,6 @@
             }
         };
 
-        // Текущая выбранная модель
-        let currentModel = 'claude';  // claude | deepseek | gemini
-
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
         const sendButton = document.getElementById('sendButton');
@@ -4592,6 +4589,24 @@
             
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Обновляем статистику если это вопрос пользователя
+            if (!isBot) {
+                updateQuestionStats();
+            }
+        }
+        
+        function updateQuestionStats() {
+            // Получаем текущий счетчик
+            let questionCount = parseInt(localStorage.getItem('badgrules_question_count') || '0');
+            questionCount++;
+            localStorage.setItem('badgrules_question_count', questionCount.toString());
+            
+            // Обновляем в UI
+            const statQuestions = document.getElementById('statQuestions');
+            if (statQuestions) {
+                statQuestions.textContent = questionCount;
+            }
         }
 
         function addTypingIndicator() {
@@ -5036,8 +5051,72 @@ ${forumData}
                 console.log('Guest button handler added');
             }
             
+            // Добавляем обработчики кнопок меню
+            document.querySelectorAll('.logo-menu-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const section = this.getAttribute('data-section');
+                    selectLogoMenu(section);
+                });
+            });
+            
             checkLoginStatus();
         });
+        
+        // Функция переключения разделов меню
+        function selectLogoMenu(section) {
+            console.log('Переключение на раздел:', section);
+            
+            // Убираем active со всех
+            document.querySelectorAll('.logo-menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Добавляем active к выбранному
+            const selectedItem = document.querySelector(`.logo-menu-item[data-section="${section}"]`);
+            if (selectedItem) {
+                selectedItem.classList.add('active');
+            }
+            
+            // Скрываем все секции
+            const homeSection = document.getElementById('homeSection');
+            const chatSection = document.getElementById('chatSection');
+            const complaintsSection = document.getElementById('complaintsSection');
+            const historySection = document.getElementById('historySection');
+            
+            if (homeSection) homeSection.style.display = 'none';
+            if (chatSection) chatSection.style.display = 'none';
+            if (complaintsSection) complaintsSection.style.display = 'none';
+            if (historySection) historySection.style.display = 'none';
+            
+            // Показываем выбранную секцию
+            switch(section) {
+                case 'home':
+                    if (homeSection) homeSection.style.display = 'block';
+                    break;
+                case 'chat':
+                    if (chatSection) chatSection.style.display = 'block';
+                    if (chatInput) chatInput.focus();
+                    break;
+                case 'complaints':
+                    if (complaintsSection) complaintsSection.style.display = 'block';
+                    showComplaintsTab();
+                    break;
+                case 'history':
+                    if (historySection) historySection.style.display = 'block';
+                    loadChatHistory();
+                    break;
+            }
+        }
+        
+        // Функция для отображения вкладки жалоб/откатов
+        function showComplaintsTab() {
+            alert('📝 Раздел "Откат" в разработке!\n\nСкоро здесь можно будет:\n• Подать жалобу\n• Запросить откат\n• Просмотреть статус жалоб');
+        }
+        
+        // Функция для загрузки истории чата
+        function loadChatHistory() {
+            alert('📜 Раздел "История" в разработке!\n\nСкоро здесь можно будет:\n• Просмотреть историю вопросов\n• Найти старые ответы\n• Экспортировать историю');
+        }
 
         window.addEventListener('load', () => {
             if (chatInput) {
@@ -5052,33 +5131,43 @@ ${forumData}
 
         // Check Login Status
         function checkLoginStatus() {
-            console.log('Проверка статуса входа...');
-            const user = localStorage.getItem('badgrules_user');
-            console.log('Данные пользователя:', user);
+            console.log('✅ Проверка статуса входа...');
+            let user = localStorage.getItem('badgrules_user');
             
-            if (user) {
-                const userData = JSON.parse(user);
-                console.log('Пользователь найден:', userData);
-                showMainInterface(userData);
-            } else {
-                console.log('Пользователь не найден, показываем экран входа');
+            if (!user) {
+                // Автоматически создаем гостя
+                console.log('✅ Создаем гостевой аккаунт...');
+                const guestUser = {
+                    id: 'guest_' + Date.now(),
+                    username: 'Гость',
+                    avatar: null,
+                    loginType: 'guest',
+                    firstLogin: new Date().toISOString()
+                };
+                localStorage.setItem('badgrules_user', JSON.stringify(guestUser));
+                user = JSON.stringify(guestUser);
             }
+            
+            const userData = JSON.parse(user);
+            console.log('✅ Пользователь:', userData.username);
+            showMainInterface(userData);
         }
 
         // Login with Discord
         function loginWithDiscord() {
             console.log('Перенаправление на Discord OAuth...');
-            // Реальная авторизация через Discord
-            window.location.href = DISCORD_OAUTH_URL;
+            alert('🔗 Discord авторизация будет доступна в следующей версии!\n\nПока используйте гостевой режим.');
         }
 
         // Continue as Guest
         function continueAsGuest() {
+            console.log('✅ Вход как гость');
             const guestUser = {
                 id: 'guest_' + Date.now(),
                 username: 'Гость',
                 avatar: null,
-                loginType: 'guest'
+                loginType: 'guest',
+                firstLogin: new Date().toISOString()
             };
             
             localStorage.setItem('badgrules_user', JSON.stringify(guestUser));
@@ -5087,29 +5176,21 @@ ${forumData}
 
         // Show Main Interface
         function showMainInterface(user) {
-            console.log('Показываем главный интерфейс для:', user);
+            console.log('✅ Показываем интерфейс для:', user.username);
             
-            // Hide login overlay
+            // СРАЗУ скрываем экран входа
             const loginOverlay = document.getElementById('loginOverlay');
-            console.log('loginOverlay элемент:', loginOverlay);
-            
             if (loginOverlay) {
-                loginOverlay.classList.add('hidden');
-                console.log('Экран входа скрыт');
-            } else {
-                console.error('loginOverlay не найден!');
+                loginOverlay.style.display = 'none';  // ЖЕСТКО скрываем
+                console.log('✅ Экран входа скрыт');
             }
             
-            // Show user profile badge
+            // СРАЗУ показываем badge
             const badge = document.getElementById('userProfileBadge');
-            console.log('userProfileBadge элемент:', badge);
-            
             if (badge) {
                 badge.classList.remove('hidden');
-                console.log('Бейдж пользователя показан');
-            } else {
-                console.error('userProfileBadge не найден!');
-                return;
+                badge.style.display = 'flex';  // ЖЕСТКО показываем
+                console.log('✅ Бейдж показан');
             }
             
             // Update user info
@@ -5238,28 +5319,29 @@ ${forumData}
 
         // Load and update profile statistics
         function loadProfileStats() {
-            // Get saved data from localStorage
-            const chatHistory = JSON.parse(localStorage.getItem('badgrules_chat_history') || '[]');
-            const complaints = JSON.parse(localStorage.getItem('badgrules_complaints') || '[]');
-            
-            // Update questions count
+            // Получаем счетчик вопросов
+            const questionCount = parseInt(localStorage.getItem('badgrules_question_count') || '0');
             const statQuestions = document.getElementById('statQuestions');
             if (statQuestions) {
-                statQuestions.textContent = chatHistory.length || 0;
+                statQuestions.textContent = questionCount;
             }
             
-            // Update complaints count
+            // Получаем счетчик жалоб
+            const complaintsCount = parseInt(localStorage.getItem('badgrules_complaints_count') || '0');
             const statComplaints = document.getElementById('statComplaints');
             if (statComplaints) {
-                statComplaints.textContent = complaints.length || 0;
+                statComplaints.textContent = complaintsCount;
             }
             
-            // Update rules (count of different rule views - можно добавить трекинг)
+            // Получаем счетчик правил
+            const rulesViewed = parseInt(localStorage.getItem('badgrules_rules_viewed') || '0');
             const statRules = document.getElementById('statRules');
             if (statRules) {
-                const rulesViewed = localStorage.getItem('badgrules_rules_viewed') || '0';
                 statRules.textContent = rulesViewed;
             }
+            
+            // Рассчитываем рейтинг
+            calculateUserRank();
             
             // Calculate time in system
             const statTime = document.getElementById('statTime');
@@ -5281,6 +5363,64 @@ ${forumData}
                 const sessions = localStorage.getItem('badgrules_sessions') || '1';
                 profileSessions.textContent = sessions;
             }
+        }
+        
+        // Система рейтинга пользователей
+        function calculateUserRank() {
+            const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+            const userId = user.id;
+            
+            // Проверяем есть ли кастомный рейтинг для этого пользователя
+            const customRanks = JSON.parse(localStorage.getItem('badgrules_custom_ranks') || '{}');
+            
+            let rank;
+            if (customRanks[userId]) {
+                // Используем кастомный рейтинг
+                rank = customRanks[userId];
+            } else {
+                // Автоматический расчет рейтинга
+                const questionCount = parseInt(localStorage.getItem('badgrules_question_count') || '0');
+                
+                // Получаем общий список пользователей
+                const allUsers = JSON.parse(localStorage.getItem('badgrules_all_users') || '[]');
+                
+                // Добавляем текущего пользователя если его нет
+                if (!allUsers.find(u => u.id === userId)) {
+                    allUsers.push({
+                        id: userId,
+                        username: user.username,
+                        questions: questionCount
+                    });
+                } else {
+                    // Обновляем счетчик
+                    const userIndex = allUsers.findIndex(u => u.id === userId);
+                    allUsers[userIndex].questions = questionCount;
+                }
+                
+                // Сортируем по количеству вопросов
+                allUsers.sort((a, b) => b.questions - a.questions);
+                
+                // Находим позицию текущего пользователя
+                const userPosition = allUsers.findIndex(u => u.id === userId) + 1;
+                rank = userPosition;
+                
+                // Сохраняем обновленный список
+                localStorage.setItem('badgrules_all_users', JSON.stringify(allUsers));
+            }
+            
+            // Обновляем отображение рейтинга
+            const rankElement = document.getElementById('userRank');
+            if (rankElement) {
+                rankElement.textContent = `#${rank}`;
+            }
+        }
+        
+        // Функция для установки кастомного рейтинга (для администраторов)
+        function setCustomRank(userId, rank) {
+            const customRanks = JSON.parse(localStorage.getItem('badgrules_custom_ranks') || '{}');
+            customRanks[userId] = rank;
+            localStorage.setItem('badgrules_custom_ranks', JSON.stringify(customRanks));
+            calculateUserRank();
         }
 
         // Logout
