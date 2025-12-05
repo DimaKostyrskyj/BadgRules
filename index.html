@@ -4980,80 +4980,50 @@
             addTypingIndicator();
 
             try {
-                // ✨ НОВОЕ: Проверяем встроенную базу знаний первой
+                // ✨ ГЛАВНОЕ: Проверяем встроенную базу знаний первой
                 console.log('🔍 Проверяю встроенную базу знаний...');
                 const knowledgeEntry = searchKnowledgeBase(message);
                 
                 if (knowledgeEntry) {
-                    console.log('✅ Найдено в базе знаний');
+                    // НАЙДЕНО В БАЗЕ - выводим ответ сразу
+                    console.log('✅ Найдено в базе знаний!');
                     removeTypingIndicator();
                     
                     const formattedResponse = `${knowledgeEntry.title}
 
 ${knowledgeEntry.content}
 
-📚 *Информация из встроенной базы знаний*`;
+📚 *Информация из встроенной базы знаний сервера*`;
                     
                     addMessage(formattedResponse, true);
                 } else {
-                    // Если в базе не найдено, используем старый функционал поиска на форумах
-                    console.log('🔍 Поиск в базе не дал результатов, ищу на форумах...');
-                    const forumLinks = await searchForums(message);
-                    
-                    console.log('📥 Загружаю контент...');
-                    const contents = [];
-                    for (const link of forumLinks.slice(0, 4)) {
-                        const content = await fetchForumContent(link);
-                        if (content) {
-                            contents.push({ url: link, content });
-                        }
-                    }
-                    
-                    const forumData = contents.map((item, idx) => 
-                        `Источник ${idx + 1} (${item.url}):\n${item.content}`
-                    ).join('\n\n---\n\n');
-                    
-                    const enhancedPrompt = `Ты - AI-ассистент для GTA 5 RP серверов.
-
-🌐 КОНТЕНТ С ФОРУМОВ:
-
-${forumData}
-
-📋 ПРАВИЛА:
-1. Используй информацию с форумов выше
-2. Указывай ссылки
-3. Приводи примеры
-4. Используй эмодзи
-
-Вопрос: ${message}`;
-                    
-                    const config = API_CONFIG[currentModel];
-                    let response;
-                    
-                    if (currentModel === 'gemini') {
-                        response = await callGemini(enhancedPrompt, config);
-                    } else if (currentModel === 'claude') {
-                        response = await callClaude([{ role: 'user', content: enhancedPrompt }], config);
-                    } else if (currentModel === 'grok') {
-                        response = await callGrok([{ role: 'user', content: enhancedPrompt }], config);
-                    }
-                    
+                    // Если не найдено в базе - выводим справку
                     removeTypingIndicator();
-                    addMessage(response, true);
+                    
+                    const helpResponse = `❓ Информация по запросу "${message}" не найдена в базе.
+
+📚 Попробуйте спросить о:
+🏴 "Криминал" - правила преступлений
+🚔 "Полиция" - обязанности копов
+🚫 "Метагейм" - что нельзя делать
+📍 "Зоны" - защищенные и опасные
+⚖️ "Наказания" - баны и штрафы
+👥 "Фракции" - организации на сервере
+🆘 "Помощь" - команды и советы
+
+Или задайте более конкретный вопрос!`;
+                    
+                    addMessage(helpResponse, true);
                 }
                 
             } catch (error) {
                 console.error('Ошибка:', error);
                 removeTypingIndicator();
                 
-                let errorMessage = '❌ Ошибка: ';
-                if (error.message.includes('429')) {
-                    errorMessage += 'Превышен лимит. Получи API ключ на aistudio.google.com/apikey';
-                } else {
-                    errorMessage += error.message;
-                }
-                
-                addMessage(errorMessage, true);
+                const errorResponse = `⚠️ Ошибка обработки: ${error.message}
+
+Попробуйте еще раз или переформулируйте вопрос.`;
+                addMessage(errorResponse, true);
             } finally {
                 isProcessing = false;
                 sendButton.disabled = false;
