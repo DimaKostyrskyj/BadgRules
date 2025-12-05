@@ -4789,6 +4789,63 @@
         }
 
         // ═══════════════════════════════════════════════════════════════
+        // 📚 ВСТРОЕННАЯ БАЗА ЗНАНИЙ GTA 5 RP
+        // ═══════════════════════════════════════════════════════════════
+        
+        const KNOWLEDGE_BASE = {
+            'криминал': {
+                title: '🏴 КРИМИНАЛ - ПРАВИЛА И РЕКОМЕНДАЦИИ',
+                content: '🎯 Основные правила:\n\n1️⃣ Взаимодействие с полицией\n• Команды должны иметь смысл в RP\n• Нельзя убивать копов без причины (VDM)\n• Рассчитывайте на конфликт\n\n2️⃣ Правила ограбления\n• Сообщите о ограблении в /call\n• Оставьте время для ответа (5-10 минут)\n• Используйте маски или паркур\n\n3️⃣ Деньги и наркотики\n• Максимум 50000 за сессию\n• Наркотики требуют лицензии\n• Нельзя афишировать преступления\n\n4️⃣ VDM и RDM запреты\n• VDM = Vehicle Death Match\n• RDM = Random Death Match\n• Штраф: мут, бан на 24-48 часов\n\n💰 Заработок: 500-5000 за операцию'
+            },
+            'полиция': {
+                title: '🚔 ПОЛИЦИЯ - ОБЯЗАННОСТИ И ШТРАФЫ',
+                content: '👮 Правила для копов:\n\n1️⃣ Патрулирование\n• Максимум 2-3 копа в группе\n• Следите за преступниками\n• Проверяйте машины\n\n2️⃣ Остановка и арест\n• Зажмите левый shift\n• Введите причину\n• Прочитайте права\n\n3️⃣ Штрафы\n• Превышение: 500\n• Красный свет: 300\n• Без прав: 1000\n• Преступление: 5-15 минут\n\n4️⃣ Стрельба\n• Только при угрозе\n• Предупредите преступника\n• Сообщите в /dispatch\n\n⚠️ Запрещено: взятки\n💰 Зарплата: 5000 в час'
+            },
+            'мета': {
+                title: '🚫 МЕТАГЕЙМ - ЧТО НЕЛЬЗЯ ДЕЛАТЬ',
+                content: '❌ Правила против метагейма:\n\n1️⃣ Что такое метагейм?\nИспользование информации ВНЕ RP\n(Дискорд, телефон, соседний сервер)\n\n2️⃣ Примеры метагейма:\n❌ "Видел тебя в Дискорде"\n❌ Имя игрока вместо персонажа\n❌ RP события в голосе\n❌ Координация через Дискорд\n\n3️⃣ Правильно:\n✅ Только информация персонажа\n✅ RP рация или телефон\n✅ Персонажи не знают друг о друге\n\n4️⃣ Наказание:\n• Первое: Предупреждение\n• Повторное: Мут 30 минут\n• Постоянное: Бан'
+            },
+            'зоны': {
+                title: '📍 ЗАЩИЩЕННЫЕ И ОПАСНЫЕ ЗОНЫ',
+                content: '🏘️ Основные зоны:\n\n1️⃣ Защищенные (No-PvP)\n🟢 Больница\n🟢 LSPD\n🟢 Банк\n🟢 Казино\nБоевые действия запрещены\n\n2️⃣ Опасные (PvP)\n🔴 Downtown\n🔴 Sandy Shores\n🔴 Paleto Bay\nПреступления разрешены\n\n3️⃣ Специальные\n🟡 Метро (No-PvP)\n🟡 Аэропорт (полиция)\n🟡 Порт (криминал)\n\n🎯 Совет: Планируйте вдали от копов!'
+            },
+            'наказания': {
+                title: '⚖️ СИСТЕМА НАКАЗАНИЙ',
+                content: '📋 Наказания:\n\n1️⃣ Баны\n🔴 Постоянный: Читеры, реклама\n🔴 48 часов: Оскорбления\n🔴 24 часа: Метагейм\n🔴 12 часов: Нарушения\n\n2️⃣ Муты\n🟡 1 час: Спам\n🟡 30 минут: Оскорбления\n🟡 5 минут: Флуд\n\n3️⃣ In-RP\n💰 Штраф: 500-5000\n⏰ Арест: 5-30 минут\n\n4️⃣ Репутация\n⭐ 5 звезд: Легенда\n⭐ 3 звезды: Нормально\n⭐ 1 звезда: Плохая'
+            },
+            'фракции': {
+                title: '👥 ФРАКЦИИ И ОРГАНИЗАЦИИ',
+                content: '🏢 Доступные фракции:\n\n1️⃣ LSPD\n👮 Зарплата: 5000/ч\n📋 Требования: Лицензия\n✅ Оружие, броня, машины\n\n2️⃣ Lost MC\n💪 Зарплата: 3000 + добыча\n📋 Требования: Рекомендация\n✅ Оружие, базы, транспорт\n\n3️⃣ Firefighters\n👨‍🚒 Зарплата: 4000/ч\n📋 Требования: Интервью\n✅ Спасение, медицина\n\n4️⃣ Taxi\n🚕 Зарплата: 1500/ч\n📋 Требования: Лицензия\n✅ Свои машины'
+            },
+            'помощь': {
+                title: '🆘 БЫСТРАЯ СПРАВКА',
+                content: '📞 Команды:\n💬 /me - действие\n🗨️ /do - описание\n📱 /call - полиция\n💬 /local - чат\n🔊 /yell - крик\n🔪 /rob - грабеж\n\n🆘 При проблеме:\n• Звоните /call\n• Опишите проблему\n• Ждите помощи\n\n🎮 Советы:\n✅ Легальные работы\n✅ Изучите карту\n✅ Присоединитесь в фракцию\n✅ Избегайте конфликтов\n✅ Читайте правила!'
+            }
+        };
+        
+        // Функция поиска по базе знаний
+        function searchKnowledgeBase(query) {
+            const lq = query.toLowerCase();
+            const keywords = {
+                'криминал': ['криминал', 'преступ', 'грабе', 'воров', 'убийст', 'убить', 'rdm', 'vdm', 'деньги'],
+                'полиция': ['полиц', 'коп', 'арест', 'штраф', 'лспд', 'police', 'cop', 'копы'],
+                'мета': ['мета', 'метагейм', 'ooc', 'discord', 'дискорд'],
+                'зоны': ['зона', 'район', 'защита', 'pvp', 'опасно', 'безопас'],
+                'наказания': ['наказ', 'штраф', 'мут', 'бан', 'репутац', 'звезд', 'наказание'],
+                'фракции': ['фракц', 'org', 'организ', 'lost', 'lspd', 'police', 'taxi', 'fire'],
+                'помощь': ['помощь', 'команд', 'как', 'что делать', 'справ', 'команды']
+            };
+            
+            for (const [key, words] of Object.entries(keywords)) {
+                if (words.some(word => lq.includes(word))) {
+                    return KNOWLEDGE_BASE[key] || null;
+                }
+            }
+            
+            return null;
+        }
+
+        // ═══════════════════════════════════════════════════════════════
         // 🔍 ПОИСК ПО ФОРУМАМ MAJESTIC RP И GTA5RP
         // ═══════════════════════════════════════════════════════════════
         
@@ -4923,23 +4980,40 @@
             addTypingIndicator();
 
             try {
-                console.log('🔍 Начинаю поиск на форумах...');
-                const forumLinks = await searchForums(message);
+                // ✨ НОВОЕ: Проверяем встроенную базу знаний первой
+                console.log('🔍 Проверяю встроенную базу знаний...');
+                const knowledgeEntry = searchKnowledgeBase(message);
                 
-                console.log('📥 Загружаю контент...');
-                const contents = [];
-                for (const link of forumLinks.slice(0, 4)) {
-                    const content = await fetchForumContent(link);
-                    if (content) {
-                        contents.push({ url: link, content });
+                if (knowledgeEntry) {
+                    console.log('✅ Найдено в базе знаний');
+                    removeTypingIndicator();
+                    
+                    const formattedResponse = `${knowledgeEntry.title}
+
+${knowledgeEntry.content}
+
+📚 *Информация из встроенной базы знаний*`;
+                    
+                    addMessage(formattedResponse, true);
+                } else {
+                    // Если в базе не найдено, используем старый функционал поиска на форумах
+                    console.log('🔍 Поиск в базе не дал результатов, ищу на форумах...');
+                    const forumLinks = await searchForums(message);
+                    
+                    console.log('📥 Загружаю контент...');
+                    const contents = [];
+                    for (const link of forumLinks.slice(0, 4)) {
+                        const content = await fetchForumContent(link);
+                        if (content) {
+                            contents.push({ url: link, content });
+                        }
                     }
-                }
-                
-                const forumData = contents.map((item, idx) => 
-                    `Источник ${idx + 1} (${item.url}):\n${item.content}`
-                ).join('\n\n---\n\n');
-                
-                const enhancedPrompt = `Ты - AI-ассистент для GTA 5 RP серверов.
+                    
+                    const forumData = contents.map((item, idx) => 
+                        `Источник ${idx + 1} (${item.url}):\n${item.content}`
+                    ).join('\n\n---\n\n');
+                    
+                    const enhancedPrompt = `Ты - AI-ассистент для GTA 5 RP серверов.
 
 🌐 КОНТЕНТ С ФОРУМОВ:
 
@@ -4952,20 +5026,21 @@ ${forumData}
 4. Используй эмодзи
 
 Вопрос: ${message}`;
-                
-                const config = API_CONFIG[currentModel];
-                let response;
-                
-                if (currentModel === 'gemini') {
-                    response = await callGemini(enhancedPrompt, config);
-                } else if (currentModel === 'claude') {
-                    response = await callClaude([{ role: 'user', content: enhancedPrompt }], config);
-                } else if (currentModel === 'grok') {
-                    response = await callGrok([{ role: 'user', content: enhancedPrompt }], config);
+                    
+                    const config = API_CONFIG[currentModel];
+                    let response;
+                    
+                    if (currentModel === 'gemini') {
+                        response = await callGemini(enhancedPrompt, config);
+                    } else if (currentModel === 'claude') {
+                        response = await callClaude([{ role: 'user', content: enhancedPrompt }], config);
+                    } else if (currentModel === 'grok') {
+                        response = await callGrok([{ role: 'user', content: enhancedPrompt }], config);
+                    }
+                    
+                    removeTypingIndicator();
+                    addMessage(response, true);
                 }
-                
-                removeTypingIndicator();
-                addMessage(response, true);
                 
             } catch (error) {
                 console.error('Ошибка:', error);
