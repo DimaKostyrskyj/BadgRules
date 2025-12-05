@@ -4807,161 +4807,179 @@
         // 🧠 CLAUDE API
         // ═══════════════════════════════════════════════════════════════
 
-        async function callClaude(messages, config) {
-            if (config.useBuiltIn) {
-                // ВАЖНО: Встроенный Claude API работает ТОЛЬКО на claude.ai
-                // В обычном браузере будет CORS ошибка
-                try {
-                    const response = await fetch('https://api.anthropic.com/v1/messages', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'anthropic-version': '2023-06-01'
-                        },
-                        body: JSON.stringify({
-                            model: config.model,
-                            max_tokens: 2000,
-                            messages: messages
-                        })
-                    });
+        // ═══════════════════════════════════════════════════════════════
+// 🔧 КОНФИГУРАЦИЯ (использует Environment Variables)
+// ═══════════════════════════════════════════════════════════════
 
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
+const API_CONFIG = {
+    claude: {
+        enabled: true,
+        apiKey: '',  // Не нужен для claude.ai
+        endpoint: 'https://api.anthropic.com/v1/messages',
+        model: 'claude-3-5-sonnet-20241022',
+        useBuiltIn: true
+    },
+    
+    gemini: {
+        enabled: true,
+        apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY || '',
+        endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
+        model: 'gemini-2.0-flash-exp'
+    },
+    
+    grok: {
+        enabled: false,
+        apiKey: process.env.NEXT_PUBLIC_XAI_API_KEY || '',
+        endpoint: 'https://api.x.ai/v1/chat/completions',
+        model: 'grok-beta'
+    }
+};
 
-                    const data = await response.json();
-                    return data.content[0].text;
-                } catch (error) {
-                    // CORS ошибка - Claude API не работает из браузера
-                    throw new Error('❌ Claude API работает только на claude.ai!\n\n✅ Используйте GEMINI (переключите модель слева) - он работает везде и БЕСПЛАТНО!');
-                }
-            } else {
-                // Внешний API ключ
-                const response = await fetch(config.endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': config.apiKey,
-                        'anthropic-version': '2023-06-01'
-                    },
-                    body: JSON.stringify({
-                        model: config.model,
-                        max_tokens: 2000,
-                        messages: messages
-                    })
-                });
+// ═══════════════════════════════════════════════════════════════
+// 🤖 CLAUDE API
+// ═══════════════════════════════════════════════════════════════
 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
+async function callClaude(messages, config) {
+    if (config.useBuiltIn) {
+        throw new Error('❌ Claude API не работает из браузера из-за CORS!\n\n✅ Используйте GEMINI - он работает везде!');
+    } else {
+        const response = await fetch('/api/claude', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                messages: messages,
+                model: config.model
+            })
+        });
 
-                const data = await response.json();
-                return data.content[0].text;
-            }
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || `HTTP ${response.status}`);
         }
 
-        // ═══════════════════════════════════════════════════════════════
-        // 💎 GEMINI API
-        // ═══════════════════════════════════════════════════════════════
+        const data = await response.json();
+        return data.content;
+    }
+}
 
-        async function callGemini(userMessage, config) {
-            // Gemini использует другой формат - объединяем промпт с сообщением
+// ═══════════════════════════════════════════════════════════════
+// 💎 GEMINI API
+// ═══════════════════════════════════════════════════════════════
+
+async function callGemini(userMessage, config) {
+    // Вариант А: Прямой вызов (если ключ на фронтенде)
+    if (process.env.NEXT_PUBLIC_GEMINI_API_KEY) {
+        try {
             const fullPrompt = SYSTEM_PROMPT + '\n\nПользователь: ' + userMessage;
-            
-            try {
-                const response = await fetch(`${config.endpoint}?key=${config.apiKey}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: fullPrompt
-                            }]
-                        }],
-                        generationConfig: {
-                            temperature: 0.7,
-                            maxOutputTokens: 2000
-                        }
-                    })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    
-                    if (response.status === 429) {
-                        throw new Error('429: Превышен лимит запросов. Получите свой API ключ на https://aistudio.google.com/apikey (БЕСПЛАТНО!)');
-                    } else if (response.status === 400) {
-                        throw new Error('400: Неверный запрос. Проверьте API ключ.');
-                    } else if (response.status === 403) {
-                        throw new Error('403: API ключ недействителен. Создайте новый на https://aistudio.google.com/apikey');
-                    } else {
-                        throw new Error(`HTTP ${response.status}: ${errorData.error?.message || 'Неизвестная ошибка'}`);
-                    }
-                }
-
-                const data = await response.json();
-                
-                if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                    return data.candidates[0].content.parts[0].text;
-                } else {
-                    throw new Error('Неверный формат ответа от Gemini');
-                }
-            } catch (error) {
-                console.error('Gemini Error:', error);
-                throw error;
-            }
-        }
-
-        // ═══════════════════════════════════════════════════════════════
-        // ⚡ GROK API
-        // ═══════════════════════════════════════════════════════════════
-
-        async function callGrok(messages, config) {
-            const response = await fetch(config.endpoint, {
+            const response = await fetch(`${config.endpoint}?key=${config.apiKey}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${config.apiKey}`
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    model: config.model,
-                    messages: messages,
-                    max_tokens: 2000,
-                    temperature: 0.7
+                    contents: [{
+                        parts: [{ text: fullPrompt }]
+                    }]
                 })
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error?.message || `HTTP ${response.status}`);
             }
 
             const data = await response.json();
-            
-            if (data.choices && data.choices[0] && data.choices[0].message) {
-                return data.choices[0].message.content;
-            } else {
-                throw new Error('Неверный формат ответа от Grok');
-            }
+            return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Нет ответа';
+        } catch (error) {
+            throw new Error(`Gemini ошибка: ${error.message}`);
+        }
+    } 
+    // Вариант Б: Через серверный API (рекомендуется)
+    else {
+        const response = await fetch('/api/gemini', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: userMessage })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || `HTTP ${response.status}`);
         }
 
-        // Model Selection
-        function selectModel(model) {
-            console.log('Переключение на модель:', model);
-            
-            // Check if model is enabled
-            const config = API_CONFIG[model];
-            if (!config || !config.enabled) {
-                alert(`Модель ${model} не настроена. Добавьте API ключ в настройках.`);
-                return;
-            }
-            
-            // If requires API key and not provided
-            if (model !== 'claude' && (!config.apiKey || config.apiKey === '')) {
-                alert(`Для использования ${model} требуется API ключ.\n\nИнструкция по настройке в файле API_SETUP_GUIDE.md`);
-                return;
-            }
+        const data = await response.json();
+        return data.text;
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ⚡ GROK API
+// ═══════════════════════════════════════════════════════════════
+
+async function callGrok(messages, config) {
+    // Всегда через серверный API для безопасности
+    const response = await fetch('/api/grok', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            messages: messages,
+            model: config.model 
+        })
+    });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || `HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.content;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 🚀 УНИВЕРСАЛЬНАЯ ФУНКЦИЯ ВЫЗОВА
+// ═══════════════════════════════════════════════════════════════
+
+async function callAISimple(userMessage, provider = 'gemini') {
+    try {
+        const config = API_CONFIG[provider];
+        
+        if (!config || !config.enabled) {
+            throw new Error(`Модель ${provider} не настроена`);
+        }
+
+        if (config.apiKey === '' && provider !== 'claude') {
+            throw new Error(`API ключ для ${provider} не указан`);
+        }
+
+        let response;
+        switch(provider) {
+            case 'claude':
+                response = await callClaude([
+                    { role: 'user', content: userMessage }
+                ], config);
+                break;
+                
+            case 'gemini':
+                response = await callGemini(userMessage, config);
+                break;
+                
+            case 'grok':
+                response = await callGrok([
+                    { role: 'user', content: userMessage }
+                ], config);
+                break;
+                
+            default:
+                throw new Error(`Неизвестная модель: ${provider}`);
+        }
+
+        return response;
+    } catch (error) {
+        console.error(`${provider} error:`, error);
+        throw error;
+    }
+}
             
             // Update current model
             currentModel = model;
