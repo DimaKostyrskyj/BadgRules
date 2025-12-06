@@ -1569,6 +1569,355 @@
             background: var(--border-color);
         }
 
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* 📜 КРАСИВОЕ ФОРМАТИРОВАНИЕ ОТВЕТОВ БОТА */
+        /* ═══════════════════════════════════════════════════════════════ */
+        
+        .rule-card {
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .rule-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rule-icon {
+            font-size: 1.5rem;
+        }
+
+        .rule-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .rule-badge {
+            background: rgba(88, 101, 242, 0.3);
+            color: #a8b4ff;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .rule-definition {
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid #5865F2;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .rule-section {
+            margin-bottom: 1rem;
+        }
+
+        .rule-section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rule-section-title svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .punishment-box {
+            background: linear-gradient(135deg, rgba(237, 66, 69, 0.15) 0%, rgba(237, 66, 69, 0.05) 100%);
+            border: 1px solid rgba(237, 66, 69, 0.3);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .punishment-icon {
+            font-size: 1.25rem;
+        }
+
+        .punishment-text {
+            color: #ff9999;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .examples-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .examples-list li {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .examples-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .examples-list li::before {
+            content: '•';
+            color: #5865F2;
+            font-weight: bold;
+        }
+
+        .notes-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .notes-list li {
+            background: rgba(250, 166, 26, 0.1);
+            border-left: 3px solid #faa61a;
+            padding: 0.6rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #ffd699;
+        }
+
+        .notes-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .rule-source {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .rule-source a {
+            color: #5865F2;
+            text-decoration: none;
+        }
+
+        .rule-source a:hover {
+            text-decoration: underline;
+        }
+
+        /* Help Card - когда ничего не найдено */
+        .help-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.25rem;
+        }
+
+        .help-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .help-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .help-section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .terms-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 500px) {
+            .terms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .term-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 0.6rem 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .term-item:hover {
+            background: rgba(88, 101, 242, 0.15);
+            border-color: rgba(88, 101, 242, 0.4);
+            color: var(--text-primary);
+            transform: translateX(4px);
+        }
+
+        .term-abbr {
+            background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .topics-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .topic-tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .topic-tag:hover {
+            background: rgba(88, 101, 242, 0.2);
+            border-color: rgba(88, 101, 242, 0.4);
+            color: var(--text-primary);
+        }
+
+        .help-tip {
+            background: rgba(250, 166, 26, 0.1);
+            border-left: 3px solid #faa61a;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.85rem;
+            color: #ffd699;
+        }
+
+        /* HTML контент в сообщениях */
+        .message-text.html-content {
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        /* Мульти-результаты */
+        .multi-results {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .mini-rule-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .mini-rule-card:hover {
+            border-color: rgba(88, 101, 242, 0.5);
+            background: rgba(88, 101, 242, 0.05);
+        }
+
+        .mini-rule-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mini-rule-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .mini-rule-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .mini-rule-punishment {
+            font-size: 0.8rem;
+            color: #ff9999;
+        }
+
+        /* Не найдено - список терминов */
+        .terms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .term-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .term-chip:hover {
+            border-color: #5865F2;
+            color: var(--text-primary);
+            background: rgba(88, 101, 242, 0.1);
+        }
+
+        .term-chip strong {
+            color: var(--text-primary);
+        }
+
         .message-time {
             font-size: 0.75rem;
             color: var(--text-secondary);
@@ -5369,6 +5718,25 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
+        // Функция для добавления HTML сообщений (красивые карточки)
+        function addMessageHtml(htmlContent, isBot = false) {
+            welcomeScreen.classList.add('hidden');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isBot ? 'bot' : 'user'}`;
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${isBot ? 'BR' : 'Вы'}</div>
+                <div class="message-content">
+                    <div class="message-text html-content">${htmlContent}</div>
+                    <div class="message-time">${getCurrentTime()}</div>
+                </div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
         function addTypingIndicator() {
             const typingDiv = document.createElement('div');
             typingDiv.className = 'message bot';
@@ -5954,37 +6322,108 @@
             return results;
         }
 
-        // Функция форматирования ответа по правилам
+        // Функция форматирования ответа по правилам - КРАСИВЫЙ HTML
         function formatRuleResponse(ruleData) {
-            let response = `📜 **${ruleData.term}**\n\n`;
-            response += `📖 ${ruleData.definition}\n\n`;
+            let html = `<div class="rule-card">`;
             
-            if (ruleData.rule) {
-                response += `📋 Правило: **${ruleData.rule}**\n`;
-            }
+            // Заголовок
+            html += `<div class="rule-header">
+                <span class="rule-icon">📜</span>
+                <span class="rule-title">${ruleData.term}</span>
+                ${ruleData.rule ? `<span class="rule-badge">Правило ${ruleData.rule}</span>` : ''}
+            </div>`;
+            
+            // Определение
+            html += `<div class="rule-definition">${ruleData.definition}</div>`;
+            
+            // Наказание
             if (ruleData.punishment) {
-                response += `⚖️ Наказание: ${ruleData.punishment}\n`;
-            }
-            if (ruleData.examples && ruleData.examples.length > 0) {
-                response += `\n📌 Примеры:\n`;
-                ruleData.examples.forEach(ex => {
-                    response += `• ${ex}\n`;
-                });
-            }
-            if (ruleData.notes && ruleData.notes.length > 0) {
-                response += `\n💡 Примечания:\n`;
-                ruleData.notes.forEach(note => {
-                    response += `• ${note}\n`;
-                });
-            }
-            if (ruleData.exceptions) {
-                response += `\n✅ Исключения: ${Array.isArray(ruleData.exceptions) ? ruleData.exceptions.join(', ') : ruleData.exceptions}\n`;
-            }
-            if (ruleData.source) {
-                response += `\n🔗 Источник: ${ruleData.source}`;
+                html += `<div class="rule-section">
+                    <div class="punishment-box">
+                        <span class="punishment-icon">⚖️</span>
+                        <span class="punishment-text">${ruleData.punishment}</span>
+                    </div>
+                </div>`;
             }
             
-            return response;
+            // Примеры
+            if (ruleData.examples && ruleData.examples.length > 0) {
+                html += `<div class="rule-section">
+                    <div class="rule-section-title">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        Примеры
+                    </div>
+                    <ul class="examples-list">
+                        ${ruleData.examples.map(ex => `<li>${ex}</li>`).join('')}
+                    </ul>
+                </div>`;
+            }
+            
+            // Примечания
+            if (ruleData.notes && ruleData.notes.length > 0) {
+                html += `<div class="rule-section">
+                    <div class="rule-section-title">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        Важно знать
+                    </div>
+                    <ul class="notes-list">
+                        ${ruleData.notes.map(note => `<li>${note}</li>`).join('')}
+                    </ul>
+                </div>`;
+            }
+            
+            // Исключения
+            if (ruleData.exceptions) {
+                const exceptionsText = Array.isArray(ruleData.exceptions) ? ruleData.exceptions.join(', ') : ruleData.exceptions;
+                html += `<div class="rule-section">
+                    <div class="rule-section-title">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        Исключения
+                    </div>
+                    <div style="background: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e; padding: 0.6rem 1rem; border-radius: 0 8px 8px 0; font-size: 0.9rem; color: #86efac;">
+                        ✅ ${exceptionsText}
+                    </div>
+                </div>`;
+            }
+            
+            // Источник
+            if (ruleData.source) {
+                html += `<div class="rule-source">
+                    <span>🔗</span>
+                    <span>Источник:</span>
+                    <a href="https://${ruleData.source}" target="_blank">${ruleData.source}</a>
+                </div>`;
+            }
+            
+            html += `</div>`;
+            return html;
+        }
+
+        // Форматирование для нескольких результатов
+        function formatMultipleResults(results) {
+            let html = `<div class="multi-results">
+                <div style="color: var(--text-secondary); margin-bottom: 0.5rem;">📚 Найдено ${results.length} результатов:</div>`;
+            
+            results.slice(0, 3).forEach((rule, i) => {
+                html += `<div class="mini-rule-card">
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                        <span style="font-size: 1.1rem;">📜</span>
+                        <span style="font-weight: 600; color: var(--text-primary);">${rule.term}</span>
+                        ${rule.rule ? `<span class="rule-badge" style="margin-left: auto;">Правило ${rule.rule}</span>` : ''}
+                    </div>
+                    <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">${rule.definition}</div>
+                    ${rule.punishment ? `<div style="font-size: 0.85rem; color: #ff9999;">⚖️ ${rule.punishment}</div>` : ''}
+                </div>`;
+            });
+            
+            if (results.length > 3) {
+                html += `<div style="text-align: center; padding: 0.75rem; color: var(--text-secondary); font-size: 0.85rem;">
+                    💡 Уточните запрос для более точного результата
+                </div>`;
+            }
+            
+            html += `</div>`;
+            return html;
         }
 
         // Старая база знаний для обратной совместимости
@@ -6027,27 +6466,18 @@
             const rulesResults = searchRulesDatabase(lq);
             
             if (rulesResults.length > 0) {
-                // Нашли в базе правил - форматируем ответ
-                let response = '';
+                // Нашли в базе правил - форматируем ответ как HTML
+                let htmlContent = '';
                 
                 if (rulesResults.length === 1) {
-                    response = formatRuleResponse(rulesResults[0]);
+                    htmlContent = formatRuleResponse(rulesResults[0]);
                 } else {
-                    response = `📚 **Найдено ${rulesResults.length} результатов:**\n\n`;
-                    rulesResults.slice(0, 3).forEach((rule, i) => {
-                        response += `${i + 1}. **${rule.term}**\n`;
-                        response += `   ${rule.definition}\n`;
-                        if (rule.punishment) response += `   ⚖️ ${rule.punishment}\n`;
-                        response += '\n';
-                    });
-                    if (rulesResults.length > 3) {
-                        response += `\n💡 Уточните запрос для получения более подробной информации.`;
-                    }
+                    htmlContent = formatMultipleResults(rulesResults);
                 }
                 
                 return {
-                    title: '📜 ПРАВИЛА ПРОЕКТА',
-                    content: response
+                    isHtml: true,
+                    content: htmlContent
                 };
             }
             
@@ -6064,7 +6494,14 @@
             
             for (const [key, words] of Object.entries(keywords)) {
                 if (words.some(word => lq.includes(word))) {
-                    return KNOWLEDGE_BASE[key] || null;
+                    const kb = KNOWLEDGE_BASE[key];
+                    if (kb) {
+                        return {
+                            isHtml: false,
+                            title: kb.title,
+                            content: kb.content
+                        };
+                    }
                 }
             }
             
@@ -6076,7 +6513,7 @@
                     const rule = RULES_DATABASE[term];
                     if (rule) {
                         return {
-                            title: '📜 ПРАВИЛА ПРОЕКТА',
+                            isHtml: true,
                             content: formatRuleResponse(rule)
                         };
                     }
@@ -6230,45 +6667,59 @@
                     console.log('✅ Найдено в базе знаний!');
                     removeTypingIndicator();
                     
-                    const formattedResponse = `${knowledgeEntry.title}
-
-${knowledgeEntry.content}
-
-📚 *Информация из встроенной базы знаний сервера*`;
-                    
-                    addMessage(formattedResponse, true);
+                    if (knowledgeEntry.isHtml) {
+                        // HTML ответ - красивая карточка
+                        addMessageHtml(knowledgeEntry.content, true);
+                    } else {
+                        // Текстовый ответ
+                        const formattedResponse = `${knowledgeEntry.title}\n\n${knowledgeEntry.content}`;
+                        addMessage(formattedResponse, true);
+                    }
                 } else {
                     // Если не найдено в базе - выводим справку с доступными терминами
                     removeTypingIndicator();
                     
-                    const helpResponse = `❓ По запросу "${message}" ничего не найдено.
-
-📜 **Доступные термины правил:**
-• **DM** - DeathMatch (убийство без причины)
-• **RDM** - Random DeathMatch
-• **VDM** - Vehicle DeathMatch (таран)
-• **DB** - DriveBy (стрельба из машины)
-• **RK** - Revenge Kill (месть)
-• **NLR** - New Life Rule (новая жизнь)
-• **PG** - PowerGaming (нереалистичное поведение)
-• **MG** - MetaGaming (использование OOC инфы)
-• **SK** - Spawn Kill
-• **TK** - Team Kill
-• **CK/FCK** - Character Kill
-
-📋 **Другие темы:**
-• Зеленая зона, Гетто
-• Похищение, Маска
-• Оскорбления, Флуд
-• Читы, Баги, Твинк
-• Деморган, Warn
-
-💡 Напишите термин или вопрос, например:
-"Что такое DM?" или "Правила похищения"
-
-🔗 Источник: forum.gta5rp.com`;
+                    const helpHtml = `<div class="help-card">
+                        <div class="help-header">
+                            <span style="font-size: 1.5rem;">❓</span>
+                            <span>По запросу "<strong>${message}</strong>" ничего не найдено</span>
+                        </div>
+                        
+                        <div class="help-section">
+                            <div class="help-section-title">📜 Доступные термины правил:</div>
+                            <div class="terms-grid">
+                                <div class="term-item" onclick="askQuickQuestion('Что такое DM?')"><span class="term-abbr">DM</span> DeathMatch</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое VDM?')"><span class="term-abbr">VDM</span> Vehicle DeathMatch</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое RK?')"><span class="term-abbr">RK</span> Revenge Kill</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое NLR?')"><span class="term-abbr">NLR</span> New Life Rule</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое PG?')"><span class="term-abbr">PG</span> PowerGaming</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое MG?')"><span class="term-abbr">MG</span> MetaGaming</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое SK?')"><span class="term-abbr">SK</span> Spawn Kill</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое TK?')"><span class="term-abbr">TK</span> Team Kill</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое DB?')"><span class="term-abbr">DB</span> DriveBy</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое CK?')"><span class="term-abbr">CK</span> Character Kill</div>
+                            </div>
+                        </div>
+                        
+                        <div class="help-section">
+                            <div class="help-section-title">📋 Другие темы:</div>
+                            <div class="topics-list">
+                                <span class="topic-tag" onclick="askQuickQuestion('Зеленая зона')">Зеленая зона</span>
+                                <span class="topic-tag" onclick="askQuickQuestion('Гетто')">Гетто</span>
+                                <span class="topic-tag" onclick="askQuickQuestion('Похищение')">Похищение</span>
+                                <span class="topic-tag" onclick="askQuickQuestion('Маска')">Маска</span>
+                                <span class="topic-tag" onclick="askQuickQuestion('Оскорбления')">Оскорбления</span>
+                                <span class="topic-tag" onclick="askQuickQuestion('Читы')">Читы</span>
+                                <span class="topic-tag" onclick="askQuickQuestion('Твинк')">Твинк</span>
+                            </div>
+                        </div>
+                        
+                        <div class="help-tip">
+                            💡 Нажмите на термин или напишите вопрос, например: "Что такое DM?"
+                        </div>
+                    </div>`;
                     
-                    addMessage(helpResponse, true);
+                    addMessageHtml(helpHtml, true);
                 }
                 
             } catch (error) {
