@@ -2454,6 +2454,830 @@
             background: rgba(239, 68, 68, 0.1);
         }
 
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* 💎 SUBSCRIPTION SECTION STYLES                                   */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .subscription-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .subscription-header {
+            margin-bottom: 1.25rem;
+        }
+
+        .subscription-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .subscription-header h3 svg {
+            color: #fbbf24;
+        }
+
+        /* Current Subscription Status */
+        .subscription-current {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1.25rem;
+        }
+
+        .subscription-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .subscription-badge.free {
+            background: rgba(100, 100, 100, 0.2);
+            color: var(--text-secondary);
+        }
+
+        .subscription-badge.basic {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+        }
+
+        .subscription-badge.pro {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+            color: #c084fc;
+        }
+
+        .subscription-badge.premium {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.2));
+            color: #fbbf24;
+        }
+
+        .sub-icon {
+            font-size: 1rem;
+        }
+
+        .subscription-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .sub-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sub-expires {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Subscription Plans Grid */
+        .subscription-plans {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .subscription-plans {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .plan-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .plan-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-4px);
+        }
+
+        .plan-card.popular {
+            border-color: rgba(168, 85, 247, 0.4);
+            background: linear-gradient(135deg, var(--secondary-bg), rgba(168, 85, 247, 0.05));
+        }
+
+        .plan-card.popular:hover {
+            border-color: rgba(168, 85, 247, 0.6);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.15);
+        }
+
+        .plan-popular-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .plan-header {
+            text-align: center;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .plan-name {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .plan-price small {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.25rem 0;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.6rem;
+        }
+
+        .plan-features li svg {
+            color: #4ade80;
+            flex-shrink: 0;
+        }
+
+        .plan-btn {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Manrope', sans-serif;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .plan-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-light);
+        }
+
+        .plan-btn.primary {
+            background: var(--text-primary);
+            border: none;
+            color: var(--primary-bg);
+        }
+
+        .plan-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.15);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* 💳 PAYMENT MODAL STYLES                                          */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .payment-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .payment-modal-overlay.hidden {
+            display: none;
+        }
+
+        .payment-modal {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: scaleIn 0.3s ease;
+        }
+
+        .payment-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .payment-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .payment-header {
+            text-align: center;
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .payment-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .payment-icon svg {
+            color: var(--text-primary);
+        }
+
+        .payment-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-plan-name {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Payment Steps */
+        .payment-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .payment-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
+
+        .payment-step.active {
+            opacity: 1;
+        }
+
+        .payment-step.completed {
+            opacity: 1;
+        }
+
+        .payment-step.completed .step-number {
+            background: #4ade80;
+            border-color: #4ade80;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--border-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .payment-step.active .step-number {
+            background: var(--text-primary);
+            border-color: var(--text-primary);
+            color: var(--primary-bg);
+        }
+
+        .step-name {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .payment-step.active .step-name {
+            color: var(--text-primary);
+        }
+
+        .payment-step-line {
+            width: 30px;
+            height: 2px;
+            background: var(--border-color);
+        }
+
+        /* Payment Content */
+        .payment-content {
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .payment-content.hidden {
+            display: none;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-light);
+        }
+
+        .payment-method.selected {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--text-primary);
+        }
+
+        .method-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--tertiary-bg);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .method-icon svg {
+            color: var(--text-secondary);
+        }
+
+        .payment-method.selected .method-icon svg {
+            color: var(--text-primary);
+        }
+
+        .method-info {
+            flex: 1;
+        }
+
+        .method-name {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .method-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .method-check {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .method-check svg {
+            opacity: 0;
+            color: var(--primary-bg);
+        }
+
+        .payment-method.selected .method-check {
+            background: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        .payment-method.selected .method-check svg {
+            opacity: 1;
+        }
+
+        /* Payment Forms */
+        .payment-form {
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-form.hidden {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--text-primary);
+            background: var(--secondary-bg);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .card-input-wrapper {
+            position: relative;
+        }
+
+        .card-brands {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .card-brand {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            opacity: 0.3;
+        }
+
+        .card-brand.visa { background: #1a1f71; color: white; }
+        .card-brand.mc { background: #eb001b; color: white; }
+        .card-brand.mir { background: #4db45e; color: white; }
+
+        /* SBP Form */
+        .sbp-qr-container {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .sbp-qr {
+            margin-bottom: 1rem;
+        }
+
+        .sbp-instruction {
+            color: #333;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .sbp-banks {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .sbp-banks span {
+            font-size: 0.75rem;
+            color: #666;
+            padding: 0.3rem 0.6rem;
+            background: #f0f0f0;
+            border-radius: 6px;
+        }
+
+        /* Redirect Notice */
+        .redirect-notice {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .redirect-notice svg {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .redirect-notice p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Crypto Form */
+        .crypto-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .crypto-option {
+            flex: 1;
+            padding: 0.75rem;
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .crypto-option:hover {
+            border-color: var(--border-light);
+        }
+
+        .crypto-option.selected {
+            background: var(--text-primary);
+            border-color: var(--text-primary);
+            color: var(--primary-bg);
+        }
+
+        .crypto-address-container {
+            background: var(--tertiary-bg);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .crypto-address-container label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .crypto-address {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--secondary-bg);
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .crypto-address span {
+            flex: 1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .crypto-amount {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .crypto-amount strong {
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Payment Summary */
+        .payment-summary {
+            background: var(--tertiary-bg);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .summary-row.total {
+            border-top: 1px solid var(--border-color);
+            margin-top: 0.5rem;
+            padding-top: 0.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        /* Payment Buttons */
+        .payment-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .payment-btn {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Manrope', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .payment-btn.primary {
+            background: var(--text-primary);
+            border: none;
+            color: var(--primary-bg);
+        }
+
+        .payment-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        .payment-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .payment-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-light);
+        }
+
+        /* Payment Success */
+        .payment-success {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(74, 222, 128, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .success-icon svg {
+            color: #4ade80;
+        }
+
+        .payment-success h3 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-success p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .success-expires {
+            font-size: 0.85rem !important;
+            color: var(--text-muted) !important;
+            margin-bottom: 1.5rem !important;
+        }
+
+        /* Payment Processing */
+        .payment-processing {
+            position: absolute;
+            inset: 0;
+            background: rgba(17, 17, 17, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            z-index: 100;
+        }
+
+        .payment-processing.hidden {
+            display: none;
+        }
+
+        .processing-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--text-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .payment-processing p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
         @media (max-width: 600px) {
             .profile-minimal {
                 padding: 1rem;
@@ -2464,6 +3288,23 @@
             }
 
             .profile-quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-steps {
+                padding: 1rem;
+                gap: 0.25rem;
+            }
+
+            .step-name {
+                display: none;
+            }
+
+            .payment-content {
+                padding: 1.25rem;
+            }
+
+            .form-row {
                 grid-template-columns: 1fr;
             }
         }
@@ -4964,7 +5805,7 @@
             </div>
         </div>
         <!-- End Chat Section -->
-        
+
                 <!-- Profile Section - Static & Simple -->
         <div class="section" id="profileSection">
             <div class="profile-minimal">
@@ -5065,6 +5906,360 @@
                         </svg>
                         Выйти из аккаунта
                     </button>
+                </div>
+
+                <!-- Subscription Section -->
+                <div class="subscription-section">
+                    <div class="subscription-header">
+                        <h3>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                            Подписка
+                        </h3>
+                    </div>
+                    
+                    <!-- Current Subscription Status -->
+                    <div class="subscription-current" id="subscriptionStatus">
+                        <div class="subscription-badge free" id="subBadge">
+                            <span class="sub-icon">○</span>
+                            <span class="sub-name">Free</span>
+                        </div>
+                        <div class="subscription-info">
+                            <span class="sub-label">Текущий план</span>
+                            <span class="sub-expires" id="subExpires">Бесплатный доступ</span>
+                        </div>
+                    </div>
+
+                    <!-- Subscription Plans -->
+                    <div class="subscription-plans">
+                        <div class="plan-card" data-plan="basic" onclick="selectPlan('basic')">
+                            <div class="plan-header">
+                                <span class="plan-name">Basic</span>
+                                <span class="plan-price">149 ₽<small>/мес</small></span>
+                            </div>
+                            <ul class="plan-features">
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>100 запросов в день</li>
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Claude Sonnet 4</li>
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>История чатов</li>
+                            </ul>
+                            <button class="plan-btn" onclick="openPaymentModal('basic')">Выбрать</button>
+                        </div>
+
+                        <div class="plan-card popular" data-plan="pro" onclick="selectPlan('pro')">
+                            <div class="plan-popular-badge">Популярный</div>
+                            <div class="plan-header">
+                                <span class="plan-name">Pro</span>
+                                <span class="plan-price">299 ₽<small>/мес</small></span>
+                            </div>
+                            <ul class="plan-features">
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Безлимит запросов</li>
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Все AI модели</li>
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Приоритетная поддержка</li>
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Анализ видео</li>
+                            </ul>
+                            <button class="plan-btn primary" onclick="openPaymentModal('pro')">Выбрать</button>
+                        </div>
+
+                        <div class="plan-card" data-plan="premium" onclick="selectPlan('premium')">
+                            <div class="plan-header">
+                                <span class="plan-name">Premium</span>
+                                <span class="plan-price">499 ₽<small>/мес</small></span>
+                            </div>
+                            <ul class="plan-features">
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Всё из Pro</li>
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>API доступ</li>
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Персональный бот</li>
+                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Эксклюзивные функции</li>
+                            </ul>
+                            <button class="plan-btn" onclick="openPaymentModal('premium')">Выбрать</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div class="payment-modal-overlay hidden" id="paymentModal">
+            <div class="payment-modal">
+                <button class="payment-close" onclick="closePaymentModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+
+                <div class="payment-header">
+                    <div class="payment-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                    </div>
+                    <h2>Оформление подписки</h2>
+                    <p class="payment-plan-name" id="paymentPlanName">Pro — 299 ₽/мес</p>
+                </div>
+
+                <!-- Payment Steps -->
+                <div class="payment-steps">
+                    <div class="payment-step active" data-step="1">
+                        <span class="step-number">1</span>
+                        <span class="step-name">Способ оплаты</span>
+                    </div>
+                    <div class="payment-step-line"></div>
+                    <div class="payment-step" data-step="2">
+                        <span class="step-number">2</span>
+                        <span class="step-name">Оплата</span>
+                    </div>
+                    <div class="payment-step-line"></div>
+                    <div class="payment-step" data-step="3">
+                        <span class="step-number">3</span>
+                        <span class="step-name">Готово</span>
+                    </div>
+                </div>
+
+                <!-- Step 1: Payment Method -->
+                <div class="payment-content" id="paymentStep1">
+                    <div class="payment-methods">
+                        <div class="payment-method selected" data-method="card" onclick="selectPaymentMethod('card')">
+                            <div class="method-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                                </svg>
+                            </div>
+                            <div class="method-info">
+                                <span class="method-name">Банковская карта</span>
+                                <span class="method-desc">Visa, Mastercard, МИР</span>
+                            </div>
+                            <div class="method-check">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="payment-method" data-method="sbp" onclick="selectPaymentMethod('sbp')">
+                            <div class="method-icon sbp">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                    <path d="M2 17l10 5 10-5"></path>
+                                    <path d="M2 12l10 5 10-5"></path>
+                                </svg>
+                            </div>
+                            <div class="method-info">
+                                <span class="method-name">СБП</span>
+                                <span class="method-desc">Система быстрых платежей</span>
+                            </div>
+                            <div class="method-check">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="payment-method" data-method="yoomoney" onclick="selectPaymentMethod('yoomoney')">
+                            <div class="method-icon yoomoney">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 6v6l4 2"></path>
+                                </svg>
+                            </div>
+                            <div class="method-info">
+                                <span class="method-name">ЮMoney</span>
+                                <span class="method-desc">Электронный кошелёк</span>
+                            </div>
+                            <div class="method-check">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="payment-method" data-method="crypto" onclick="selectPaymentMethod('crypto')">
+                            <div class="method-icon crypto">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.5 9.5c.5-1 1.5-1.5 2.5-1.5 1.5 0 2.5 1 2.5 2.5 0 1-.5 1.5-1.5 2-.5.3-1 .5-1 1v.5"></path>
+                                    <circle cx="12" cy="16" r=".5"></circle>
+                                </svg>
+                            </div>
+                            <div class="method-info">
+                                <span class="method-name">Криптовалюта</span>
+                                <span class="method-desc">BTC, ETH, USDT</span>
+                            </div>
+                            <div class="method-check">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="payment-btn primary" onclick="goToPaymentStep(2)">
+                        Продолжить
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Step 2: Payment Details -->
+                <div class="payment-content hidden" id="paymentStep2">
+                    <!-- Card Form -->
+                    <div class="payment-form" id="cardForm">
+                        <div class="form-group">
+                            <label>Номер карты</label>
+                            <div class="card-input-wrapper">
+                                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCardNumber(this)">
+                                <div class="card-brands">
+                                    <span class="card-brand visa">VISA</span>
+                                    <span class="card-brand mc">MC</span>
+                                    <span class="card-brand mir">МИР</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Срок действия</label>
+                                <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV/CVC</label>
+                                <input type="password" id="cardCvv" placeholder="•••" maxlength="3">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Имя владельца</label>
+                            <input type="text" id="cardName" placeholder="IVAN IVANOV" oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                    </div>
+
+                    <!-- SBP Form -->
+                    <div class="payment-form hidden" id="sbpForm">
+                        <div class="sbp-qr-container">
+                            <div class="sbp-qr" id="sbpQrCode">
+                                <svg width="150" height="150" viewBox="0 0 150 150">
+                                    <rect fill="#fff" width="150" height="150"/>
+                                    <g fill="#000">
+                                        <rect x="10" y="10" width="10" height="10"/>
+                                        <rect x="20" y="10" width="10" height="10"/>
+                                        <rect x="30" y="10" width="10" height="10"/>
+                                        <rect x="40" y="10" width="10" height="10"/>
+                                        <rect x="50" y="10" width="10" height="10"/>
+                                        <rect x="60" y="10" width="10" height="10"/>
+                                        <rect x="70" y="10" width="10" height="10"/>
+                                        <rect x="10" y="20" width="10" height="10"/>
+                                        <rect x="70" y="20" width="10" height="10"/>
+                                        <rect x="90" y="20" width="10" height="10"/>
+                                        <rect x="100" y="20" width="10" height="10"/>
+                                        <rect x="110" y="20" width="10" height="10"/>
+                                        <rect x="130" y="20" width="10" height="10"/>
+                                        <rect x="10" y="30" width="10" height="10"/>
+                                        <rect x="30" y="30" width="10" height="10"/>
+                                        <rect x="40" y="30" width="10" height="10"/>
+                                        <rect x="50" y="30" width="10" height="10"/>
+                                        <rect x="70" y="30" width="10" height="10"/>
+                                        <rect x="90" y="30" width="10" height="10"/>
+                                        <rect x="130" y="30" width="10" height="10"/>
+                                        <!-- More QR pattern -->
+                                    </g>
+                                </svg>
+                            </div>
+                            <p class="sbp-instruction">Отсканируйте QR-код в приложении вашего банка</p>
+                            <div class="sbp-banks">
+                                <span>Сбербанк</span>
+                                <span>Тинькофф</span>
+                                <span>Альфа-Банк</span>
+                                <span>ВТБ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- YooMoney Form -->
+                    <div class="payment-form hidden" id="yoomoneyForm">
+                        <div class="redirect-notice">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <p>Вы будете перенаправлены на страницу ЮMoney для завершения оплаты</p>
+                        </div>
+                    </div>
+
+                    <!-- Crypto Form -->
+                    <div class="payment-form hidden" id="cryptoForm">
+                        <div class="crypto-selector">
+                            <button class="crypto-option selected" data-crypto="btc" onclick="selectCrypto('btc')">BTC</button>
+                            <button class="crypto-option" data-crypto="eth" onclick="selectCrypto('eth')">ETH</button>
+                            <button class="crypto-option" data-crypto="usdt" onclick="selectCrypto('usdt')">USDT</button>
+                        </div>
+                        <div class="crypto-address-container">
+                            <label>Адрес для оплаты:</label>
+                            <div class="crypto-address">
+                                <span id="cryptoAddress">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</span>
+                                <button onclick="copyCryptoAddress()" class="copy-btn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="crypto-amount">
+                                <span>Сумма: </span>
+                                <strong id="cryptoAmount">0.0000035 BTC</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-summary">
+                        <div class="summary-row">
+                            <span>Подписка</span>
+                            <span id="summaryPlan">Pro</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Период</span>
+                            <span>1 месяц</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Итого</span>
+                            <span id="summaryTotal">299 ₽</span>
+                        </div>
+                    </div>
+
+                    <div class="payment-buttons">
+                        <button class="payment-btn secondary" onclick="goToPaymentStep(1)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                            Назад
+                        </button>
+                        <button class="payment-btn primary" onclick="processPayment()">
+                            Оплатить <span id="payBtnAmount">299 ₽</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Success -->
+                <div class="payment-content hidden" id="paymentStep3">
+                    <div class="payment-success">
+                        <div class="success-icon">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Оплата прошла успешно!</h3>
+                        <p>Подписка <strong id="successPlan">Pro</strong> активирована</p>
+                        <p class="success-expires">Действует до: <span id="successExpires">01.02.2025</span></p>
+                        <button class="payment-btn primary" onclick="closePaymentModal()">Готово</button>
+                    </div>
+                </div>
+
+                <!-- Processing Overlay -->
+                <div class="payment-processing hidden" id="paymentProcessing">
+                    <div class="processing-spinner"></div>
+                    <p>Обработка платежа...</p>
                 </div>
             </div>
         </div>
@@ -7767,6 +8962,271 @@ showSection = function(sectionName) {
         setTimeout(initScrollReveal, 100);
     }
 };
+
+// ═══════════════════════════════════════════════════════════════════════
+// 💎 SUBSCRIPTION SYSTEM
+// ═══════════════════════════════════════════════════════════════════════
+
+const SUBSCRIPTION_PLANS = {
+    basic: { name: 'Basic', price: 149, features: ['100 запросов/день', 'Claude Sonnet 4', 'История чатов'] },
+    pro: { name: 'Pro', price: 299, features: ['Безлимит', 'Все AI', 'Поддержка', 'Анализ видео'] },
+    premium: { name: 'Premium', price: 499, features: ['Всё из Pro', 'API', 'Персональный бот', 'Эксклюзив'] }
+};
+
+let selectedPlan = null;
+let selectedPaymentMethod = 'card';
+let currentPaymentStep = 1;
+
+// Load and display subscription status
+function loadSubscriptionStatus() {
+    const subscription = JSON.parse(localStorage.getItem('badgrules_subscription') || 'null');
+    const subBadge = document.getElementById('subBadge');
+    const subExpires = document.getElementById('subExpires');
+    
+    if (!subscription || new Date(subscription.expiresAt) < new Date()) {
+        // Free or expired
+        if (subBadge) {
+            subBadge.className = 'subscription-badge free';
+            subBadge.innerHTML = '<span class="sub-icon">○</span><span class="sub-name">Free</span>';
+        }
+        if (subExpires) subExpires.textContent = 'Бесплатный доступ';
+        return null;
+    }
+    
+    // Active subscription
+    const plan = subscription.plan;
+    const expiresDate = new Date(subscription.expiresAt).toLocaleDateString('ru-RU');
+    
+    if (subBadge) {
+        subBadge.className = `subscription-badge ${plan}`;
+        const icons = { basic: '◐', pro: '◉', premium: '★' };
+        subBadge.innerHTML = `<span class="sub-icon">${icons[plan]}</span><span class="sub-name">${SUBSCRIPTION_PLANS[plan].name}</span>`;
+    }
+    if (subExpires) subExpires.textContent = `Действует до ${expiresDate}`;
+    
+    return subscription;
+}
+
+// Select plan
+function selectPlan(plan) {
+    document.querySelectorAll('.plan-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.plan === plan);
+    });
+    selectedPlan = plan;
+}
+
+// Open payment modal
+function openPaymentModal(plan) {
+    selectedPlan = plan;
+    currentPaymentStep = 1;
+    
+    const planData = SUBSCRIPTION_PLANS[plan];
+    document.getElementById('paymentPlanName').textContent = `${planData.name} — ${planData.price} ₽/мес`;
+    document.getElementById('summaryPlan').textContent = planData.name;
+    document.getElementById('summaryTotal').textContent = `${planData.price} ₽`;
+    document.getElementById('payBtnAmount').textContent = `${planData.price} ₽`;
+    
+    // Reset to step 1
+    goToPaymentStep(1);
+    
+    // Show modal
+    document.getElementById('paymentModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close payment modal
+function closePaymentModal() {
+    document.getElementById('paymentModal').classList.add('hidden');
+    document.body.style.overflow = '';
+    
+    // Refresh subscription status
+    loadSubscriptionStatus();
+}
+
+// Select payment method
+function selectPaymentMethod(method) {
+    selectedPaymentMethod = method;
+    
+    document.querySelectorAll('.payment-method').forEach(el => {
+        el.classList.toggle('selected', el.dataset.method === method);
+    });
+    
+    // Show/hide appropriate forms
+    document.getElementById('cardForm').classList.toggle('hidden', method !== 'card');
+    document.getElementById('sbpForm').classList.toggle('hidden', method !== 'sbp');
+    document.getElementById('yoomoneyForm').classList.toggle('hidden', method !== 'yoomoney');
+    document.getElementById('cryptoForm').classList.toggle('hidden', method !== 'crypto');
+}
+
+// Go to payment step
+function goToPaymentStep(step) {
+    currentPaymentStep = step;
+    
+    // Update step indicators
+    document.querySelectorAll('.payment-step').forEach((el, index) => {
+        el.classList.remove('active', 'completed');
+        if (index + 1 < step) el.classList.add('completed');
+        if (index + 1 === step) el.classList.add('active');
+    });
+    
+    // Show/hide content
+    document.getElementById('paymentStep1').classList.toggle('hidden', step !== 1);
+    document.getElementById('paymentStep2').classList.toggle('hidden', step !== 2);
+    document.getElementById('paymentStep3').classList.toggle('hidden', step !== 3);
+}
+
+// Format card number
+function formatCardNumber(input) {
+    let value = input.value.replace(/\D/g, '');
+    value = value.replace(/(.{4})/g, '$1 ').trim();
+    input.value = value.substring(0, 19);
+    
+    // Detect card type
+    const number = value.replace(/\s/g, '');
+    document.querySelectorAll('.card-brand').forEach(brand => brand.style.opacity = '0.3');
+    
+    if (number.startsWith('4')) {
+        document.querySelector('.card-brand.visa').style.opacity = '1';
+    } else if (number.startsWith('5') || number.startsWith('2')) {
+        document.querySelector('.card-brand.mc').style.opacity = '1';
+    } else if (number.startsWith('220')) {
+        document.querySelector('.card-brand.mir').style.opacity = '1';
+    }
+}
+
+// Format expiry
+function formatExpiry(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+    }
+    input.value = value;
+}
+
+// Select crypto
+function selectCrypto(crypto) {
+    document.querySelectorAll('.crypto-option').forEach(el => {
+        el.classList.toggle('selected', el.dataset.crypto === crypto);
+    });
+    
+    const addresses = {
+        btc: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+        eth: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
+        usdt: 'TN8F5VmF5VGfxW8iYFQGtGJwL6y8qRjdLp'
+    };
+    
+    const amounts = {
+        btc: `0.0000${Math.floor(SUBSCRIPTION_PLANS[selectedPlan].price / 85000 * 10000)} BTC`,
+        eth: `0.00${Math.floor(SUBSCRIPTION_PLANS[selectedPlan].price / 3500 * 100)} ETH`,
+        usdt: `${SUBSCRIPTION_PLANS[selectedPlan].price} USDT`
+    };
+    
+    document.getElementById('cryptoAddress').textContent = addresses[crypto];
+    document.getElementById('cryptoAmount').textContent = amounts[crypto];
+}
+
+// Copy crypto address
+function copyCryptoAddress() {
+    const address = document.getElementById('cryptoAddress').textContent;
+    navigator.clipboard.writeText(address).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        setTimeout(() => {
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
+        }, 2000);
+    });
+}
+
+// Process payment
+function processPayment() {
+    // Validate form for card payment
+    if (selectedPaymentMethod === 'card') {
+        const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+        const cardExpiry = document.getElementById('cardExpiry').value;
+        const cardCvv = document.getElementById('cardCvv').value;
+        const cardName = document.getElementById('cardName').value;
+        
+        if (cardNumber.length < 16) {
+            alert('Введите корректный номер карты');
+            return;
+        }
+        if (!cardExpiry || cardExpiry.length < 5) {
+            alert('Введите срок действия карты');
+            return;
+        }
+        if (cardCvv.length < 3) {
+            alert('Введите CVV код');
+            return;
+        }
+        if (!cardName) {
+            alert('Введите имя владельца карты');
+            return;
+        }
+    }
+    
+    // Show processing
+    document.getElementById('paymentProcessing').classList.remove('hidden');
+    
+    // Simulate payment processing
+    setTimeout(() => {
+        document.getElementById('paymentProcessing').classList.add('hidden');
+        
+        // Save subscription
+        const expiresAt = new Date();
+        expiresAt.setMonth(expiresAt.getMonth() + 1);
+        
+        const subscription = {
+            plan: selectedPlan,
+            startedAt: new Date().toISOString(),
+            expiresAt: expiresAt.toISOString(),
+            paymentMethod: selectedPaymentMethod
+        };
+        
+        localStorage.setItem('badgrules_subscription', JSON.stringify(subscription));
+        
+        // Show success
+        document.getElementById('successPlan').textContent = SUBSCRIPTION_PLANS[selectedPlan].name;
+        document.getElementById('successExpires').textContent = expiresAt.toLocaleDateString('ru-RU');
+        
+        goToPaymentStep(3);
+        
+        // Update profile badge
+        updateSubscriptionBadgeInProfile();
+        
+    }, 2000);
+}
+
+// Update subscription badge in user card
+function updateSubscriptionBadgeInProfile() {
+    const subscription = JSON.parse(localStorage.getItem('badgrules_subscription') || 'null');
+    
+    // Update profile section subscription display
+    loadSubscriptionStatus();
+    
+    // Could also add a badge next to username if desired
+}
+
+// Initialize subscription on page load
+document.addEventListener('DOMContentLoaded', () => {
+    loadSubscriptionStatus();
+});
+
+// Close modal on outside click
+document.getElementById('paymentModal')?.addEventListener('click', (e) => {
+    if (e.target.classList.contains('payment-modal-overlay')) {
+        closePaymentModal();
+    }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('paymentModal');
+        if (modal && !modal.classList.contains('hidden')) {
+            closePaymentModal();
+        }
+    }
+});
 
     </script>
 </body>
