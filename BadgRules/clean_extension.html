@@ -1,0 +1,132 @@
+<style>
+/* 🛑 DISABLE ANIMATIONS FOR LIFETIME BLOCK */
+/* ═══════════════════════════════════════════════════════════════ */
+.lifetime-elite, 
+.lifetime-elite .lifetime-rays,
+.lifetime-elite .lt-btn, 
+.lifetime-elite .lt-btn::after,
+.lifetime-elite .lifetime-icon-elite,
+.lifetime-elite:hover,
+.lifetime-elite:hover .lifetime-icon-elite {
+    animation: none !important;
+    transform: none !important; 
+}
+
+.lifetime-elite:hover {
+    border-color: #d4af37 !important; /* Keep border color change */
+}
+</style>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// 💎 PRO GRANT SYSTEM
+// ═══════════════════════════════════════════════════════════════
+
+// Helper to grant Pro via Console/Code
+window.grantPro = function(userId, days = 30) {
+    if (!userId) return console.error('❌ Please provide a user ID');
+    
+    const isLifetime = days === -1;
+    const now = new Date();
+    const subscription = {
+        plan: isLifetime ? 'lifetime' : 'manual',
+        planName: isLifetime ? 'Lifetime (Manual)' : days + ' Days (Manual)',
+        grantedBy: 'console',
+        reason: 'Manual grant via console',
+        lifetime: isLifetime,
+        startedAt: now.toISOString(),
+        expiresAt: isLifetime ? null : new Date(now.getTime() + days * 24 * 60 * 60 * 1000).toISOString()
+    };
+    
+    const grantsKey = 'badgrules_pro_grants';
+    const grants = JSON.parse(localStorage.getItem(grantsKey) || '{}');
+    grants[userId] = subscription;
+    localStorage.setItem(grantsKey, JSON.stringify(grants));
+    
+    console.log(`✅ Granted Pro to ${userId} for ${isLifetime ? 'Lifetime' : days + ' days'}`);
+    alert(`✅ Pro подписка выдана пользователю ${userId}`);
+    
+    // Refresh if it's the current user
+    const currentUser = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+    if (currentUser.id === userId) {
+        location.reload();
+    }
+    
+    return subscription;
+};
+
+// Check if current user has granted Pro
+function checkGrantedPro() {
+    const userData = localStorage.getItem('badgrules_user');
+    if (!userData) return null;
+    
+    try {
+        const user = JSON.parse(userData);
+
+        // [ADDED] Hardcoded Pro Users List - ADD YOUR ID HERE
+        const HARDCODED_PRO_IDS = [
+            'YOUR_ID_HERE', 
+            '962762264825634846' 
+        ];
+
+        if (HARDCODED_PRO_IDS.includes(user.id)) {
+            return {
+                plan: 'lifetime',
+                lifetime: true,
+                grantedAt: new Date().toISOString(),
+                expiresAt: null,
+                source: 'hardcoded'
+            };
+        }
+        const grantsKey = 'badgrules_pro_grants';
+        const grants = JSON.parse(localStorage.getItem(grantsKey) || '{}');
+        
+        if (grants[user.id]) {
+            const grant = grants[user.id];
+            
+            // Check if not expired
+            if (grant.lifetime || new Date(grant.expiresAt) > new Date()) {
+                return grant;
+            }
+        }
+    } catch (e) {
+        console.error('Error checking granted pro:', e);
+    }
+    
+    return null;
+}
+
+// Enhanced loadSubscriptionStatus to check granted Pro
+const originalLoadSubscriptionStatus = window.originalLoadSubscriptionStatus || loadSubscriptionStatus;
+window.originalLoadSubscriptionStatus = originalLoadSubscriptionStatus;
+
+loadSubscriptionStatus = function() {
+    // First check for granted Pro
+    const grantedPro = checkGrantedPro();
+    
+    if (grantedPro) {
+        const badge = document.getElementById('subBadge');
+        const expires = document.getElementById('subExpires');
+        
+        if (badge) {
+            badge.classList.remove('free');
+            badge.classList.add(grantedPro.lifetime ? 'lifetime' : 'pro');
+            badge.querySelector('.badge-text').textContent = grantedPro.lifetime ? 'LIFETIME' : 'PRO';
+        }
+        
+        if (expires) {
+            if (grantedPro.lifetime) {
+                expires.textContent = '♾️ Бессрочная подписка';
+            } else {
+                const expDate = new Date(grantedPro.expiresAt);
+                expires.textContent = `Активна до ${expDate.toLocaleDateString('ru-RU')}`;
+            }
+        }
+        
+        return grantedPro;
+    }
+    
+    // Otherwise use original function
+    return originalLoadSubscriptionStatus();
+};
+</script>
