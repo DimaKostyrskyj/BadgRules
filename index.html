@@ -352,6 +352,21 @@
             stroke-width: 3;
         }
 
+        .project-forum-link {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-top: 0.5rem;
+            opacity: 0.7;
+            transition: all 0.2s ease;
+        }
+
+        .project-forum-link:hover {
+            opacity: 1;
+            color: var(--text-primary);
+        }
+
         /* Server Selection */
         .server-selector {
             max-height: 280px;
@@ -452,6 +467,16 @@
             font-size: 0.7rem;
             color: var(--text-secondary);
             font-family: 'JetBrains Mono', monospace;
+        }
+
+        .server-bonus {
+            font-size: 0.65rem;
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            margin-left: 0.3rem;
+            font-weight: 600;
         }
 
         /* Step Navigation Buttons */
@@ -3873,6 +3898,7 @@
                             <div class="project-icon">🎮</div>
                             <div class="project-name">GTA 5 RP</div>
                             <div class="project-desc">22 сервера</div>
+                            <a href="https://forum.gta5rp.com" target="_blank" class="project-forum-link" onclick="event.stopPropagation()">forum.gta5rp.com</a>
                         </div>
                         
                         <div class="project-card majestic" onclick="selectProject('majestic')" data-project="majestic">
@@ -3884,6 +3910,7 @@
                             <div class="project-icon">👑</div>
                             <div class="project-name">Majestic RP</div>
                             <div class="project-desc">16 серверов</div>
+                            <a href="https://forum.majestic-rp.ru" target="_blank" class="project-forum-link" onclick="event.stopPropagation()">forum.majestic-rp.ru</a>
                         </div>
                     </div>
 
@@ -4859,46 +4886,46 @@
         
         const SERVERS = {
             gta5rp: [
-                { id: 1, name: 'DOWNTOWN', emoji: '🏙️', players: '1920/2000' },
-                { id: 2, name: 'STRAWBERRY', emoji: '🍓', players: '933/2000' },
-                { id: 3, name: 'VINEWOOD', emoji: '🎬', players: '711/2000' },
-                { id: 4, name: 'BLACKBERRY', emoji: '🫐', players: '1661/2000' },
-                { id: 5, name: 'INSQUAD', emoji: '🦊', players: '958/2000' },
-                { id: 6, name: 'SUNRISE', emoji: '🌅', players: '1791/2000' },
-                { id: 7, name: 'RAINBOW', emoji: '🌈', players: '601/2000' },
-                { id: 8, name: 'RICHMAN', emoji: '🤵', players: '1302/2000' },
-                { id: 9, name: 'ECLIPSE', emoji: '🌓', players: '3340/2000' },
-                { id: 10, name: 'LA MESA', emoji: '🌵', players: '587/2000' },
-                { id: 11, name: 'BURTON', emoji: '🏛️', players: '1078/2000' },
-                { id: 12, name: 'ROCKFORD', emoji: '💎', players: '2060/2000' },
-                { id: 13, name: 'ALTA', emoji: '☘️', players: '736/2000' },
-                { id: 14, name: 'DEL PERRO', emoji: '🏀', players: '495/2000' },
-                { id: 15, name: 'DAVIS', emoji: '🏵️', players: '1183/2000' },
-                { id: 16, name: 'HARMONY', emoji: '🌸', players: '1194/2000' },
-                { id: 17, name: 'REDWOOD', emoji: '🌲', players: '3941/2000' },
-                { id: 18, name: 'HAWICK', emoji: '🍀', players: '936/2000' },
-                { id: 19, name: 'GRAPESEED', emoji: '🍇', players: '1939/2000' },
-                { id: 20, name: 'MURRIETA', emoji: '🌷', players: '3263/2000' },
-                { id: 21, name: 'VESPUCCI', emoji: '🏖️', players: '—' },
-                { id: 22, name: 'MILTON', emoji: '🍸', players: '—' }
+                { id: 1, name: 'DOWNTOWN', emoji: '🏙️', players: '', bonus: '' },
+                { id: 2, name: 'STRAWBERRY', emoji: '🍓', players: '', bonus: '' },
+                { id: 3, name: 'VINEWOOD', emoji: '🎬', players: '', bonus: '' },
+                { id: 4, name: 'BLACKBERRY', emoji: '🫐', players: '', bonus: '' },
+                { id: 5, name: 'INSQUAD', emoji: '🦊', players: '', bonus: '' },
+                { id: 6, name: 'SUNRISE', emoji: '🌅', players: '', bonus: '' },
+                { id: 7, name: 'RAINBOW', emoji: '🌈', players: '', bonus: '' },
+                { id: 8, name: 'RICHMAN', emoji: '🤵', players: '', bonus: '' },
+                { id: 9, name: 'ECLIPSE', emoji: '🌓', players: '', bonus: '' },
+                { id: 10, name: 'LA MESA', emoji: '🌵', players: '', bonus: '' },
+                { id: 11, name: 'BURTON', emoji: '🏛️', players: '', bonus: '' },
+                { id: 12, name: 'ROCKFORD', emoji: '💎', players: '', bonus: '' },
+                { id: 13, name: 'ALTA', emoji: '☘️', players: '', bonus: '' },
+                { id: 14, name: 'DEL PERRO', emoji: '🏀', players: '', bonus: '' },
+                { id: 15, name: 'DAVIS', emoji: '🏵️', players: '', bonus: '' },
+                { id: 16, name: 'HARMONY', emoji: '🌸', players: '', bonus: '' },
+                { id: 17, name: 'REDWOOD', emoji: '🌲', players: '', bonus: '' },
+                { id: 18, name: 'HAWICK', emoji: '🍀', players: '', bonus: '' },
+                { id: 19, name: 'GRAPESEED', emoji: '🍇', players: '', bonus: '' },
+                { id: 20, name: 'MURRIETA', emoji: '🌷', players: '', bonus: '' },
+                { id: 21, name: 'VESPUCCI', emoji: '🏖️', players: '', bonus: '' },
+                { id: 22, name: 'MILTON', emoji: '🍸', players: '', bonus: '' }
             ],
             majestic: [
-                { id: 1, name: 'Houston', emoji: '🚀', players: '—' },
-                { id: 2, name: 'Seattle', emoji: '☕', players: '—' },
-                { id: 3, name: 'Phoenix', emoji: '🔥', players: '—' },
-                { id: 4, name: 'Denver', emoji: '🏔️', players: '—' },
-                { id: 5, name: 'New York', emoji: '🗽', players: '—' },
-                { id: 6, name: 'Washington', emoji: '🏛️', players: '—' },
-                { id: 7, name: 'Dallas', emoji: '⛳', players: '—' },
-                { id: 8, name: 'Boston', emoji: '🎓', players: '—' },
-                { id: 9, name: 'Chicago', emoji: '🌆', players: '—' },
-                { id: 10, name: 'San Francisco', emoji: '🌉', players: '—' },
-                { id: 11, name: 'Atlanta', emoji: '🍑', players: '—' },
-                { id: 12, name: 'Miami', emoji: '🌴', players: '—' },
-                { id: 13, name: 'Los Angeles', emoji: '🎬', players: '—' },
-                { id: 14, name: 'Las Vegas', emoji: '🎰', players: '—' },
-                { id: 15, name: 'San Diego', emoji: '🏄', players: '—' },
-                { id: 16, name: 'Detroit', emoji: '🚗', players: '—' }
+                { id: 1, name: 'Denver', emoji: '🏔️', players: '—', bonus: '' },
+                { id: 2, name: 'Phoenix', emoji: '🔥', players: '—', bonus: '' },
+                { id: 3, name: 'Seattle', emoji: '☕', players: '—', bonus: 'x1.1' },
+                { id: 4, name: 'Houston', emoji: '🚀', players: '—', bonus: 'x1.15' },
+                { id: 5, name: 'New York', emoji: '🗽', players: '—', bonus: 'x1.2' },
+                { id: 6, name: 'Atlanta', emoji: '🍑', players: '—', bonus: 'x1.2' },
+                { id: 7, name: 'San Francisco', emoji: '🌉', players: '—', bonus: 'x1.2' },
+                { id: 8, name: 'Chicago', emoji: '🌆', players: '—', bonus: 'x1.2' },
+                { id: 9, name: 'Los Angeles', emoji: '🎬', players: '—', bonus: 'x1.2' },
+                { id: 10, name: 'Miami', emoji: '🌴', players: '—', bonus: 'x1.2' },
+                { id: 11, name: 'Dallas', emoji: '⭐', players: '—', bonus: 'x1.2 🆕' },
+                { id: 12, name: 'Detroit', emoji: '🚗', players: '—', bonus: 'x1.2' },
+                { id: 13, name: 'Boston', emoji: '🎓', players: '—', bonus: 'x1.2' },
+                { id: 14, name: 'Las Vegas', emoji: '🎰', players: '—', bonus: 'x1.2' },
+                { id: 15, name: 'San Diego', emoji: '🏄', players: '—', bonus: 'x1.2' },
+                { id: 16, name: 'Washington', emoji: '🏛️', players: '—', bonus: 'x1.2' }
             ]
         };
 
@@ -4940,16 +4967,17 @@
             const servers = SERVERS[project] || [];
             const projectClass = project;
             
-            grid.innerHTML = servers.map(server => `
+            grid.innerHTML = servers.map(server => {
+                const bonusHtml = server.bonus ? `<span class="server-bonus">${server.bonus}</span>` : '';
+                return `
                 <div class="server-card ${projectClass}" data-server="${server.id}" onclick="selectServer(${server.id}, '${server.name}', '${server.emoji}')">
                     <div class="server-number">${String(server.id).padStart(2, '0')}</div>
                     <span class="server-emoji">${server.emoji}</span>
                     <div class="server-info">
-                        <div class="server-name">${server.name}</div>
-                        <div class="server-players">${server.players}</div>
+                        <div class="server-name">${server.name} ${bonusHtml}</div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
             
             // Update step 2 title
             const projectName = project === 'gta5rp' ? 'GTA 5 RP' : 'Majestic RP';
@@ -6188,12 +6216,19 @@ ${knowledgeEntry.content}
                     // Clean URL
                     window.history.replaceState({}, document.title, window.location.pathname);
                     
-                    showMainInterface(user);
+                    // Check if server selection exists
+                    const selection = loadServerSelection();
+                    if (selection && selection.project && selection.server) {
+                        showMainInterface(user);
+                    } else {
+                        // Show login overlay at step 1 for server selection
+                        document.getElementById('loginOverlay').classList.remove('hidden');
+                        goToStep(1);
+                    }
                 })
                 .catch(error => {
                     console.error('Error fetching Discord user:', error);
-                    alert('Ошибка при входе через Discord. Попробуйте войти как гость.');
-                    continueAsGuest();
+                    alert('Ошибка при входе через Discord. Попробуйте снова.');
                 });
             }
         });
