@@ -4219,7 +4219,327 @@
                 font-size: 0.85rem;
                 padding: 0.65rem 0.85rem;
             }
+                    /* ═══════════════════════════════════════════════════════════════ */
+        /* 💎 SUBSCRIPTION SECTION - Pricing & Plans                        */
+        /* ═══════════════════════════════════════════════════════════════ */
+        
+        .subscription-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
 
+        .subscription-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .subscription-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subscription-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .pricing-card.lifetime {
+            border: 2px solid #ffd700;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 215, 0, 0.02) 100%);
+        }
+
+        .pricing-card.lifetime:hover {
+            border-color: #ffd700;
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            color: #1a1a1a;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .pricing-price {
+            margin-bottom: 0.25rem;
+        }
+
+        .price-main {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .price-secondary {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .price-period {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            opacity: 0.8;
+        }
+
+        /* Features List */
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+            flex: 1;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .feature-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .pricing-features li:has(.feature-check:contains("-")) {
+            opacity: 0.5;
+        }
+
+        .pricing-features li:has(.feature-check:contains("-")) .feature-check {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        /* Select Button */
+        .pricing-select-btn {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: linear-gradient(135deg, #5865F2 0%, #4752C4 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Manrope', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-select-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.4);
+        }
+
+        .pricing-card.lifetime .pricing-select-btn {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            color: #1a1a1a;
+        }
+
+        .pricing-card.lifetime .pricing-select-btn:hover {
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .payment-methods h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .method-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .method-card:hover {
+            border-color: rgba(88, 101, 242, 0.5);
+            background: rgba(88, 101, 242, 0.05);
+        }
+
+        .method-icon {
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .method-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .method-currencies {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Additional Info */
+        .subscription-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .info-card h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* CTA */
+        .subscription-cta {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .subscription-cta .cta-primary,
+        .subscription-cta .cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            margin: 0 0.5rem;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .methods-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .subscription-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .subscription-cta {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .subscription-cta .cta-primary,
+            .subscription-cta .cta-secondary {
+                margin: 0;
+                width: 100%;
+            }
+    
         }
     </style>
 </head>
@@ -4242,6 +4562,12 @@
         </div>
         
         <div class="logo-dropdown" id="logoDropdown">
+            <div class="logo-menu-item" data-section="subscription" onclick="selectLogoMenu('subscription')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                </svg>
+                <span>Подписка</span>
+            </div>
             <div class="logo-menu-item active" data-section="home" onclick="selectLogoMenu('home')">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -4964,7 +5290,176 @@
             </div>
         </div>
         <!-- End Chat Section -->
+          <!-- Subscription Section -->
+        <div class="section" id="subscriptionSection">
+            <div class="subscription-container">
+                <div class="subscription-header">
+                    <h2>🌟 Премиум подписка BadgRules</h2>
+                    <p class="subscription-subtitle">Полный доступ ко всем возможностям AI-ассистента</p>
+                </div>
 
+                <!-- Pricing Cards -->
+                <div class="pricing-grid">
+                    <!-- Lifetime -->
+                    <div class="pricing-card lifetime" onclick="selectPlan('lifetime')">
+                        <div class="pricing-badge">⭐ Популярный</div>
+                        <div class="pricing-header">
+                            <h3 class="pricing-title">Бессрочная</h3>
+                            <div class="pricing-price">
+                                <span class="price-main">$100</span>
+                                <span class="price-secondary">≈ 9 200 ₽</span>
+                            </div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="feature-check">✓</span> Доступ навсегда</li>
+                            <li><span class="feature-check">✓</span> Все AI модели</li>
+                            <li><span class="feature-check">✓</span> Анализ видео</li>
+                            <li><span class="feature-check">✓</span> База правил</li>
+                            <li><span class="feature-check">✓</span> Приоритетная поддержка</li>
+                            <li><span class="feature-check">✓</span> Discord бот</li>
+                        </ul>
+                        <button class="pricing-select-btn">Выбрать план</button>
+                    </div>
+
+                    <!-- Yearly -->
+                    <div class="pricing-card" onclick="selectPlan('yearly')">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title">Годовая</h3>
+                            <div class="pricing-price">
+                                <span class="price-main">$50</span>
+                                <span class="price-secondary">≈ 4 600 ₽</span>
+                            </div>
+                            <div class="price-period">в год</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="feature-check">✓</span> 12 месяцев доступа</li>
+                            <li><span class="feature-check">✓</span> Все AI модели</li>
+                            <li><span class="feature-check">✓</span> Анализ видео</li>
+                            <li><span class="feature-check">✓</span> База правил</li>
+                            <li><span class="feature-check">✓</span> Стандартная поддержка</li>
+                            <li><span class="feature-check">✓</span> Discord бот</li>
+                        </ul>
+                        <button class="pricing-select-btn">Выбрать план</button>
+                    </div>
+
+                    <!-- 6 Months -->
+                    <div class="pricing-card" onclick="selectPlan('6months')">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title">6 месяцев</h3>
+                            <div class="pricing-price">
+                                <span class="price-main">$30</span>
+                                <span class="price-secondary">≈ 2 760 ₽</span>
+                            </div>
+                            <div class="price-period">6 месяцев</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="feature-check">✓</span> 6 месяцев доступа</li>
+                            <li><span class="feature-check">✓</span> Claude & Gemini AI</li>
+                            <li><span class="feature-check">✓</span> Анализ видео (до 50MB)</li>
+                            <li><span class="feature-check">✓</span> База правил</li>
+                            <li><span class="feature-check">✓</span> Стандартная поддержка</li>
+                            <li><span class="feature-check">-</span> Без Discord бота</li>
+                        </ul>
+                        <button class="pricing-select-btn">Выбрать план</button>
+                    </div>
+
+                    <!-- 3 Months -->
+                    <div class="pricing-card" onclick="selectPlan('3months')">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title">3 месяца</h3>
+                            <div class="pricing-price">
+                                <span class="price-main">$13.5</span>
+                                <span class="price-secondary">≈ 1 242 ₽</span>
+                            </div>
+                            <div class="price-period">3 месяца</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="feature-check">✓</span> 3 месяца доступа</li>
+                            <li><span class="feature-check">✓</span> Claude AI</li>
+                            <li><span class="feature-check">✓</span> Анализ видео (до 30MB)</li>
+                            <li><span class="feature-check">✓</span> База правил</li>
+                            <li><span class="feature-check">-</span> Базовая поддержка</li>
+                            <li><span class="feature-check">-</span> Без Discord бота</li>
+                        </ul>
+                        <button class="pricing-select-btn">Выбрать план</button>
+                    </div>
+
+                    <!-- 1 Month -->
+                    <div class="pricing-card" onclick="selectPlan('1month')">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title">1 месяц</h3>
+                            <div class="pricing-price">
+                                <span class="price-main">$6</span>
+                                <span class="price-secondary">≈ 552 ₽</span>
+                            </div>
+                            <div class="price-period">в месяц</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><span class="feature-check">✓</span> 1 месяц доступа</li>
+                            <li><span class="feature-check">✓</span> Claude AI</li>
+                            <li><span class="feature-check">✓</span> База правил</li>
+                            <li><span class="feature-check">-</span> Без анализа видео</li>
+                            <li><span class="feature-check">-</span> Базовая поддержка</li>
+                            <li><span class="feature-check">-</span> Без Discord бота</li>
+                        </ul>
+                        <button class="pricing-select-btn">Выбрать план</button>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="payment-methods">
+                    <h3>💳 Способы оплаты</h3>
+                    <div class="methods-grid">
+                        <div class="method-card">
+                            <div class="method-icon">💳</div>
+                            <span class="method-name">Visa / Mastercard</span>
+                            <span class="method-currencies">₽ / $</span>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-icon">💎</div>
+                            <span class="method-name">ЮMoney</span>
+                            <span class="method-currencies">₽</span>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-icon">💰</div>
+                            <span class="method-name">QIWI</span>
+                            <span class="method-currencies">₽</span>
+                        </div>
+                        <div class="method-card">
+                            <div class="method-icon">🔗</div>
+                            <span class="method-name">Crypto</span>
+                            <span class="method-currencies">USDT, BTC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="subscription-info">
+                    <div class="info-card">
+                        <h4>🔄 Автопродление</h4>
+                        <p>Доступно для месячных и годовых тарифов. Можно отключить в любое время.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>📦 Возврат средств</h4>
+                        <p>В течение 14 дней при неиспользовании услуги.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4>🎁 Пробный период</h4>
+                        <p>7 дней бесплатно для новых пользователей.</p>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="subscription-cta">
+                    <a href="https://badgrules.com/subscribe" target="_blank" class="cta-primary">
+                        🚀 Купить подписку
+                    </a>
+                    <a href="https://discord.gg/rU5bwEv97n" target="_blank" class="cta-secondary">
+                        💬 Задать вопрос в Discord
+                    </a>
+                </div>
+            </div>
+        </div>
                 <!-- Profile Section - Static & Simple -->
         <div class="section" id="profileSection">
             <div class="profile-minimal">
@@ -5345,7 +5840,29 @@
         // ═══════════════════════════════════════════════════════════════
         // 🎯 PROJECT SELECTION FUNCTIONS
         // ═══════════════════════════════════════════════════════════════
+        function selectPlan(plan) {
+        const plans = {
+            'lifetime': 'Бессрочная подписка ($100)',
+            'yearly': 'Годовая подписка ($50)',
+            '6months': '6 месяцев подписки ($30)',
+            '3months': '3 месяца подписки ($13.5)',
+            '1month': 'Месячная подписка ($6)'
+        };
         
+        if (plans[plan]) {
+            // Удаляем выделение со всех карточек
+            document.querySelectorAll('.pricing-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Добавляем выделение выбранной
+            const selectedCard = event.currentTarget;
+            selectedCard.classList.add('selected');
+            
+            // Показываем модальное окно или перенаправляем на оплату
+            window.open('https://badgrules.com/subscribe?plan=' + plan, '_blank');
+        }
+
         function selectProject(project) {
             selectedProject = project;
             selectedServer = null; // Reset server selection
@@ -7144,16 +7661,17 @@
             // '345678901234567890': '0003',  // Админ 2
             
              // ═══ ДОБАВЬТЕ DISCORD ID ВАШЕЙ КОМАНДЫ НИЖЕ ═══
-            '701782316623855668': '0000',      // #0001 - Владелец
-            '482499344982081546': '0001',     // #0002 - Админ
-            'ADMIN2_DISCORD_ID_HERE': '0002',     // #0003 - Админ
-            'MODER1_DISCORD_ID_HERE': '0003',     // #0004 - Модератор
-            'MODER2_DISCORD_ID_HERE': '0004',     // #0005 - Модератор
-            'HELPER1_DISCORD_ID_HERE': '0005',    // #0006 - Хелпер
-            'HELPER2_DISCORD_ID_HERE': '0006',    // #0007 - Хелпер
-            'TEAM1_DISCORD_ID_HERE': '0007',      // #0008 - Команда
-            'TEAM2_DISCORD_ID_HERE': '0008',      // #0009 - Команда
-            'TEAM3_DISCORD_ID_HERE': '0009',      // #0010 - Команда
+            '701782316623855668': '0000',      // #0000 - Владелец
+            '482499344982081546': '0001',     // #0001 - Владелец
+            '994390088190529586': '0002',     // #0002 - Админ
+            'MODER1_DISCORD_ID_HERE': '0003',     // #0003 - Админ
+            '1346385347319169038': '0004',     // #0004 - Команда
+            '1170537060277428324': '0005',    // #0005 - Команда
+            'HELPER2_DISCORD_ID_HERE': '0006',    // #0006 - Команда
+            'TEAM1_DISCORD_ID_HERE': '0007',      // #0007 - Команда
+            'TEAM2_DISCORD_ID_HERE': '0008',      // #0008 - Команда
+            'TEAM3_DISCORD_ID_HERE': '0009',      // #0009 - Команда
+            'TEAM3_DISCORD_ID_HERE': '0010',      // #0010 - Команда
             // ═══════════════════════════════════════════════
         };
         
