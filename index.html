@@ -2545,16 +2545,1016 @@
             color: var(--text-secondary);
         }
 
-        /* Subscription Plans Grid */
-        .subscription-plans {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* 💎 PREMIUM SUBSCRIPTION SECTION - BADGRULES STYLE              */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .subscription-section-premium {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Premium Header */
+        .sub-premium-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sub-premium-icon {
+            position: relative;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .icon-glow {
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 20px;
+            filter: blur(15px);
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .sub-premium-icon svg {
+            color: #000;
+        }
+
+        .sub-premium-title h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .pro-text {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sub-premium-title p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Status Card */
+        .sub-status-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sub-status-left {
+            display: flex;
+            align-items: center;
             gap: 1rem;
         }
 
+        .sub-status-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .sub-status-badge.free {
+            background: rgba(100, 100, 100, 0.2);
+            color: var(--text-secondary);
+        }
+
+        .sub-status-badge.pro {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.2));
+            color: #fbbf24;
+        }
+
+        .sub-status-badge.lifetime {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(139, 92, 246, 0.2));
+            color: #a855f7;
+        }
+
+        .sub-status-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
+        .status-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-value {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .sub-status-right {
+            text-align: right;
+        }
+
+        .requests-counter {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .requests-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .requests-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: left;
+            line-height: 1.3;
+        }
+
+        /* Benefits Grid */
+        .pro-benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
         @media (max-width: 768px) {
-            .subscription-plans {
-                grid-template-columns: 1fr;
+            .pro-benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .benefit-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: benefitFadeIn 0.5s ease calc(var(--delay) * 0.1s) backwards;
+        }
+
+        @keyframes benefitFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .benefit-card:hover {
+            border-color: rgba(251, 191, 36, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .benefit-icon {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-text strong {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 0.15rem;
+        }
+
+        .benefit-text span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Pricing Container */
+        .pricing-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Price Card */
+        .price-card {
+            position: relative;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .price-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-4px);
+        }
+
+        .price-card.popular {
+            border-color: rgba(251, 191, 36, 0.4);
+        }
+
+        .price-card.popular:hover {
+            border-color: rgba(251, 191, 36, 0.6);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-align: center;
+            padding: 0.35rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            letter-spacing: 0.5px;
+        }
+
+        .popular-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(251, 191, 36, 0.08), transparent 70%);
+            pointer-events: none;
+        }
+
+        .price-save-tag {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(74, 222, 128, 0.15);
+            color: #4ade80;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+        }
+
+        .price-card.popular .price-save-tag {
+            top: 2rem;
+        }
+
+        .price-card-inner {
+            padding: 1.25rem 1rem;
+            text-align: center;
+        }
+
+        .price-card.popular .price-card-inner {
+            padding-top: 2.5rem;
+        }
+
+        .price-period {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .price-amount {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 0.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .price-amount .currency {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .price-amount .value {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .price-amount .cents {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .price-rub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-per-month {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .price-btn {
+            width: 100%;
+            padding: 0.7rem;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .price-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-light);
+        }
+
+        .price-btn.primary {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border: none;
+            color: #000;
+        }
+
+        .price-btn.primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(251, 191, 36, 0.3);
+        }
+
+        .price-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .price-btn:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* Lifetime Card - Special */
+        .lifetime-card {
+            position: relative;
+            background: linear-gradient(135deg, var(--secondary-bg), rgba(168, 85, 247, 0.05));
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .lifetime-card:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(168, 85, 247, 0.15);
+        }
+
+        .lifetime-bg {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .lifetime-particles span {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #a855f7;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: particleFloat 4s ease-in-out infinite;
+        }
+
+        .lifetime-particles span:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .lifetime-particles span:nth-child(2) { left: 30%; top: 60%; animation-delay: 0.5s; }
+        .lifetime-particles span:nth-child(3) { left: 50%; top: 30%; animation-delay: 1s; }
+        .lifetime-particles span:nth-child(4) { left: 70%; top: 70%; animation-delay: 1.5s; }
+        .lifetime-particles span:nth-child(5) { left: 85%; top: 40%; animation-delay: 2s; }
+        .lifetime-particles span:nth-child(6) { left: 95%; top: 80%; animation-delay: 2.5s; }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+            50% { transform: translateY(-20px) scale(1.5); opacity: 0.8; }
+        }
+
+        .lifetime-content {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .lifetime-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .lifetime-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(139, 92, 246, 0.2));
+            color: #a855f7;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.4rem 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .lifetime-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.35rem;
+        }
+
+        .lifetime-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .lifetime-right {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .lifetime-right {
+                text-align: center;
+            }
+        }
+
+        .lifetime-price {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            gap: 0.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        @media (max-width: 600px) {
+            .lifetime-price {
+                justify-content: center;
+            }
+        }
+
+        .lifetime-currency {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #a855f7;
+            margin-top: 0.3rem;
+        }
+
+        .lifetime-value {
+            font-size: 2.75rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .lifetime-rub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .lifetime-btn {
+            background: linear-gradient(135deg, #a855f7, #8b5cf6);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .lifetime-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .trust-badge svg {
+            color: #4ade80;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* 💳 NEW PAYMENT MODAL STYLES                                     */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .payment-modal-new {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 440px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: var(--text-secondary);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+
+        .modal-header-new {
+            text-align: center;
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-logo {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .modal-logo-glow {
+            position: absolute;
+            inset: -6px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 24px;
+            filter: blur(20px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+
+        .modal-logo-text {
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: #000;
+        }
+
+        .modal-header-new h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.35rem;
+        }
+
+        .modal-plan-name {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Order Summary */
+        .order-summary {
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .summary-card {
+            background: var(--tertiary-bg);
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-card .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0;
+        }
+
+        .summary-card .summary-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .summary-card .summary-label svg {
+            opacity: 0.6;
+        }
+
+        .summary-card .summary-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .summary-card .summary-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 0.5rem 0;
+        }
+
+        .summary-card .summary-row.total {
+            padding-top: 0.75rem;
+        }
+
+        .summary-card .summary-row.total .summary-label {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .summary-total {
+            text-align: right;
+        }
+
+        .total-usd {
+            display: block;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .total-rub {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* PayPal Button New */
+        .paypal-btn-new {
+            width: 100%;
+            position: relative;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #003087, #009cde);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .paypal-btn-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .paypal-btn-new:hover .paypal-btn-bg {
+            transform: translateX(100%);
+        }
+
+        .paypal-btn-content {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .paypal-btn-new:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 156, 222, 0.3);
+        }
+
+        .payment-info-note {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            background: rgba(251, 191, 36, 0.08);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-info-note svg {
+            color: #fbbf24;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .payment-info-note p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .secure-badge svg {
+            color: #4ade80;
+        }
+
+        /* Success State */
+        .success-state {
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .success-animation {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .success-circle {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.2), rgba(34, 197, 94, 0.2));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: successPop 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes successPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .success-circle svg {
+            color: #4ade80;
+            animation: checkDraw 0.5s ease 0.3s backwards;
+        }
+
+        @keyframes checkDraw {
+            from { stroke-dashoffset: 50; opacity: 0; }
+            to { stroke-dashoffset: 0; opacity: 1; }
+        }
+
+        .success-particles span {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: particleExplode 0.8s ease forwards;
+        }
+
+        .success-particles span:nth-child(1) { background: #fbbf24; top: 50%; left: 50%; --angle: 0deg; }
+        .success-particles span:nth-child(2) { background: #4ade80; top: 50%; left: 50%; --angle: 60deg; }
+        .success-particles span:nth-child(3) { background: #a855f7; top: 50%; left: 50%; --angle: 120deg; }
+        .success-particles span:nth-child(4) { background: #f43f5e; top: 50%; left: 50%; --angle: 180deg; }
+        .success-particles span:nth-child(5) { background: #3b82f6; top: 50%; left: 50%; --angle: 240deg; }
+        .success-particles span:nth-child(6) { background: #10b981; top: 50%; left: 50%; --angle: 300deg; }
+
+        @keyframes particleExplode {
+            0% { transform: translate(-50%, -50%) rotate(var(--angle)) translateY(0) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-60px) scale(0); opacity: 0; }
+        }
+
+        .success-state h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .success-state p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .success-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem !important;
+        }
+
+        .success-btn {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border: none;
+            color: #000;
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .success-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Processing Overlay */
+        .processing-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(17, 17, 17, 0.97);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .processing-overlay.hidden {
+            display: none;
+        }
+
+        .processing-spinner {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.25rem;
+        }
+
+        .spinner-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-radius: 50%;
+            animation: spinnerRotate 1.5s linear infinite;
+        }
+
+        .spinner-ring:nth-child(1) {
+            border-top-color: #fbbf24;
+            animation-delay: 0s;
+        }
+
+        .spinner-ring:nth-child(2) {
+            border-right-color: #a855f7;
+            animation-delay: 0.15s;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+        }
+
+        .spinner-ring:nth-child(3) {
+            border-bottom-color: #4ade80;
+            animation-delay: 0.3s;
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+        }
+
+        @keyframes spinnerRotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .processing-overlay p {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .processing-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 600px) {
+            .sub-status-card {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .sub-status-left {
+                flex-direction: column;
+            }
+
+            .order-summary {
+                padding: 1.25rem;
+            }
+
+            .modal-header-new {
+                padding: 1.5rem 1.25rem 1.25rem;
             }
         }
 
@@ -5908,362 +6908,343 @@
                     </button>
                 </div>
 
-                <!-- Subscription Section -->
-                <div class="subscription-section">
-                    <div class="subscription-header">
-                        <h3>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <!-- Subscription Section - Premium Design -->
+                <div class="subscription-section-premium">
+                    <!-- Header with Glow Effect -->
+                    <div class="sub-premium-header">
+                        <div class="sub-premium-icon">
+                            <div class="icon-glow"></div>
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                             </svg>
-                            Подписка
-                        </h3>
-                    </div>
-                    
-                    <!-- Current Subscription Status -->
-                    <div class="subscription-current" id="subscriptionStatus">
-                        <div class="subscription-badge free" id="subBadge">
-                            <span class="sub-icon">○</span>
-                            <span class="sub-name">Free</span>
                         </div>
-                        <div class="subscription-info">
-                            <span class="sub-label">Текущий план</span>
-                            <span class="sub-expires" id="subExpires">Бесплатный доступ</span>
+                        <div class="sub-premium-title">
+                            <h3>BadgRules <span class="pro-text">PRO</span></h3>
+                            <p>Разблокируй все возможности</p>
                         </div>
                     </div>
 
-                    <!-- Subscription Plans -->
-                    <div class="subscription-plans">
-                        <div class="plan-card" data-plan="basic" onclick="selectPlan('basic')">
-                            <div class="plan-header">
-                                <span class="plan-name">Basic</span>
-                                <span class="plan-price">149 ₽<small>/мес</small></span>
+                    <!-- Current Status Card -->
+                    <div class="sub-status-card" id="subscriptionStatus">
+                        <div class="sub-status-left">
+                            <div class="sub-status-badge free" id="subBadge">
+                                <span class="badge-icon">○</span>
+                                <span class="badge-text">FREE</span>
                             </div>
-                            <ul class="plan-features">
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>100 запросов в день</li>
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Claude Sonnet 4</li>
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>История чатов</li>
-                            </ul>
-                            <button class="plan-btn" onclick="openPaymentModal('basic')">Выбрать</button>
+                            <div class="sub-status-info">
+                                <span class="status-label">Текущий статус</span>
+                                <span class="status-value" id="subExpires">Ограниченный доступ</span>
+                            </div>
+                        </div>
+                        <div class="sub-status-right">
+                            <div class="requests-counter">
+                                <span class="requests-number">5</span>
+                                <span class="requests-label">запросов<br>осталось</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pro Benefits - Animated Cards -->
+                    <div class="pro-benefits-grid">
+                        <div class="benefit-card" style="--delay: 0">
+                            <div class="benefit-icon">🚀</div>
+                            <div class="benefit-text">
+                                <strong>Безлимит</strong>
+                                <span>Неограниченные запросы</span>
+                            </div>
+                        </div>
+                        <div class="benefit-card" style="--delay: 1">
+                            <div class="benefit-icon">🤖</div>
+                            <div class="benefit-text">
+                                <strong>Все AI</strong>
+                                <span>Claude, Gemini, Grok</span>
+                            </div>
+                        </div>
+                        <div class="benefit-card" style="--delay: 2">
+                            <div class="benefit-icon">🎬</div>
+                            <div class="benefit-text">
+                                <strong>Видео</strong>
+                                <span>Анализ для откатов</span>
+                            </div>
+                        </div>
+                        <div class="benefit-card" style="--delay: 3">
+                            <div class="benefit-icon">⚡</div>
+                            <div class="benefit-text">
+                                <strong>Приоритет</strong>
+                                <span>Быстрые ответы</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pricing Cards - GTA Style -->
+                    <div class="pricing-container">
+                        <div class="pricing-label">Выбери свой план</div>
+                        
+                        <div class="pricing-grid">
+                            <!-- 1 Month -->
+                            <div class="price-card" data-plan="1month" onclick="selectPlan('1month')">
+                                <div class="price-card-inner">
+                                    <div class="price-period">1 месяц</div>
+                                    <div class="price-amount">
+                                        <span class="currency">$</span>
+                                        <span class="value">6</span>
+                                    </div>
+                                    <div class="price-rub">≈ 570 ₽</div>
+                                    <button class="price-btn" onclick="event.stopPropagation(); openPaymentModal('1month')">
+                                        <span>Выбрать</span>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 3 Months -->
+                            <div class="price-card has-save" data-plan="3months" onclick="selectPlan('3months')">
+                                <div class="price-save-tag">-25%</div>
+                                <div class="price-card-inner">
+                                    <div class="price-period">3 месяца</div>
+                                    <div class="price-amount">
+                                        <span class="currency">$</span>
+                                        <span class="value">13</span>
+                                        <span class="cents">.50</span>
+                                    </div>
+                                    <div class="price-rub">≈ 1 280 ₽</div>
+                                    <div class="price-per-month">$4.50/мес</div>
+                                    <button class="price-btn" onclick="event.stopPropagation(); openPaymentModal('3months')">
+                                        <span>Выбрать</span>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 6 Months - Popular -->
+                            <div class="price-card popular has-save" data-plan="6months" onclick="selectPlan('6months')">
+                                <div class="popular-badge">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                    </svg>
+                                    ПОПУЛЯРНЫЙ
+                                </div>
+                                <div class="price-save-tag">-17%</div>
+                                <div class="price-card-inner">
+                                    <div class="price-period">6 месяцев</div>
+                                    <div class="price-amount">
+                                        <span class="currency">$</span>
+                                        <span class="value">30</span>
+                                    </div>
+                                    <div class="price-rub">≈ 2 850 ₽</div>
+                                    <div class="price-per-month">$5/мес</div>
+                                    <button class="price-btn primary" onclick="event.stopPropagation(); openPaymentModal('6months')">
+                                        <span>Выбрать</span>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="popular-glow"></div>
+                            </div>
+
+                            <!-- 1 Year -->
+                            <div class="price-card has-save" data-plan="1year" onclick="selectPlan('1year')">
+                                <div class="price-save-tag">-31%</div>
+                                <div class="price-card-inner">
+                                    <div class="price-period">1 год</div>
+                                    <div class="price-amount">
+                                        <span class="currency">$</span>
+                                        <span class="value">50</span>
+                                    </div>
+                                    <div class="price-rub">≈ 4 750 ₽</div>
+                                    <div class="price-per-month">$4.16/мес</div>
+                                    <button class="price-btn" onclick="event.stopPropagation(); openPaymentModal('1year')">
+                                        <span>Выбрать</span>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="9 18 15 12 9 6"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="plan-card popular" data-plan="pro" onclick="selectPlan('pro')">
-                            <div class="plan-popular-badge">Популярный</div>
-                            <div class="plan-header">
-                                <span class="plan-name">Pro</span>
-                                <span class="plan-price">299 ₽<small>/мес</small></span>
+                        <!-- Lifetime - Special Card -->
+                        <div class="lifetime-card" data-plan="lifetime" onclick="selectPlan('lifetime')">
+                            <div class="lifetime-bg">
+                                <div class="lifetime-particles">
+                                    <span></span><span></span><span></span>
+                                    <span></span><span></span><span></span>
+                                </div>
                             </div>
-                            <ul class="plan-features">
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Безлимит запросов</li>
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Все AI модели</li>
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Приоритетная поддержка</li>
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Анализ видео</li>
-                            </ul>
-                            <button class="plan-btn primary" onclick="openPaymentModal('pro')">Выбрать</button>
+                            <div class="lifetime-content">
+                                <div class="lifetime-left">
+                                    <div class="lifetime-badge">♾️ НАВСЕГДА</div>
+                                    <div class="lifetime-title">Бессрочная подписка</div>
+                                    <div class="lifetime-desc">Один платёж — вечный доступ ко всем функциям</div>
+                                </div>
+                                <div class="lifetime-right">
+                                    <div class="lifetime-price">
+                                        <span class="lifetime-currency">$</span>
+                                        <span class="lifetime-value">100</span>
+                                    </div>
+                                    <div class="lifetime-rub">≈ 9 500 ₽</div>
+                                    <button class="lifetime-btn" onclick="event.stopPropagation(); openPaymentModal('lifetime')">
+                                        Получить навсегда
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="plan-card" data-plan="premium" onclick="selectPlan('premium')">
-                            <div class="plan-header">
-                                <span class="plan-name">Premium</span>
-                                <span class="plan-price">499 ₽<small>/мес</small></span>
-                            </div>
-                            <ul class="plan-features">
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Всё из Pro</li>
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>API доступ</li>
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Персональный бот</li>
-                                <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>Эксклюзивные функции</li>
-                            </ul>
-                            <button class="plan-btn" onclick="openPaymentModal('premium')">Выбрать</button>
+                    <!-- Trust Badges -->
+                    <div class="trust-badges">
+                        <div class="trust-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            Безопасная оплата
+                        </div>
+                        <div class="trust-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                            Гарантия возврата
+                        </div>
+                        <div class="trust-badge">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            Мгновенная активация
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Payment Modal -->
+        <!-- Payment Modal - Redesigned -->
         <div class="payment-modal-overlay hidden" id="paymentModal">
-            <div class="payment-modal">
-                <button class="payment-close" onclick="closePaymentModal()">
+            <div class="payment-modal-new">
+                <button class="modal-close-btn" onclick="closePaymentModal()">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
                 </button>
 
-                <div class="payment-header">
-                    <div class="payment-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                            <line x1="1" y1="10" x2="23" y2="10"></line>
-                        </svg>
+                <!-- Modal Header -->
+                <div class="modal-header-new">
+                    <div class="modal-logo">
+                        <div class="modal-logo-glow"></div>
+                        <span class="modal-logo-text">B</span>
                     </div>
                     <h2>Оформление подписки</h2>
-                    <p class="payment-plan-name" id="paymentPlanName">Pro — 299 ₽/мес</p>
+                    <p class="modal-plan-name" id="paymentPlanName">6 месяцев — $30</p>
                 </div>
 
-                <!-- Payment Steps -->
-                <div class="payment-steps">
-                    <div class="payment-step active" data-step="1">
-                        <span class="step-number">1</span>
-                        <span class="step-name">Способ оплаты</span>
+                <!-- Order Summary -->
+                <div class="order-summary" id="paymentStep1">
+                    <div class="summary-card">
+                        <div class="summary-row">
+                            <span class="summary-label">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                Тариф
+                            </span>
+                            <span class="summary-value" id="summaryPlan">6 месяцев</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                Действует до
+                            </span>
+                            <span class="summary-value" id="summaryDuration">01.07.2025</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row total">
+                            <span class="summary-label">Итого</span>
+                            <div class="summary-total">
+                                <span class="total-usd" id="summaryUsd">$30</span>
+                                <span class="total-rub" id="summaryRub">≈ 2 850 ₽</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="payment-step-line"></div>
-                    <div class="payment-step" data-step="2">
-                        <span class="step-number">2</span>
-                        <span class="step-name">Оплата</span>
+
+                    <!-- PayPal Button -->
+                    <button class="paypal-btn-new" onclick="payWithPayPal()">
+                        <div class="paypal-btn-bg"></div>
+                        <div class="paypal-btn-content">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.816-5.09a.932.932 0 0 1 .923-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.777-4.471z"/>
+                            </svg>
+                            <span>Оплатить через PayPal</span>
+                        </div>
+                    </button>
+
+                    <div class="payment-info-note">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <p>После оплаты подписка активируется автоматически. Возврат в течение 24 часов.</p>
                     </div>
-                    <div class="payment-step-line"></div>
-                    <div class="payment-step" data-step="3">
-                        <span class="step-number">3</span>
-                        <span class="step-name">Готово</span>
+
+                    <div class="secure-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        Защищённое соединение SSL
                     </div>
                 </div>
 
-                <!-- Step 1: Payment Method -->
-                <div class="payment-content" id="paymentStep1">
-                    <div class="payment-methods">
-                        <div class="payment-method selected" data-method="card" onclick="selectPaymentMethod('card')">
-                            <div class="method-icon">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                                    <line x1="1" y1="10" x2="23" y2="10"></line>
-                                </svg>
-                            </div>
-                            <div class="method-info">
-                                <span class="method-name">Банковская карта</span>
-                                <span class="method-desc">Visa, Mastercard, МИР</span>
-                            </div>
-                            <div class="method-check">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </div>
+                <!-- Success State -->
+                <div class="success-state hidden" id="paymentStep3">
+                    <div class="success-animation">
+                        <div class="success-circle">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
                         </div>
-
-                        <div class="payment-method" data-method="sbp" onclick="selectPaymentMethod('sbp')">
-                            <div class="method-icon sbp">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                                    <path d="M2 17l10 5 10-5"></path>
-                                    <path d="M2 12l10 5 10-5"></path>
-                                </svg>
-                            </div>
-                            <div class="method-info">
-                                <span class="method-name">СБП</span>
-                                <span class="method-desc">Система быстрых платежей</span>
-                            </div>
-                            <div class="method-check">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="payment-method" data-method="yoomoney" onclick="selectPaymentMethod('yoomoney')">
-                            <div class="method-icon yoomoney">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M12 6v6l4 2"></path>
-                                </svg>
-                            </div>
-                            <div class="method-info">
-                                <span class="method-name">ЮMoney</span>
-                                <span class="method-desc">Электронный кошелёк</span>
-                            </div>
-                            <div class="method-check">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="payment-method" data-method="crypto" onclick="selectPaymentMethod('crypto')">
-                            <div class="method-icon crypto">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M9.5 9.5c.5-1 1.5-1.5 2.5-1.5 1.5 0 2.5 1 2.5 2.5 0 1-.5 1.5-1.5 2-.5.3-1 .5-1 1v.5"></path>
-                                    <circle cx="12" cy="16" r=".5"></circle>
-                                </svg>
-                            </div>
-                            <div class="method-info">
-                                <span class="method-name">Криптовалюта</span>
-                                <span class="method-desc">BTC, ETH, USDT</span>
-                            </div>
-                            <div class="method-check">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </div>
+                        <div class="success-particles">
+                            <span></span><span></span><span></span>
+                            <span></span><span></span><span></span>
                         </div>
                     </div>
-
-                    <button class="payment-btn primary" onclick="goToPaymentStep(2)">
-                        Продолжить
+                    <h3>Добро пожаловать в PRO! 🎉</h3>
+                    <p>Подписка <strong id="successPlan">Pro</strong> успешно активирована</p>
+                    <p class="success-date">Действует до: <span id="successExpires">01.07.2025</span></p>
+                    <button class="success-btn" onclick="closePaymentModal()">
+                        Начать использовать
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"></polyline>
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                         </svg>
                     </button>
                 </div>
 
-                <!-- Step 2: Payment Details -->
-                <div class="payment-content hidden" id="paymentStep2">
-                    <!-- Card Form -->
-                    <div class="payment-form" id="cardForm">
-                        <div class="form-group">
-                            <label>Номер карты</label>
-                            <div class="card-input-wrapper">
-                                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCardNumber(this)">
-                                <div class="card-brands">
-                                    <span class="card-brand visa">VISA</span>
-                                    <span class="card-brand mc">MC</span>
-                                    <span class="card-brand mir">МИР</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Срок действия</label>
-                                <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)">
-                            </div>
-                            <div class="form-group">
-                                <label>CVV/CVC</label>
-                                <input type="password" id="cardCvv" placeholder="•••" maxlength="3">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Имя владельца</label>
-                            <input type="text" id="cardName" placeholder="IVAN IVANOV" oninput="this.value = this.value.toUpperCase()">
-                        </div>
-                    </div>
-
-                    <!-- SBP Form -->
-                    <div class="payment-form hidden" id="sbpForm">
-                        <div class="sbp-qr-container">
-                            <div class="sbp-qr" id="sbpQrCode">
-                                <svg width="150" height="150" viewBox="0 0 150 150">
-                                    <rect fill="#fff" width="150" height="150"/>
-                                    <g fill="#000">
-                                        <rect x="10" y="10" width="10" height="10"/>
-                                        <rect x="20" y="10" width="10" height="10"/>
-                                        <rect x="30" y="10" width="10" height="10"/>
-                                        <rect x="40" y="10" width="10" height="10"/>
-                                        <rect x="50" y="10" width="10" height="10"/>
-                                        <rect x="60" y="10" width="10" height="10"/>
-                                        <rect x="70" y="10" width="10" height="10"/>
-                                        <rect x="10" y="20" width="10" height="10"/>
-                                        <rect x="70" y="20" width="10" height="10"/>
-                                        <rect x="90" y="20" width="10" height="10"/>
-                                        <rect x="100" y="20" width="10" height="10"/>
-                                        <rect x="110" y="20" width="10" height="10"/>
-                                        <rect x="130" y="20" width="10" height="10"/>
-                                        <rect x="10" y="30" width="10" height="10"/>
-                                        <rect x="30" y="30" width="10" height="10"/>
-                                        <rect x="40" y="30" width="10" height="10"/>
-                                        <rect x="50" y="30" width="10" height="10"/>
-                                        <rect x="70" y="30" width="10" height="10"/>
-                                        <rect x="90" y="30" width="10" height="10"/>
-                                        <rect x="130" y="30" width="10" height="10"/>
-                                        <!-- More QR pattern -->
-                                    </g>
-                                </svg>
-                            </div>
-                            <p class="sbp-instruction">Отсканируйте QR-код в приложении вашего банка</p>
-                            <div class="sbp-banks">
-                                <span>Сбербанк</span>
-                                <span>Тинькофф</span>
-                                <span>Альфа-Банк</span>
-                                <span>ВТБ</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- YooMoney Form -->
-                    <div class="payment-form hidden" id="yoomoneyForm">
-                        <div class="redirect-notice">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                            <p>Вы будете перенаправлены на страницу ЮMoney для завершения оплаты</p>
-                        </div>
-                    </div>
-
-                    <!-- Crypto Form -->
-                    <div class="payment-form hidden" id="cryptoForm">
-                        <div class="crypto-selector">
-                            <button class="crypto-option selected" data-crypto="btc" onclick="selectCrypto('btc')">BTC</button>
-                            <button class="crypto-option" data-crypto="eth" onclick="selectCrypto('eth')">ETH</button>
-                            <button class="crypto-option" data-crypto="usdt" onclick="selectCrypto('usdt')">USDT</button>
-                        </div>
-                        <div class="crypto-address-container">
-                            <label>Адрес для оплаты:</label>
-                            <div class="crypto-address">
-                                <span id="cryptoAddress">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</span>
-                                <button onclick="copyCryptoAddress()" class="copy-btn">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="crypto-amount">
-                                <span>Сумма: </span>
-                                <strong id="cryptoAmount">0.0000035 BTC</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="payment-summary">
-                        <div class="summary-row">
-                            <span>Подписка</span>
-                            <span id="summaryPlan">Pro</span>
-                        </div>
-                        <div class="summary-row">
-                            <span>Период</span>
-                            <span>1 месяц</span>
-                        </div>
-                        <div class="summary-row total">
-                            <span>Итого</span>
-                            <span id="summaryTotal">299 ₽</span>
-                        </div>
-                    </div>
-
-                    <div class="payment-buttons">
-                        <button class="payment-btn secondary" onclick="goToPaymentStep(1)">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="15 18 9 12 15 6"></polyline>
-                            </svg>
-                            Назад
-                        </button>
-                        <button class="payment-btn primary" onclick="processPayment()">
-                            Оплатить <span id="payBtnAmount">299 ₽</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Step 3: Success -->
-                <div class="payment-content hidden" id="paymentStep3">
-                    <div class="payment-success">
-                        <div class="success-icon">
-                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>
-                        </div>
-                        <h3>Оплата прошла успешно!</h3>
-                        <p>Подписка <strong id="successPlan">Pro</strong> активирована</p>
-                        <p class="success-expires">Действует до: <span id="successExpires">01.02.2025</span></p>
-                        <button class="payment-btn primary" onclick="closePaymentModal()">Готово</button>
-                    </div>
-                </div>
-
                 <!-- Processing Overlay -->
-                <div class="payment-processing hidden" id="paymentProcessing">
-                    <div class="processing-spinner"></div>
-                    <p>Обработка платежа...</p>
+                <div class="processing-overlay hidden" id="paymentProcessing">
+                    <div class="processing-spinner">
+                        <div class="spinner-ring"></div>
+                        <div class="spinner-ring"></div>
+                        <div class="spinner-ring"></div>
+                    </div>
+                    <p>Ожидание оплаты...</p>
+                    <span class="processing-hint">Не закрывайте это окно</span>
                 </div>
             </div>
         </div>
-
         <!-- Complaints Section -->
         <div class="section" id="complaintsSection">
             <div class="rollback-container">
@@ -8964,18 +9945,21 @@ showSection = function(sectionName) {
 };
 
 // ═══════════════════════════════════════════════════════════════════════
-// 💎 SUBSCRIPTION SYSTEM
+// 💎 SUBSCRIPTION SYSTEM WITH PAYPAL
 // ═══════════════════════════════════════════════════════════════════════
 
+// ⚠️ ВАЖНО: Замените YOUR_PAYPAL_EMAIL на ваш реальный PayPal email
+const PAYPAL_EMAIL = 'YOUR_PAYPAL_EMAIL@example.com';
+
 const SUBSCRIPTION_PLANS = {
-    basic: { name: 'Basic', price: 149, features: ['100 запросов/день', 'Claude Sonnet 4', 'История чатов'] },
-    pro: { name: 'Pro', price: 299, features: ['Безлимит', 'Все AI', 'Поддержка', 'Анализ видео'] },
-    premium: { name: 'Premium', price: 499, features: ['Всё из Pro', 'API', 'Персональный бот', 'Эксклюзив'] }
+    '1month': { name: '1 месяц', priceUsd: 6, priceRub: 570, months: 1 },
+    '3months': { name: '3 месяца', priceUsd: 13.50, priceRub: 1280, months: 3 },
+    '6months': { name: '6 месяцев', priceUsd: 30, priceRub: 2850, months: 6 },
+    '1year': { name: '1 год', priceUsd: 50, priceRub: 4750, months: 12 },
+    'lifetime': { name: 'Бессрочная', priceUsd: 100, priceRub: 9500, months: -1 } // -1 = навсегда
 };
 
 let selectedPlan = null;
-let selectedPaymentMethod = 'card';
-let currentPaymentStep = 1;
 
 // Load and display subscription status
 function loadSubscriptionStatus() {
@@ -8983,24 +9967,44 @@ function loadSubscriptionStatus() {
     const subBadge = document.getElementById('subBadge');
     const subExpires = document.getElementById('subExpires');
     
-    if (!subscription || new Date(subscription.expiresAt) < new Date()) {
-        // Free or expired
+    if (!subscription) {
+        // Free
         if (subBadge) {
             subBadge.className = 'subscription-badge free';
             subBadge.innerHTML = '<span class="sub-icon">○</span><span class="sub-name">Free</span>';
         }
-        if (subExpires) subExpires.textContent = 'Бесплатный доступ';
+        if (subExpires) subExpires.textContent = 'Бесплатный доступ (ограничен)';
+        return null;
+    }
+    
+    // Check if lifetime
+    if (subscription.lifetime) {
+        if (subBadge) {
+            subBadge.className = 'subscription-badge premium';
+            subBadge.innerHTML = '<span class="sub-icon">♾️</span><span class="sub-name">Pro Lifetime</span>';
+        }
+        if (subExpires) subExpires.textContent = 'Бессрочная подписка';
+        return subscription;
+    }
+    
+    // Check expiration
+    if (new Date(subscription.expiresAt) < new Date()) {
+        // Expired
+        localStorage.removeItem('badgrules_subscription');
+        if (subBadge) {
+            subBadge.className = 'subscription-badge free';
+            subBadge.innerHTML = '<span class="sub-icon">○</span><span class="sub-name">Free</span>';
+        }
+        if (subExpires) subExpires.textContent = 'Подписка истекла';
         return null;
     }
     
     // Active subscription
-    const plan = subscription.plan;
     const expiresDate = new Date(subscription.expiresAt).toLocaleDateString('ru-RU');
     
     if (subBadge) {
-        subBadge.className = `subscription-badge ${plan}`;
-        const icons = { basic: '◐', pro: '◉', premium: '★' };
-        subBadge.innerHTML = `<span class="sub-icon">${icons[plan]}</span><span class="sub-name">${SUBSCRIPTION_PLANS[plan].name}</span>`;
+        subBadge.className = 'subscription-badge pro';
+        subBadge.innerHTML = '<span class="sub-icon">⭐</span><span class="sub-name">Pro</span>';
     }
     if (subExpires) subExpires.textContent = `Действует до ${expiresDate}`;
     
@@ -9009,7 +10013,7 @@ function loadSubscriptionStatus() {
 
 // Select plan
 function selectPlan(plan) {
-    document.querySelectorAll('.plan-card').forEach(card => {
+    document.querySelectorAll('.plan-card-new').forEach(card => {
         card.classList.toggle('selected', card.dataset.plan === plan);
     });
     selectedPlan = plan;
@@ -9018,16 +10022,27 @@ function selectPlan(plan) {
 // Open payment modal
 function openPaymentModal(plan) {
     selectedPlan = plan;
-    currentPaymentStep = 1;
     
     const planData = SUBSCRIPTION_PLANS[plan];
-    document.getElementById('paymentPlanName').textContent = `${planData.name} — ${planData.price} ₽/мес`;
-    document.getElementById('summaryPlan').textContent = planData.name;
-    document.getElementById('summaryTotal').textContent = `${planData.price} ₽`;
-    document.getElementById('payBtnAmount').textContent = `${planData.price} ₽`;
     
-    // Reset to step 1
-    goToPaymentStep(1);
+    // Update modal content
+    document.getElementById('paymentPlanName').textContent = `${planData.name} — $${planData.priceUsd}`;
+    document.getElementById('summaryPlan').textContent = planData.name;
+    document.getElementById('summaryUsd').textContent = `$${planData.priceUsd}`;
+    document.getElementById('summaryRub').textContent = `≈ ${planData.priceRub.toLocaleString()} ₽`;
+    
+    // Calculate expiry date
+    let expiryText = 'Бессрочно';
+    if (planData.months > 0) {
+        const expiryDate = new Date();
+        expiryDate.setMonth(expiryDate.getMonth() + planData.months);
+        expiryText = `до ${expiryDate.toLocaleDateString('ru-RU')}`;
+    }
+    document.getElementById('summaryDuration').textContent = expiryText;
+    
+    // Show step 1
+    document.getElementById('paymentStep1').classList.remove('hidden');
+    document.getElementById('paymentStep3').classList.add('hidden');
     
     // Show modal
     document.getElementById('paymentModal').classList.remove('hidden');
@@ -9043,172 +10058,181 @@ function closePaymentModal() {
     loadSubscriptionStatus();
 }
 
-// Select payment method
-function selectPaymentMethod(method) {
-    selectedPaymentMethod = method;
+// Pay with PayPal
+function payWithPayPal() {
+    const planData = SUBSCRIPTION_PLANS[selectedPlan];
+    const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
     
-    document.querySelectorAll('.payment-method').forEach(el => {
-        el.classList.toggle('selected', el.dataset.method === method);
-    });
+    // Generate unique order ID
+    const orderId = 'BADG-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
     
-    // Show/hide appropriate forms
-    document.getElementById('cardForm').classList.toggle('hidden', method !== 'card');
-    document.getElementById('sbpForm').classList.toggle('hidden', method !== 'sbp');
-    document.getElementById('yoomoneyForm').classList.toggle('hidden', method !== 'yoomoney');
-    document.getElementById('cryptoForm').classList.toggle('hidden', method !== 'crypto');
-}
-
-// Go to payment step
-function goToPaymentStep(step) {
-    currentPaymentStep = step;
-    
-    // Update step indicators
-    document.querySelectorAll('.payment-step').forEach((el, index) => {
-        el.classList.remove('active', 'completed');
-        if (index + 1 < step) el.classList.add('completed');
-        if (index + 1 === step) el.classList.add('active');
-    });
-    
-    // Show/hide content
-    document.getElementById('paymentStep1').classList.toggle('hidden', step !== 1);
-    document.getElementById('paymentStep2').classList.toggle('hidden', step !== 2);
-    document.getElementById('paymentStep3').classList.toggle('hidden', step !== 3);
-}
-
-// Format card number
-function formatCardNumber(input) {
-    let value = input.value.replace(/\D/g, '');
-    value = value.replace(/(.{4})/g, '$1 ').trim();
-    input.value = value.substring(0, 19);
-    
-    // Detect card type
-    const number = value.replace(/\s/g, '');
-    document.querySelectorAll('.card-brand').forEach(brand => brand.style.opacity = '0.3');
-    
-    if (number.startsWith('4')) {
-        document.querySelector('.card-brand.visa').style.opacity = '1';
-    } else if (number.startsWith('5') || number.startsWith('2')) {
-        document.querySelector('.card-brand.mc').style.opacity = '1';
-    } else if (number.startsWith('220')) {
-        document.querySelector('.card-brand.mir').style.opacity = '1';
-    }
-}
-
-// Format expiry
-function formatExpiry(input) {
-    let value = input.value.replace(/\D/g, '');
-    if (value.length >= 2) {
-        value = value.substring(0, 2) + '/' + value.substring(2, 4);
-    }
-    input.value = value;
-}
-
-// Select crypto
-function selectCrypto(crypto) {
-    document.querySelectorAll('.crypto-option').forEach(el => {
-        el.classList.toggle('selected', el.dataset.crypto === crypto);
-    });
-    
-    const addresses = {
-        btc: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
-        eth: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
-        usdt: 'TN8F5VmF5VGfxW8iYFQGtGJwL6y8qRjdLp'
+    // Save pending order
+    const pendingOrder = {
+        orderId: orderId,
+        plan: selectedPlan,
+        planName: planData.name,
+        amount: planData.priceUsd,
+        userId: user.id || 'guest',
+        createdAt: new Date().toISOString()
     };
+    localStorage.setItem('badgrules_pending_order', JSON.stringify(pendingOrder));
     
-    const amounts = {
-        btc: `0.0000${Math.floor(SUBSCRIPTION_PLANS[selectedPlan].price / 85000 * 10000)} BTC`,
-        eth: `0.00${Math.floor(SUBSCRIPTION_PLANS[selectedPlan].price / 3500 * 100)} ETH`,
-        usdt: `${SUBSCRIPTION_PLANS[selectedPlan].price} USDT`
-    };
-    
-    document.getElementById('cryptoAddress').textContent = addresses[crypto];
-    document.getElementById('cryptoAmount').textContent = amounts[crypto];
-}
-
-// Copy crypto address
-function copyCryptoAddress() {
-    const address = document.getElementById('cryptoAddress').textContent;
-    navigator.clipboard.writeText(address).then(() => {
-        const btn = document.querySelector('.copy-btn');
-        btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-        setTimeout(() => {
-            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>';
-        }, 2000);
-    });
-}
-
-// Process payment
-function processPayment() {
-    // Validate form for card payment
-    if (selectedPaymentMethod === 'card') {
-        const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
-        const cardExpiry = document.getElementById('cardExpiry').value;
-        const cardCvv = document.getElementById('cardCvv').value;
-        const cardName = document.getElementById('cardName').value;
-        
-        if (cardNumber.length < 16) {
-            alert('Введите корректный номер карты');
-            return;
-        }
-        if (!cardExpiry || cardExpiry.length < 5) {
-            alert('Введите срок действия карты');
-            return;
-        }
-        if (cardCvv.length < 3) {
-            alert('Введите CVV код');
-            return;
-        }
-        if (!cardName) {
-            alert('Введите имя владельца карты');
-            return;
-        }
-    }
+    // Build PayPal URL
+    // Using PayPal.me or PayPal Buy Now button
+    const paypalUrl = buildPayPalUrl(planData.priceUsd, orderId, planData.name);
     
     // Show processing
     document.getElementById('paymentProcessing').classList.remove('hidden');
     
-    // Simulate payment processing
-    setTimeout(() => {
-        document.getElementById('paymentProcessing').classList.add('hidden');
-        
-        // Save subscription
-        const expiresAt = new Date();
-        expiresAt.setMonth(expiresAt.getMonth() + 1);
-        
-        const subscription = {
-            plan: selectedPlan,
-            startedAt: new Date().toISOString(),
-            expiresAt: expiresAt.toISOString(),
-            paymentMethod: selectedPaymentMethod
-        };
-        
-        localStorage.setItem('badgrules_subscription', JSON.stringify(subscription));
-        
-        // Show success
-        document.getElementById('successPlan').textContent = SUBSCRIPTION_PLANS[selectedPlan].name;
-        document.getElementById('successExpires').textContent = expiresAt.toLocaleDateString('ru-RU');
-        
-        goToPaymentStep(3);
-        
-        // Update profile badge
-        updateSubscriptionBadgeInProfile();
-        
-    }, 2000);
+    // Open PayPal in new window
+    const paypalWindow = window.open(paypalUrl, '_blank', 'width=500,height=700');
+    
+    // Start checking for payment completion
+    startPaymentCheck(orderId, paypalWindow);
 }
 
-// Update subscription badge in user card
-function updateSubscriptionBadgeInProfile() {
-    const subscription = JSON.parse(localStorage.getItem('badgrules_subscription') || 'null');
+// Build PayPal payment URL
+function buildPayPalUrl(amount, orderId, planName) {
+    // Option 1: PayPal.me link (простой способ)
+    // Замените YOUR_PAYPAL_USERNAME на ваш PayPal.me username
+    // return `https://paypal.me/YOUR_PAYPAL_USERNAME/${amount}USD`;
     
-    // Update profile section subscription display
+    // Option 2: PayPal Buy Now button (более надёжный)
+    const params = new URLSearchParams({
+        cmd: '_xclick',
+        business: PAYPAL_EMAIL,
+        item_name: `BadgRules Pro - ${planName}`,
+        item_number: orderId,
+        amount: amount,
+        currency_code: 'USD',
+        return: window.location.origin + window.location.pathname + '?payment=success&order=' + orderId,
+        cancel_return: window.location.origin + window.location.pathname + '?payment=cancelled',
+        notify_url: '', // Webhook URL if you have a backend
+        no_shipping: '1',
+        no_note: '1'
+    });
+    
+    return `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
+}
+
+// Check for payment completion
+function startPaymentCheck(orderId, paypalWindow) {
+    let checkCount = 0;
+    const maxChecks = 300; // 5 minutes max
+    
+    const checkInterval = setInterval(() => {
+        checkCount++;
+        
+        // Check URL parameters for return from PayPal
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('payment') === 'success' && urlParams.get('order') === orderId) {
+            clearInterval(checkInterval);
+            completePayment(orderId);
+            // Clean URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+            return;
+        }
+        
+        // Check if PayPal window was closed
+        if (paypalWindow && paypalWindow.closed) {
+            // User closed PayPal window - offer manual confirmation
+            clearInterval(checkInterval);
+            document.getElementById('paymentProcessing').classList.add('hidden');
+            
+            if (confirm('Вы завершили оплату через PayPal?\n\nНажмите OK если оплата прошла успешно.')) {
+                completePayment(orderId);
+            }
+            return;
+        }
+        
+        // Timeout
+        if (checkCount >= maxChecks) {
+            clearInterval(checkInterval);
+            document.getElementById('paymentProcessing').classList.add('hidden');
+            alert('Время ожидания оплаты истекло. Если вы оплатили, обратитесь в поддержку с номером заказа: ' + orderId);
+        }
+    }, 1000);
+}
+
+// Complete payment and activate subscription
+function completePayment(orderId) {
+    const pendingOrder = JSON.parse(localStorage.getItem('badgrules_pending_order') || 'null');
+    
+    if (!pendingOrder || pendingOrder.orderId !== orderId) {
+        alert('Ошибка: заказ не найден');
+        return;
+    }
+    
+    const planData = SUBSCRIPTION_PLANS[pendingOrder.plan];
+    
+    // Calculate expiry
+    let expiresAt = null;
+    let lifetime = false;
+    
+    if (planData.months === -1) {
+        lifetime = true;
+    } else {
+        expiresAt = new Date();
+        expiresAt.setMonth(expiresAt.getMonth() + planData.months);
+        expiresAt = expiresAt.toISOString();
+    }
+    
+    // Save subscription
+    const subscription = {
+        plan: pendingOrder.plan,
+        planName: planData.name,
+        orderId: orderId,
+        amount: planData.priceUsd,
+        lifetime: lifetime,
+        startedAt: new Date().toISOString(),
+        expiresAt: expiresAt
+    };
+    
+    localStorage.setItem('badgrules_subscription', JSON.stringify(subscription));
+    localStorage.removeItem('badgrules_pending_order');
+    
+    // Hide processing
+    document.getElementById('paymentProcessing').classList.add('hidden');
+    
+    // Show success
+    document.getElementById('successPlan').textContent = planData.name;
+    document.getElementById('successExpires').textContent = lifetime ? 'Бессрочно' : new Date(expiresAt).toLocaleDateString('ru-RU');
+    
+    document.getElementById('paymentStep1').classList.add('hidden');
+    document.getElementById('paymentStep3').classList.remove('hidden');
+    
+    // Update profile
     loadSubscriptionStatus();
+}
+
+// Check for payment return on page load
+function checkPaymentReturn() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const payment = urlParams.get('payment');
+    const orderId = urlParams.get('order');
     
-    // Could also add a badge next to username if desired
+    if (payment === 'success' && orderId) {
+        // Clean URL first
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Complete payment
+        setTimeout(() => {
+            completePayment(orderId);
+            openPaymentModal(JSON.parse(localStorage.getItem('badgrules_pending_order') || '{}').plan || '1month');
+            document.getElementById('paymentStep1').classList.add('hidden');
+            document.getElementById('paymentStep3').classList.remove('hidden');
+        }, 500);
+    } else if (payment === 'cancelled') {
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+        localStorage.removeItem('badgrules_pending_order');
+    }
 }
 
 // Initialize subscription on page load
 document.addEventListener('DOMContentLoaded', () => {
     loadSubscriptionStatus();
+    checkPaymentReturn();
 });
 
 // Close modal on outside click
