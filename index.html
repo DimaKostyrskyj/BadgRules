@@ -5840,29 +5840,8 @@
         // ═══════════════════════════════════════════════════════════════
         // 🎯 PROJECT SELECTION FUNCTIONS
         // ═══════════════════════════════════════════════════════════════
-        function selectPlan(plan) {
-        const plans = {
-            'lifetime': 'Бессрочная подписка ($100)',
-            'yearly': 'Годовая подписка ($50)',
-            '6months': '6 месяцев подписки ($30)',
-            '3months': '3 месяца подписки ($13.5)',
-            '1month': 'Месячная подписка ($6)'
-        };
         
-        if (plans[plan]) {
-            // Удаляем выделение со всех карточек
-            document.querySelectorAll('.pricing-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            
-            // Добавляем выделение выбранной
-            const selectedCard = event.currentTarget;
-            selectedCard.classList.add('selected');
-            
-            // Показываем модальное окно или перенаправляем на оплату
-            window.open('https://badgrules.com/subscribe?plan=' + plan, '_blank');
-        }
-
+        
         function selectProject(project) {
             selectedProject = project;
             selectedServer = null; // Reset server selection
