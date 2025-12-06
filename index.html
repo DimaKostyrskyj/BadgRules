@@ -26,6 +26,8 @@
             --border-color: #2a2a2a;
             --shadow: rgba(0, 0, 0, 0.5);
             --glow: rgba(255, 255, 255, 0.1);
+            --gta5rp-color: #e74c3c;
+            --majestic-color: #9b59b6;
         }
 
         body {
@@ -60,7 +62,7 @@
             border: 1px solid var(--border-color);
             border-radius: 24px;
             padding: 3rem;
-            max-width: 480px;
+            max-width: 540px;
             width: 90%;
             box-shadow: 0 20px 60px var(--shadow);
             animation: scaleIn 0.6s ease-out;
@@ -201,6 +203,422 @@
 
         .login-footer a:hover {
             opacity: 0.7;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* PROJECT & SERVER SELECTION STYLES                                */
+        /* ═══════════════════════════════════════════════════════════════ */
+        
+        /* Login Steps */
+        .login-step {
+            display: none;
+        }
+
+        .login-step.active {
+            display: block;
+        }
+
+        /* Step Indicator */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .step-dot.active {
+            background: #fff;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .step-dot.completed {
+            background: #22c55e;
+        }
+
+        /* Project Cards */
+        .project-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card.gta5rp::before {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+
+        .project-card.majestic::before {
+            background: linear-gradient(90deg, #9b59b6, #8e44ad);
+        }
+
+        .project-card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card.selected {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .project-card.selected::before {
+            opacity: 1;
+        }
+
+        .project-card.gta5rp.selected {
+            border-color: var(--gta5rp-color);
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .project-card.majestic.selected {
+            border-color: var(--majestic-color);
+            box-shadow: 0 0 20px rgba(155, 89, 182, 0.3);
+        }
+
+        .project-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--text-primary);
+        }
+
+        .project-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .project-check {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-card.selected .project-check {
+            display: flex;
+        }
+
+        .project-check svg {
+            width: 14px;
+            height: 14px;
+            stroke: white;
+            stroke-width: 3;
+        }
+
+        /* Server Selection */
+        .server-selector {
+            max-height: 280px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+            padding-right: 0.5rem;
+        }
+
+        .server-selector::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .server-selector::-webkit-scrollbar-track {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .server-selector::-webkit-scrollbar-thumb {
+            background: var(--text-secondary);
+            border-radius: 3px;
+        }
+
+        .server-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .server-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .server-card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .server-card.selected {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .server-card.gta5rp.selected {
+            border-color: var(--gta5rp-color);
+            background: rgba(231, 76, 60, 0.15);
+        }
+
+        .server-card.majestic.selected {
+            border-color: var(--majestic-color);
+            background: rgba(155, 89, 182, 0.15);
+        }
+
+        .server-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            flex-shrink: 0;
+        }
+
+        .server-card.selected .server-number {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .server-emoji {
+            font-size: 1.1rem;
+        }
+
+        .server-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .server-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .server-players {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Step Navigation Buttons */
+        .step-navigation {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Manrope', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .nav-btn.back {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .nav-btn.back:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        .nav-btn.next {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            border: none;
+            color: #1a1a1a;
+        }
+
+        .nav-btn.next:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-btn.next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Selected Info Display */
+        .selected-info {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .selected-info-icon {
+            font-size: 2rem;
+        }
+
+        .selected-info-text {
+            flex: 1;
+        }
+
+        .selected-info-project {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .selected-info-server {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .change-selection {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .change-selection:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        /* User Server Badge */
+        .user-server-badge {
+            font-size: 0.65rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .user-server-badge.gta5rp {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .user-server-badge.majestic {
+            background: rgba(155, 89, 182, 0.2);
+            color: #9b59b6;
+        }
+
+        /* Dropdown Server Info */
+        .dropdown-server-info {
+            padding: 0.75rem;
+            margin-bottom: 0.35rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+        }
+
+        .dropdown-server-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .dropdown-server-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 500px) {
+            .project-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .server-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step-navigation {
+                flex-direction: column;
+            }
+
+            .nav-btn.back {
+                order: 2;
+            }
+
+            .nav-btn.next {
+                order: 1;
+            }
         }
 
         /* User Profile Badge */
@@ -3431,29 +3849,126 @@
                 <img src="images/logo.png" alt="BadgRules Logo" class="login-logo-img">
                 <h2>BADGRULES</h2>
             </div>
+
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step-dot active" id="stepDot1"></div>
+                <div class="step-dot" id="stepDot2"></div>
+                <div class="step-dot" id="stepDot3"></div>
+            </div>
             
-            <div class="login-content">
-                <h3>Добро пожаловать</h3>
-                <p class="login-subtitle">Войдите, чтобы получить доступ к нейросети по правилам GTA 5 RP</p>
-                
-                <button class="discord-login-button" onclick="loginWithDiscord()">
-                    <svg class="discord-icon" viewBox="0 0 71 55" fill="none">
-                        <path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527 0.41542C45.5603 0.39851 45.468 0.440769 45.4204 0.525289C44.7963 1.6353 44.105 3.0834 43.6209 4.2216C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216C26.905 3.0581 26.1886 1.6353 25.5617 0.525289C25.5141 0.443589 25.4218 0.40133 25.3294 0.41542C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795C1.57795 18.7309 -0.943561 32.1443 0.293408 45.3914C0.299005 45.4562 0.335386 45.5182 0.385761 45.5576C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195C18.2071 54.5477 18.305 54.5139 18.3638 54.4378C19.7295 52.5728 20.9469 50.6063 21.9907 48.5383C22.0523 48.4172 21.9935 48.2735 21.8676 48.2256C19.9366 47.4931 18.0979 46.6 16.3292 45.5858C16.1893 45.5041 16.1781 45.304 16.3068 45.2082C16.679 44.9293 17.0513 44.6391 17.4067 44.3461C17.471 44.2926 17.5606 44.2813 17.6362 44.3151C29.2558 49.6202 41.8354 49.6202 53.3179 44.3151C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433C53.9057 44.6363 54.2779 44.9293 54.6529 45.2082C54.7816 45.304 54.7732 45.5041 54.6333 45.5858C52.8646 46.6197 51.0259 47.4931 49.0921 48.2228C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383C50.038 50.6034 51.2554 52.5699 52.5959 54.435C52.6519 54.5139 52.7526 54.5477 52.845 54.5195C58.6464 52.7249 64.529 50.0174 70.6019 45.5576C70.6551 45.5182 70.6887 45.459 70.6943 45.3942C72.1747 30.0791 68.2147 16.7757 60.1968 4.9823C60.1772 4.9429 60.1437 4.9147 60.1045 4.8978ZM23.7259 37.3253C20.2276 37.3253 17.3451 34.1136 17.3451 30.1693C17.3451 26.225 20.1717 23.0133 23.7259 23.0133C27.308 23.0133 30.1626 26.2532 30.1066 30.1693C30.1066 34.1136 27.28 37.3253 23.7259 37.3253ZM47.3178 37.3253C43.8196 37.3253 40.9371 34.1136 40.9371 30.1693C40.9371 26.225 43.7636 23.0133 47.3178 23.0133C50.9 23.0133 53.7545 26.2532 53.6986 30.1693C53.6986 34.1136 50.9 37.3253 47.3178 37.3253Z" fill="currentColor"/>
-                    </svg>
-                    Войти через Discord
-                </button>
-                
-                <div class="login-divider">
-                    <span>или</span>
+            <!-- Step 1: Project Selection -->
+            <div class="login-step active" id="step1">
+                <div class="login-content">
+                    <h3>Выберите проект</h3>
+                    <p class="login-subtitle">На каком проекте вы играете?</p>
+                    
+                    <div class="project-selector">
+                        <div class="project-card gta5rp" onclick="selectProject('gta5rp')" data-project="gta5rp">
+                            <div class="project-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="project-icon">🎮</div>
+                            <div class="project-name">GTA 5 RP</div>
+                            <div class="project-desc">22 сервера</div>
+                        </div>
+                        
+                        <div class="project-card majestic" onclick="selectProject('majestic')" data-project="majestic">
+                            <div class="project-check">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="project-icon">👑</div>
+                            <div class="project-name">Majestic RP</div>
+                            <div class="project-desc">16 серверов</div>
+                        </div>
+                    </div>
+
+                    <button class="nav-btn next" id="nextStep1" disabled onclick="goToStep(2)">
+                        <span>Далее</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
                 </div>
+            </div>
+
+            <!-- Step 2: Server Selection -->
+            <div class="login-step" id="step2">
+                <div class="login-content">
+                    <h3 id="serverStepTitle">Выберите сервер</h3>
+                    <p class="login-subtitle" id="serverStepSubtitle">На каком сервере вы играете?</p>
+                    
+                    <div class="server-selector" id="serverSelector">
+                        <div class="server-grid" id="serverGrid">
+                            <!-- Servers will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="step-navigation">
+                        <button class="nav-btn back" onclick="goToStep(1)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                            <span>Назад</span>
+                        </button>
+                        <button class="nav-btn next" id="nextStep2" disabled onclick="goToStep(3)">
+                            <span>Далее</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Login -->
+            <div class="login-step" id="step3">
+                <div class="login-content">
+                    <h3>Авторизация</h3>
+                    <p class="login-subtitle">Войдите для полного доступа к функциям</p>
+
+                    <!-- Selected Project/Server Info -->
+                    <div class="selected-info" id="selectedInfo">
+                        <div class="selected-info-icon" id="selectedIcon">🎮</div>
+                        <div class="selected-info-text">
+                            <div class="selected-info-project" id="selectedProjectText">GTA 5 RP</div>
+                            <div class="selected-info-server" id="selectedServerText">Downtown</div>
+                        </div>
+                        <button class="change-selection" onclick="goToStep(1)">Изменить</button>
+                    </div>
                 
-                <button class="guest-button" onclick="continueAsGuest()">
-                    Продолжить как гость
-                </button>
-                
-                <p class="login-footer">
-                    Входя в систему, вы соглашаетесь с <a href="#">условиями использования</a> и <a href="#">политикой конфиденциальности</a>
-                </p>
+                    <button class="discord-login-button" onclick="loginWithDiscord()">
+                        <svg class="discord-icon" viewBox="0 0 71 55" fill="none">
+                            <path d="M60.1045 4.8978C55.5792 2.8214 50.7265 1.2916 45.6527 0.41542C45.5603 0.39851 45.468 0.440769 45.4204 0.525289C44.7963 1.6353 44.105 3.0834 43.6209 4.2216C38.1637 3.4046 32.7345 3.4046 27.3892 4.2216C26.905 3.0581 26.1886 1.6353 25.5617 0.525289C25.5141 0.443589 25.4218 0.40133 25.3294 0.41542C20.2584 1.2888 15.4057 2.8186 10.8776 4.8978C10.8384 4.9147 10.8048 4.9429 10.7825 4.9795C1.57795 18.7309 -0.943561 32.1443 0.293408 45.3914C0.299005 45.4562 0.335386 45.5182 0.385761 45.5576C6.45866 50.0174 12.3413 52.7249 18.1147 54.5195C18.2071 54.5477 18.305 54.5139 18.3638 54.4378C19.7295 52.5728 20.9469 50.6063 21.9907 48.5383C22.0523 48.4172 21.9935 48.2735 21.8676 48.2256C19.9366 47.4931 18.0979 46.6 16.3292 45.5858C16.1893 45.5041 16.1781 45.304 16.3068 45.2082C16.679 44.9293 17.0513 44.6391 17.4067 44.3461C17.471 44.2926 17.5606 44.2813 17.6362 44.3151C29.2558 49.6202 41.8354 49.6202 53.3179 44.3151C53.3935 44.2785 53.4831 44.2898 53.5502 44.3433C53.9057 44.6363 54.2779 44.9293 54.6529 45.2082C54.7816 45.304 54.7732 45.5041 54.6333 45.5858C52.8646 46.6197 51.0259 47.4931 49.0921 48.2228C48.9662 48.2707 48.9102 48.4172 48.9718 48.5383C50.038 50.6034 51.2554 52.5699 52.5959 54.435C52.6519 54.5139 52.7526 54.5477 52.845 54.5195C58.6464 52.7249 64.529 50.0174 70.6019 45.5576C70.6551 45.5182 70.6887 45.459 70.6943 45.3942C72.1747 30.0791 68.2147 16.7757 60.1968 4.9823C60.1772 4.9429 60.1437 4.9147 60.1045 4.8978ZM23.7259 37.3253C20.2276 37.3253 17.3451 34.1136 17.3451 30.1693C17.3451 26.225 20.1717 23.0133 23.7259 23.0133C27.308 23.0133 30.1626 26.2532 30.1066 30.1693C30.1066 34.1136 27.28 37.3253 23.7259 37.3253ZM47.3178 37.3253C43.8196 37.3253 40.9371 34.1136 40.9371 30.1693C40.9371 26.225 43.7636 23.0133 47.3178 23.0133C50.9 23.0133 53.7545 26.2532 53.6986 30.1693C53.6986 34.1136 50.9 37.3253 47.3178 37.3253Z" fill="currentColor"/>
+                        </svg>
+                        Войти через Discord
+                    </button>
+                    
+                    <div class="login-divider">
+                        <span>или</span>
+                    </div>
+                    
+                    <button class="guest-button" onclick="continueAsGuest()">
+                        Продолжить как гость
+                    </button>
+
+                    <div class="step-navigation" style="margin-top: 1rem;">
+                        <button class="nav-btn back" onclick="goToStep(2)" style="flex: 0 0 auto; padding: 0.75rem 1.25rem;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                            <span>Назад</span>
+                        </button>
+                    </div>
+                    
+                    <p class="login-footer">
+                        Входя в систему, вы соглашаетесь с <a href="#">условиями использования</a> и <a href="#">политикой конфиденциальности</a>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -3472,7 +3987,9 @@
         <div class="user-avatar" id="userAvatar">G</div>
         <div class="user-info">
             <div class="user-name" id="userName">Гость</div>
-            <div class="user-status">Не авторизован</div>
+            <div class="user-status" id="userServerBadge">
+                <span class="user-server-badge" id="serverBadge">Сервер</span>
+            </div>
         </div>
         <svg class="dropdown-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="6 9 12 15 18 9"></polyline>
@@ -3481,12 +3998,26 @@
 
     <!-- Profile Dropdown Menu -->
     <div class="profile-dropdown hidden" id="profileDropdown">
+        <div class="dropdown-server-info">
+            <div class="dropdown-server-label">Текущий сервер</div>
+            <div class="dropdown-server-value" id="dropdownServerValue">
+                <span id="dropdownServerIcon">🎮</span>
+                <span id="dropdownServerName">Downtown</span>
+            </div>
+        </div>
         <button class="dropdown-item" onclick="showSection('profile'); closeProfileMenu()">
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
             </svg>
             <span>Личный кабинет</span>
+        </button>
+        <button class="dropdown-item" onclick="changeServer(); closeProfileMenu()">
+            <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span>Сменить сервер</span>
         </button>
         <button class="dropdown-item" onclick="addBotForFamily(); closeProfileMenu()">
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -4323,6 +4854,222 @@
 
     <script>
         // ═══════════════════════════════════════════════════════════════
+        // 🎮 SERVER DATA - GTA 5 RP & Majestic RP
+        // ═══════════════════════════════════════════════════════════════
+        
+        const SERVERS = {
+            gta5rp: [
+                { id: 1, name: 'DOWNTOWN', emoji: '🏙️', players: '1920/2000' },
+                { id: 2, name: 'STRAWBERRY', emoji: '🍓', players: '933/2000' },
+                { id: 3, name: 'VINEWOOD', emoji: '🎬', players: '711/2000' },
+                { id: 4, name: 'BLACKBERRY', emoji: '🫐', players: '1661/2000' },
+                { id: 5, name: 'INSQUAD', emoji: '🦊', players: '958/2000' },
+                { id: 6, name: 'SUNRISE', emoji: '🌅', players: '1791/2000' },
+                { id: 7, name: 'RAINBOW', emoji: '🌈', players: '601/2000' },
+                { id: 8, name: 'RICHMAN', emoji: '🤵', players: '1302/2000' },
+                { id: 9, name: 'ECLIPSE', emoji: '🌓', players: '3340/2000' },
+                { id: 10, name: 'LA MESA', emoji: '🌵', players: '587/2000' },
+                { id: 11, name: 'BURTON', emoji: '🏛️', players: '1078/2000' },
+                { id: 12, name: 'ROCKFORD', emoji: '💎', players: '2060/2000' },
+                { id: 13, name: 'ALTA', emoji: '☘️', players: '736/2000' },
+                { id: 14, name: 'DEL PERRO', emoji: '🏀', players: '495/2000' },
+                { id: 15, name: 'DAVIS', emoji: '🏵️', players: '1183/2000' },
+                { id: 16, name: 'HARMONY', emoji: '🌸', players: '1194/2000' },
+                { id: 17, name: 'REDWOOD', emoji: '🌲', players: '3941/2000' },
+                { id: 18, name: 'HAWICK', emoji: '🍀', players: '936/2000' },
+                { id: 19, name: 'GRAPESEED', emoji: '🍇', players: '1939/2000' },
+                { id: 20, name: 'MURRIETA', emoji: '🌷', players: '3263/2000' },
+                { id: 21, name: 'VESPUCCI', emoji: '🏖️', players: '—' },
+                { id: 22, name: 'MILTON', emoji: '🍸', players: '—' }
+            ],
+            majestic: [
+                { id: 1, name: 'Houston', emoji: '🚀', players: '—' },
+                { id: 2, name: 'Seattle', emoji: '☕', players: '—' },
+                { id: 3, name: 'Phoenix', emoji: '🔥', players: '—' },
+                { id: 4, name: 'Denver', emoji: '🏔️', players: '—' },
+                { id: 5, name: 'New York', emoji: '🗽', players: '—' },
+                { id: 6, name: 'Washington', emoji: '🏛️', players: '—' },
+                { id: 7, name: 'Dallas', emoji: '⛳', players: '—' },
+                { id: 8, name: 'Boston', emoji: '🎓', players: '—' },
+                { id: 9, name: 'Chicago', emoji: '🌆', players: '—' },
+                { id: 10, name: 'San Francisco', emoji: '🌉', players: '—' },
+                { id: 11, name: 'Atlanta', emoji: '🍑', players: '—' },
+                { id: 12, name: 'Miami', emoji: '🌴', players: '—' },
+                { id: 13, name: 'Los Angeles', emoji: '🎬', players: '—' },
+                { id: 14, name: 'Las Vegas', emoji: '🎰', players: '—' },
+                { id: 15, name: 'San Diego', emoji: '🏄', players: '—' },
+                { id: 16, name: 'Detroit', emoji: '🚗', players: '—' }
+            ]
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // 📊 PROJECT/SERVER SELECTION STATE
+        // ═══════════════════════════════════════════════════════════════
+        
+        let selectedProject = null;
+        let selectedServer = null;
+        let currentLoginStep = 1;
+
+        // ═══════════════════════════════════════════════════════════════
+        // 🎯 PROJECT SELECTION FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+        
+        function selectProject(project) {
+            selectedProject = project;
+            selectedServer = null; // Reset server selection
+            
+            // Update UI
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            const selectedCard = document.querySelector(`.project-card[data-project="${project}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+            
+            // Enable next button
+            document.getElementById('nextStep1').disabled = false;
+            
+            // Pre-populate servers for step 2
+            populateServers(project);
+        }
+
+        function populateServers(project) {
+            const grid = document.getElementById('serverGrid');
+            const servers = SERVERS[project] || [];
+            const projectClass = project;
+            
+            grid.innerHTML = servers.map(server => `
+                <div class="server-card ${projectClass}" data-server="${server.id}" onclick="selectServer(${server.id}, '${server.name}', '${server.emoji}')">
+                    <div class="server-number">${String(server.id).padStart(2, '0')}</div>
+                    <span class="server-emoji">${server.emoji}</span>
+                    <div class="server-info">
+                        <div class="server-name">${server.name}</div>
+                        <div class="server-players">${server.players}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Update step 2 title
+            const projectName = project === 'gta5rp' ? 'GTA 5 RP' : 'Majestic RP';
+            document.getElementById('serverStepTitle').textContent = `Сервер ${projectName}`;
+        }
+
+        function selectServer(id, name, emoji) {
+            selectedServer = { id, name, emoji };
+            
+            // Update UI
+            document.querySelectorAll('.server-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            const selectedCard = document.querySelector(`.server-card[data-server="${id}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+            
+            // Enable next button
+            document.getElementById('nextStep2').disabled = false;
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 📍 STEP NAVIGATION
+        // ═══════════════════════════════════════════════════════════════
+        
+        function goToStep(step) {
+            // Validate transition
+            if (step === 2 && !selectedProject) return;
+            if (step === 3 && !selectedServer) return;
+            
+            // Hide all steps
+            document.querySelectorAll('.login-step').forEach(s => s.classList.remove('active'));
+            
+            // Show target step
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            // Update step indicator
+            updateStepIndicator(step);
+            
+            // If going to step 3, update selected info display
+            if (step === 3) {
+                updateSelectedInfoDisplay();
+            }
+            
+            currentLoginStep = step;
+        }
+
+        function updateStepIndicator(activeStep) {
+            for (let i = 1; i <= 3; i++) {
+                const dot = document.getElementById(`stepDot${i}`);
+                dot.classList.remove('active', 'completed');
+                
+                if (i < activeStep) {
+                    dot.classList.add('completed');
+                } else if (i === activeStep) {
+                    dot.classList.add('active');
+                }
+            }
+        }
+
+        function updateSelectedInfoDisplay() {
+            const projectName = selectedProject === 'gta5rp' ? 'GTA 5 RP' : 'Majestic RP';
+            
+            document.getElementById('selectedIcon').textContent = selectedServer.emoji;
+            document.getElementById('selectedProjectText').textContent = projectName;
+            document.getElementById('selectedServerText').textContent = selectedServer.name;
+        }
+
+        function saveServerSelection() {
+            const selection = {
+                project: selectedProject,
+                server: selectedServer
+            };
+            localStorage.setItem('badgrules_server_selection', JSON.stringify(selection));
+        }
+
+        function loadServerSelection() {
+            const saved = localStorage.getItem('badgrules_server_selection');
+            if (saved) {
+                const selection = JSON.parse(saved);
+                selectedProject = selection.project;
+                selectedServer = selection.server;
+                return selection;
+            }
+            return null;
+        }
+
+        function updateServerBadgeDisplay(project, server) {
+            const serverBadge = document.getElementById('serverBadge');
+            const dropdownIcon = document.getElementById('dropdownServerIcon');
+            const dropdownName = document.getElementById('dropdownServerName');
+            
+            if (serverBadge) {
+                serverBadge.textContent = server.name;
+                serverBadge.className = 'user-server-badge ' + project;
+            }
+            
+            if (dropdownIcon) dropdownIcon.textContent = server.emoji;
+            if (dropdownName) dropdownName.textContent = server.name;
+        }
+
+        function changeServer() {
+            // Clear selection and show login overlay at step 1
+            selectedProject = null;
+            selectedServer = null;
+            
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.getElementById('nextStep1').disabled = true;
+            document.getElementById('nextStep2').disabled = true;
+            
+            goToStep(1);
+            document.getElementById('loginOverlay').classList.remove('hidden');
+            document.getElementById('userProfileBadge').classList.add('hidden');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
         // 🤖 AI MODEL SELECTOR - New Clean Version
         // ═══════════════════════════════════════════════════════════════
         
@@ -5122,20 +5869,24 @@ ${knowledgeEntry.content}
         function checkLoginStatus() {
             console.log('Проверка статуса входа...');
             const user = localStorage.getItem('badgrules_user');
+            const selection = loadServerSelection();
             console.log('Данные пользователя:', user);
+            console.log('Выбор сервера:', selection);
             
-            if (user) {
+            if (user && selection) {
                 const userData = JSON.parse(user);
                 console.log('Пользователь найден:', userData);
                 showMainInterface(userData);
             } else {
-                console.log('Пользователь не найден, показываем экран входа');
+                console.log('Пользователь не найден или нет выбора сервера, показываем экран входа');
             }
         }
 
         // Login with Discord
         function loginWithDiscord() {
             console.log('Перенаправление на Discord OAuth...');
+            // Сохраняем выбор сервера перед редиректом
+            saveServerSelection();
             // Реальная авторизация через Discord
             window.location.href = DISCORD_OAUTH_URL;
         }
@@ -5149,6 +5900,7 @@ ${knowledgeEntry.content}
                 loginType: 'guest'
             };
             
+            saveServerSelection();
             localStorage.setItem('badgrules_user', JSON.stringify(guestUser));
             showMainInterface(guestUser);
         }
@@ -5156,6 +5908,9 @@ ${knowledgeEntry.content}
         // Show Main Interface
         function showMainInterface(user) {
             console.log('Показываем главный интерфейс для:', user);
+            
+            // Load server selection
+            const selection = loadServerSelection();
             
             // Hide login overlay
             const loginOverlay = document.getElementById('loginOverlay');
@@ -5183,15 +5938,12 @@ ${knowledgeEntry.content}
             // Update user info
             const userName = document.getElementById('userName');
             const userAvatar = document.getElementById('userAvatar');
-            const userStatus = badge.querySelector('.user-status');
             
             console.log('userName:', userName);
             console.log('userAvatar:', userAvatar);
-            console.log('userStatus:', userStatus);
             
             if (user.loginType === 'discord') {
                 if (userName) userName.textContent = user.displayName || user.username;
-                if (userStatus) userStatus.textContent = 'Discord';
                 
                 // Display avatar
                 if (userAvatar) {
@@ -5216,11 +5968,15 @@ ${knowledgeEntry.content}
                 }
             } else {
                 if (userName) userName.textContent = 'Гость';
-                if (userStatus) userStatus.textContent = 'Гостевой режим';
                 if (userAvatar) {
                     userAvatar.textContent = 'G';
                     userAvatar.style.backgroundImage = '';
                 }
+            }
+            
+            // Update server badge display
+            if (selection && selection.server) {
+                updateServerBadgeDisplay(selection.project, selection.server);
             }
             
             console.log('Информация пользователя обновлена');
@@ -5379,6 +6135,7 @@ ${knowledgeEntry.content}
         function logout() {
             if (confirm('Вы уверены, что хотите выйти?')) {
                 localStorage.removeItem('badgrules_user');
+                localStorage.removeItem('badgrules_server_selection');
                 location.reload();
             }
         }
