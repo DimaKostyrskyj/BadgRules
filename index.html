@@ -9760,13 +9760,12 @@
                     const teamRole = getTeamRole(user.id);
                     if (teamRole) {
                         profileRoleBadge.textContent = teamRole;
-                        profileRoleBadge.classList.remove('hidden', 'owner', 'admin', 'moderator', 'helper', 'team');
+                        profileRoleBadge.classList.remove('hidden', 'owner', 'admin', 'team');
                         
                         // Добавляем соответствующий класс
                         if (teamRole === 'Владелец') profileRoleBadge.classList.add('owner');
                         else if (teamRole === 'Администратор') profileRoleBadge.classList.add('admin');
-                        else if (teamRole === 'Модератор') profileRoleBadge.classList.add('moderator');
-                        else if (teamRole === 'Хелпер') profileRoleBadge.classList.add('helper');
+                        else if (teamRole === 'Команда') profileRoleBadge.classList.add('team');
                         else profileRoleBadge.classList.add('team');
                     } else {
                         profileRoleBadge.classList.add('hidden');
@@ -9903,7 +9902,7 @@
             const num = parseInt(number);
             if (num === 0,1) return 'Владелец';
             if (num <= 2,3) return 'Администратор';
-            if (num <= 4,5,6,7,8,9,10) return 'Team';
+            if (num <= 4,5,6,7,8,9,10) return 'Команда';
             return null;
         }
 
