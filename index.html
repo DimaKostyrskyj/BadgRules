@@ -2832,19 +2832,18 @@
         }
 
         .price-save-tag {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
+            display: inline-block;
             background: rgba(74, 222, 128, 0.15);
             color: #4ade80;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            padding: 0.25rem 0.5rem;
-            border-radius: 6px;
+            padding: 0.35rem 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
         }
 
         .price-card.popular .price-save-tag {
-            top: 2rem;
+            margin-top: 0;
         }
 
         .price-card-inner {
@@ -7001,7 +7000,6 @@
 
                             <!-- 3 Months -->
                             <div class="price-card has-save" data-plan="3months" onclick="selectPlan('3months')">
-                                <div class="price-save-tag">-25%</div>
                                 <div class="price-card-inner">
                                     <div class="price-period">3 месяца</div>
                                     <div class="price-amount">
@@ -7011,6 +7009,7 @@
                                     </div>
                                     <div class="price-rub">≈ 1 280 ₽</div>
                                     <div class="price-per-month">$4.50/мес</div>
+                                    <div class="price-save-tag">-25%</div>
                                     <button class="price-btn" onclick="event.stopPropagation(); openPaymentModal('3months')">
                                         <span>Выбрать</span>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -7028,7 +7027,6 @@
                                     </svg>
                                     ПОПУЛЯРНЫЙ
                                 </div>
-                                <div class="price-save-tag">-17%</div>
                                 <div class="price-card-inner">
                                     <div class="price-period">6 месяцев</div>
                                     <div class="price-amount">
@@ -7037,6 +7035,7 @@
                                     </div>
                                     <div class="price-rub">≈ 2 850 ₽</div>
                                     <div class="price-per-month">$5/мес</div>
+                                    <div class="price-save-tag">-17%</div>
                                     <button class="price-btn primary" onclick="event.stopPropagation(); openPaymentModal('6months')">
                                         <span>Выбрать</span>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -7049,7 +7048,6 @@
 
                             <!-- 1 Year -->
                             <div class="price-card has-save" data-plan="1year" onclick="selectPlan('1year')">
-                                <div class="price-save-tag">-31%</div>
                                 <div class="price-card-inner">
                                     <div class="price-period">1 год</div>
                                     <div class="price-amount">
@@ -7058,6 +7056,7 @@
                                     </div>
                                     <div class="price-rub">≈ 4 750 ₽</div>
                                     <div class="price-per-month">$4.16/мес</div>
+                                    <div class="price-save-tag">-31%</div>
                                     <button class="price-btn" onclick="event.stopPropagation(); openPaymentModal('1year')">
                                         <span>Выбрать</span>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
