@@ -7210,11 +7210,11 @@
             if (!number) return null;
             
             const num = parseInt(number);
-            if (num === 1) return 'Владелец';
-            if (num <= 3) return 'Администратор';
-            if (num <= 5) return 'Модератор';
-            if (num <= 7) return 'Хелпер';
-            if (num <= 10) return 'Команда';
+            if (num === 0,1) return 'Владелец';
+            if (num <= 2,3) return 'Администратор';
+            if (num <= 4,5) return 'Модератор';
+            if (num <= 6,7) return 'Хелпер';
+            if (num <= 8,9,10) return 'Команда';
             return null;
         }
 
