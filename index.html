@@ -7143,7 +7143,7 @@
             // '234567890123456789': '0002',  // Админ 1
             // '345678901234567890': '0003',  // Админ 2
             
-            // ═══ ДОБАВЬТЕ DISCORD ID ВАШЕЙ КОМАНДЫ НИЖЕ ═══
+             // ═══ ДОБАВЬТЕ DISCORD ID ВАШЕЙ КОМАНДЫ НИЖЕ ═══
             '701782316623855668': '0000',      // #0001 - Владелец
             '482499344982081546': '0001',     // #0002 - Админ
             'ADMIN2_DISCORD_ID_HERE': '0002',     // #0003 - Админ
@@ -7157,7 +7157,7 @@
             // ═══════════════════════════════════════════════
         };
         
-        // Функция генерации уникального номера аккаунта
+        // Функция генерации уникального номера аккаунта (последовательная)
         function getAccountNumber(discordId) {
             if (!discordId) return '0000';
             
@@ -7166,37 +7166,33 @@
                 return RESERVED_ACCOUNT_NUMBERS[discordId];
             }
             
-            // Проверяем, есть ли уже сохраненный номер для этого пользователя
-            const savedNumbers = JSON.parse(localStorage.getItem('badgrules_account_numbers') || '{}');
-            if (savedNumbers[discordId]) {
-                return savedNumbers[discordId];
+            // Получаем данные о номерах из localStorage
+            const accountData = JSON.parse(localStorage.getItem('badgrules_account_data') || '{"nextNumber": 11, "users": {}}');
+            
+            // Проверяем, есть ли уже номер у этого пользователя
+            if (accountData.users[discordId]) {
+                return accountData.users[discordId];
             }
             
-            // Генерируем новый уникальный номер на основе Discord ID
-            // Используем хеш Discord ID для создания стабильного номера
-            const hash = hashDiscordId(discordId);
+            // Выдаем следующий номер по порядку
+            const newNumber = accountData.nextNumber;
+            const formattedNumber = newNumber.toString().padStart(4, '0');
             
-            // Номера от 0011 до 9999 (первые 10 зарезервированы)
-            const number = (hash % 9989) + 11; // 11-9999
-            const formattedNumber = number.toString().padStart(4, '0');
+            // Сохраняем номер для пользователя
+            accountData.users[discordId] = formattedNumber;
+            accountData.nextNumber = newNumber + 1;
             
-            // Сохраняем номер
-            savedNumbers[discordId] = formattedNumber;
-            localStorage.setItem('badgrules_account_numbers', JSON.stringify(savedNumbers));
+            localStorage.setItem('badgrules_account_data', JSON.stringify(accountData));
+            
+            console.log(`🎫 Выдан номер аккаунта #${formattedNumber} для Discord ID: ${discordId}`);
             
             return formattedNumber;
         }
         
-        // Простая хеш-функция для Discord ID
-        function hashDiscordId(discordId) {
-            let hash = 0;
-            const str = discordId.toString();
-            for (let i = 0; i < str.length; i++) {
-                const char = str.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // Convert to 32bit integer
-            }
-            return Math.abs(hash);
+        // Функция для получения общего количества зарегистрированных пользователей
+        function getTotalUsers() {
+            const accountData = JSON.parse(localStorage.getItem('badgrules_account_data') || '{"nextNumber": 11, "users": {}}');
+            return Object.keys(accountData.users).length + Object.keys(RESERVED_ACCOUNT_NUMBERS).length;
         }
         
         // Функция для проверки, является ли пользователь членом команды
