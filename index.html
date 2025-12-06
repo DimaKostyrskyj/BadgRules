@@ -9829,82 +9829,152 @@
         
         // Зарезервированные номера для команды (Discord ID -> Номер)
         // Добавьте Discord ID членов вашей команды здесь
-        const RESERVED_ACCOUNT_NUMBERS = {
-            // Формат: 'DISCORD_USER_ID': '0001'
-            // Пример:
-            // '123456789012345678': '0001',  // Владелец
-            // '234567890123456789': '0002',  // Админ 1
-            // '345678901234567890': '0003',  // Админ 2
-            
-             // ═══ ДОБАВЬТЕ DISCORD ID ВАШЕЙ КОМАНДЫ НИЖЕ ═══
-            '701782316623855668': '0000',      // #0000 - Владелец
-            '482499344982081546': '0001',     // #0001 - Владелец
-            '994390088190529586': '0002',     // #0002 - Админ
-            '1170537060277428324': '0003',     // #0003 - Админ
-            '1346385347319169038': '0004',     // #0004 - Команда
-            'HELPER2_DISCORD_ID_HERE': '0005',    // #0005 - Команда
-            'HELPER2_DISCORD_ID_HERE': '0006',    // #0006 - Команда
-            'TEAM1_DISCORD_ID_HERE': '0007',      // #0007 - Команда
-            'TEAM3_DISCORD_ID_HERE': '0008',      // #0008 - Команда
-            'TEAM3_DISCORD_ID_HERE': '0009',      // #0009 - Команда
-            'TEAM3_DISCORD_ID_HERE': '0010',      // #0010 - Команда
-            // ═══════════════════════════════════════════════
-        };
+       const RESERVED_ACCOUNT_NUMBERS = {
+    // Формат: 'DISCORD_USER_ID': '0001'
+    // 0000, 0001 = Владельцы
+    // 0002 и далее = Команда
+    
+    // ═══ ДОБАВЬТЕ DISCORD ID ВАШЕЙ КОМАНДЫ НИЖЕ ═══
+    '701782316623855668': '0000',      // #0000 - Владелец
+    '482499344982081546': '0001',     // #0001 - Владелец
+    '994390088190529586': '0002',     // #0002 - Команда
+    '1170537060277428324': '0003',     // #0003 - Команда
+    '1346385347319169038': '0004',     // #0004 - Команда
+    'HELPER1_DISCORD_ID_HERE': '0005',    // #0005 - Команда
+    'HELPER2_DISCORD_ID_HERE': '0006',    // #0006 - Команда
+    'TEAM1_DISCORD_ID_HERE': '0007',      // #0007 - Команда
+    'TEAM2_DISCORD_ID_HERE': '0008',      // #0008 - Команда
+    'TEAM3_DISCORD_ID_HERE': '0009',      // #0009 - Команда
+    'TEAM4_DISCORD_ID_HERE': '0010',      // #0010 - Команда
+    // ═══════════════════════════════════════════════
+};
+
+// Функция для проверки, является ли пользователь членом команды
+function isTeamMember(discordId) {
+    return RESERVED_ACCOUNT_NUMBERS.hasOwnProperty(discordId);
+}
+
+// Функция для получения роли члена команды
+function getTeamRole(discordId) {
+    const number = RESERVED_ACCOUNT_NUMBERS[discordId];
+    if (!number) return null;
+    
+    const num = parseInt(number);
+    if (num === 0 || num === 1) return 'owner';  // Владельцы
+    if (num >= 2 && num <= 10) return 'team';    // Команда
+    return null;
+}
+
+// Функция для получения красивой текстовой роли
+function getTeamRoleText(discordId) {
+    const role = getTeamRole(discordId);
+    if (!role) return null;
+    
+    return role === 'owner' ? 'Владелец' : 'Команда';
+}
+
+// Функция для получения номера аккаунта с проверкой на владельца
+function getAccountNumber(discordId) {
+    if (!discordId) return '0000';
+    
+    // Проверяем, есть ли зарезервированный номер для этого Discord ID
+    if (RESERVED_ACCOUNT_NUMBERS[discordId]) {
+        return RESERVED_ACCOUNT_NUMBERS[discordId];
+    }
+    
+    // Для остальных пользователей генерируем номер начиная с 0011
+    const accountData = JSON.parse(localStorage.getItem('badgrules_account_data') || '{"nextNumber": 11, "users": {}}');
+    
+    // Проверяем, есть ли уже номер у этого пользователя
+    if (accountData.users[discordId]) {
+        return accountData.users[discordId];
+    }
+    
+    // Выдаем следующий номер по порядку (начиная с 0011)
+    const newNumber = accountData.nextNumber;
+    const formattedNumber = newNumber.toString().padStart(4, '0');
+    
+    // Сохраняем номер для пользователя
+    accountData.users[discordId] = formattedNumber;
+    accountData.nextNumber = newNumber + 1;
+    
+    localStorage.setItem('badgrules_account_data', JSON.stringify(accountData));
+    
+    console.log(`🎫 Выдан номер аккаунта #${formattedNumber} для Discord ID: ${discordId}`);
+    
+    return formattedNumber;
+}
+
+// Функция для получения общего количества пользователей
+function getTotalUsers() {
+    const accountData = JSON.parse(localStorage.getItem('badgrules_account_data') || '{"nextNumber": 11, "users": {}}');
+    return Object.keys(accountData.users).length + Object.keys(RESERVED_ACCOUNT_NUMBERS).length;
+}
+
+// Функция для проверки VIP статуса (номера 0000-0010)
+function isVipNumber(accountNumber) {
+    const num = parseInt(accountNumber);
+    return num >= 0 && num <= 10;
+}
+
+// Пример использования в функции авторизации
+function setupUserProfile(userData) {
+    const discordId = userData.id || 'guest';
+    const accountNumber = getAccountNumber(discordId);
+    const teamRole = getTeamRole(discordId);
+    const isVip = isVipNumber(accountNumber);
+    
+    // Обновляем профиль
+    document.getElementById('profileDiscordId').textContent = discordId;
+    
+    // Добавляем бейдж роли если есть
+    const roleBadge = document.getElementById('profileRoleBadge');
+    if (teamRole) {
+        roleBadge.textContent = teamRole === 'owner' ? 'Владелец' : 'Команда';
+        roleBadge.className = `profile-role-badge ${teamRole}`;
+        roleBadge.classList.remove('hidden');
+    } else {
+        roleBadge.classList.add('hidden');
+    }
+    
+    // Добавляем VIP стиль для номеров 0000-0010
+    const tagElement = document.getElementById('profileDiscriminator');
+    if (isVip) {
+        tagElement.classList.add('vip');
+    }
+}
+
+// Функция для отображения роли в дропдауне профиля
+function setupProfileDropdown(userData) {
+    const discordId = userData.id || 'guest';
+    const teamRole = getTeamRole(discordId);
+    
+    // Добавляем роль в дропдаун если пользователь в команде
+    if (teamRole) {
+        const roleText = teamRole === 'owner' ? 'Владелец проекта' : 'Команда проекта';
+        const roleIcon = teamRole === 'owner' ? '👑' : '👥';
         
-        // Функция генерации уникального номера аккаунта (последовательная)
-        function getAccountNumber(discordId) {
-            if (!discordId) return '0000';
-            
-            // Проверяем, есть ли зарезервированный номер для этого Discord ID
-            if (RESERVED_ACCOUNT_NUMBERS[discordId]) {
-                return RESERVED_ACCOUNT_NUMBERS[discordId];
-            }
-            
-            // Получаем данные о номерах из localStorage
-            const accountData = JSON.parse(localStorage.getItem('badgrules_account_data') || '{"nextNumber": 11, "users": {}}');
-            
-            // Проверяем, есть ли уже номер у этого пользователя
-            if (accountData.users[discordId]) {
-                return accountData.users[discordId];
-            }
-            
-            // Выдаем следующий номер по порядку
-            const newNumber = accountData.nextNumber;
-            const formattedNumber = newNumber.toString().padStart(4, '0');
-            
-            // Сохраняем номер для пользователя
-            accountData.users[discordId] = formattedNumber;
-            accountData.nextNumber = newNumber + 1;
-            
-            localStorage.setItem('badgrules_account_data', JSON.stringify(accountData));
-            
-            console.log(`🎫 Выдан номер аккаунта #${formattedNumber} для Discord ID: ${discordId}`);
-            
-            return formattedNumber;
-        }
+        // Создаем элемент с ролью в дропдауне
+        const roleElement = document.createElement('div');
+        roleElement.className = 'dropdown-item';
+        roleElement.innerHTML = `
+            <span style="color: ${teamRole === 'owner' ? '#ffd700' : '#5865F2'}">${roleIcon}</span>
+            <span>${roleText}</span>
+        `;
         
-        // Функция для получения общего количества зарегистрированных пользователей
-        function getTotalUsers() {
-            const accountData = JSON.parse(localStorage.getItem('badgrules_account_data') || '{"nextNumber": 11, "users": {}}');
-            return Object.keys(accountData.users).length + Object.keys(RESERVED_ACCOUNT_NUMBERS).length;
-        }
-        
-        // Функция для проверки, является ли пользователь членом команды
-        function isTeamMember(discordId) {
-            return RESERVED_ACCOUNT_NUMBERS.hasOwnProperty(discordId);
-        }
-        
-        // Функция для получения роли члена команды
-        function getTeamRole(discordId) {
-            const number = RESERVED_ACCOUNT_NUMBERS[discordId];
-            if (!number) return null;
+        // Вставляем в начало дропдауна
+        const dropdown = document.getElementById('profileDropdown');
+        const firstItem = dropdown.querySelector('.dropdown-item');
+        if (firstItem) {
+            dropdown.insertBefore(roleElement, firstItem);
             
-            const num = parseInt(number);
-            if (num === 0,1) return 'Владелец';
-            if (num <= 2,3) return 'Администратор';
-            if (num <= 4,5,6,7,8,9,10) return 'Команда';
-            return null;
+            // Добавляем разделитель
+            const divider = document.createElement('div');
+            divider.className = 'dropdown-divider';
+            dropdown.insertBefore(divider, firstItem);
         }
+    }
+}
 
         // Load and update profile statistics
         function loadProfileStats() {
