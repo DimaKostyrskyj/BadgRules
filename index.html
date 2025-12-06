@@ -2548,6 +2548,155 @@
         /* ═══════════════════════════════════════════════════════════════ */
         /* 💎 PREMIUM SUBSCRIPTION SECTION - BADGRULES STYLE              */
         /* ═══════════════════════════════════════════════════════════════ */
+        /* 👑 WHITE-GOLD-BLACK ELITE SUBSCRIPTION                          */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .subscription-elite {
+            position: relative;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .elite-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+
+        .gold-particles span {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: #d4af37;
+            border-radius: 50%;
+            animation: particleFly 15s linear infinite;
+            opacity: 0;
+        }
+
+        .gold-particles span:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .gold-particles span:nth-child(2) { left: 20%; animation-delay: 1.5s; }
+        .gold-particles span:nth-child(3) { left: 30%; animation-delay: 3s; }
+        .gold-particles span:nth-child(4) { left: 40%; animation-delay: 4.5s; }
+        .gold-particles span:nth-child(5) { left: 50%; animation-delay: 6s; }
+        .gold-particles span:nth-child(6) { left: 60%; animation-delay: 7.5s; }
+        .gold-particles span:nth-child(7) { left: 70%; animation-delay: 9s; }
+        .gold-particles span:nth-child(8) { left: 80%; animation-delay: 10.5s; }
+        .gold-particles span:nth-child(9) { left: 90%; animation-delay: 12s; }
+        .gold-particles span:nth-child(10) { left: 95%; animation-delay: 13.5s; }
+
+        @keyframes particleFly {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-20vh) scale(1); opacity: 0; }
+        }
+
+        .elite-header { position: relative; text-align: center; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(212, 175, 55, 0.15); }
+        .crown-container { position: relative; display: inline-block; margin-bottom: 1rem; }
+        .crown-glow { position: absolute; inset: -20px; background: radial-gradient(circle, rgba(212, 175, 55, 0.4), transparent 70%); animation: crownPulse 3s ease-in-out infinite; }
+        @keyframes crownPulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 0.8; } }
+        .crown-icon { font-size: 3rem; position: relative; animation: crownFloat 2s ease-in-out infinite; }
+        @keyframes crownFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        .elite-title { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: 1px; }
+        .title-white { color: #ffffff; }
+        .title-gold { color: #d4af37; }
+        .title-pro { display: inline-block; background: linear-gradient(135deg, #d4af37, #f4e4bc, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-left: 0.5rem; animation: shimmer 3s ease-in-out infinite; background-size: 200% 100%; }
+        @keyframes shimmer { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        .elite-subtitle { color: rgba(255, 255, 255, 0.5); font-size: 0.95rem; }
+
+        .elite-status { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02)); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+        .status-left { display: flex; align-items: center; gap: 1rem; }
+        .status-badge-elite { padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.8rem; letter-spacing: 1px; }
+        .status-badge-elite.free { background: rgba(100, 100, 100, 0.3); color: #888; border: 1px solid rgba(100, 100, 100, 0.3); }
+        .status-badge-elite.pro { background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.1)); color: #d4af37; border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+        .status-badge-elite.lifetime { background: linear-gradient(135deg, #d4af37, #b8962e); color: #000; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); }
+        .status-info-elite { display: flex; flex-direction: column; gap: 0.2rem; }
+        .info-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .info-value { font-size: 0.9rem; color: #fff; }
+        .requests-display { display: flex; align-items: center; gap: 0.5rem; }
+        .requests-num { font-size: 2rem; font-weight: 800; color: #d4af37; font-family: 'JetBrains Mono', monospace; }
+        .requests-text { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
+        .elite-features { margin-bottom: 2rem; }
+        .features-label-elite { text-align: center; margin-bottom: 1rem; color: rgba(212, 175, 55, 0.6); font-size: 0.8rem; letter-spacing: 2px; }
+        .features-grid-elite { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+        @media (max-width: 600px) { .features-grid-elite { grid-template-columns: repeat(2, 1fr); } }
+        .feature-elite { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 12px; padding: 1rem; text-align: center; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+        .feature-elite:hover { border-color: rgba(212, 175, 55, 0.4); background: rgba(212, 175, 55, 0.05); transform: translateY(-3px); }
+        .feature-elite .f-icon { font-size: 1.5rem; }
+        .feature-elite span:last-child { color: #fff; font-size: 0.85rem; font-weight: 600; }
+
+        .elite-pricing { margin-bottom: 1.5rem; }
+        .pricing-top-elite { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; color: rgba(255,255,255,0.4); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .currency-switch { display: flex; gap: 0.5rem; background: rgba(255,255,255,0.05); padding: 0.3rem; border-radius: 8px; cursor: pointer; }
+        .currency-switch .curr { padding: 0.3rem 0.6rem; border-radius: 6px; font-weight: 700; transition: all 0.3s; color: rgba(255,255,255,0.5); }
+        .currency-switch .curr.active { background: #d4af37; color: #000; }
+
+        .plans-elite { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+        @media (max-width: 800px) { .plans-elite { grid-template-columns: repeat(2, 1fr); } }
+        .plan-elite { position: relative; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem 1rem; text-align: center; cursor: pointer; transition: all 0.3s ease; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+        .plan-elite:hover { border-color: rgba(212, 175, 55, 0.5); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .plan-elite.popular { border-color: rgba(212, 175, 55, 0.5); background: linear-gradient(180deg, rgba(212, 175, 55, 0.1), transparent); }
+        .plan-elite.popular:hover { border-color: #d4af37; box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2); }
+        .plan-popular-tag { position: absolute; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #d4af37, #b8962e); color: #000; font-size: 0.65rem; font-weight: 800; padding: 0.35rem; letter-spacing: 1px; }
+        .plan-elite.popular .plan-time { margin-top: 0.75rem; }
+        .plan-badge-elite { position: absolute; top: 0.5rem; right: 0.5rem; background: rgba(74, 222, 128, 0.15); color: #4ade80; font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 6px; }
+        .plan-elite.popular .plan-badge-elite { top: 2rem; }
+        .plan-badge-elite.gold, .plan-badge-elite.best { background: rgba(212, 175, 55, 0.2); color: #d4af37; }
+        .plan-time { font-size: 0.9rem; color: #fff; font-weight: 600; margin-bottom: 0.75rem; }
+        .plan-price { font-size: 1.75rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem; }
+        .plan-sub { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
+        .plan-glow { position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1), transparent 70%); pointer-events: none; }
+
+        .lifetime-elite { position: relative; background: linear-gradient(135deg, #1a1a1a, #0d0d0d); border: 2px solid #d4af37; border-radius: 20px; padding: 1.5rem; cursor: pointer; transition: all 0.3s ease; overflow: hidden; }
+        .lifetime-elite:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(212, 175, 55, 0.25); }
+        .lifetime-rays { position: absolute; inset: 0; background: repeating-conic-gradient(from 0deg, transparent 0deg, rgba(212, 175, 55, 0.03) 1deg, transparent 2deg); animation: raysSpin 60s linear infinite; }
+        @keyframes raysSpin { to { transform: rotate(360deg); } }
+        .lifetime-content-elite { position: relative; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+        @media (max-width: 600px) { .lifetime-content-elite { flex-direction: column; text-align: center; } }
+        .lifetime-left-elite { display: flex; align-items: center; gap: 1rem; }
+        .lifetime-icon-elite { font-size: 2.5rem; }
+        .lifetime-text-elite { display: flex; flex-direction: column; }
+        .lt-title { font-size: 1rem; font-weight: 800; color: #d4af37; letter-spacing: 2px; }
+        .lt-desc { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+        .lifetime-right-elite { text-align: right; }
+        @media (max-width: 600px) { .lifetime-right-elite { text-align: center; } }
+        .lt-price { display: block; font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; }
+        .lt-btn { background: linear-gradient(135deg, #d4af37, #b8962e); border: none; color: #000; padding: 0.75rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.3s; font-family: 'Manrope', sans-serif; }
+        .lt-btn:hover { transform: scale(1.05); box-shadow: 0 5px 25px rgba(212, 175, 55, 0.4); }
+
+        .trust-elite { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; color: rgba(255,255,255,0.3); font-size: 0.8rem; margin-top: 1.5rem; }
+
+        .admin-elite { background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 16px; padding: 1.5rem; margin-top: 1.5rem; }
+        .admin-elite.hidden { display: none; }
+        .admin-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(239, 68, 68, 0.2); color: #ef4444; font-weight: 700; }
+        .admin-head button { background: none; border: none; color: #ef4444; font-size: 1.25rem; cursor: pointer; }
+        .admin-body { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+        .admin-inp { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.75rem; color: #fff; font-size: 0.9rem; font-family: 'Manrope', sans-serif; }
+        .admin-inp:focus { outline: none; border-color: rgba(212, 175, 55, 0.5); }
+        .admin-inp::placeholder { color: rgba(255,255,255,0.3); }
+        .admin-btns { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .adm-plan { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.5rem 0.75rem; color: #888; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; font-family: 'Manrope', sans-serif; }
+        .adm-plan:hover { border-color: rgba(212, 175, 55, 0.3); }
+        .adm-plan.active { background: rgba(212, 175, 55, 0.2); border-color: rgba(212, 175, 55, 0.5); color: #d4af37; }
+        .admin-grant { background: linear-gradient(135deg, #4ade80, #22c55e); border: none; color: #000; padding: 0.75rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: 'Manrope', sans-serif; }
+        .admin-grant:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(74, 222, 128, 0.3); }
+        .admin-history { margin-bottom: 1rem; }
+        .hist-title { display: block; color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 0.5rem; }
+        .grants-list-elite { max-height: 120px; overflow-y: auto; }
+        .no-grants { color: rgba(255,255,255,0.3); font-size: 0.85rem; }
+        .admin-revoke { display: flex; gap: 0.5rem; }
+        .admin-rev-btn { background: linear-gradient(135deg, #ef4444, #dc2626); border: none; color: #fff; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.3s; font-family: 'Manrope', sans-serif; flex-shrink: 0; }
+        .admin-rev-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3); }
+        .admin-toggle-elite { position: fixed; bottom: 2rem; right: 2rem; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 50%; width: 50px; height: 50px; font-size: 1.25rem; cursor: pointer; z-index: 100; transition: all 0.3s; }
+        .admin-toggle-elite:hover { background: rgba(239, 68, 68, 0.3); transform: scale(1.1); }
+        .admin-toggle-elite.hidden { display: none; }
+
+        @media (max-width: 600px) {
+            .elite-status { flex-direction: column; gap: 1rem; text-align: center; }
+            .status-left { flex-direction: column; }
+            .admin-revoke { flex-direction: column; }
+        }
 
         .subscription-section-premium {
             margin-top: 2rem;
@@ -3119,8 +3268,434 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════ */
-        /* 💳 NEW PAYMENT MODAL STYLES                                     */
+        /* 💎 PREMIUM V2 STYLES - ENHANCED DESIGN                         */
         /* ═══════════════════════════════════════════════════════════════ */
+
+        .sub-premium-header-v2 {
+            position: relative;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(168, 85, 247, 0.1));
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .header-bg-effects {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.5;
+            animation: floatShape 8s ease-in-out infinite;
+        }
+
+        .shape-1 { width: 150px; height: 150px; background: #fbbf24; top: -50px; right: -50px; }
+        .shape-2 { width: 100px; height: 100px; background: #a855f7; bottom: -30px; left: 20%; animation-delay: 2s; }
+        .shape-3 { width: 80px; height: 80px; background: #4ade80; top: 50%; right: 30%; animation-delay: 4s; }
+
+        @keyframes floatShape {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, -20px) scale(1.1); }
+        }
+
+        .header-content { position: relative; text-align: center; }
+
+        .premium-crown {
+            display: inline-flex;
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 18px;
+            align-items: center; justify-content: center;
+            margin-bottom: 1rem;
+            animation: crownBounce 2s ease-in-out infinite;
+        }
+
+        .premium-crown svg { color: #000; }
+
+        @keyframes crownBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .header-content h3 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .gradient-text {
+            background: linear-gradient(135deg, #fbbf24, #a855f7);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .header-content p { color: var(--text-secondary); }
+
+        /* Status Glass */
+        .sub-status-glass {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 1.25rem 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-main { display: flex; align-items: center; gap: 1rem; }
+
+        .status-badge {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.6rem 1rem; border-radius: 12px;
+            font-weight: 700; font-size: 0.8rem; letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        .status-badge.free { background: rgba(100,100,100,0.2); color: var(--text-secondary); }
+        .status-badge.pro { background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(245,158,11,0.2)); color: #fbbf24; }
+        .status-badge.lifetime { background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(139,92,246,0.2)); color: #a855f7; }
+
+        .status-details { display: flex; flex-direction: column; gap: 0.15rem; }
+        .status-title { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .status-desc { font-size: 0.9rem; color: var(--text-secondary); }
+
+        .stat-item { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
+        .stat-circle { position: relative; width: 50px; height: 50px; }
+        .stat-circle svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .stat-bg { fill: none; stroke: var(--border-color); stroke-width: 3; }
+        .stat-fill { fill: none; stroke: #fbbf24; stroke-width: 3; stroke-linecap: round; }
+        .stat-number { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; }
+        .stat-label { font-size: 0.7rem; color: var(--text-muted); }
+
+        /* Benefits Modern */
+        .benefits-modern { margin-bottom: 2rem; }
+        .benefits-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .benefits-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        .benefits-grid-v2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+        @media (max-width: 768px) { .benefits-grid-v2 { grid-template-columns: repeat(2, 1fr); } }
+
+        .benefit-item-v2 {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1rem;
+            display: flex; align-items: center; gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item-v2:hover { border-color: var(--border-light); transform: translateY(-2px); }
+
+        .benefit-icon-v2 {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+
+        .benefit-icon-v2.blue { background: rgba(59,130,246,0.15); color: #3b82f6; }
+        .benefit-icon-v2.purple { background: rgba(168,85,247,0.15); color: #a855f7; }
+        .benefit-icon-v2.green { background: rgba(74,222,128,0.15); color: #4ade80; }
+        .benefit-icon-v2.orange { background: rgba(251,191,36,0.15); color: #fbbf24; }
+
+        .benefit-info strong { display: block; font-size: 0.85rem; color: var(--text-primary); margin-bottom: 0.1rem; }
+        .benefit-info span { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Pricing V2 */
+        .pricing-section-v2 { margin-bottom: 1.5rem; }
+        .pricing-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .pricing-title { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+        .pricing-toggle { display: flex; align-items: center; gap: 0.75rem; }
+        .toggle-label { font-size: 0.8rem; color: var(--text-muted); transition: color 0.3s; }
+        .toggle-label.active { color: var(--text-primary); font-weight: 600; }
+
+        .currency-toggle {
+            width: 44px; height: 24px;
+            background: var(--secondary-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; cursor: pointer; position: relative;
+        }
+
+        .toggle-thumb {
+            position: absolute; top: 2px; left: 2px;
+            width: 18px; height: 18px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%; transition: transform 0.3s;
+        }
+
+        .currency-toggle.usd .toggle-thumb { transform: translateX(20px); }
+
+        /* Plans Grid V2 */
+        .plans-grid-v2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+        @media (max-width: 900px) { .plans-grid-v2 { grid-template-columns: repeat(2, 1fr); } }
+
+        .plan-card-v2 {
+            position: relative; background: var(--secondary-bg);
+            border: 1px solid var(--border-color); border-radius: 16px;
+            padding: 1.25rem; text-align: center; transition: all 0.3s; overflow: hidden;
+        }
+
+        .plan-card-v2:hover { border-color: var(--border-light); transform: translateY(-4px); }
+
+        .plan-card-v2.popular {
+            border-color: rgba(251,191,36,0.4);
+            background: linear-gradient(180deg, rgba(251,191,36,0.08), transparent);
+        }
+
+        .plan-card-v2.popular:hover { border-color: rgba(251,191,36,0.6); box-shadow: 0 10px 30px rgba(251,191,36,0.15); }
+
+        .popular-ribbon {
+            position: absolute; top: 0; left: 0; right: 0;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #000; font-size: 0.7rem; font-weight: 700; padding: 0.35rem; text-align: center;
+        }
+
+        .plan-card-v2.popular .plan-header { margin-top: 1rem; }
+
+        .plan-save-badge {
+            position: absolute; top: 0.5rem; right: 0.5rem;
+            background: rgba(74,222,128,0.15); color: #4ade80;
+            font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.5rem; border-radius: 6px;
+        }
+
+        .plan-card-v2.popular .plan-save-badge { top: 2rem; }
+        .plan-save-badge.best { background: rgba(251,191,36,0.15); color: #fbbf24; }
+
+        .plan-header { margin-bottom: 0.75rem; }
+        .plan-name { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+        .plan-duration { font-size: 0.75rem; color: var(--text-muted); }
+        .plan-price-block { margin-bottom: 0.5rem; }
+
+        .price-main { display: flex; align-items: flex-start; justify-content: center; gap: 0.1rem; }
+        .price-currency { font-size: 1rem; font-weight: 600; color: var(--text-secondary); margin-top: 0.3rem; }
+        .price-value { font-size: 2rem; font-weight: 800; color: var(--text-primary); line-height: 1; }
+        .price-per-month-v2 { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+
+        .show-rub { display: inline; }
+        .show-usd { display: none; }
+
+        .plan-select-btn {
+            width: 100%; padding: 0.7rem;
+            background: transparent; border: 1px solid var(--border-color);
+            border-radius: 10px; color: var(--text-primary);
+            font-weight: 600; font-size: 0.85rem; cursor: pointer;
+            transition: all 0.3s; font-family: 'Manrope', sans-serif;
+        }
+
+        .plan-select-btn:hover { background: rgba(255,255,255,0.05); border-color: var(--border-light); }
+
+        .plan-select-btn.primary {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border: none; color: #000;
+        }
+
+        .plan-select-btn.primary:hover { transform: scale(1.02); box-shadow: 0 5px 20px rgba(251,191,36,0.3); }
+
+        /* Lifetime V2 */
+        .lifetime-card-v2 {
+            position: relative;
+            background: linear-gradient(135deg, var(--secondary-bg), rgba(168,85,247,0.08));
+            border: 1px solid rgba(168,85,247,0.3);
+            border-radius: 20px; padding: 1.5rem;
+            transition: all 0.3s; overflow: hidden;
+        }
+
+        .lifetime-card-v2:hover { border-color: rgba(168,85,247,0.5); transform: translateY(-4px); box-shadow: 0 15px 40px rgba(168,85,247,0.15); }
+
+        .lifetime-shine {
+            position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .lifetime-card-v2:hover .lifetime-shine { left: 100%; }
+
+        .lifetime-content-v2 { position: relative; display: flex; align-items: center; gap: 1.5rem; }
+        @media (max-width: 700px) { .lifetime-content-v2 { flex-direction: column; text-align: center; } }
+
+        .lifetime-icon { color: #a855f7; flex-shrink: 0; }
+        .lifetime-info { flex: 1; }
+
+        .lifetime-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(139,92,246,0.2));
+            color: #a855f7; font-size: 0.7rem; font-weight: 700;
+            padding: 0.35rem 0.75rem; border-radius: 8px; margin-bottom: 0.5rem; letter-spacing: 0.5px;
+        }
+
+        .lifetime-info h4 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .lifetime-info p { font-size: 0.85rem; color: var(--text-secondary); margin: 0; }
+        .lifetime-price-block { text-align: right; flex-shrink: 0; }
+        @media (max-width: 700px) { .lifetime-price-block { text-align: center; } }
+
+        .lifetime-price-v2 { display: flex; align-items: flex-start; justify-content: flex-end; gap: 0.1rem; margin-bottom: 0.5rem; }
+        @media (max-width: 700px) { .lifetime-price-v2 { justify-content: center; } }
+
+        .lifetime-price-v2 .price-currency { font-size: 1.25rem; color: #a855f7; margin-top: 0.3rem; }
+        .lifetime-price-v2 .price-value { font-size: 2.5rem; }
+
+        .lifetime-btn-v2 {
+            background: linear-gradient(135deg, #a855f7, #8b5cf6);
+            border: none; color: white; padding: 0.75rem 1.5rem;
+            border-radius: 12px; font-weight: 700; font-size: 0.9rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            transition: all 0.3s; font-family: 'Manrope', sans-serif;
+        }
+
+        .lifetime-btn-v2:hover { transform: scale(1.02); box-shadow: 0 8px 25px rgba(168,85,247,0.4); }
+
+        /* Trust Section V2 */
+        .trust-section-v2 { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted); }
+        .trust-item svg { color: #4ade80; }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* 🛡️ ADMIN PANEL STYLES                                          */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .admin-panel-section {
+            background: var(--secondary-bg);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .admin-panel-section.hidden { display: none; }
+
+        .admin-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.5rem; padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-title {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-weight: 700; font-size: 1.1rem; color: #ef4444;
+        }
+
+        .admin-close-btn {
+            background: none; border: none; color: var(--text-secondary);
+            font-size: 1.25rem; cursor: pointer; padding: 0.25rem;
+        }
+
+        .admin-card {
+            background: var(--tertiary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-card.danger { border-color: rgba(239, 68, 68, 0.3); }
+
+        .admin-card h4 {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 0.95rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-primary);
+        }
+
+        .admin-form { display: flex; flex-direction: column; gap: 1rem; }
+
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .form-group label { font-size: 0.8rem; color: var(--text-secondary); }
+
+        .admin-input {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: border-color 0.3s;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .admin-input:focus { outline: none; border-color: var(--border-light); }
+        .admin-input::placeholder { color: var(--text-muted); }
+
+        .admin-plan-select { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+        .admin-plan-btn {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .admin-plan-btn:hover { border-color: var(--border-light); }
+
+        .admin-plan-btn.active {
+            background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(245,158,11,0.2));
+            border-color: rgba(251,191,36,0.4);
+            color: #fbbf24;
+        }
+
+        .admin-grant-btn {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            border: none; color: #000;
+            padding: 0.85rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 700; font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .admin-grant-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(74,222,128,0.3); }
+
+        .admin-revoke-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border: none; color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 600; font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .admin-revoke-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(239,68,68,0.3); }
+
+        .grants-list { max-height: 200px; overflow-y: auto; }
+
+        .grants-empty { text-align: center; color: var(--text-muted); padding: 1rem; font-size: 0.85rem; }
+
+        .grant-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem;
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .grant-item-user { font-size: 0.85rem; color: var(--text-primary); font-family: monospace; }
+        .grant-item-plan { font-size: 0.75rem; color: #4ade80; }
+        .grant-item-date { font-size: 0.7rem; color: var(--text-muted); }
+
+        .admin-toggle-btn {
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(220,38,38,0.15));
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 12px;
+            padding: 0.85rem 1.5rem;
+            color: #ef4444;
+            font-weight: 600; font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1.5rem;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .admin-toggle-btn:hover { background: linear-gradient(135deg, rgba(239,68,68,0.25), rgba(220,38,38,0.25)); }
+        .admin-toggle-btn.hidden { display: none; }
+
+        @media (max-width: 600px) {
+            .sub-status-glass { flex-direction: column; gap: 1rem; text-align: center; }
+            .status-main { flex-direction: column; }
+            .admin-plan-select { justify-content: center; }
+        }
 
         .payment-modal-new {
             background: var(--secondary-bg);
@@ -6907,220 +7482,164 @@
                     </button>
                 </div>
 
-                <!-- Subscription Section - Premium Design -->
-                <div class="subscription-section-premium">
-                    <!-- Header with Glow Effect -->
-                    <div class="sub-premium-header">
-                        <div class="sub-premium-icon">
-                            <div class="icon-glow"></div>
-                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                            </svg>
-                        </div>
-                        <div class="sub-premium-title">
-                            <h3>BadgRules <span class="pro-text">PRO</span></h3>
-                            <p>Разблокируй все возможности</p>
+                <!-- Subscription Section - Premium Design V2 -->
+                <!-- 👑 SUBSCRIPTION - WHITE GOLD BLACK EDITION -->
+                <div class="subscription-elite">
+                    <!-- Animated Background -->
+                    <div class="elite-bg">
+                        <div class="gold-particles">
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span><span></span>
                         </div>
                     </div>
 
-                    <!-- Current Status Card -->
-                    <div class="sub-status-card" id="subscriptionStatus">
-                        <div class="sub-status-left">
-                            <div class="sub-status-badge free" id="subBadge">
-                                <span class="badge-icon">○</span>
+                    <!-- Premium Header -->
+                    <div class="elite-header">
+                        <div class="crown-container">
+                            <div class="crown-glow"></div>
+                            <div class="crown-icon">👑</div>
+                        </div>
+                        <h2 class="elite-title">
+                            <span class="title-white">Badg</span><span class="title-gold">Rules</span>
+                            <span class="title-pro">PRO</span>
+                        </h2>
+                        <p class="elite-subtitle">Эксклюзивные возможности для настоящих игроков</p>
+                    </div>
+
+                    <!-- Status Card -->
+                    <div class="elite-status" id="subscriptionStatus">
+                        <div class="status-left">
+                            <div class="status-badge-elite free" id="subBadge">
                                 <span class="badge-text">FREE</span>
                             </div>
-                            <div class="sub-status-info">
-                                <span class="status-label">Текущий статус</span>
-                                <span class="status-value" id="subExpires">Ограниченный доступ</span>
+                            <div class="status-info-elite">
+                                <span class="info-label">Статус</span>
+                                <span class="info-value" id="subExpires">Базовый доступ</span>
                             </div>
                         </div>
-                        <div class="sub-status-right">
-                            <div class="requests-counter">
-                                <span class="requests-number">5</span>
-                                <span class="requests-label">запросов<br>осталось</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pro Benefits - Animated Cards -->
-                    <div class="pro-benefits-grid">
-                        <div class="benefit-card" style="--delay: 0">
-                            <div class="benefit-icon">🚀</div>
-                            <div class="benefit-text">
-                                <strong>Безлимит</strong>
-                                <span>Неограниченные запросы</span>
-                            </div>
-                        </div>
-                        <div class="benefit-card" style="--delay: 1">
-                            <div class="benefit-icon">🤖</div>
-                            <div class="benefit-text">
-                                <strong>Все AI</strong>
-                                <span>Claude, Gemini, Grok</span>
-                            </div>
-                        </div>
-                        <div class="benefit-card" style="--delay: 2">
-                            <div class="benefit-icon">🎬</div>
-                            <div class="benefit-text">
-                                <strong>Видео</strong>
-                                <span>Анализ для откатов</span>
-                            </div>
-                        </div>
-                        <div class="benefit-card" style="--delay: 3">
-                            <div class="benefit-icon">⚡</div>
-                            <div class="benefit-text">
-                                <strong>Приоритет</strong>
-                                <span>Быстрые ответы</span>
+                        <div class="status-right">
+                            <div class="requests-display">
+                                <span class="requests-num">5</span>
+                                <span class="requests-text">запросов</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Pricing Cards - GTA Style -->
-                    <div class="pricing-container">
-                        <div class="pricing-label">Выбери свой план</div>
-                        
-                        <div class="pricing-grid">
-                            <!-- 1 Month -->
-                            <div class="price-card" data-plan="1month" onclick="selectPlan('1month')">
-                                <div class="price-card-inner">
-                                    <div class="price-period">1 месяц</div>
-                                    <div class="price-amount">
-                                        <span class="currency">$</span>
-                                        <span class="value">6</span>
-                                    </div>
-                                    <div class="price-rub">≈ 570 ₽</div>
-                                    <button class="price-btn" onclick="event.stopPropagation(); openPaymentModal('1month')">
-                                        <span>Выбрать</span>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <polyline points="9 18 15 12 9 6"></polyline>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
+                    <!-- Features -->
+                    <div class="elite-features">
+                        <div class="features-label-elite">
+                            <span>✦ PRO возможности ✦</span>
+                        </div>
+                        <div class="features-grid-elite">
+                            <div class="feature-elite"><span class="f-icon">⚡</span><span>Безлимит</span></div>
+                            <div class="feature-elite"><span class="f-icon">🤖</span><span>Все AI</span></div>
+                            <div class="feature-elite"><span class="f-icon">🎬</span><span>Видео</span></div>
+                            <div class="feature-elite"><span class="f-icon">🚀</span><span>Приоритет</span></div>
+                        </div>
+                    </div>
 
-                            <!-- 3 Months -->
-                            <div class="price-card has-save" data-plan="3months" onclick="selectPlan('3months')">
-                                <div class="price-card-inner">
-                                    <div class="price-period">3 месяца</div>
-                                    <div class="price-amount">
-                                        <span class="currency">$</span>
-                                        <span class="value">13</span>
-                                        <span class="cents">.50</span>
-                                    </div>
-                                    <div class="price-rub">≈ 1 280 ₽</div>
-                                    <div class="price-per-month">$4.50/мес</div>
-                                    <div class="price-save-tag">-25%</div>
-                                    <button class="price-btn" onclick="event.stopPropagation(); openPaymentModal('3months')">
-                                        <span>Выбрать</span>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <polyline points="9 18 15 12 9 6"></polyline>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- 6 Months - Popular -->
-                            <div class="price-card popular has-save" data-plan="6months" onclick="selectPlan('6months')">
-                                <div class="popular-badge">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                    </svg>
-                                    ПОПУЛЯРНЫЙ
-                                </div>
-                                <div class="price-card-inner">
-                                    <div class="price-period">6 месяцев</div>
-                                    <div class="price-amount">
-                                        <span class="currency">$</span>
-                                        <span class="value">30</span>
-                                    </div>
-                                    <div class="price-rub">≈ 2 850 ₽</div>
-                                    <div class="price-per-month">$5/мес</div>
-                                    <div class="price-save-tag">-17%</div>
-                                    <button class="price-btn primary" onclick="event.stopPropagation(); openPaymentModal('6months')">
-                                        <span>Выбрать</span>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <polyline points="9 18 15 12 9 6"></polyline>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="popular-glow"></div>
-                            </div>
-
-                            <!-- 1 Year -->
-                            <div class="price-card has-save" data-plan="1year" onclick="selectPlan('1year')">
-                                <div class="price-card-inner">
-                                    <div class="price-period">1 год</div>
-                                    <div class="price-amount">
-                                        <span class="currency">$</span>
-                                        <span class="value">50</span>
-                                    </div>
-                                    <div class="price-rub">≈ 4 750 ₽</div>
-                                    <div class="price-per-month">$4.16/мес</div>
-                                    <div class="price-save-tag">-31%</div>
-                                    <button class="price-btn" onclick="event.stopPropagation(); openPaymentModal('1year')">
-                                        <span>Выбрать</span>
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <polyline points="9 18 15 12 9 6"></polyline>
-                                        </svg>
-                                    </button>
-                                </div>
+                    <!-- Pricing -->
+                    <div class="elite-pricing">
+                        <div class="pricing-top-elite">
+                            <span>Тарифы</span>
+                            <div class="currency-switch" onclick="toggleCurrency()">
+                                <span class="curr active" id="toggleRub">₽</span>
+                                <span class="curr" id="toggleUsd">$</span>
                             </div>
                         </div>
 
-                        <!-- Lifetime - Special Card -->
-                        <div class="lifetime-card" data-plan="lifetime" onclick="selectPlan('lifetime')">
-                            <div class="lifetime-bg">
-                                <div class="lifetime-particles">
-                                    <span></span><span></span><span></span>
-                                    <span></span><span></span><span></span>
-                                </div>
+                        <div class="plans-elite">
+                            <div class="plan-elite" onclick="openPaymentModal('1month')">
+                                <span class="plan-time">1 мес</span>
+                                <span class="plan-price show-rub">570₽</span>
+                                <span class="plan-price show-usd" style="display:none">$6</span>
                             </div>
-                            <div class="lifetime-content">
-                                <div class="lifetime-left">
-                                    <div class="lifetime-badge">♾️ НАВСЕГДА</div>
-                                    <div class="lifetime-title">Бессрочная подписка</div>
-                                    <div class="lifetime-desc">Один платёж — вечный доступ ко всем функциям</div>
-                                </div>
-                                <div class="lifetime-right">
-                                    <div class="lifetime-price">
-                                        <span class="lifetime-currency">$</span>
-                                        <span class="lifetime-value">100</span>
+                            <div class="plan-elite" onclick="openPaymentModal('3months')">
+                                <div class="plan-badge-elite">-25%</div>
+                                <span class="plan-time">3 мес</span>
+                                <span class="plan-price show-rub">1 280₽</span>
+                                <span class="plan-price show-usd" style="display:none">$13.50</span>
+                                <span class="plan-sub show-rub">427₽/мес</span>
+                                <span class="plan-sub show-usd" style="display:none">$4.50/мес</span>
+                            </div>
+                            <div class="plan-elite popular" onclick="openPaymentModal('6months')">
+                                <div class="plan-popular-tag">⭐ ХИТ</div>
+                                <div class="plan-badge-elite gold">-17%</div>
+                                <span class="plan-time">6 мес</span>
+                                <span class="plan-price show-rub">2 850₽</span>
+                                <span class="plan-price show-usd" style="display:none">$30</span>
+                                <span class="plan-sub show-rub">475₽/мес</span>
+                                <span class="plan-sub show-usd" style="display:none">$5/мес</span>
+                                <div class="plan-glow"></div>
+                            </div>
+                            <div class="plan-elite" onclick="openPaymentModal('1year')">
+                                <div class="plan-badge-elite best">-31%</div>
+                                <span class="plan-time">1 год</span>
+                                <span class="plan-price show-rub">4 750₽</span>
+                                <span class="plan-price show-usd" style="display:none">$50</span>
+                                <span class="plan-sub show-rub">396₽/мес</span>
+                                <span class="plan-sub show-usd" style="display:none">$4.16/мес</span>
+                            </div>
+                        </div>
+
+                        <!-- Lifetime -->
+                        <div class="lifetime-elite" onclick="openPaymentModal('lifetime')">
+                            <div class="lifetime-rays"></div>
+                            <div class="lifetime-content-elite">
+                                <div class="lifetime-left-elite">
+                                    <span class="lifetime-icon-elite">♾️</span>
+                                    <div class="lifetime-text-elite">
+                                        <span class="lt-title">НАВСЕГДА</span>
+                                        <span class="lt-desc">Один раз — навсегда</span>
                                     </div>
-                                    <div class="lifetime-rub">≈ 9 500 ₽</div>
-                                    <button class="lifetime-btn" onclick="event.stopPropagation(); openPaymentModal('lifetime')">
-                                        Получить навсегда
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                                        </svg>
-                                    </button>
+                                </div>
+                                <div class="lifetime-right-elite">
+                                    <span class="lt-price show-rub">9 500₽</span>
+                                    <span class="lt-price show-usd" style="display:none">$100</span>
+                                    <button class="lt-btn">Получить →</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Trust Badges -->
-                    <div class="trust-badges">
-                        <div class="trust-badge">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                            </svg>
-                            Безопасная оплата
+                    <!-- Trust -->
+                    <div class="trust-elite">
+                        <span>🔒 Безопасно</span>
+                        <span>•</span>
+                        <span>🛡️ Гарантия</span>
+                        <span>•</span>
+                        <span>⚡ Мгновенно</span>
+                    </div>
+
+                    <!-- Admin Panel -->
+                    <div class="admin-elite hidden" id="adminPanel">
+                        <div class="admin-head">
+                            <span>🛡️ Админ-панель</span>
+                            <button onclick="toggleAdminPanel()">✕</button>
                         </div>
-                        <div class="trust-badge">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                            </svg>
-                            Гарантия возврата
+                        <div class="admin-body">
+                            <input type="text" id="adminUserId" placeholder="Discord ID" class="admin-inp">
+                            <div class="admin-btns">
+                                <button class="adm-plan active" data-plan="1month" onclick="selectAdminPlan(this)">1м</button>
+                                <button class="adm-plan" data-plan="3months" onclick="selectAdminPlan(this)">3м</button>
+                                <button class="adm-plan" data-plan="6months" onclick="selectAdminPlan(this)">6м</button>
+                                <button class="adm-plan" data-plan="1year" onclick="selectAdminPlan(this)">1г</button>
+                                <button class="adm-plan" data-plan="lifetime" onclick="selectAdminPlan(this)">∞</button>
+                            </div>
+                            <input type="number" id="adminCustomDays" placeholder="Дней (вручную)" class="admin-inp">
+                            <input type="text" id="adminReason" placeholder="Причина" class="admin-inp">
+                            <button class="admin-grant" onclick="grantProSubscription()">✓ Выдать</button>
                         </div>
-                        <div class="trust-badge">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                            Мгновенная активация
+                        <div class="admin-history">
+                            <span class="hist-title">История</span>
+                            <div id="grantsList" class="grants-list-elite"><span class="no-grants">Пусто</span></div>
+                        </div>
+                        <div class="admin-revoke">
+                            <input type="text" id="revokeUserId" placeholder="ID для отзыва" class="admin-inp">
+                            <button class="admin-rev-btn" onclick="revokeProSubscription()">✕ Отозвать</button>
                         </div>
                     </div>
+                    <button class="admin-toggle-elite hidden" id="adminToggleBtn" onclick="toggleAdminPanel()">🛡️</button>
                 </div>
             </div>
         </div>
@@ -10232,6 +10751,8 @@ function checkPaymentReturn() {
 document.addEventListener('DOMContentLoaded', () => {
     loadSubscriptionStatus();
     checkPaymentReturn();
+    checkAdminAccess();
+    loadGrantsHistory();
 });
 
 // Close modal on outside click
@@ -10250,6 +10771,270 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+
+// ═══════════════════════════════════════════════════════════════
+// 💱 CURRENCY TOGGLE
+// ═══════════════════════════════════════════════════════════════
+
+let showUsd = false;
+
+function toggleCurrency() {
+    showUsd = !showUsd;
+    
+    const toggle = document.querySelector('.currency-toggle');
+    const rubLabel = document.getElementById('toggleRub');
+    const usdLabel = document.getElementById('toggleUsd');
+    
+    if (showUsd) {
+        toggle?.classList.add('usd');
+        rubLabel?.classList.remove('active');
+        usdLabel?.classList.add('active');
+    } else {
+        toggle?.classList.remove('usd');
+        rubLabel?.classList.add('active');
+        usdLabel?.classList.remove('active');
+    }
+    
+    // Toggle visibility
+    document.querySelectorAll('.show-rub').forEach(el => {
+        el.style.display = showUsd ? 'none' : 'inline';
+    });
+    document.querySelectorAll('.show-usd').forEach(el => {
+        el.style.display = showUsd ? 'inline' : 'none';
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 🛡️ ADMIN PANEL FUNCTIONS
+// ═══════════════════════════════════════════════════════════════
+
+// Admin Discord IDs - Add your admin IDs here
+const ADMIN_IDS = [
+    '701782316623855668',  // Owner
+    '482499344982081546',  // Owner
+    '994390088190529586',  // Admin
+    // Add more admin IDs here
+];
+
+let selectedAdminPlan = '1month';
+
+function checkAdminAccess() {
+    const userData = localStorage.getItem('badgrules_user');
+    if (!userData) return;
+    
+    try {
+        const user = JSON.parse(userData);
+        if (ADMIN_IDS.includes(user.id)) {
+            const adminBtn = document.getElementById('adminToggleBtn');
+            if (adminBtn) {
+                adminBtn.classList.remove('hidden');
+            }
+        }
+    } catch (e) {
+        console.error('Error checking admin access:', e);
+    }
+}
+
+function toggleAdminPanel() {
+    const panel = document.getElementById('adminPanel');
+    if (panel) {
+        panel.classList.toggle('hidden');
+    }
+}
+
+function selectAdminPlan(btn) {
+    document.querySelectorAll('.admin-plan-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedAdminPlan = btn.dataset.plan;
+    
+    // Clear custom days when selecting preset
+    document.getElementById('adminCustomDays').value = '';
+}
+
+function grantProSubscription() {
+    const userId = document.getElementById('adminUserId')?.value?.trim();
+    const customDays = parseInt(document.getElementById('adminCustomDays')?.value) || 0;
+    const reason = document.getElementById('adminReason')?.value?.trim() || '';
+    
+    if (!userId) {
+        alert('Введите Discord ID пользователя');
+        return;
+    }
+    
+    if (!/^\d{17,19}$/.test(userId)) {
+        alert('Некорректный Discord ID. Должен содержать 17-19 цифр.');
+        return;
+    }
+    
+    // Calculate expiry
+    let days = customDays;
+    let planName = '';
+    let isLifetime = false;
+    
+    if (days > 0) {
+        planName = `${days} дней (вручную)`;
+    } else {
+        const planDays = {
+            '1month': 30,
+            '3months': 90,
+            '6months': 180,
+            '1year': 365,
+            'lifetime': -1
+        };
+        days = planDays[selectedAdminPlan] || 30;
+        planName = SUBSCRIPTION_PLANS[selectedAdminPlan]?.name || selectedAdminPlan;
+        isLifetime = selectedAdminPlan === 'lifetime';
+    }
+    
+    // Create subscription
+    const now = new Date();
+    const subscription = {
+        plan: selectedAdminPlan,
+        planName: planName,
+        grantedBy: 'admin',
+        reason: reason,
+        lifetime: isLifetime,
+        startedAt: now.toISOString(),
+        expiresAt: isLifetime ? null : new Date(now.getTime() + days * 24 * 60 * 60 * 1000).toISOString()
+    };
+    
+    // Save to grants storage (for this user)
+    const grantsKey = `badgrules_pro_grants`;
+    const grants = JSON.parse(localStorage.getItem(grantsKey) || '{}');
+    grants[userId] = subscription;
+    localStorage.setItem(grantsKey, JSON.stringify(grants));
+    
+    // Save to history
+    const historyKey = 'badgrules_grants_history';
+    const history = JSON.parse(localStorage.getItem(historyKey) || '[]');
+    history.unshift({
+        userId: userId,
+        planName: planName,
+        reason: reason,
+        grantedAt: now.toISOString()
+    });
+    // Keep last 50 entries
+    if (history.length > 50) history.pop();
+    localStorage.setItem(historyKey, JSON.stringify(history));
+    
+    // Reload history display
+    loadGrantsHistory();
+    
+    // Clear form
+    document.getElementById('adminUserId').value = '';
+    document.getElementById('adminCustomDays').value = '';
+    document.getElementById('adminReason').value = '';
+    
+    // Show success
+    const expiryText = isLifetime ? 'навсегда' : `до ${new Date(subscription.expiresAt).toLocaleDateString('ru-RU')}`;
+    alert(`✅ Pro подписка выдана!\n\nПользователь: ${userId}\nПлан: ${planName}\nДействует: ${expiryText}`);
+}
+
+function revokeProSubscription() {
+    const userId = document.getElementById('revokeUserId')?.value?.trim();
+    
+    if (!userId) {
+        alert('Введите Discord ID пользователя');
+        return;
+    }
+    
+    if (!confirm(`Вы уверены, что хотите отозвать Pro у пользователя ${userId}?`)) {
+        return;
+    }
+    
+    const grantsKey = `badgrules_pro_grants`;
+    const grants = JSON.parse(localStorage.getItem(grantsKey) || '{}');
+    
+    if (grants[userId]) {
+        delete grants[userId];
+        localStorage.setItem(grantsKey, JSON.stringify(grants));
+        
+        document.getElementById('revokeUserId').value = '';
+        alert(`✅ Pro подписка отозвана у пользователя ${userId}`);
+    } else {
+        alert(`⚠️ У пользователя ${userId} нет активной подписки в системе`);
+    }
+}
+
+function loadGrantsHistory() {
+    const historyKey = 'badgrules_grants_history';
+    const history = JSON.parse(localStorage.getItem(historyKey) || '[]');
+    const container = document.getElementById('grantsList');
+    
+    if (!container) return;
+    
+    if (history.length === 0) {
+        container.innerHTML = '<div class="grants-empty">Нет записей</div>';
+        return;
+    }
+    
+    container.innerHTML = history.slice(0, 10).map(grant => `
+        <div class="grant-item">
+            <div>
+                <div class="grant-item-user">${grant.userId}</div>
+                <div class="grant-item-date">${new Date(grant.grantedAt).toLocaleString('ru-RU')}</div>
+            </div>
+            <div class="grant-item-plan">${grant.planName}</div>
+        </div>
+    `).join('');
+}
+
+// Check if current user has granted Pro
+function checkGrantedPro() {
+    const userData = localStorage.getItem('badgrules_user');
+    if (!userData) return null;
+    
+    try {
+        const user = JSON.parse(userData);
+        const grantsKey = 'badgrules_pro_grants';
+        const grants = JSON.parse(localStorage.getItem(grantsKey) || '{}');
+        
+        if (grants[user.id]) {
+            const grant = grants[user.id];
+            
+            // Check if not expired
+            if (grant.lifetime || new Date(grant.expiresAt) > new Date()) {
+                return grant;
+            }
+        }
+    } catch (e) {
+        console.error('Error checking granted pro:', e);
+    }
+    
+    return null;
+}
+
+// Enhanced loadSubscriptionStatus to check granted Pro
+const originalLoadSubscriptionStatus = loadSubscriptionStatus;
+loadSubscriptionStatus = function() {
+    // First check for granted Pro
+    const grantedPro = checkGrantedPro();
+    
+    if (grantedPro) {
+        const badge = document.getElementById('subBadge');
+        const expires = document.getElementById('subExpires');
+        
+        if (badge) {
+            badge.classList.remove('free');
+            badge.classList.add(grantedPro.lifetime ? 'lifetime' : 'pro');
+            badge.querySelector('.badge-text').textContent = grantedPro.lifetime ? 'LIFETIME' : 'PRO';
+        }
+        
+        if (expires) {
+            if (grantedPro.lifetime) {
+                expires.textContent = '♾️ Бессрочная подписка';
+            } else {
+                const expDate = new Date(grantedPro.expiresAt);
+                expires.textContent = `Активна до ${expDate.toLocaleDateString('ru-RU')}`;
+            }
+        }
+        
+        return grantedPro;
+    }
+    
+    // Otherwise use original function
+    return originalLoadSubscriptionStatus();
+};
 
     </script>
 </body>
