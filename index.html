@@ -5808,6 +5808,395 @@
                 throw new Error('Claude: ' + error.message);
             }
         }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 🔍 ПОИСК ПО ФОРУМАМ - ЗАВИСИТ ОТ ВЫБРАННОГО ПРОЕКТА
+        // ═══════════════════════════════════════════════════════════════
+
+        // База форумов для разных проектов
+        const FORUMS_BY_PROJECT = {
+            gta5rp: {
+                name: 'GTA 5 RP',
+                forumUrl: 'https://forum.gta5rp.com',
+                rulesPage: 'https://forum.gta5rp.com/forums/pravila/',
+                searchTerms: ['gta5rp', 'gta 5 rp', 'форум гта рп']
+            },
+            majestic: {
+                name: 'Majestic RP',
+                forumUrl: 'https://forum.majestic-rp.ru',
+                rulesPage: 'https://forum.majestic-rp.ru/forums/pravila-servera/',
+                searchTerms: ['majestic', 'majestic rp', 'мажестик рп']
+            }
+        };
+
+        // Функция поиска по форумам - зависит от выбранного проекта
+        async function searchForums(query) {
+            console.log('🔍 Ищу на форумах для проекта:', selectedProject);
+            
+            // Если проект не выбран, ищем по всем форумам
+            let forumsToSearch = [];
+            
+            if (selectedProject && FORUMS_BY_PROJECT[selectedProject]) {
+                // Ищем только на форуме выбранного проекта
+                forumsToSearch = [FORUMS_BY_PROJECT[selectedProject]];
+            } else {
+                // Ищем на всех форумах (fallback)
+                forumsToSearch = Object.values(FORUMS_BY_PROJECT);
+            }
+            
+            const allLinks = [];
+            
+            for (const forum of forumsToSearch) {
+                try {
+                    console.log(`🔍 Поиск на форуме: ${forum.name}`);
+                    
+                    // Если есть конкретный запрос
+                    if (query && query.trim().length > 0) {
+                        const searchQuery = `site:${forum.forumUrl.replace('https://', '')} ${query}`;
+                        const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+                        const corsProxy = 'https://api.allorigins.win/raw?url=';
+                        
+                        const response = await fetch(corsProxy + encodeURIComponent(googleUrl), {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'text/html'
+                            }
+                        }).catch(err => {
+                            console.warn('Прокси не доступен для', forum.name);
+                            return null;
+                        });
+                        
+                        if (response && response.ok) {
+                            const html = await response.text();
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            
+                            const links = [];
+                            doc.querySelectorAll(`a[href*="${forum.forumUrl}"]`).forEach(link => {
+                                const href = link.href;
+                                if (href.includes(forum.forumUrl) && !links.includes(href) && links.length < 2) {
+                                    links.push(href);
+                                }
+                            });
+                            
+                            if (links.length > 0) {
+                                links.forEach(link => {
+                                    allLinks.push({
+                                        url: link,
+                                        project: forum.name,
+                                        forum: forum.name
+                                    });
+                                });
+                                console.log(`✅ Найдено на ${forum.name}:`, links.length);
+                            } else {
+                                // Добавляем главную страницу правил
+                                allLinks.push({
+                                    url: forum.rulesPage,
+                                    project: forum.name,
+                                    forum: forum.name
+                                });
+                            }
+                        }
+                    } else {
+                        // Для пустого запроса возвращаем главную страницу правил
+                        allLinks.push({
+                            url: forum.rulesPage,
+                            project: forum.name,
+                            forum: forum.name
+                        });
+                    }
+                } catch (error) {
+                    console.warn(`⚠️ Ошибка поиска на ${forum.name}:`, error.message);
+                    // В случае ошибки добавляем главную страницу правил
+                    allLinks.push({
+                        url: forum.rulesPage,
+                        project: forum.name,
+                        forum: forum.name
+                    });
+                }
+            }
+            
+            return allLinks.length > 0 ? allLinks : getDefaultForumLinks(query);
+        }
+
+        // Функция получения ссылок по умолчанию - зависит от проекта
+        function getDefaultForumLinks(query) {
+            const lq = query.toLowerCase();
+            const links = [];
+            
+            // Определяем, какой проект использовать
+            let targetProject = selectedProject;
+            
+            // Если проект не выбран, определяем по запросу
+            if (!targetProject) {
+                if (lq.includes('majestic') || lq.includes('мажестик')) {
+                    targetProject = 'majestic';
+                } else {
+                    targetProject = 'gta5rp'; // По умолчанию GTA5RP
+                }
+            }
+            
+            const forum = FORUMS_BY_PROJECT[targetProject];
+            
+            if (forum) {
+                if (lq.includes('fear') || lq.includes('фир') || lq.includes('страх') || 
+                    lq.includes('meta') || lq.includes('мета') ||
+                    lq.includes('dm') || lq.includes('vdm') || lq.includes('rdm') ||
+                    lq.includes('nlr') || lq.includes('pg') || lq.includes('mg') ||
+                    lq.includes('зона') || lq.includes('зоне') || lq.includes('район')) {
+                    links.push({
+                        url: forum.rulesPage,
+                        project: forum.name,
+                        forum: forum.name
+                    });
+                } else {
+                    // Для любых других запросов возвращаем главную страницу правил
+                    links.push({
+                        url: forum.rulesPage,
+                        project: forum.name,
+                        forum: forum.name
+                    });
+                }
+            } else {
+                // Fallback для обоих проектов
+                links.push({
+                    url: 'https://forum.gta5rp.com/forums/pravila/',
+                    project: 'GTA 5 RP',
+                    forum: 'GTA 5 RP'
+                });
+                links.push({
+                    url: 'https://forum.majestic-rp.ru/forums/pravila-servera/',
+                    project: 'Majestic RP',
+                    forum: 'Majestic RP'
+                });
+            }
+            
+            return links;
+        }
+
+        // Обновленная функция для отображения информации о проекте в ответах
+        function getProjectContext() {
+            if (!selectedProject) {
+                return {
+                    name: 'неизвестный проект',
+                    forum: 'форумах GTA 5 RP и Majestic RP',
+                    rulesPage: null
+                };
+            }
+            
+            const forum = FORUMS_BY_PROJECT[selectedProject];
+            return {
+                name: forum ? forum.name : 'неизвестный проект',
+                forum: forum ? `форуме ${forum.name}` : 'форумах',
+                rulesPage: forum ? forum.rulesPage : null
+            };
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // ОБНОВЛЕННАЯ ФУНКЦИЯ ПОИСКА С УЧЕТОМ ПРОЕКТА
+        // ═══════════════════════════════════════════════════════════════
+
+        // Обновленная функция поиска по базе знаний с указанием проекта
+        function searchKnowledgeBaseWithProject(query) {
+            const lq = query.toLowerCase();
+            const projectContext = getProjectContext();
+            
+            const rulesResults = searchRulesDatabase(lq);
+            
+            if (rulesResults.length > 0) {
+                let htmlContent = '';
+                
+                if (rulesResults.length === 1) {
+                    // Добавляем информацию о проекте к ответу
+                    const ruleData = rulesResults[0];
+                    let formattedResponse = formatRuleResponse(ruleData);
+                    
+                    // Добавляем примечание о проекте
+                    formattedResponse = formattedResponse.replace(
+                        '</div>',
+                        `<div class="rule-source">
+                            <span>🎮</span>
+                            <span>Проект: <strong>${projectContext.name}</strong></span>
+                        </div></div>`
+                    );
+                    
+                    htmlContent = formattedResponse;
+                } else {
+                    htmlContent = formatMultipleResults(rulesResults);
+                }
+                
+                return {
+                    isHtml: true,
+                    content: htmlContent,
+                    project: projectContext.name
+                };
+            }
+            
+            // Если не найдено в базе
+            const helpHtml = `<div class="help-card">
+                <div class="help-header">
+                    <span style="font-size: 1.5rem;">🎮</span>
+                    <span>Поиск на проекте: <strong>${projectContext.name}</strong></span>
+                </div>
+                
+                <div class="help-section">
+                    <div class="help-section-title">📜 Доступные термины правил ${projectContext.name}:</div>
+                    <div class="terms-grid">
+                        <div class="term-item" onclick="askQuickQuestion('Что такое DM?')"><span class="term-abbr">DM</span> DeathMatch</div>
+                        <div class="term-item" onclick="askQuickQuestion('Что такое VDM?')"><span class="term-abbr">VDM</span> Vehicle DeathMatch</div>
+                        <div class="term-item" onclick="askQuickQuestion('Что такое RK?')"><span class="term-abbr">RK</span> Revenge Kill</div>
+                        <div class="term-item" onclick="askQuickQuestion('Что такое NLR?')"><span class="term-abbr">NLR</span> New Life Rule</div>
+                        <div class="term-item" onclick="askQuickQuestion('Что такое PG?')"><span class="term-abbr">PG</span> PowerGaming</div>
+                        <div class="term-item" onclick="askQuickQuestion('Что такое MG?')"><span class="term-abbr">MG</span> MetaGaming</div>
+                        <div class="term-item" onclick="askQuickQuestion('Что такое CK?')"><span class="term-abbr">CK</span> Character Kill</div>
+                    </div>
+                </div>
+                
+                <div class="help-tip">
+                    💡 Поиск ведется на ${projectContext.forum}. 
+                    ${projectContext.rulesPage ? `<br>📖 <a href="${projectContext.rulesPage}" target="_blank" style="color: #5865F2;">Полные правила проекта</a>` : ''}
+                </div>
+            </div>`;
+            
+            return {
+                isHtml: true,
+                content: helpHtml,
+                project: projectContext.name
+            };
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // ОБНОВЛЕННАЯ ФУНКЦИЯ SENDMESSAGE С УЧЕТОМ ПРОЕКТА
+        // ═══════════════════════════════════════════════════════════════
+
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message || isProcessing) return;
+
+            isProcessing = true;
+            sendButton.disabled = true;
+            
+            addMessage(message, false);
+            chatInput.value = '';
+            addTypingIndicator();
+
+            try {
+                // Проверяем встроенную базу знаний с учетом проекта
+                console.log('🔍 Проверяю базу знаний для проекта:', selectedProject);
+                const knowledgeEntry = searchKnowledgeBaseWithProject(message);
+                
+                if (knowledgeEntry) {
+                    console.log('✅ Найдено в базе знаний! Проект:', knowledgeEntry.project);
+                    removeTypingIndicator();
+                    
+                    if (knowledgeEntry.isHtml) {
+                        addMessageHtml(knowledgeEntry.content, true);
+                    } else {
+                        addMessage(knowledgeEntry.content, true);
+                    }
+                } else {
+                    // Если не найдено, показываем справку с учетом проекта
+                    removeTypingIndicator();
+                    
+                    const projectContext = getProjectContext();
+                    const helpHtml = `<div class="help-card">
+                        <div class="help-header">
+                            <span style="font-size: 1.5rem;">🎮</span>
+                            <span>Поиск на проекте: <strong>${projectContext.name}</strong></span>
+                        </div>
+                        
+                        <div class="help-section">
+                            <div class="help-section-title">❓ По запросу "<strong>${message}</strong>" ничего не найдено</div>
+                            <div class="terms-grid">
+                                <div class="term-item" onclick="askQuickQuestion('Что такое DM?')"><span class="term-abbr">DM</span> DeathMatch</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое VDM?')"><span class="term-abbr">VDM</span> Vehicle DeathMatch</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое RK?')"><span class="term-abbr">RK</span> Revenge Kill</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое NLR?')"><span class="term-abbr">NLR</span> New Life Rule</div>
+                                <div class="term-item" onclick="askQuickQuestion('Что такое PG?')"><span class="term-abbr">PG</span> PowerGaming</div>
+                            </div>
+                        </div>
+                        
+                        <div class="help-tip">
+                            💡 Напишите конкретный вопрос, например: "Что такое DM на ${projectContext.name}?"
+                        </div>
+                    </div>`;
+                    
+                    addMessageHtml(helpHtml, true);
+                }
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                removeTypingIndicator();
+                
+                const errorResponse = `⚠️ Ошибка обработки: ${error.message}
+
+        Попробуйте еще раз или переформулируйте вопрос.`;
+                addMessage(errorResponse, true);
+            } finally {
+                isProcessing = false;
+                sendButton.disabled = false;
+                chatInput.focus();
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // ОБНОВЛЕННАЯ ФУНКЦИЯ askQuickQuestion С УЧЕТОМ ПРОЕКТА
+        // ═══════════════════════════════════════════════════════════════
+
+        function askQuickQuestion(question) {
+            chatInput.value = question;
+            sendMessage();
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // ДОБАВЛЕНИЕ ИНДИКАТОРА ПРОЕКТА В ИНТЕРФЕЙСЕ
+        // ═══════════════════════════════════════════════════════════════
+
+        // Функция для обновления отображения информации о проекте
+        function updateProjectInfoDisplay() {
+            const projectContext = getProjectContext();
+            
+            // Обновляем информацию в приветственном экране
+            const welcomeSubtitles = document.querySelectorAll('.welcome-subtitle');
+            if (welcomeSubtitles.length > 1) {
+                welcomeSubtitles[1].innerHTML = `Используя <a href="${projectContext.rulesPage || '#'}" target="_blank">правила сервера ${projectContext.name}</a>`;
+            }
+            
+            // Обновляем информацию в заголовке чата
+            const chatTitle = document.querySelector('.welcome-screen h3');
+            if (chatTitle) {
+                // Можно добавить иконку проекта рядом с заголовком
+            }
+        }
+
+        // Вызываем обновление при смене проекта
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем сохраненный выбор сервера
+            const savedSelection = loadServerSelection();
+            if (savedSelection) {
+                selectedProject = savedSelection.project;
+                selectedServer = savedSelection.server;
+                updateProjectInfoDisplay();
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // ОБНОВЛЕНИЕ ПРИ СМЕНЕ ПРОЕКТА
+        // ═══════════════════════════════════════════════════════════════
+
+        // Модифицируем функцию selectProject для обновления информации
+        const originalSelectProject = selectProject;
+        selectProject = function(project) {
+            originalSelectProject(project);
+            updateProjectInfoDisplay();
+        };
+
+        // Модифицируем функцию changeServer для обновления информации
+        const originalChangeServer = changeServer;
+        changeServer = function() {
+            originalChangeServer();
+            updateProjectInfoDisplay();
+        };
         
         // Встроенный API для claude.ai
         async function getBuiltInResponse(messages) {
