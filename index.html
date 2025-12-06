@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -6798,6 +6798,27 @@
             20% { left: 100%; }
             100% { left: 100%; }
         }
+            /* в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ */
+        /* рџ›‘ DISABLE ANIMATIONS FOR LIFETIME BLOCK                        */
+        /* в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ */
+        .lifetime-elite, 
+        .lifetime-elite .lifetime-rays,
+        .lifetime-elite .lt-btn, 
+        .lifetime-elite .lt-btn::after,
+        .lifetime-elite .lifetime-icon-elite,
+        .lifetime-elite:hover,
+        .lifetime-elite:hover .lifetime-icon-elite {
+            animation: none !important;
+            transform: none !important; 
+        }
+        
+        /* Keep simple hover scale if desired, but user said "remove animation". 
+           If they meant just the continuous ones, I should perhaps leave hover. 
+           But "РЈР±РµСЂРё Р°РЅРёРјР°С†РёСЋ" is strong. Let's kill all animations on that block to be safe. */
+        
+        .lifetime-elite:hover {
+            border-color: #d4af37 !important; /* Keep border color change */
+        }
     </style>
 </head>
 <body>
@@ -11270,4 +11291,5 @@ loadSubscriptionStatus = function() {
     </script>
 </body>
 </html>
+
 
