@@ -2242,6 +2242,61 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        /* Бейдж роли команды */
+        .profile-role-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 0.5rem;
+        }
+        
+        .profile-role-badge.hidden {
+            display: none;
+        }
+        
+        .profile-role-badge.owner {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            color: #1a1a1a;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.4);
+        }
+        
+        .profile-role-badge.admin {
+            background: linear-gradient(135deg, #ed4245 0%, #c73e3a 100%);
+            color: white;
+            box-shadow: 0 2px 10px rgba(237, 66, 69, 0.4);
+        }
+        
+        .profile-role-badge.moderator {
+            background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+            color: white;
+            box-shadow: 0 2px 10px rgba(88, 101, 242, 0.4);
+        }
+        
+        .profile-role-badge.helper {
+            background: linear-gradient(135deg, #3ba55d 0%, #2d8049 100%);
+            color: white;
+            box-shadow: 0 2px 10px rgba(59, 165, 93, 0.4);
+        }
+        
+        .profile-role-badge.team {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+            box-shadow: 0 2px 10px rgba(155, 89, 182, 0.4);
+        }
+        
+        /* VIP номера (1-10) */
+        .profile-tag-minimal.vip {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
         .profile-status-minimal {
             display: flex;
             align-items: center;
@@ -4919,6 +4974,7 @@
                     <div class="profile-user-info">
                         <h2 class="profile-name-minimal" id="profileUsername">Гость</h2>
                         <span class="profile-tag-minimal" id="profileDiscriminator">#0000</span>
+                        <span class="profile-role-badge hidden" id="profileRoleBadge"></span>
                         <div class="profile-status-minimal">
                             <span class="status-dot online"></span>
                             В сети
@@ -6984,6 +7040,7 @@
             const profileUsername = document.getElementById('profileUsername');
             const profileDiscriminator = document.getElementById('profileDiscriminator');
             const profileAvatarImg = document.getElementById('profileAvatarImg');
+            const profileRoleBadge = document.getElementById('profileRoleBadge');
             
             if (user.loginType === 'discord') {
                 // Username
@@ -6991,11 +7048,35 @@
                     profileUsername.textContent = user.displayName || user.username || 'Discord User';
                 }
                 
-                // Discriminator (если есть)
-                if (profileDiscriminator && user.discriminator) {
-                    profileDiscriminator.textContent = `#${user.discriminator}`;
-                } else if (profileDiscriminator) {
-                    profileDiscriminator.textContent = '@' + (user.username || 'user');
+                // Генерируем уникальный номер аккаунта
+                if (profileDiscriminator) {
+                    const accountNumber = getAccountNumber(user.id);
+                    profileDiscriminator.textContent = `#${accountNumber}`;
+                    
+                    // Добавляем VIP стиль для номеров 1-10
+                    if (parseInt(accountNumber) <= 10) {
+                        profileDiscriminator.classList.add('vip');
+                    } else {
+                        profileDiscriminator.classList.remove('vip');
+                    }
+                }
+                
+                // Показываем бейдж роли для команды
+                if (profileRoleBadge) {
+                    const teamRole = getTeamRole(user.id);
+                    if (teamRole) {
+                        profileRoleBadge.textContent = teamRole;
+                        profileRoleBadge.classList.remove('hidden', 'owner', 'admin', 'moderator', 'helper', 'team');
+                        
+                        // Добавляем соответствующий класс
+                        if (teamRole === 'Владелец') profileRoleBadge.classList.add('owner');
+                        else if (teamRole === 'Администратор') profileRoleBadge.classList.add('admin');
+                        else if (teamRole === 'Модератор') profileRoleBadge.classList.add('moderator');
+                        else if (teamRole === 'Хелпер') profileRoleBadge.classList.add('helper');
+                        else profileRoleBadge.classList.add('team');
+                    } else {
+                        profileRoleBadge.classList.add('hidden');
+                    }
                 }
                 
                 // Avatar
@@ -7047,6 +7128,94 @@
                     profileAvatarImg.style.backgroundImage = '';
                 }
             }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 🎫 СИСТЕМА УНИКАЛЬНЫХ НОМЕРОВ АККАУНТОВ
+        // ═══════════════════════════════════════════════════════════════
+        
+        // Зарезервированные номера для команды (Discord ID -> Номер)
+        // Добавьте Discord ID членов вашей команды здесь
+        const RESERVED_ACCOUNT_NUMBERS = {
+            // Формат: 'DISCORD_USER_ID': '0001'
+            // Пример:
+            // '123456789012345678': '0001',  // Владелец
+            // '234567890123456789': '0002',  // Админ 1
+            // '345678901234567890': '0003',  // Админ 2
+            
+            // ═══ ДОБАВЬТЕ DISCORD ID ВАШЕЙ КОМАНДЫ НИЖЕ ═══
+            '701782316623855668': '0000',      // #0001 - Владелец
+            '482499344982081546': '0001',     // #0002 - Админ
+            'ADMIN2_DISCORD_ID_HERE': '0002',     // #0003 - Админ
+            'MODER1_DISCORD_ID_HERE': '0003',     // #0004 - Модератор
+            'MODER2_DISCORD_ID_HERE': '0004',     // #0005 - Модератор
+            'HELPER1_DISCORD_ID_HERE': '0005',    // #0006 - Хелпер
+            'HELPER2_DISCORD_ID_HERE': '0006',    // #0007 - Хелпер
+            'TEAM1_DISCORD_ID_HERE': '0007',      // #0008 - Команда
+            'TEAM2_DISCORD_ID_HERE': '0008',      // #0009 - Команда
+            'TEAM3_DISCORD_ID_HERE': '0009',      // #0010 - Команда
+            // ═══════════════════════════════════════════════
+        };
+        
+        // Функция генерации уникального номера аккаунта
+        function getAccountNumber(discordId) {
+            if (!discordId) return '0000';
+            
+            // Проверяем, есть ли зарезервированный номер для этого Discord ID
+            if (RESERVED_ACCOUNT_NUMBERS[discordId]) {
+                return RESERVED_ACCOUNT_NUMBERS[discordId];
+            }
+            
+            // Проверяем, есть ли уже сохраненный номер для этого пользователя
+            const savedNumbers = JSON.parse(localStorage.getItem('badgrules_account_numbers') || '{}');
+            if (savedNumbers[discordId]) {
+                return savedNumbers[discordId];
+            }
+            
+            // Генерируем новый уникальный номер на основе Discord ID
+            // Используем хеш Discord ID для создания стабильного номера
+            const hash = hashDiscordId(discordId);
+            
+            // Номера от 0011 до 9999 (первые 10 зарезервированы)
+            const number = (hash % 9989) + 11; // 11-9999
+            const formattedNumber = number.toString().padStart(4, '0');
+            
+            // Сохраняем номер
+            savedNumbers[discordId] = formattedNumber;
+            localStorage.setItem('badgrules_account_numbers', JSON.stringify(savedNumbers));
+            
+            return formattedNumber;
+        }
+        
+        // Простая хеш-функция для Discord ID
+        function hashDiscordId(discordId) {
+            let hash = 0;
+            const str = discordId.toString();
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return Math.abs(hash);
+        }
+        
+        // Функция для проверки, является ли пользователь членом команды
+        function isTeamMember(discordId) {
+            return RESERVED_ACCOUNT_NUMBERS.hasOwnProperty(discordId);
+        }
+        
+        // Функция для получения роли члена команды
+        function getTeamRole(discordId) {
+            const number = RESERVED_ACCOUNT_NUMBERS[discordId];
+            if (!number) return null;
+            
+            const num = parseInt(number);
+            if (num === 1) return 'Владелец';
+            if (num <= 3) return 'Администратор';
+            if (num <= 5) return 'Модератор';
+            if (num <= 7) return 'Хелпер';
+            if (num <= 10) return 'Команда';
+            return null;
         }
 
         // Load and update profile statistics
