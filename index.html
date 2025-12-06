@@ -10043,8 +10043,8 @@ function getTeamRole(discordId) {
     if (!number) return null;
     
     const num = parseInt(number);
-    if (num === 0 || num === 1) return 'owner';  // Владельцы
-    if (num >= 2 && num <= 10) return 'team';    // Команда
+    if (num === 0 || num === 1) return 'Владелец';  // Владельцы
+    if (num >= 2 && num <= 10) return 'Команда';    // Команда
     return null;
 }
 
@@ -11062,9 +11062,9 @@ function toggleCurrency() {
 
 // Admin Discord IDs - Add your admin IDs here
 const ADMIN_IDS = [
-    '701782316623855668',  // Owner
-    '482499344982081546',  // Owner
-    '994390088190529586',  // Admin
+    '701782316623855668',  // Владелец
+    '482499344982081546',  // Владелец
+    '994390088190529586',  // Команда
     // Add more admin IDs here
 ];
 
