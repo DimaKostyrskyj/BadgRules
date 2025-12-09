@@ -8961,6 +8961,573 @@
         .subscription-section-premium {
             animation: fadeInWhite 0.6s ease-out;
         }
+
+         /* ═══════════════════════════════════════════════════════════════ */
+/* 💎 SUBSCRIPTION DARK GRAY THEME                               */
+/* ═══════════════════════════════════════════════════════════════ */
+
+.subscription-dark-gray {
+    position: relative;
+    margin-top: 2rem;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+/* Background effects */
+.sub-dark-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+        linear-gradient(135deg, #111111 0%, #1a1a1a 50%, #111111 100%),
+        radial-gradient(circle at 20% 50%, #2a2a2a 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, #333333 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.sub-dark-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(50, 50, 50, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(50, 50, 50, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.3;
+}
+
+/* Header */
+.sub-dark-header {
+    padding: 2.5rem 2.5rem 1.5rem;
+    border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    position: relative;
+}
+
+.sub-dark-icon {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #333333, #444444);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #3a3a3a;
+}
+
+.sub-dark-icon svg {
+    color: #888888;
+}
+
+.sub-dark-title h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e0e0e0;
+    margin-bottom: 0.25rem;
+}
+
+.sub-dark-title p {
+    font-size: 0.9rem;
+    color: #888888;
+    margin: 0;
+}
+
+/* Status Card */
+.sub-dark-status {
+    padding: 1.5rem 2.5rem;
+    border-bottom: 1px solid #2a2a2a;
+    background: rgba(40, 40, 40, 0.5);
+}
+
+.status-row-dark {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dark-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #a0a0a0;
+}
+
+.dark-badge.active {
+    background: #333333;
+    border-color: #4a4a4a;
+    color: #cccccc;
+}
+
+.status-info-dark {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.status-label-dark {
+    font-size: 0.75rem;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-value-dark {
+    font-size: 0.9rem;
+    color: #cccccc;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Dark Features */
+.sub-dark-features {
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.features-grid-dark {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .features-grid-dark {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .features-grid-dark {
+        grid-template-columns: 1fr;
+    }
+}
+
+.feature-item-dark {
+    background: #222222;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.feature-item-dark:hover {
+    border-color: #3a3a3a;
+    background: #252525;
+    transform: translateY(-3px);
+}
+
+.feature-icon-dark {
+    width: 44px;
+    height: 44px;
+    background: #2a2a2a;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.feature-icon-dark svg {
+    color: #666666;
+}
+
+.feature-text-dark h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #cccccc;
+    margin-bottom: 0.35rem;
+}
+
+.feature-text-dark p {
+    font-size: 0.8rem;
+    color: #888888;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Dark Pricing */
+.sub-dark-pricing {
+    padding: 2rem 2.5rem;
+}
+
+.pricing-header-dark {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.pricing-title-dark {
+    font-size: 0.85rem;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.currency-dark {
+    display: flex;
+    gap: 0.5rem;
+    background: #222222;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 0.25rem;
+}
+
+.currency-btn-dark {
+    padding: 0.4rem 0.8rem;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: #666666;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.currency-btn-dark.active {
+    background: #333333;
+    color: #cccccc;
+}
+
+/* Plans Grid Dark */
+.plans-grid-dark {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .plans-grid-dark {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .plans-grid-dark {
+        grid-template-columns: 1fr;
+    }
+}
+
+.plan-card-dark {
+    background: #222222;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.plan-card-dark:hover {
+    border-color: #3a3a3a;
+    background: #252525;
+    transform: translateY(-4px);
+}
+
+.plan-card-dark.popular {
+    border-color: #444444;
+    background: linear-gradient(180deg, #252525, #222222);
+}
+
+.plan-popular-dark {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333333;
+    color: #a0a0a0;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    border: 1px solid #444444;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.plan-header-dark {
+    text-align: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.plan-name-dark {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #cccccc;
+    margin-bottom: 0.5rem;
+}
+
+.plan-price-dark {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #e0e0e0;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.plan-price-dark small {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #888888;
+}
+
+.plan-features-dark {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem 0;
+}
+
+.plan-features-dark li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #888888;
+    margin-bottom: 0.5rem;
+}
+
+.plan-features-dark li svg {
+    color: #666666;
+    flex-shrink: 0;
+}
+
+.plan-btn-dark {
+    width: 100%;
+    padding: 0.75rem;
+    background: #333333;
+    border: 1px solid #3a3a3a;
+    border-radius: 10px;
+    color: #cccccc;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.plan-btn-dark:hover {
+    background: #3a3a3a;
+    border-color: #444444;
+    color: #e0e0e0;
+}
+
+.plan-btn-dark.primary {
+    background: #444444;
+    border-color: #555555;
+    color: #ffffff;
+}
+
+.plan-btn-dark.primary:hover {
+    background: #555555;
+    border-color: #666666;
+}
+
+/* Lifetime Card Dark */
+.lifetime-dark {
+    background: linear-gradient(135deg, #222222, #1a1a1a);
+    border: 1px solid #333333;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-top: 1.5rem;
+}
+
+.lifetime-content-dark {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .lifetime-content-dark {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.lifetime-left-dark {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.lifetime-icon-dark {
+    font-size: 3rem;
+    color: #666666;
+}
+
+.lifetime-info-dark h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #cccccc;
+    margin-bottom: 0.25rem;
+}
+
+.lifetime-info-dark p {
+    font-size: 0.9rem;
+    color: #888888;
+    margin: 0;
+}
+
+.lifetime-price-dark {
+    text-align: right;
+}
+
+.lifetime-price-dark .price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #e0e0e0;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.lifetime-btn-dark {
+    padding: 0.85rem 2rem;
+    background: #333333;
+    border: 1px solid #3a3a3a;
+    border-radius: 12px;
+    color: #cccccc;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.lifetime-btn-dark:hover {
+    background: #3a3a3a;
+    border-color: #444444;
+    color: #ffffff;
+}
+
+/* Trust Section Dark */
+.sub-dark-trust {
+    padding: 1.5rem 2.5rem;
+    border-top: 1px solid #2a2a2a;
+    background: rgba(30, 30, 30, 0.5);
+}
+
+.trust-grid-dark {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.trust-item-dark {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #666666;
+}
+
+.trust-item-dark svg {
+    color: #555555;
+}
+
+/* Admin Panel Dark */
+.admin-panel-dark {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.admin-header-dark {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.admin-header-dark h4 {
+    color: #cccccc;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.admin-input-dark {
+    width: 100%;
+    background: #222222;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: #cccccc;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.admin-input-dark:focus {
+    outline: none;
+    border-color: #3a3a3a;
+}
+
+.admin-btns-dark {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.admin-btn-dark {
+    flex: 1;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.admin-btn-dark.grant {
+    background: #333333;
+    color: #cccccc;
+}
+
+.admin-btn-dark.grant:hover {
+    background: #3a3a3a;
+}
+
+.admin-btn-dark.revoke {
+    background: #2a2a2a;
+    color: #888888;
+}
+
+.admin-btn-dark.revoke:hover {
+    background: #333333;
+    color: #cccccc;
+}
+
+/* Animation for dark theme */
+@keyframes darkPulse {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(50, 50, 50, 0.4);
+        border-color: #2a2a2a;
+    }
+    50% { 
+        box-shadow: 0 0 0 8px rgba(50, 50, 50, 0);
+        border-color: #3a3a3a;
+    }
+}
+
+.plan-card-dark:hover {
+    animation: darkPulse 2s infinite;
+}
     </style>
 </head>
 <body>
