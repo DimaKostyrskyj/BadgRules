@@ -665,69 +665,6 @@
             user-select: none;
         }
 
-        /* PRO статус - мягкое золотое свечение */
-        .user-profile-badge.pro-active {
-            border-color: rgba(251, 191, 36, 0.5);
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, var(--secondary-bg) 100%);
-        }
-        
-        .user-profile-badge.pro-active:hover {
-            border-color: #fbbf24;
-            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.15);
-        }
-        
-        /* LIFETIME статус - мягкое фиолетовое свечение */
-        .user-profile-badge.lifetime-active {
-            border-color: rgba(167, 139, 250, 0.5);
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.05) 0%, var(--secondary-bg) 100%);
-        }
-        
-        .user-profile-badge.lifetime-active:hover {
-            border-color: #a78bfa;
-            box-shadow: 0 4px 15px rgba(167, 139, 250, 0.15);
-        }
-        
-        /* Бейдж подписки */
-        .user-sub-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            padding: 1px 6px;
-            border-radius: 4px;
-            font-size: 0.6rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            margin-right: 6px;
-        }
-        
-        .user-sub-badge.free { background: rgba(107, 114, 128, 0.2); color: #9ca3af; }
-        .user-sub-badge.pro { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
-        .user-sub-badge.lifetime { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; }
-        .user-sub-badge svg { width: 8px; height: 8px; }
-        
-        /* Тонкое кольцо вокруг аватара */
-        .user-avatar.pro-ring { box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.4); }
-        .user-avatar.lifetime-ring { box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.4); }
-        
-        /* Информация о подписке в dropdown */
-        .dropdown-sub-info {
-            padding: 0.6rem 0.8rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 6px;
-            margin-bottom: 0.4rem;
-        }
-        .dropdown-sub-info.pro { border-left: 2px solid #fbbf24; }
-        .dropdown-sub-info.lifetime { border-left: 2px solid #a78bfa; }
-        
-        .dropdown-sub-status { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
-        .dropdown-sub-icon { font-size: 0.9rem; }
-        .dropdown-sub-text { font-weight: 600; font-size: 0.8rem; }
-        .dropdown-sub-text.pro { color: #fbbf24; }
-        .dropdown-sub-text.lifetime { color: #c4b5fd; }
-        .dropdown-sub-plan { font-size: 0.7rem; color: var(--text-secondary); }
-        .dropdown-sub-expires { font-size: 0.65rem; color: var(--text-muted); margin-top: 2px; }
-
         .user-profile-badge:hover {
             border-color: var(--accent-color);
             box-shadow: 0 5px 20px rgba(255, 255, 255, 0.1);
@@ -2614,52 +2551,417 @@
         /* 🚀 LAUNCH EDITION SUBSCRIPTION STYLES - 50% OFF                 */
         /* ═══════════════════════════════════════════════════════════════ */
 
-        .sub-launch {
-            position: relative;
+        /* ═══════════════════════════════════════════════════════════════
+           MODERN MINIMAL SUBSCRIPTION STYLES
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .sub-modern {
             margin-top: 2rem;
-            padding: 0;
             background: var(--secondary-bg);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
+            border-radius: 16px;
             overflow: hidden;
         }
-
-        /* Animated Particles */
-        .launch-particles {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
+        
+        /* Header */
+        .sub-modern-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
         }
-
-        .launch-particles span {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            animation: floatUp 12s linear infinite;
-            opacity: 0;
+        
+        .sub-modern-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
-
-        .launch-particles span:nth-child(1) { left: 5%; animation-delay: 0s; }
-        .launch-particles span:nth-child(2) { left: 15%; animation-delay: 1s; }
-        .launch-particles span:nth-child(3) { left: 25%; animation-delay: 2s; }
-        .launch-particles span:nth-child(4) { left: 35%; animation-delay: 3s; }
-        .launch-particles span:nth-child(5) { left: 45%; animation-delay: 4s; }
-        .launch-particles span:nth-child(6) { left: 55%; animation-delay: 5s; }
-        .launch-particles span:nth-child(7) { left: 65%; animation-delay: 6s; }
-        .launch-particles span:nth-child(8) { left: 75%; animation-delay: 7s; }
-        .launch-particles span:nth-child(9) { left: 85%; animation-delay: 8s; }
-        .launch-particles span:nth-child(10) { left: 92%; animation-delay: 9s; }
-        .launch-particles span:nth-child(11) { left: 10%; animation-delay: 10s; }
-        .launch-particles span:nth-child(12) { left: 80%; animation-delay: 11s; }
-
-        @keyframes floatUp {
-            0% { transform: translateY(500px) scale(0); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-50px) scale(1); opacity: 0; }
+        
+        .sub-logo {
+            font-size: 1.5rem;
+        }
+        
+        .sub-title-text h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .sub-title-text h3 span {
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .sub-title-text p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin: 0.15rem 0 0 0;
+        }
+        
+        .sub-modern-status {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .status-badge-modern {
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-badge-modern.free {
+            background: rgba(107, 114, 128, 0.15);
+            color: #9ca3af;
+        }
+        
+        .status-badge-modern.pro {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+        }
+        
+        .status-badge-modern.lifetime {
+            background: rgba(167, 139, 250, 0.15);
+            color: #c4b5fd;
+        }
+        
+        .status-text-modern {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Secret Features Hint */
+        .sub-secret-hint {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(167, 139, 250, 0.04) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .secret-icon {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .secret-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        
+        .secret-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #c4b5fd;
+        }
+        
+        .secret-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Features */
+        .sub-features-modern {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .feature-modern {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.25rem 0.5rem;
+            border-right: 1px solid var(--border-color);
+        }
+        
+        .feature-modern:last-child {
+            border-right: none;
+        }
+        
+        .feature-icon-modern {
+            font-size: 1.25rem;
+        }
+        
+        .feature-name {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+        
+        /* Pricing */
+        .sub-pricing-modern {
+            padding: 1.25rem 1.5rem;
+        }
+        
+        .pricing-header-modern {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        .currency-switch {
+            display: flex;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            padding: 2px;
+            cursor: pointer;
+        }
+        
+        .currency-switch .curr-opt {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 4px;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+        
+        .currency-switch .curr-opt.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+        }
+        
+        /* Plans Grid */
+        .plans-modern {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .plan-modern {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .plan-modern:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .plan-modern.popular {
+            border-color: rgba(167, 139, 250, 0.4);
+            background: rgba(139, 92, 246, 0.08);
+        }
+        
+        .plan-modern.popular:hover {
+            border-color: rgba(167, 139, 250, 0.6);
+        }
+        
+        .plan-tag {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.2rem 0.5rem;
+            background: #8b5cf6;
+            color: white;
+            font-size: 0.55rem;
+            font-weight: 700;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        
+        .plan-tag.best {
+            background: #10b981;
+        }
+        
+        .plan-duration {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .plan-price-modern {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.15rem;
+        }
+        
+        .plan-price-modern .price-old {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+        
+        .plan-price-modern .price-main {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .plan-per {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+        }
+        
+        /* Lifetime */
+        .lifetime-modern {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(167, 139, 250, 0.05) 100%);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .lifetime-modern:hover {
+            border-color: rgba(167, 139, 250, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .lifetime-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .lifetime-icon {
+            font-size: 1.75rem;
+            color: #c4b5fd;
+        }
+        
+        .lifetime-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        
+        .lifetime-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .lifetime-desc {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        
+        .lifetime-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .lifetime-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.1rem;
+        }
+        
+        .lifetime-price .price-old {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+        
+        .lifetime-price .price-main {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #c4b5fd;
+        }
+        
+        .lifetime-arrow {
+            font-size: 1.25rem;
+            color: #c4b5fd;
+            transition: transform 0.2s;
+        }
+        
+        .lifetime-modern:hover .lifetime-arrow {
+            transform: translateX(4px);
+        }
+        
+        /* Footer */
+        .sub-footer-modern {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .sub-footer-modern span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .sub-modern-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .sub-features-modern {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .feature-modern:nth-child(2) {
+                border-right: none;
+            }
+            
+            .feature-modern:nth-child(1),
+            .feature-modern:nth-child(2) {
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .plans-modern {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .lifetime-modern {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .lifetime-left {
+                flex-direction: column;
+            }
+            
+            .lifetime-price {
+                align-items: center;
+            }
+            
+            .sub-footer-modern {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: center;
+            }
         }
 
         /* Launch Banner */
@@ -8421,8 +8723,7 @@
         <div class="user-avatar" id="userAvatar">G</div>
         <div class="user-info">
             <div class="user-name" id="userName">Гость</div>
-            <div class="user-status">
-                <span class="user-sub-badge free" id="userSubBadge">FREE</span>
+            <div class="user-status" id="userServerBadge">
                 <span class="user-server-badge" id="serverBadge">Сервер</span>
             </div>
         </div>
@@ -8433,16 +8734,6 @@
 
     <!-- Profile Dropdown Menu -->
     <div class="profile-dropdown hidden" id="profileDropdown">
-        <!-- Блок статуса подписки -->
-        <div class="dropdown-sub-info" id="dropdownSubInfo">
-            <div class="dropdown-sub-status">
-                <span class="dropdown-sub-icon" id="dropdownSubIcon">○</span>
-                <span class="dropdown-sub-text" id="dropdownSubText">Бесплатный</span>
-            </div>
-            <div class="dropdown-sub-plan" id="dropdownSubPlan">Базовый доступ</div>
-            <div class="dropdown-sub-expires" id="dropdownSubExpires"></div>
-        </div>
-        
         <div class="dropdown-server-info">
             <div class="dropdown-server-label">Текущий сервер</div>
             <div class="dropdown-server-value" id="dropdownServerValue">
@@ -9081,238 +9372,140 @@
                     </button>
                 </div>
 
-                <!-- 🚀 SUBSCRIPTION - LAUNCH EDITION with -50% OFF -->
-                <div class="sub-launch">
-                    <!-- Animated particles -->
-                    <div class="launch-particles">
-                        <span></span><span></span><span></span><span></span><span></span>
-                        <span></span><span></span><span></span><span></span><span></span>
-                        <span></span><span></span>
-                    </div>
-
-                    <!-- Launch Banner -->
-                    <div class="launch-banner">
-                        <div class="launch-banner-inner">
-                            <span class="launch-icon">🚀</span>
-                            <span class="launch-text">ОТКРЫТИЕ ПРОЕКТА</span>
-                            <span class="launch-discount">-50%</span>
-                            <span class="launch-text">НА ВСЁ</span>
-                            <span class="launch-icon">🚀</span>
-                        </div>
-                    </div>
-
+                <!-- 🚀 SUBSCRIPTION - MINIMAL MODERN -->
+                <div class="sub-modern">
                     <!-- Header -->
-                    <div class="sub-header-launch">
-                        <div class="header-icon-launch">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                            </svg>
-                            <div class="icon-pulse"></div>
+                    <div class="sub-modern-header">
+                        <div class="sub-modern-title">
+                            <span class="sub-logo">⭐</span>
+                            <div class="sub-title-text">
+                                <h3>BadgRules <span>PRO</span></h3>
+                                <p>Полный доступ ко всем возможностям</p>
+                            </div>
                         </div>
-                        <div class="header-text-launch">
-                            <h3>BadgRules <span>PRO</span></h3>
-                            <p>Расширенные возможности для игроков</p>
+                        <div class="sub-modern-status" id="subscriptionStatus">
+                            <div class="status-badge-modern free" id="subBadge">FREE</div>
+                            <span class="status-text-modern" id="subExpires">Базовый доступ</span>
                         </div>
                     </div>
 
-                    <!-- Status -->
-                    <div class="sub-status-launch" id="subscriptionStatus">
-                        <div class="status-info-launch">
-                            <div class="status-badge-launch free" id="subBadge">
-                                <span class="badge-text">FREE</span>
-                            </div>
-                            <div class="status-details-launch">
-                                <span class="status-label-launch">Текущий статус</span>
-                                <span class="status-value-launch" id="subExpires">Базовый доступ</span>
-                            </div>
-                        </div>
-                        <div class="status-counter-launch">
-                            <div class="counter-ring">
-                                <svg viewBox="0 0 36 36">
-                                    <circle class="ring-bg" cx="18" cy="18" r="16"/>
-                                    <circle class="ring-fill" cx="18" cy="18" r="16"/>
-                                </svg>
-                                <span class="counter-num">5</span>
-                            </div>
-                            <span class="counter-text">запросов</span>
+                    <!-- Secret Features Hint -->
+                    <div class="sub-secret-hint">
+                        <div class="secret-icon">🔮</div>
+                        <div class="secret-text">
+                            <span class="secret-title">Секретные возможности</span>
+                            <span class="secret-desc">PRO открывает скрытые функции, недоступные в бесплатной версии</span>
                         </div>
                     </div>
 
-                    <!-- Features -->
-                    <div class="sub-features-launch">
-                        <div class="feature-launch">
-                            <div class="feature-icon-launch">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                                </svg>
-                            </div>
-                            <span class="feature-title-launch">Безлимит</span>
-                            <span class="feature-desc-launch">∞ запросов</span>
+                    <!-- Features Grid -->
+                    <div class="sub-features-modern">
+                        <div class="feature-modern">
+                            <div class="feature-icon-modern">⚡</div>
+                            <span class="feature-name">Безлимит</span>
                         </div>
-                        <div class="feature-launch">
-                            <div class="feature-icon-launch">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="3"/>
-                                    <path d="M12 1v2m0 18v2m11-11h-2M3 12H1"/>
-                                </svg>
-                            </div>
-                            <span class="feature-title-launch">Все AI</span>
-                            <span class="feature-desc-launch">3 модели</span>
+                        <div class="feature-modern">
+                            <div class="feature-icon-modern">🧠</div>
+                            <span class="feature-name">Все AI модели</span>
                         </div>
-                        <div class="feature-launch">
-                            <div class="feature-icon-launch">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polygon points="23 7 16 12 23 17 23 7"/>
-                                    <rect x="1" y="5" width="15" height="14" rx="2"/>
-                                </svg>
-                            </div>
-                            <span class="feature-title-launch">Видео</span>
-                            <span class="feature-desc-launch">AI анализ</span>
+                        <div class="feature-modern">
+                            <div class="feature-icon-modern">🎬</div>
+                            <span class="feature-name">Видео анализ</span>
                         </div>
-                        <div class="feature-launch">
-                            <div class="feature-icon-launch">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"/>
-                                    <path d="M12 6v6l4 2"/>
-                                </svg>
-                            </div>
-                            <span class="feature-title-launch">Приоритет</span>
-                            <span class="feature-desc-launch">&lt;1 сек</span>
+                        <div class="feature-modern">
+                            <div class="feature-icon-modern">🔓</div>
+                            <span class="feature-name">Секретные функции</span>
                         </div>
                     </div>
 
-                    <!-- Pricing -->
-                    <div class="sub-pricing-launch">
-                        <div class="pricing-header-launch">
-                            <span class="pricing-title-launch">Тарифы</span>
-                            <div class="currency-toggle-launch" onclick="toggleCurrency()">
-                                <span class="curr-opt active" id="toggleRub">₽ RUB</span>
-                                <span class="curr-opt" id="toggleUsd">$ USD</span>
+                    <!-- Pricing Section -->
+                    <div class="sub-pricing-modern">
+                        <div class="pricing-header-modern">
+                            <span class="pricing-label">Выберите тариф</span>
+                            <div class="currency-switch" onclick="toggleCurrency()">
+                                <span class="curr-opt active" id="toggleRub">₽</span>
+                                <span class="curr-opt" id="toggleUsd">$</span>
                             </div>
                         </div>
 
                         <!-- Plans -->
-                        <div class="plans-grid-launch">
-                            <!-- 1 Month -->
-                            <div class="plan-card-launch" onclick="openPaymentModal('1month')">
-                                <div class="plan-name-launch">1 месяц</div>
-                                <div class="plan-price-launch">
+                        <div class="plans-modern">
+                            <div class="plan-modern" onclick="openPaymentModal('1month')">
+                                <span class="plan-duration">1 мес</span>
+                                <div class="plan-price-modern">
                                     <span class="price-old show-rub">570₽</span>
                                     <span class="price-old show-usd" style="display:none">$6</span>
-                                    <span class="price-new show-rub">285₽</span>
-                                    <span class="price-new show-usd" style="display:none">$3</span>
+                                    <span class="price-main show-rub">285₽</span>
+                                    <span class="price-main show-usd" style="display:none">$3</span>
                                 </div>
-                                <div class="plan-discount-launch">-50%</div>
-                                <button class="plan-btn-launch">Выбрать</button>
                             </div>
 
-                            <!-- 3 Months -->
-                            <div class="plan-card-launch" onclick="openPaymentModal('3months')">
-                                <div class="plan-name-launch">3 месяца</div>
-                                <div class="plan-price-launch">
+                            <div class="plan-modern" onclick="openPaymentModal('3months')">
+                                <span class="plan-duration">3 мес</span>
+                                <div class="plan-price-modern">
                                     <span class="price-old show-rub">1 280₽</span>
                                     <span class="price-old show-usd" style="display:none">$13.50</span>
-                                    <span class="price-new show-rub">640₽</span>
-                                    <span class="price-new show-usd" style="display:none">$6.75</span>
+                                    <span class="price-main show-rub">640₽</span>
+                                    <span class="price-main show-usd" style="display:none">$6.75</span>
                                 </div>
-                                <div class="plan-per-launch">
-                                    <span class="show-rub">≈ 213₽/мес</span>
-                                    <span class="show-usd" style="display:none">≈ $2.25/мес</span>
-                                </div>
-                                <div class="plan-discount-launch">-50%</div>
-                                <button class="plan-btn-launch">Выбрать</button>
+                                <span class="plan-per show-rub">213₽/мес</span>
+                                <span class="plan-per show-usd" style="display:none">$2.25/мес</span>
                             </div>
 
-                            <!-- 6 Months - Popular -->
-                            <div class="plan-card-launch popular" onclick="openPaymentModal('6months')">
-                                <div class="plan-popular-launch">★ ПОПУЛЯРНЫЙ</div>
-                                <div class="plan-name-launch">6 месяцев</div>
-                                <div class="plan-price-launch">
+                            <div class="plan-modern popular" onclick="openPaymentModal('6months')">
+                                <span class="plan-tag">Популярный</span>
+                                <span class="plan-duration">6 мес</span>
+                                <div class="plan-price-modern">
                                     <span class="price-old show-rub">2 850₽</span>
                                     <span class="price-old show-usd" style="display:none">$30</span>
-                                    <span class="price-new show-rub">1 425₽</span>
-                                    <span class="price-new show-usd" style="display:none">$15</span>
+                                    <span class="price-main show-rub">1 425₽</span>
+                                    <span class="price-main show-usd" style="display:none">$15</span>
                                 </div>
-                                <div class="plan-per-launch">
-                                    <span class="show-rub">≈ 237₽/мес</span>
-                                    <span class="show-usd" style="display:none">≈ $2.50/мес</span>
-                                </div>
-                                <div class="plan-discount-launch">-50%</div>
-                                <button class="plan-btn-launch primary">Выбрать</button>
-                                <div class="plan-shine"></div>
+                                <span class="plan-per show-rub">237₽/мес</span>
+                                <span class="plan-per show-usd" style="display:none">$2.50/мес</span>
                             </div>
 
-                            <!-- 1 Year -->
-                            <div class="plan-card-launch" onclick="openPaymentModal('1year')">
-                                <div class="plan-best-launch">ЛУЧШАЯ ЦЕНА</div>
-                                <div class="plan-name-launch">12 месяцев</div>
-                                <div class="plan-price-launch">
+                            <div class="plan-modern" onclick="openPaymentModal('1year')">
+                                <span class="plan-tag best">Выгодно</span>
+                                <span class="plan-duration">12 мес</span>
+                                <div class="plan-price-modern">
                                     <span class="price-old show-rub">4 750₽</span>
                                     <span class="price-old show-usd" style="display:none">$50</span>
-                                    <span class="price-new show-rub">2 375₽</span>
-                                    <span class="price-new show-usd" style="display:none">$25</span>
+                                    <span class="price-main show-rub">2 375₽</span>
+                                    <span class="price-main show-usd" style="display:none">$25</span>
                                 </div>
-                                <div class="plan-per-launch">
-                                    <span class="show-rub">≈ 198₽/мес</span>
-                                    <span class="show-usd" style="display:none">≈ $2.08/мес</span>
-                                </div>
-                                <div class="plan-discount-launch">-50%</div>
-                                <button class="plan-btn-launch">Выбрать</button>
+                                <span class="plan-per show-rub">198₽/мес</span>
+                                <span class="plan-per show-usd" style="display:none">$2.08/мес</span>
                             </div>
                         </div>
 
                         <!-- Lifetime -->
-                        <div class="lifetime-launch" onclick="openPaymentModal('lifetime')">
-                            <div class="lifetime-glow"></div>
-                            <div class="lifetime-content-launch">
-                                <div class="lifetime-left-launch">
-                                    <div class="lifetime-icon-launch">∞</div>
-                                    <div class="lifetime-info-launch">
-                                        <span class="lifetime-title-launch">НАВСЕГДА</span>
-                                        <span class="lifetime-desc-launch">Один платёж — вечный доступ</span>
-                                    </div>
+                        <div class="lifetime-modern" onclick="openPaymentModal('lifetime')">
+                            <div class="lifetime-left">
+                                <span class="lifetime-icon">∞</span>
+                                <div class="lifetime-info">
+                                    <span class="lifetime-title">Навсегда</span>
+                                    <span class="lifetime-desc">Один раз — доступ навечно</span>
                                 </div>
-                                <div class="lifetime-right-launch">
-                                    <div class="lifetime-price-launch">
-                                        <span class="price-old show-rub">9 500₽</span>
-                                        <span class="price-old show-usd" style="display:none">$100</span>
-                                        <span class="price-new show-rub">4 750₽</span>
-                                        <span class="price-new show-usd" style="display:none">$50</span>
-                                    </div>
-                                    <div class="lifetime-discount-launch">-50%</div>
-                                    <button class="lifetime-btn-launch">
-                                        Получить
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                                        </svg>
-                                    </button>
+                            </div>
+                            <div class="lifetime-right">
+                                <div class="lifetime-price">
+                                    <span class="price-old show-rub">9 500₽</span>
+                                    <span class="price-old show-usd" style="display:none">$100</span>
+                                    <span class="price-main show-rub">4 750₽</span>
+                                    <span class="price-main show-usd" style="display:none">$50</span>
                                 </div>
+                                <span class="lifetime-arrow">→</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Trust -->
-                    <div class="sub-trust-launch">
-                        <div class="trust-item-launch">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2"/>
-                                <path d="M7 11V7a5 5 0 0110 0v4"/>
-                            </svg>
-                            <span>Безопасно</span>
-                        </div>
-                        <div class="trust-item-launch">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                            </svg>
-                            <span>Гарантия</span>
-                        </div>
-                        <div class="trust-item-launch">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="20 6 9 17 4 12"/>
-                            </svg>
-                            <span>Мгновенно</span>
-                        </div>
+                    <!-- Footer -->
+                    <div class="sub-footer-modern">
+                        <span>🔒 Безопасная оплата</span>
+                        <span>⚡ Мгновенная активация</span>
                     </div>
+                </div>
 
                     <!-- Admin Panel -->
                     <div class="admin-panel-launch hidden" id="adminPanel">
@@ -9347,7 +9540,6 @@
                         </div>
                     </div>
                     <button class="admin-toggle-launch hidden" id="adminToggleBtn" onclick="toggleAdminPanel()">🛡️</button>
-                </div>
             </div>
         </div>
 
@@ -9686,158 +9878,6 @@
     </div>
 
     <script>
-        // ═══════════════════════════════════════════════════════════════
-        // 🤖 BADGRULES BOT INTEGRATION
-        // ═══════════════════════════════════════════════════════════════
-        
-        const LOGGER_CONFIG = {
-            WEBHOOK_URL: 'http://localhost:5000',  // URL бота
-            WEBHOOK_SECRET: 'your-secret-key-here', // Секретный ключ
-            ENABLED: true,
-            LOG_EVENTS: { login: true, logout: true, chat: true, error: true, payment: true },
-            // Автообновление подписки каждые 30 секунд
-            AUTO_CHECK_INTERVAL: 30000
-        };
-
-        class SiteLogger {
-            constructor(config) { this.config = config; this.queue = []; this.sending = false; }
-            async log(type, data = {}) {
-                if (!this.config.ENABLED || !this.config.LOG_EVENTS[type]) return;
-                this.queue.push({ type, timestamp: new Date().toISOString(), ...data });
-                this.processQueue();
-            }
-            async processQueue() {
-                if (this.sending || this.queue.length === 0) return;
-                this.sending = true;
-                while (this.queue.length > 0) {
-                    const payload = this.queue.shift();
-                    try {
-                        await fetch(`${this.config.WEBHOOK_URL}/webhook/log`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.config.WEBHOOK_SECRET}` },
-                            body: JSON.stringify(payload)
-                        });
-                    } catch (e) { /* ignore */ }
-                    await new Promise(r => setTimeout(r, 100));
-                }
-                this.sending = false;
-            }
-            logLogin(userId, username, server = null) { this.log('login', { user_id: userId, username, server, message: `${username} вошёл` }); }
-            logLogout(userId, username) { this.log('logout', { user_id: userId, username, message: `${username} вышел` }); }
-            logChat(userId, username, message, server = null) { this.log('chat', { user_id: userId, username, server, message: message.substring(0, 500) }); }
-            logPayment(userId, username, plan, amount) { this.log('payment', { user_id: userId, username, message: `Покупка: ${plan} за ${amount}` }); }
-        }
-
-        class SubscriptionChecker {
-            constructor(config) { 
-                this.config = config; 
-                this.cache = new Map(); 
-                this.cacheTime = 10000; // 10 сек кэш для быстрого обновления
-            }
-            
-            async check(userId, forceRefresh = false) {
-                if (!this.config.ENABLED) return { has_pro: false };
-                
-                // Проверяем кэш (если не принудительное обновление)
-                if (!forceRefresh) {
-                    const cached = this.cache.get(userId);
-                    if (cached && Date.now() - cached.timestamp < this.cacheTime) return cached.data;
-                }
-                
-                try {
-                    const response = await fetch(`${this.config.WEBHOOK_URL}/api/subscription/${userId}`, {
-                        headers: { 'Authorization': `Bearer ${this.config.WEBHOOK_SECRET}` }
-                    });
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    const data = await response.json();
-                    this.cache.set(userId, { data, timestamp: Date.now() });
-                    return data;
-                } catch (e) { 
-                    console.warn('[Bot] Check failed:', e.message); 
-                    return { has_pro: false, status: 'error' }; 
-                }
-            }
-            
-            clearCache() { this.cache.clear(); }
-        }
-
-        async function notifySubscriptionPurchase(userId, username, plan, amount) {
-            if (!LOGGER_CONFIG.ENABLED) return false;
-            try {
-                await fetch(`${LOGGER_CONFIG.WEBHOOK_URL}/webhook/subscription`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${LOGGER_CONFIG.WEBHOOK_SECRET}` },
-                    body: JSON.stringify({ event: 'subscription_purchased', user_id: userId, username, plan, amount })
-                });
-                return true;
-            } catch (e) { return false; }
-        }
-
-        const siteLogger = new SiteLogger(LOGGER_CONFIG);
-        const subscriptionChecker = new SubscriptionChecker(LOGGER_CONFIG);
-        
-        // Автоматическая проверка подписки через бота
-        let subCheckInterval = null;
-        
-        function startSubscriptionAutoCheck() {
-            if (subCheckInterval) return;
-            
-            const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
-            if (!user.id || !LOGGER_CONFIG.ENABLED) return;
-            
-            console.log('[Bot] 🔄 Автопроверка подписки запущена');
-            
-            // Проверяем сразу
-            checkAndSyncSubscription(user.id);
-            
-            // И каждые N секунд
-            subCheckInterval = setInterval(() => {
-                checkAndSyncSubscription(user.id);
-            }, LOGGER_CONFIG.AUTO_CHECK_INTERVAL);
-        }
-        
-        function stopSubscriptionAutoCheck() {
-            if (subCheckInterval) {
-                clearInterval(subCheckInterval);
-                subCheckInterval = null;
-            }
-        }
-        
-        async function checkAndSyncSubscription(userId) {
-            try {
-                const botSub = await subscriptionChecker.check(userId, true); // Принудительное обновление
-                const localSub = JSON.parse(localStorage.getItem('badgrules_subscription') || 'null');
-                
-                if (botSub.has_pro) {
-                    // Бот говорит есть PRO
-                    const newSub = {
-                        plan: botSub.plan || 'granted',
-                        planName: botSub.plan_name || 'PRO',
-                        fromBot: true,
-                        lifetime: botSub.days_remaining > 3650,
-                        expiresAt: botSub.expires_at,
-                        daysRemaining: botSub.days_remaining
-                    };
-                    
-                    // Обновляем если изменилось
-                    if (!localSub || localSub.plan !== newSub.plan || localSub.expiresAt !== newSub.expiresAt) {
-                        console.log('[Bot] ✅ Подписка синхронизирована:', newSub.planName);
-                        localStorage.setItem('badgrules_subscription', JSON.stringify(newSub));
-                        loadSubscriptionStatus();
-                    }
-                } else if (localSub && localSub.fromBot) {
-                    // Бот говорит нет PRO, а у нас была подписка от бота - удаляем
-                    console.log('[Bot] ❌ Подписка отозвана');
-                    localStorage.removeItem('badgrules_subscription');
-                    loadSubscriptionStatus();
-                }
-            } catch (e) {
-                // Ошибка - молча игнорируем
-            }
-        }
-
-        console.log('🤖 BadgRules Bot Integration loaded');
-
         // ═══════════════════════════════════════════════════════════════
         // 🎮 SERVER DATA - GTA 5 RP & Majestic RP
         // ═══════════════════════════════════════════════════════════════
@@ -11581,12 +11621,6 @@
             
             // Update profile section
             updateProfileSection(user);
-            
-            // Загружаем статус подписки
-            loadSubscriptionStatus();
-            
-            // Запускаем автопроверку подписки через бота
-            startSubscriptionAutoCheck();
         }
 
         // Update Profile Section
@@ -11915,13 +11949,6 @@ function setupProfileDropdown(userData) {
 
         function logout() {
             if (confirm('Вы уверены, что хотите выйти?')) {
-                // Логируем выход
-                const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
-                if (user.id) siteLogger.logLogout(user.id, user.displayName || user.username);
-                
-                // Останавливаем автопроверку
-                stopSubscriptionAutoCheck();
-                
                 localStorage.removeItem('badgrules_user');
                 localStorage.removeItem('badgrules_server_selection');
                 location.reload();
@@ -11972,9 +11999,6 @@ function setupProfileDropdown(userData) {
                     
                     console.log('Processed user data:', user);
                     localStorage.setItem('badgrules_user', JSON.stringify(user));
-                    
-                    // Логируем вход
-                    siteLogger.logLogin(user.id, user.displayName || user.username);
                     
                     // Clean URL
                     window.history.replaceState({}, document.title, window.location.pathname);
@@ -12426,86 +12450,52 @@ let selectedPlan = null;
 // Load and display subscription status
 function loadSubscriptionStatus() {
     const subscription = JSON.parse(localStorage.getItem('badgrules_subscription') || 'null');
-    
-    // UI элементы
-    const profileBadge = document.getElementById('userProfileBadge');
-    const userAvatar = document.getElementById('userAvatar');
-    const userSubBadge = document.getElementById('userSubBadge');
-    const dropdownSubInfo = document.getElementById('dropdownSubInfo');
-    const dropdownSubIcon = document.getElementById('dropdownSubIcon');
-    const dropdownSubText = document.getElementById('dropdownSubText');
-    const dropdownSubPlan = document.getElementById('dropdownSubPlan');
-    const dropdownSubExpires = document.getElementById('dropdownSubExpires');
     const subBadge = document.getElementById('subBadge');
     const subExpires = document.getElementById('subExpires');
     
-    // Сбрасываем классы
-    if (profileBadge) profileBadge.classList.remove('pro-active', 'lifetime-active');
-    if (userAvatar) userAvatar.classList.remove('pro-ring', 'lifetime-ring');
-    
-    // Определяем тип подписки
-    let subType = 'free';
-    let subIcon = '○';
-    let subText = 'Бесплатный';
-    let subPlanName = 'Базовый доступ';
-    let subExpiresText = '';
-    
-    if (subscription) {
-        if (subscription.lifetime) {
-            subType = 'lifetime';
-            subIcon = '♾️';
-            subText = 'LIFETIME';
-            subPlanName = subscription.planName || 'Навсегда';
-            subExpiresText = 'Бессрочно';
-        } else if (new Date(subscription.expiresAt) > new Date()) {
-            subType = 'pro';
-            subIcon = '⭐';
-            subText = 'PRO';
-            subPlanName = subscription.planName || 'PRO подписка';
-            const daysLeft = Math.ceil((new Date(subscription.expiresAt) - new Date()) / (1000 * 60 * 60 * 24));
-            subExpiresText = `${daysLeft} дн. до ${new Date(subscription.expiresAt).toLocaleDateString('ru-RU')}`;
-        } else {
-            // Истекла
-            localStorage.removeItem('badgrules_subscription');
+    if (!subscription) {
+        // Free
+        if (subBadge) {
+            subBadge.className = 'status-badge-modern free';
+            subBadge.textContent = 'FREE';
         }
+        if (subExpires) subExpires.textContent = 'Базовый доступ';
+        return null;
     }
     
-    // Обновляем UI хедера
-    if (profileBadge && subType !== 'free') {
-        profileBadge.classList.add(subType === 'lifetime' ? 'lifetime-active' : 'pro-active');
-    }
-    if (userAvatar && subType !== 'free') {
-        userAvatar.classList.add(subType === 'lifetime' ? 'lifetime-ring' : 'pro-ring');
-    }
-    
-    // Бейдж в хедере
-    if (userSubBadge) {
-        userSubBadge.className = `user-sub-badge ${subType}`;
-        if (subType === 'pro') {
-            userSubBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>PRO';
-        } else if (subType === 'lifetime') {
-            userSubBadge.innerHTML = '♾️';
-        } else {
-            userSubBadge.textContent = 'FREE';
+    // Check if lifetime
+    if (subscription.lifetime) {
+        if (subBadge) {
+            subBadge.className = 'status-badge-modern lifetime';
+            subBadge.textContent = 'LIFETIME';
         }
+        if (subExpires) subExpires.textContent = 'Бессрочная подписка';
+        return subscription;
     }
     
-    // Dropdown
-    if (dropdownSubInfo) dropdownSubInfo.className = `dropdown-sub-info ${subType}`;
-    if (dropdownSubIcon) dropdownSubIcon.textContent = subIcon;
-    if (dropdownSubText) {
-        dropdownSubText.className = `dropdown-sub-text ${subType}`;
-        dropdownSubText.textContent = subText;
+    // Check expiration
+    if (new Date(subscription.expiresAt) < new Date()) {
+        // Expired
+        localStorage.removeItem('badgrules_subscription');
+        if (subBadge) {
+            subBadge.className = 'status-badge-modern free';
+            subBadge.textContent = 'FREE';
+        }
+        if (subExpires) subExpires.textContent = 'Подписка истекла';
+        return null;
     }
-    if (dropdownSubPlan) dropdownSubPlan.textContent = subPlanName;
-    if (dropdownSubExpires) dropdownSubExpires.textContent = subExpiresText;
     
-    // Старые элементы (страница подписок)
+    // Active subscription
+    const expiresDate = new Date(subscription.expiresAt);
+    const daysLeft = Math.ceil((expiresDate - new Date()) / (1000 * 60 * 60 * 24));
+    
     if (subBadge) {
-        subBadge.className = `status-badge-launch ${subType}`;
-        subBadge.innerHTML = `<span class="badge-text">${subText}</span>`;
+        subBadge.className = 'status-badge-modern pro';
+        subBadge.textContent = 'PRO';
     }
-    if (subExpires) subExpires.textContent = subExpiresText || subPlanName;
+    if (subExpires) {
+        subExpires.textContent = `${daysLeft} дн. осталось`;
+    }
     
     return subscription;
 }
