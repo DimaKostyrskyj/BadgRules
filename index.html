@@ -665,6 +665,191 @@
             user-select: none;
         }
 
+        /* ═══════════════════════════════════════════════════════════════
+           PRO SUBSCRIPTION STYLES - Красивая подсветка для подписчиков
+           ═══════════════════════════════════════════════════════════════ */
+        
+        /* PRO статус - золотое свечение */
+        .user-profile-badge.pro-active {
+            border-color: #fbbf24;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            box-shadow: 
+                0 0 20px rgba(251, 191, 36, 0.2),
+                0 0 40px rgba(251, 191, 36, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .user-profile-badge.pro-active::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
+            z-index: -1;
+            opacity: 0.5;
+            animation: proBorderPulse 3s ease-in-out infinite;
+        }
+        
+        .user-profile-badge.pro-active:hover {
+            border-color: #f59e0b;
+            box-shadow: 
+                0 0 30px rgba(251, 191, 36, 0.3),
+                0 0 60px rgba(251, 191, 36, 0.15),
+                0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* LIFETIME статус - алмазное свечение */
+        .user-profile-badge.lifetime-active {
+            border-color: #a78bfa;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(139, 92, 246, 0.05) 100%);
+            box-shadow: 
+                0 0 25px rgba(167, 139, 250, 0.25),
+                0 0 50px rgba(139, 92, 246, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+        
+        .user-profile-badge.lifetime-active::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6, #c4b5fd, #a78bfa);
+            background-size: 300% 300%;
+            z-index: -1;
+            opacity: 0.6;
+            animation: lifetimeBorderShine 4s ease-in-out infinite;
+        }
+        
+        .user-profile-badge.lifetime-active:hover {
+            border-color: #8b5cf6;
+            box-shadow: 
+                0 0 35px rgba(167, 139, 250, 0.35),
+                0 0 70px rgba(139, 92, 246, 0.2),
+                0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Бейдж подписки в профиле */
+        .user-sub-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .user-sub-badge.free {
+            background: rgba(107, 114, 128, 0.2);
+            color: #9ca3af;
+        }
+        
+        .user-sub-badge.pro {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.3) 100%);
+            color: #fbbf24;
+            animation: badgeGlow 2s ease-in-out infinite;
+        }
+        
+        .user-sub-badge.lifetime {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(139, 92, 246, 0.3) 100%);
+            color: #c4b5fd;
+            animation: badgeGlow 2s ease-in-out infinite;
+        }
+        
+        .user-sub-badge svg {
+            width: 10px;
+            height: 10px;
+        }
+        
+        /* Аватар с кольцом подписки */
+        .user-avatar.pro-ring {
+            box-shadow: 0 0 0 2px var(--secondary-bg), 0 0 0 4px #fbbf24;
+        }
+        
+        .user-avatar.lifetime-ring {
+            box-shadow: 0 0 0 2px var(--secondary-bg), 0 0 0 4px #a78bfa;
+            animation: avatarRingPulse 3s ease-in-out infinite;
+        }
+        
+        /* Анимации */
+        @keyframes proBorderPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        
+        @keyframes lifetimeBorderShine {
+            0% { background-position: 0% 50%; opacity: 0.4; }
+            50% { background-position: 100% 50%; opacity: 0.7; }
+            100% { background-position: 0% 50%; opacity: 0.4; }
+        }
+        
+        @keyframes badgeGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+        
+        @keyframes avatarRingPulse {
+            0%, 100% { box-shadow: 0 0 0 2px var(--secondary-bg), 0 0 0 4px #a78bfa, 0 0 15px rgba(167, 139, 250, 0.3); }
+            50% { box-shadow: 0 0 0 2px var(--secondary-bg), 0 0 0 4px #c4b5fd, 0 0 25px rgba(167, 139, 250, 0.5); }
+        }
+        
+        /* Информация о подписке в dropdown */
+        .dropdown-sub-info {
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dropdown-sub-info.pro {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+        
+        .dropdown-sub-info.lifetime {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+        
+        .dropdown-sub-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        
+        .dropdown-sub-status-icon {
+            font-size: 1rem;
+        }
+        
+        .dropdown-sub-status-text {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .dropdown-sub-status-text.pro {
+            color: #fbbf24;
+        }
+        
+        .dropdown-sub-status-text.lifetime {
+            color: #c4b5fd;
+        }
+        
+        .dropdown-sub-plan {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        .dropdown-sub-expires {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
         .user-profile-badge:hover {
             border-color: var(--accent-color);
             box-shadow: 0 5px 20px rgba(255, 255, 255, 0.1);
@@ -8358,7 +8543,8 @@
         <div class="user-avatar" id="userAvatar">G</div>
         <div class="user-info">
             <div class="user-name" id="userName">Гость</div>
-            <div class="user-status" id="userServerBadge">
+            <div class="user-status">
+                <span class="user-sub-badge free" id="userSubBadge">FREE</span>
                 <span class="user-server-badge" id="serverBadge">Сервер</span>
             </div>
         </div>
@@ -8369,6 +8555,16 @@
 
     <!-- Profile Dropdown Menu -->
     <div class="profile-dropdown hidden" id="profileDropdown">
+        <!-- Subscription Status Block -->
+        <div class="dropdown-sub-info" id="dropdownSubInfo">
+            <div class="dropdown-sub-status">
+                <span class="dropdown-sub-status-icon" id="dropdownSubIcon">○</span>
+                <span class="dropdown-sub-status-text" id="dropdownSubText">Бесплатный</span>
+            </div>
+            <div class="dropdown-sub-plan" id="dropdownSubPlan">Базовый доступ</div>
+            <div class="dropdown-sub-expires" id="dropdownSubExpires"></div>
+        </div>
+        
         <div class="dropdown-server-info">
             <div class="dropdown-server-label">Текущий сервер</div>
             <div class="dropdown-server-value" id="dropdownServerValue">
@@ -9616,256 +9812,79 @@
         // 🤖 BADGRULES DISCORD BOT INTEGRATION
         // ═══════════════════════════════════════════════════════════════
         
-        /**
-         * НАСТРОЙКА ИНТЕГРАЦИИ С БОТОМ
-         * 
-         * 1. Запусти бота: python bot.py
-         * 2. Замени WEBHOOK_URL на адрес где запущен бот
-         * 3. Замени WEBHOOK_SECRET на тот же ключ что в боте (CONFIG["WEBHOOK_SECRET"])
-         */
         const LOGGER_CONFIG = {
-            // URL бота (замени после деплоя)
-            // Локально: 'http://localhost:5000'
-            // На сервере: 'https://твой-домен.com' или 'http://IP:5000'
             WEBHOOK_URL: 'http://localhost:5000',
-            
-            // Секретный ключ (ДОЛЖЕН совпадать с WEBHOOK_SECRET в bot.py)
             WEBHOOK_SECRET: 'your-secret-key-here',
-            
-            // Включить/выключить логирование
             ENABLED: true,
-            
-            // Какие события отправлять в Discord
-            LOG_EVENTS: {
-                login: true,      // 🔑 Вход пользователя
-                logout: true,     // 🚪 Выход
-                chat: true,       // 💬 Сообщения в чате
-                error: true,      // ❌ Ошибки
-                payment: true,    // 💳 Покупки
-            }
+            LOG_EVENTS: { login: true, logout: true, chat: true, error: true, payment: true }
         };
 
-        // ═══════════════════════════════════════════════════════════════
-        // 📡 LOGGER CLASS - Отправляет события в Discord бота
-        // ═══════════════════════════════════════════════════════════════
-        
         class SiteLogger {
-            constructor(config) {
-                this.config = config;
-                this.queue = [];
-                this.sending = false;
-            }
-            
-            // Отправить событие
+            constructor(config) { this.config = config; this.queue = []; this.sending = false; }
             async log(type, data = {}) {
-                if (!this.config.ENABLED) return;
-                if (!this.config.LOG_EVENTS[type]) return;
-                
-                const payload = {
-                    type: type,
-                    timestamp: new Date().toISOString(),
-                    url: window.location.href,
-                    ...data
-                };
-                
-                this.queue.push(payload);
+                if (!this.config.ENABLED || !this.config.LOG_EVENTS[type]) return;
+                this.queue.push({ type, timestamp: new Date().toISOString(), ...data });
                 this.processQueue();
             }
-            
             async processQueue() {
                 if (this.sending || this.queue.length === 0) return;
                 this.sending = true;
-                
                 while (this.queue.length > 0) {
                     const payload = this.queue.shift();
                     try {
                         await fetch(`${this.config.WEBHOOK_URL}/webhook/log`, {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${this.config.WEBHOOK_SECRET}`
-                            },
+                            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.config.WEBHOOK_SECRET}` },
                             body: JSON.stringify(payload)
                         });
-                    } catch (e) {
-                        console.warn('[Logger] Send error:', e.message);
-                    }
+                    } catch (e) { console.warn('[Logger]', e.message); }
                     await new Promise(r => setTimeout(r, 100));
                 }
                 this.sending = false;
             }
-            
-            // === УДОБНЫЕ МЕТОДЫ ===
-            
-            // Вход пользователя
-            logLogin(userId, username, server = null) {
-                this.log('login', {
-                    user_id: userId,
-                    username: username,
-                    server: server,
-                    message: `${username} вошёл в систему`
-                });
-                console.log('[Logger] 🔑 Login:', username);
-            }
-            
-            // Выход
-            logLogout(userId, username) {
-                this.log('logout', {
-                    user_id: userId,
-                    username: username,
-                    message: `${username} вышел из системы`
-                });
-                console.log('[Logger] 🚪 Logout:', username);
-            }
-            
-            // Сообщение в чате
-            logChat(userId, username, message, server = null) {
-                this.log('chat', {
-                    user_id: userId,
-                    username: username,
-                    server: server,
-                    message: message.substring(0, 500)
-                });
-                console.log('[Logger] 💬 Chat:', username, '-', message.substring(0, 50));
-            }
-            
-            // Ошибка
-            logError(error, userId = null, context = null) {
-                this.log('error', {
-                    user_id: userId,
-                    message: error.message || String(error),
-                    stack: error.stack,
-                    context: context
-                });
-                console.log('[Logger] ❌ Error:', error.message || error);
-            }
-            
-            // Покупка
-            logPayment(userId, username, plan, amount) {
-                this.log('payment', {
-                    user_id: userId,
-                    username: username,
-                    message: `Покупка: ${plan} за ${amount}`
-                });
-                console.log('[Logger] 💳 Payment:', username, plan, amount);
-            }
+            logLogin(userId, username, server = null) { this.log('login', { user_id: userId, username, server, message: `${username} вошёл` }); }
+            logLogout(userId, username) { this.log('logout', { user_id: userId, username, message: `${username} вышел` }); }
+            logChat(userId, username, message, server = null) { this.log('chat', { user_id: userId, username, server, message: message.substring(0, 500) }); }
+            logError(error, userId = null) { this.log('error', { user_id: userId, message: error.message || String(error) }); }
+            logPayment(userId, username, plan, amount) { this.log('payment', { user_id: userId, username, message: `Покупка: ${plan} за ${amount}` }); }
         }
 
-        // ═══════════════════════════════════════════════════════════════
-        // 🔐 SUBSCRIPTION CHECKER - Проверяет PRO статус через бота
-        // ═══════════════════════════════════════════════════════════════
-        
         class SubscriptionChecker {
-            constructor(config) {
-                this.config = config;
-                this.cache = new Map();
-                this.cacheTime = 5 * 60 * 1000; // 5 минут
-            }
-            
-            // Проверить подписку пользователя
+            constructor(config) { this.config = config; this.cache = new Map(); this.cacheTime = 5 * 60 * 1000; }
             async check(userId) {
-                if (!this.config.ENABLED) return { has_pro: false, status: 'disabled' };
-                
-                // Проверяем кэш
+                if (!this.config.ENABLED) return { has_pro: false };
                 const cached = this.cache.get(userId);
-                if (cached && Date.now() - cached.timestamp < this.cacheTime) {
-                    return cached.data;
-                }
-                
+                if (cached && Date.now() - cached.timestamp < this.cacheTime) return cached.data;
                 try {
-                    const response = await fetch(
-                        `${this.config.WEBHOOK_URL}/api/subscription/${userId}`,
-                        {
-                            headers: {
-                                'Authorization': `Bearer ${this.config.WEBHOOK_SECRET}`
-                            }
-                        }
-                    );
-                    
+                    const response = await fetch(`${this.config.WEBHOOK_URL}/api/subscription/${userId}`, {
+                        headers: { 'Authorization': `Bearer ${this.config.WEBHOOK_SECRET}` }
+                    });
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    
                     const data = await response.json();
-                    
-                    // Кэшируем
                     this.cache.set(userId, { data, timestamp: Date.now() });
-                    console.log('[SubChecker] ✅ Status:', data.status, 'for', userId);
                     return data;
-                    
-                } catch (e) {
-                    console.warn('[SubChecker] ⚠️ Check failed:', e.message);
-                    return { has_pro: false, status: 'error', error: e.message };
-                }
+                } catch (e) { console.warn('[SubChecker]', e.message); return { has_pro: false, status: 'error' }; }
             }
-            
-            // Быстрая проверка есть ли PRO
-            async hasPro(userId) {
-                const sub = await this.check(userId);
-                return sub.has_pro === true;
-            }
-            
-            // Очистить кэш
-            clearCache(userId = null) {
-                if (userId) {
-                    this.cache.delete(userId);
-                } else {
-                    this.cache.clear();
-                }
-            }
+            async hasPro(userId) { return (await this.check(userId)).has_pro === true; }
+            clearCache(userId = null) { userId ? this.cache.delete(userId) : this.cache.clear(); }
         }
 
-        // ═══════════════════════════════════════════════════════════════
-        // 📤 УВЕДОМЛЕНИЕ О ПОКУПКЕ - Отправляет боту для выдачи подписки
-        // ═══════════════════════════════════════════════════════════════
-        
         async function notifySubscriptionPurchase(userId, username, plan, amount) {
             if (!LOGGER_CONFIG.ENABLED) return false;
-            
             try {
                 const response = await fetch(`${LOGGER_CONFIG.WEBHOOK_URL}/webhook/subscription`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${LOGGER_CONFIG.WEBHOOK_SECRET}`
-                    },
-                    body: JSON.stringify({
-                        event: 'subscription_purchased',
-                        user_id: userId,
-                        username: username,
-                        plan: plan,
-                        amount: amount,
-                        timestamp: new Date().toISOString()
-                    })
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${LOGGER_CONFIG.WEBHOOK_SECRET}` },
+                    body: JSON.stringify({ event: 'subscription_purchased', user_id: userId, username, plan, amount })
                 });
-                
-                console.log('[Notify] 📤 Purchase notification sent:', plan);
                 return response.ok;
-            } catch (e) {
-                console.warn('[Notify] ⚠️ Failed to notify:', e.message);
-                return false;
-            }
+            } catch (e) { return false; }
         }
 
-        // ═══════════════════════════════════════════════════════════════
-        // 🌐 СОЗДАЁМ ГЛОБАЛЬНЫЕ ЭКЗЕМПЛЯРЫ
-        // ═══════════════════════════════════════════════════════════════
-        
         const siteLogger = new SiteLogger(LOGGER_CONFIG);
         const subscriptionChecker = new SubscriptionChecker(LOGGER_CONFIG);
-
-        // Глобальный обработчик ошибок
-        window.onerror = function(message, source, lineno, colno, error) {
-            const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
-            siteLogger.logError(error || { message }, user.id || null, {
-                source: source,
-                line: lineno,
-                column: colno
-            });
-            return false;
-        };
-
+        
         console.log('🤖 BadgRules Bot Integration loaded');
-        console.log('📡 Webhook URL:', LOGGER_CONFIG.WEBHOOK_URL);
-        console.log('🔧 Logging enabled:', LOGGER_CONFIG.ENABLED);
 
         // ═══════════════════════════════════════════════════════════════
         // 🎮 SERVER DATA - GTA 5 RP & Majestic RP
@@ -11321,7 +11340,7 @@
             isProcessing = true;
             sendButton.disabled = true;
             
-            // 📡 Логируем сообщение в Discord
+            // Логируем сообщение
             const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
             const serverSelection = loadServerSelection();
             if (user.id) {
@@ -11946,11 +11965,9 @@ function setupProfileDropdown(userData) {
 
         function logout() {
             if (confirm('Вы уверены, что хотите выйти?')) {
-                // 📡 Логируем выход в Discord
+                // Логируем выход
                 const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
-                if (user.id) {
-                    siteLogger.logLogout(user.id, user.displayName || user.username);
-                }
+                if (user.id) siteLogger.logLogout(user.id, user.displayName || user.username);
                 
                 localStorage.removeItem('badgrules_user');
                 localStorage.removeItem('badgrules_server_selection');
@@ -12003,7 +12020,7 @@ function setupProfileDropdown(userData) {
                     console.log('Processed user data:', user);
                     localStorage.setItem('badgrules_user', JSON.stringify(user));
                     
-                    // 📡 Логируем вход в Discord
+                    // Логируем вход
                     siteLogger.logLogin(user.id, user.displayName || user.username);
                     
                     // Clean URL
@@ -12265,7 +12282,7 @@ function setupProfileDropdown(userData) {
 
 // Configuration
 const BOT_CONFIG = {
-    clientId: '1436658032451784775', // Замените на Client ID вашего бота
+    clientId: 'YOUR_BOT_CLIENT_ID', // Замените на Client ID вашего бота
     inviteUrl: 'https://discord.com/api/oauth2/authorize?client_id=YOUR_BOT_CLIENT_ID&permissions=8&scope=bot%20applications.commands',
     familyBaseUrl: 'https://discord.com/api/oauth2/authorize?client_id=YOUR_BOT_CLIENT_ID&permissions=8&scope=bot%20applications.commands&guild_id='
 };
@@ -12456,46 +12473,53 @@ let selectedPlan = null;
 // Load and display subscription status
 function loadSubscriptionStatus() {
     const subscription = JSON.parse(localStorage.getItem('badgrules_subscription') || 'null');
+    
+    // Элементы UI
+    const profileBadge = document.getElementById('userProfileBadge');
+    const userAvatar = document.getElementById('userAvatar');
+    const userSubBadge = document.getElementById('userSubBadge');
+    const dropdownSubInfo = document.getElementById('dropdownSubInfo');
+    const dropdownSubIcon = document.getElementById('dropdownSubIcon');
+    const dropdownSubText = document.getElementById('dropdownSubText');
+    const dropdownSubPlan = document.getElementById('dropdownSubPlan');
+    const dropdownSubExpires = document.getElementById('dropdownSubExpires');
     const subBadge = document.getElementById('subBadge');
     const subExpires = document.getElementById('subExpires');
     
-    // 📡 Проверяем подписку через бота (асинхронно)
-    const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
-    if (user.id && LOGGER_CONFIG.ENABLED) {
-        subscriptionChecker.check(user.id).then(botSub => {
-            if (botSub.has_pro && !subscription) {
-                // Бот выдал PRO, а локально нет - синхронизируем
-                console.log('📡 PRO найден через бота:', botSub);
-                const newSub = {
-                    plan: botSub.plan || 'granted',
-                    planName: botSub.plan_name || 'PRO (от бота)',
-                    fromBot: true,
-                    lifetime: botSub.days_remaining > 3650,
-                    expiresAt: botSub.expires_at
-                };
-                localStorage.setItem('badgrules_subscription', JSON.stringify(newSub));
-                loadSubscriptionStatus(); // Перезагружаем UI
-            }
-        }).catch(e => console.warn('[SubCheck] Error:', e.message));
+    // Сбрасываем классы
+    if (profileBadge) {
+        profileBadge.classList.remove('pro-active', 'lifetime-active');
+    }
+    if (userAvatar) {
+        userAvatar.classList.remove('pro-ring', 'lifetime-ring');
     }
     
     if (!subscription) {
-        // Free
-        if (subBadge) {
-            subBadge.className = 'status-badge-launch free';
-            subBadge.innerHTML = '<span class="badge-text">FREE</span>';
-        }
-        if (subExpires) subExpires.textContent = 'Базовый доступ';
+        // FREE
+        updateSubscriptionUI({
+            type: 'free',
+            icon: '○',
+            text: 'Бесплатный',
+            plan: 'Базовый доступ',
+            expires: ''
+        });
         return null;
     }
     
     // Check if lifetime
     if (subscription.lifetime) {
-        if (subBadge) {
-            subBadge.className = 'status-badge-launch lifetime';
-            subBadge.innerHTML = '<span class="badge-text">LIFETIME</span>';
-        }
-        if (subExpires) subExpires.textContent = 'Бессрочная подписка';
+        updateSubscriptionUI({
+            type: 'lifetime',
+            icon: '♾️',
+            text: 'LIFETIME',
+            plan: subscription.planName || 'Навсегда',
+            expires: 'Бессрочная подписка'
+        });
+        
+        // Добавляем красивые эффекты
+        if (profileBadge) profileBadge.classList.add('lifetime-active');
+        if (userAvatar) userAvatar.classList.add('lifetime-ring');
+        
         return subscription;
     }
     
@@ -12503,24 +12527,95 @@ function loadSubscriptionStatus() {
     if (new Date(subscription.expiresAt) < new Date()) {
         // Expired
         localStorage.removeItem('badgrules_subscription');
-        if (subBadge) {
-            subBadge.className = 'status-badge-launch free';
-            subBadge.innerHTML = '<span class="badge-text">FREE</span>';
-        }
-        if (subExpires) subExpires.textContent = 'Подписка истекла';
+        updateSubscriptionUI({
+            type: 'free',
+            icon: '⏰',
+            text: 'Истекла',
+            plan: 'Подписка истекла',
+            expires: ''
+        });
         return null;
     }
     
-    // Active subscription
-    const expiresDate = new Date(subscription.expiresAt).toLocaleDateString('ru-RU');
+    // Active PRO subscription
+    const expiresDate = new Date(subscription.expiresAt);
+    const daysLeft = Math.ceil((expiresDate - new Date()) / (1000 * 60 * 60 * 24));
     
-    if (subBadge) {
-        subBadge.className = 'status-badge-launch pro';
-        subBadge.innerHTML = '<span class="badge-text">PRO</span>';
-    }
-    if (subExpires) subExpires.textContent = `Действует до ${expiresDate}`;
+    updateSubscriptionUI({
+        type: 'pro',
+        icon: '⭐',
+        text: 'PRO',
+        plan: subscription.planName || 'PRO подписка',
+        expires: `Осталось ${daysLeft} дн. (до ${expiresDate.toLocaleDateString('ru-RU')})`
+    });
+    
+    // Добавляем красивые эффекты
+    if (profileBadge) profileBadge.classList.add('pro-active');
+    if (userAvatar) userAvatar.classList.add('pro-ring');
     
     return subscription;
+}
+
+// Вспомогательная функция для обновления UI подписки
+function updateSubscriptionUI(data) {
+    const { type, icon, text, plan, expires } = data;
+    
+    // Бейдж в хедере
+    const userSubBadge = document.getElementById('userSubBadge');
+    if (userSubBadge) {
+        userSubBadge.className = `user-sub-badge ${type}`;
+        if (type === 'pro') {
+            userSubBadge.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> PRO`;
+        } else if (type === 'lifetime') {
+            userSubBadge.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> ∞`;
+        } else {
+            userSubBadge.textContent = 'FREE';
+        }
+    }
+    
+    // Dropdown info
+    const dropdownSubInfo = document.getElementById('dropdownSubInfo');
+    const dropdownSubIcon = document.getElementById('dropdownSubIcon');
+    const dropdownSubText = document.getElementById('dropdownSubText');
+    const dropdownSubPlan = document.getElementById('dropdownSubPlan');
+    const dropdownSubExpires = document.getElementById('dropdownSubExpires');
+    
+    if (dropdownSubInfo) {
+        dropdownSubInfo.className = `dropdown-sub-info ${type}`;
+    }
+    if (dropdownSubIcon) {
+        dropdownSubIcon.textContent = icon;
+    }
+    if (dropdownSubText) {
+        dropdownSubText.className = `dropdown-sub-status-text ${type}`;
+        dropdownSubText.textContent = text;
+    }
+    if (dropdownSubPlan) {
+        dropdownSubPlan.textContent = plan;
+    }
+    if (dropdownSubExpires) {
+        dropdownSubExpires.textContent = expires;
+    }
+    
+    // Старые элементы (для совместимости)
+    const subBadge = document.getElementById('subBadge');
+    const subExpires = document.getElementById('subExpires');
+    
+    if (subBadge) {
+        if (type === 'lifetime') {
+            subBadge.className = 'status-badge-launch lifetime';
+            subBadge.innerHTML = '<span class="badge-text">LIFETIME</span>';
+        } else if (type === 'pro') {
+            subBadge.className = 'status-badge-launch pro';
+            subBadge.innerHTML = '<span class="badge-text">PRO</span>';
+        } else {
+            subBadge.className = 'status-badge-launch free';
+            subBadge.innerHTML = '<span class="badge-text">FREE</span>';
+        }
+    }
+    if (subExpires) {
+        subExpires.textContent = expires || plan;
+    }
 }
 
 // Select plan
@@ -12704,7 +12799,7 @@ function completePayment(orderId) {
     localStorage.setItem('badgrules_subscription', JSON.stringify(subscription));
     localStorage.removeItem('badgrules_pending_order');
     
-    // 📡 Логируем покупку и уведомляем бота
+    // Логируем покупку и уведомляем бота
     if (user.id) {
         const amount = `$${planData.priceUsd}`;
         siteLogger.logPayment(user.id, user.displayName || user.username, planData.name, amount);
