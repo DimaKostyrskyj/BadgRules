@@ -1588,11 +1588,18 @@
         /* ═══════════════════════════════════════════════════════════════ */
 
         .rule-card {
-            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
-            border: 1px solid rgba(88, 101, 242, 0.3);
-            border-radius: 16px;
-            padding: 1.25rem;
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+            border: 1.5px solid rgba(88, 101, 242, 0.35);
+            border-radius: 18px;
+            padding: 1.5rem 1.75rem;
             margin-bottom: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .rule-card:hover {
+            border-color: rgba(88, 101, 242, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(88, 101, 242, 0.2);
         }
 
         .rule-header {
@@ -1657,13 +1664,19 @@
         }
 
         .punishment-box {
-            background: linear-gradient(135deg, rgba(237, 66, 69, 0.15) 0%, rgba(237, 66, 69, 0.05) 100%);
-            border: 1px solid rgba(237, 66, 69, 0.3);
-            border-radius: 10px;
-            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, rgba(237, 66, 69, 0.18) 0%, rgba(237, 66, 69, 0.06) 100%);
+            border: 1.5px solid rgba(237, 66, 69, 0.35);
+            border-radius: 12px;
+            padding: 0.9rem 1.25rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .punishment-box:hover {
+            border-color: rgba(237, 66, 69, 0.5);
+            background: linear-gradient(135deg, rgba(237, 66, 69, 0.22) 0%, rgba(237, 66, 69, 0.08) 100%);
         }
 
         .punishment-icon {
@@ -1683,16 +1696,23 @@
         }
 
         .examples-list li {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 0.6rem 1rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.75rem 1.25rem;
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.9rem;
             color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .examples-list li:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(4px);
         }
 
         .examples-list li:last-child {
@@ -1712,13 +1732,19 @@
         }
 
         .notes-list li {
-            background: rgba(250, 166, 26, 0.1);
+            background: rgba(250, 166, 26, 0.12);
             border-left: 3px solid #faa61a;
-            padding: 0.6rem 1rem;
+            padding: 0.75rem 1.25rem;
             margin-bottom: 0.5rem;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 10px 10px 0;
             font-size: 0.85rem;
             color: #ffd699;
+            transition: all 0.3s ease;
+        }
+
+        .notes-list li:hover {
+            background: rgba(250, 166, 26, 0.16);
+            transform: translateX(4px);
         }
 
         .notes-list li:last-child {
@@ -1804,10 +1830,10 @@
         }
 
         .term-item:hover {
-            background: rgba(88, 101, 242, 0.15);
-            border-color: rgba(88, 101, 242, 0.4);
+            background: rgba(88, 101, 242, 0.18);
+            border-color: rgba(88, 101, 242, 0.5);
             color: var(--text-primary);
-            transform: translateX(4px);
+            transform: translateX(6px);
         }
 
         .term-abbr {
@@ -1845,12 +1871,18 @@
         }
 
         .help-tip {
-            background: rgba(250, 166, 26, 0.1);
+            background: rgba(250, 166, 26, 0.12);
             border-left: 3px solid #faa61a;
-            padding: 0.75rem 1rem;
-            border-radius: 0 8px 8px 0;
+            padding: 0.9rem 1.25rem;
+            border-radius: 0 10px 10px 0;
             font-size: 0.85rem;
             color: #ffd699;
+            transition: all 0.3s ease;
+        }
+
+        .help-tip:hover {
+            background: rgba(250, 166, 26, 0.16);
+            transform: translateX(4px);
         }
 
         /* HTML контент в сообщениях */
@@ -1869,15 +1901,17 @@
 
         .mini-rule-card {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1rem;
-            transition: all 0.2s ease;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 1.25rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .mini-rule-card:hover {
             border-color: rgba(88, 101, 242, 0.5);
-            background: rgba(88, 101, 242, 0.05);
+            background: rgba(88, 101, 242, 0.08);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.15);
         }
 
         .mini-rule-header {
@@ -1912,20 +1946,21 @@
         }
 
         .term-chip {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.5rem 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.65rem 0.9rem;
             font-size: 0.85rem;
             color: var(--text-secondary);
             text-align: center;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .term-chip:hover {
             border-color: #5865F2;
             color: var(--text-primary);
-            background: rgba(88, 101, 242, 0.1);
+            background: rgba(88, 101, 242, 0.12);
+            transform: translateY(-2px);
         }
 
         .term-chip strong {
@@ -1993,12 +2028,12 @@
         }
 
         .quick-question {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            padding: 0.6rem 1rem;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1.25rem;
+            border-radius: 14px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: left;
             display: inline-flex;
             align-items: center;
@@ -2006,8 +2041,9 @@
         }
 
         .quick-question:hover {
-            border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-2px);
         }
 
         .quick-question-title {
@@ -2215,11 +2251,18 @@
             display: flex;
             align-items: center;
             gap: 1.25rem;
-            padding: 1.5rem;
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
             margin-bottom: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .profile-user-card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
         }
 
         .profile-avatar-minimal {
@@ -2341,17 +2384,25 @@
 
         .stat-item {
             text-align: center;
-            padding: 1rem 0.5rem;
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            padding: 1.25rem 0.75rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .stat-item:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
         .stat-number {
             display: block;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.95);
             font-family: 'JetBrains Mono', monospace;
             line-height: 1;
         }
@@ -2366,18 +2417,28 @@
 
         /* Info List */
         .profile-info-list {
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
             overflow: hidden;
             margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .profile-info-list:hover {
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .info-row {
             display: flex;
             align-items: center;
-            padding: 0.85rem 1rem;
-            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
+        }
+
+        .info-row:hover {
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .info-row:last-child {
@@ -2425,12 +2486,12 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            padding: 0.85rem 2rem;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.9rem;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: 'Manrope', sans-serif;
             border: none;
         }
@@ -2441,8 +2502,8 @@
         }
 
         .quick-action-btn.primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.5);
         }
 
         .quick-action-btn.secondary {
