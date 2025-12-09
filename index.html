@@ -665,190 +665,68 @@
             user-select: none;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
-           PRO SUBSCRIPTION STYLES - Красивая подсветка для подписчиков
-           ═══════════════════════════════════════════════════════════════ */
-        
-        /* PRO статус - золотое свечение */
+        /* PRO статус - мягкое золотое свечение */
         .user-profile-badge.pro-active {
-            border-color: #fbbf24;
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
-            box-shadow: 
-                0 0 20px rgba(251, 191, 36, 0.2),
-                0 0 40px rgba(251, 191, 36, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-        
-        .user-profile-badge.pro-active::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b, #fbbf24);
-            z-index: -1;
-            opacity: 0.5;
-            animation: proBorderPulse 3s ease-in-out infinite;
+            border-color: rgba(251, 191, 36, 0.5);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, var(--secondary-bg) 100%);
         }
         
         .user-profile-badge.pro-active:hover {
-            border-color: #f59e0b;
-            box-shadow: 
-                0 0 30px rgba(251, 191, 36, 0.3),
-                0 0 60px rgba(251, 191, 36, 0.15),
-                0 8px 32px rgba(0, 0, 0, 0.3);
-            transform: translateY(-2px);
+            border-color: #fbbf24;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.15);
         }
         
-        /* LIFETIME статус - алмазное свечение */
+        /* LIFETIME статус - мягкое фиолетовое свечение */
         .user-profile-badge.lifetime-active {
-            border-color: #a78bfa;
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(139, 92, 246, 0.05) 100%);
-            box-shadow: 
-                0 0 25px rgba(167, 139, 250, 0.25),
-                0 0 50px rgba(139, 92, 246, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        }
-        
-        .user-profile-badge.lifetime-active::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, #a78bfa, #8b5cf6, #c4b5fd, #a78bfa);
-            background-size: 300% 300%;
-            z-index: -1;
-            opacity: 0.6;
-            animation: lifetimeBorderShine 4s ease-in-out infinite;
+            border-color: rgba(167, 139, 250, 0.5);
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.05) 0%, var(--secondary-bg) 100%);
         }
         
         .user-profile-badge.lifetime-active:hover {
-            border-color: #8b5cf6;
-            box-shadow: 
-                0 0 35px rgba(167, 139, 250, 0.35),
-                0 0 70px rgba(139, 92, 246, 0.2),
-                0 8px 32px rgba(0, 0, 0, 0.3);
-            transform: translateY(-2px);
+            border-color: #a78bfa;
+            box-shadow: 0 4px 15px rgba(167, 139, 250, 0.15);
         }
         
-        /* Бейдж подписки в профиле */
+        /* Бейдж подписки */
         .user-sub-badge {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.65rem;
-            font-weight: 700;
+            gap: 3px;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.6rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
+            margin-right: 6px;
         }
         
-        .user-sub-badge.free {
-            background: rgba(107, 114, 128, 0.2);
-            color: #9ca3af;
-        }
+        .user-sub-badge.free { background: rgba(107, 114, 128, 0.2); color: #9ca3af; }
+        .user-sub-badge.pro { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+        .user-sub-badge.lifetime { background: rgba(167, 139, 250, 0.15); color: #c4b5fd; }
+        .user-sub-badge svg { width: 8px; height: 8px; }
         
-        .user-sub-badge.pro {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.3) 100%);
-            color: #fbbf24;
-            animation: badgeGlow 2s ease-in-out infinite;
-        }
-        
-        .user-sub-badge.lifetime {
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(139, 92, 246, 0.3) 100%);
-            color: #c4b5fd;
-            animation: badgeGlow 2s ease-in-out infinite;
-        }
-        
-        .user-sub-badge svg {
-            width: 10px;
-            height: 10px;
-        }
-        
-        /* Аватар с кольцом подписки */
-        .user-avatar.pro-ring {
-            box-shadow: 0 0 0 2px var(--secondary-bg), 0 0 0 4px #fbbf24;
-        }
-        
-        .user-avatar.lifetime-ring {
-            box-shadow: 0 0 0 2px var(--secondary-bg), 0 0 0 4px #a78bfa;
-            animation: avatarRingPulse 3s ease-in-out infinite;
-        }
-        
-        /* Анимации */
-        @keyframes proBorderPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-        }
-        
-        @keyframes lifetimeBorderShine {
-            0% { background-position: 0% 50%; opacity: 0.4; }
-            50% { background-position: 100% 50%; opacity: 0.7; }
-            100% { background-position: 0% 50%; opacity: 0.4; }
-        }
-        
-        @keyframes badgeGlow {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.2); }
-        }
-        
-        @keyframes avatarRingPulse {
-            0%, 100% { box-shadow: 0 0 0 2px var(--secondary-bg), 0 0 0 4px #a78bfa, 0 0 15px rgba(167, 139, 250, 0.3); }
-            50% { box-shadow: 0 0 0 2px var(--secondary-bg), 0 0 0 4px #c4b5fd, 0 0 25px rgba(167, 139, 250, 0.5); }
-        }
+        /* Тонкое кольцо вокруг аватара */
+        .user-avatar.pro-ring { box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.4); }
+        .user-avatar.lifetime-ring { box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.4); }
         
         /* Информация о подписке в dropdown */
         .dropdown-sub-info {
-            padding: 0.75rem 1rem;
+            padding: 0.6rem 0.8rem;
             background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            margin-bottom: 0.4rem;
         }
+        .dropdown-sub-info.pro { border-left: 2px solid #fbbf24; }
+        .dropdown-sub-info.lifetime { border-left: 2px solid #a78bfa; }
         
-        .dropdown-sub-info.pro {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
-            border: 1px solid rgba(251, 191, 36, 0.2);
-        }
-        
-        .dropdown-sub-info.lifetime {
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.1) 0%, rgba(139, 92, 246, 0.05) 100%);
-            border: 1px solid rgba(167, 139, 250, 0.2);
-        }
-        
-        .dropdown-sub-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-        
-        .dropdown-sub-status-icon {
-            font-size: 1rem;
-        }
-        
-        .dropdown-sub-status-text {
-            font-weight: 600;
-            font-size: 0.85rem;
-        }
-        
-        .dropdown-sub-status-text.pro {
-            color: #fbbf24;
-        }
-        
-        .dropdown-sub-status-text.lifetime {
-            color: #c4b5fd;
-        }
-        
-        .dropdown-sub-plan {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-        
-        .dropdown-sub-expires {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
+        .dropdown-sub-status { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
+        .dropdown-sub-icon { font-size: 0.9rem; }
+        .dropdown-sub-text { font-weight: 600; font-size: 0.8rem; }
+        .dropdown-sub-text.pro { color: #fbbf24; }
+        .dropdown-sub-text.lifetime { color: #c4b5fd; }
+        .dropdown-sub-plan { font-size: 0.7rem; color: var(--text-secondary); }
+        .dropdown-sub-expires { font-size: 0.65rem; color: var(--text-muted); margin-top: 2px; }
 
         .user-profile-badge:hover {
             border-color: var(--accent-color);
@@ -8555,11 +8433,11 @@
 
     <!-- Profile Dropdown Menu -->
     <div class="profile-dropdown hidden" id="profileDropdown">
-        <!-- Subscription Status Block -->
+        <!-- Блок статуса подписки -->
         <div class="dropdown-sub-info" id="dropdownSubInfo">
             <div class="dropdown-sub-status">
-                <span class="dropdown-sub-status-icon" id="dropdownSubIcon">○</span>
-                <span class="dropdown-sub-status-text" id="dropdownSubText">Бесплатный</span>
+                <span class="dropdown-sub-icon" id="dropdownSubIcon">○</span>
+                <span class="dropdown-sub-text" id="dropdownSubText">Бесплатный</span>
             </div>
             <div class="dropdown-sub-plan" id="dropdownSubPlan">Базовый доступ</div>
             <div class="dropdown-sub-expires" id="dropdownSubExpires"></div>
@@ -9809,14 +9687,16 @@
 
     <script>
         // ═══════════════════════════════════════════════════════════════
-        // 🤖 BADGRULES DISCORD BOT INTEGRATION
+        // 🤖 BADGRULES BOT INTEGRATION
         // ═══════════════════════════════════════════════════════════════
         
         const LOGGER_CONFIG = {
-            WEBHOOK_URL: 'http://localhost:5000',
-            WEBHOOK_SECRET: 'your-secret-key-here',
+            WEBHOOK_URL: 'http://localhost:5000',  // URL бота
+            WEBHOOK_SECRET: 'your-secret-key-here', // Секретный ключ
             ENABLED: true,
-            LOG_EVENTS: { login: true, logout: true, chat: true, error: true, payment: true }
+            LOG_EVENTS: { login: true, logout: true, chat: true, error: true, payment: true },
+            // Автообновление подписки каждые 30 секунд
+            AUTO_CHECK_INTERVAL: 30000
         };
 
         class SiteLogger {
@@ -9837,7 +9717,7 @@
                             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.config.WEBHOOK_SECRET}` },
                             body: JSON.stringify(payload)
                         });
-                    } catch (e) { console.warn('[Logger]', e.message); }
+                    } catch (e) { /* ignore */ }
                     await new Promise(r => setTimeout(r, 100));
                 }
                 this.sending = false;
@@ -9845,16 +9725,25 @@
             logLogin(userId, username, server = null) { this.log('login', { user_id: userId, username, server, message: `${username} вошёл` }); }
             logLogout(userId, username) { this.log('logout', { user_id: userId, username, message: `${username} вышел` }); }
             logChat(userId, username, message, server = null) { this.log('chat', { user_id: userId, username, server, message: message.substring(0, 500) }); }
-            logError(error, userId = null) { this.log('error', { user_id: userId, message: error.message || String(error) }); }
             logPayment(userId, username, plan, amount) { this.log('payment', { user_id: userId, username, message: `Покупка: ${plan} за ${amount}` }); }
         }
 
         class SubscriptionChecker {
-            constructor(config) { this.config = config; this.cache = new Map(); this.cacheTime = 5 * 60 * 1000; }
-            async check(userId) {
+            constructor(config) { 
+                this.config = config; 
+                this.cache = new Map(); 
+                this.cacheTime = 10000; // 10 сек кэш для быстрого обновления
+            }
+            
+            async check(userId, forceRefresh = false) {
                 if (!this.config.ENABLED) return { has_pro: false };
-                const cached = this.cache.get(userId);
-                if (cached && Date.now() - cached.timestamp < this.cacheTime) return cached.data;
+                
+                // Проверяем кэш (если не принудительное обновление)
+                if (!forceRefresh) {
+                    const cached = this.cache.get(userId);
+                    if (cached && Date.now() - cached.timestamp < this.cacheTime) return cached.data;
+                }
+                
                 try {
                     const response = await fetch(`${this.config.WEBHOOK_URL}/api/subscription/${userId}`, {
                         headers: { 'Authorization': `Bearer ${this.config.WEBHOOK_SECRET}` }
@@ -9863,27 +9752,90 @@
                     const data = await response.json();
                     this.cache.set(userId, { data, timestamp: Date.now() });
                     return data;
-                } catch (e) { console.warn('[SubChecker]', e.message); return { has_pro: false, status: 'error' }; }
+                } catch (e) { 
+                    console.warn('[Bot] Check failed:', e.message); 
+                    return { has_pro: false, status: 'error' }; 
+                }
             }
-            async hasPro(userId) { return (await this.check(userId)).has_pro === true; }
-            clearCache(userId = null) { userId ? this.cache.delete(userId) : this.cache.clear(); }
+            
+            clearCache() { this.cache.clear(); }
         }
 
         async function notifySubscriptionPurchase(userId, username, plan, amount) {
             if (!LOGGER_CONFIG.ENABLED) return false;
             try {
-                const response = await fetch(`${LOGGER_CONFIG.WEBHOOK_URL}/webhook/subscription`, {
+                await fetch(`${LOGGER_CONFIG.WEBHOOK_URL}/webhook/subscription`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${LOGGER_CONFIG.WEBHOOK_SECRET}` },
                     body: JSON.stringify({ event: 'subscription_purchased', user_id: userId, username, plan, amount })
                 });
-                return response.ok;
+                return true;
             } catch (e) { return false; }
         }
 
         const siteLogger = new SiteLogger(LOGGER_CONFIG);
         const subscriptionChecker = new SubscriptionChecker(LOGGER_CONFIG);
         
+        // Автоматическая проверка подписки через бота
+        let subCheckInterval = null;
+        
+        function startSubscriptionAutoCheck() {
+            if (subCheckInterval) return;
+            
+            const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+            if (!user.id || !LOGGER_CONFIG.ENABLED) return;
+            
+            console.log('[Bot] 🔄 Автопроверка подписки запущена');
+            
+            // Проверяем сразу
+            checkAndSyncSubscription(user.id);
+            
+            // И каждые N секунд
+            subCheckInterval = setInterval(() => {
+                checkAndSyncSubscription(user.id);
+            }, LOGGER_CONFIG.AUTO_CHECK_INTERVAL);
+        }
+        
+        function stopSubscriptionAutoCheck() {
+            if (subCheckInterval) {
+                clearInterval(subCheckInterval);
+                subCheckInterval = null;
+            }
+        }
+        
+        async function checkAndSyncSubscription(userId) {
+            try {
+                const botSub = await subscriptionChecker.check(userId, true); // Принудительное обновление
+                const localSub = JSON.parse(localStorage.getItem('badgrules_subscription') || 'null');
+                
+                if (botSub.has_pro) {
+                    // Бот говорит есть PRO
+                    const newSub = {
+                        plan: botSub.plan || 'granted',
+                        planName: botSub.plan_name || 'PRO',
+                        fromBot: true,
+                        lifetime: botSub.days_remaining > 3650,
+                        expiresAt: botSub.expires_at,
+                        daysRemaining: botSub.days_remaining
+                    };
+                    
+                    // Обновляем если изменилось
+                    if (!localSub || localSub.plan !== newSub.plan || localSub.expiresAt !== newSub.expiresAt) {
+                        console.log('[Bot] ✅ Подписка синхронизирована:', newSub.planName);
+                        localStorage.setItem('badgrules_subscription', JSON.stringify(newSub));
+                        loadSubscriptionStatus();
+                    }
+                } else if (localSub && localSub.fromBot) {
+                    // Бот говорит нет PRO, а у нас была подписка от бота - удаляем
+                    console.log('[Bot] ❌ Подписка отозвана');
+                    localStorage.removeItem('badgrules_subscription');
+                    loadSubscriptionStatus();
+                }
+            } catch (e) {
+                // Ошибка - молча игнорируем
+            }
+        }
+
         console.log('🤖 BadgRules Bot Integration loaded');
 
         // ═══════════════════════════════════════════════════════════════
@@ -11340,14 +11292,6 @@
             isProcessing = true;
             sendButton.disabled = true;
             
-            // Логируем сообщение
-            const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
-            const serverSelection = loadServerSelection();
-            if (user.id) {
-                const serverName = serverSelection ? `${serverSelection.project}/${serverSelection.server}` : null;
-                siteLogger.logChat(user.id, user.displayName || user.username, message, serverName);
-            }
-            
             addMessage(message, false);
             chatInput.value = '';
             addTypingIndicator();
@@ -11637,6 +11581,12 @@
             
             // Update profile section
             updateProfileSection(user);
+            
+            // Загружаем статус подписки
+            loadSubscriptionStatus();
+            
+            // Запускаем автопроверку подписки через бота
+            startSubscriptionAutoCheck();
         }
 
         // Update Profile Section
@@ -11968,6 +11918,9 @@ function setupProfileDropdown(userData) {
                 // Логируем выход
                 const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
                 if (user.id) siteLogger.logLogout(user.id, user.displayName || user.username);
+                
+                // Останавливаем автопроверку
+                stopSubscriptionAutoCheck();
                 
                 localStorage.removeItem('badgrules_user');
                 localStorage.removeItem('badgrules_server_selection');
@@ -12474,7 +12427,7 @@ let selectedPlan = null;
 function loadSubscriptionStatus() {
     const subscription = JSON.parse(localStorage.getItem('badgrules_subscription') || 'null');
     
-    // Элементы UI
+    // UI элементы
     const profileBadge = document.getElementById('userProfileBadge');
     const userAvatar = document.getElementById('userAvatar');
     const userSubBadge = document.getElementById('userSubBadge');
@@ -12487,135 +12440,74 @@ function loadSubscriptionStatus() {
     const subExpires = document.getElementById('subExpires');
     
     // Сбрасываем классы
-    if (profileBadge) {
-        profileBadge.classList.remove('pro-active', 'lifetime-active');
-    }
-    if (userAvatar) {
-        userAvatar.classList.remove('pro-ring', 'lifetime-ring');
-    }
+    if (profileBadge) profileBadge.classList.remove('pro-active', 'lifetime-active');
+    if (userAvatar) userAvatar.classList.remove('pro-ring', 'lifetime-ring');
     
-    if (!subscription) {
-        // FREE
-        updateSubscriptionUI({
-            type: 'free',
-            icon: '○',
-            text: 'Бесплатный',
-            plan: 'Базовый доступ',
-            expires: ''
-        });
-        return null;
-    }
+    // Определяем тип подписки
+    let subType = 'free';
+    let subIcon = '○';
+    let subText = 'Бесплатный';
+    let subPlanName = 'Базовый доступ';
+    let subExpiresText = '';
     
-    // Check if lifetime
-    if (subscription.lifetime) {
-        updateSubscriptionUI({
-            type: 'lifetime',
-            icon: '♾️',
-            text: 'LIFETIME',
-            plan: subscription.planName || 'Навсегда',
-            expires: 'Бессрочная подписка'
-        });
-        
-        // Добавляем красивые эффекты
-        if (profileBadge) profileBadge.classList.add('lifetime-active');
-        if (userAvatar) userAvatar.classList.add('lifetime-ring');
-        
-        return subscription;
+    if (subscription) {
+        if (subscription.lifetime) {
+            subType = 'lifetime';
+            subIcon = '♾️';
+            subText = 'LIFETIME';
+            subPlanName = subscription.planName || 'Навсегда';
+            subExpiresText = 'Бессрочно';
+        } else if (new Date(subscription.expiresAt) > new Date()) {
+            subType = 'pro';
+            subIcon = '⭐';
+            subText = 'PRO';
+            subPlanName = subscription.planName || 'PRO подписка';
+            const daysLeft = Math.ceil((new Date(subscription.expiresAt) - new Date()) / (1000 * 60 * 60 * 24));
+            subExpiresText = `${daysLeft} дн. до ${new Date(subscription.expiresAt).toLocaleDateString('ru-RU')}`;
+        } else {
+            // Истекла
+            localStorage.removeItem('badgrules_subscription');
+        }
     }
     
-    // Check expiration
-    if (new Date(subscription.expiresAt) < new Date()) {
-        // Expired
-        localStorage.removeItem('badgrules_subscription');
-        updateSubscriptionUI({
-            type: 'free',
-            icon: '⏰',
-            text: 'Истекла',
-            plan: 'Подписка истекла',
-            expires: ''
-        });
-        return null;
+    // Обновляем UI хедера
+    if (profileBadge && subType !== 'free') {
+        profileBadge.classList.add(subType === 'lifetime' ? 'lifetime-active' : 'pro-active');
     }
-    
-    // Active PRO subscription
-    const expiresDate = new Date(subscription.expiresAt);
-    const daysLeft = Math.ceil((expiresDate - new Date()) / (1000 * 60 * 60 * 24));
-    
-    updateSubscriptionUI({
-        type: 'pro',
-        icon: '⭐',
-        text: 'PRO',
-        plan: subscription.planName || 'PRO подписка',
-        expires: `Осталось ${daysLeft} дн. (до ${expiresDate.toLocaleDateString('ru-RU')})`
-    });
-    
-    // Добавляем красивые эффекты
-    if (profileBadge) profileBadge.classList.add('pro-active');
-    if (userAvatar) userAvatar.classList.add('pro-ring');
-    
-    return subscription;
-}
-
-// Вспомогательная функция для обновления UI подписки
-function updateSubscriptionUI(data) {
-    const { type, icon, text, plan, expires } = data;
+    if (userAvatar && subType !== 'free') {
+        userAvatar.classList.add(subType === 'lifetime' ? 'lifetime-ring' : 'pro-ring');
+    }
     
     // Бейдж в хедере
-    const userSubBadge = document.getElementById('userSubBadge');
     if (userSubBadge) {
-        userSubBadge.className = `user-sub-badge ${type}`;
-        if (type === 'pro') {
-            userSubBadge.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> PRO`;
-        } else if (type === 'lifetime') {
-            userSubBadge.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> ∞`;
+        userSubBadge.className = `user-sub-badge ${subType}`;
+        if (subType === 'pro') {
+            userSubBadge.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>PRO';
+        } else if (subType === 'lifetime') {
+            userSubBadge.innerHTML = '♾️';
         } else {
             userSubBadge.textContent = 'FREE';
         }
     }
     
-    // Dropdown info
-    const dropdownSubInfo = document.getElementById('dropdownSubInfo');
-    const dropdownSubIcon = document.getElementById('dropdownSubIcon');
-    const dropdownSubText = document.getElementById('dropdownSubText');
-    const dropdownSubPlan = document.getElementById('dropdownSubPlan');
-    const dropdownSubExpires = document.getElementById('dropdownSubExpires');
-    
-    if (dropdownSubInfo) {
-        dropdownSubInfo.className = `dropdown-sub-info ${type}`;
-    }
-    if (dropdownSubIcon) {
-        dropdownSubIcon.textContent = icon;
-    }
+    // Dropdown
+    if (dropdownSubInfo) dropdownSubInfo.className = `dropdown-sub-info ${subType}`;
+    if (dropdownSubIcon) dropdownSubIcon.textContent = subIcon;
     if (dropdownSubText) {
-        dropdownSubText.className = `dropdown-sub-status-text ${type}`;
-        dropdownSubText.textContent = text;
+        dropdownSubText.className = `dropdown-sub-text ${subType}`;
+        dropdownSubText.textContent = subText;
     }
-    if (dropdownSubPlan) {
-        dropdownSubPlan.textContent = plan;
-    }
-    if (dropdownSubExpires) {
-        dropdownSubExpires.textContent = expires;
-    }
+    if (dropdownSubPlan) dropdownSubPlan.textContent = subPlanName;
+    if (dropdownSubExpires) dropdownSubExpires.textContent = subExpiresText;
     
-    // Старые элементы (для совместимости)
-    const subBadge = document.getElementById('subBadge');
-    const subExpires = document.getElementById('subExpires');
-    
+    // Старые элементы (страница подписок)
     if (subBadge) {
-        if (type === 'lifetime') {
-            subBadge.className = 'status-badge-launch lifetime';
-            subBadge.innerHTML = '<span class="badge-text">LIFETIME</span>';
-        } else if (type === 'pro') {
-            subBadge.className = 'status-badge-launch pro';
-            subBadge.innerHTML = '<span class="badge-text">PRO</span>';
-        } else {
-            subBadge.className = 'status-badge-launch free';
-            subBadge.innerHTML = '<span class="badge-text">FREE</span>';
-        }
+        subBadge.className = `status-badge-launch ${subType}`;
+        subBadge.innerHTML = `<span class="badge-text">${subText}</span>`;
     }
-    if (subExpires) {
-        subExpires.textContent = expires || plan;
-    }
+    if (subExpires) subExpires.textContent = subExpiresText || subPlanName;
+    
+    return subscription;
 }
 
 // Select plan
@@ -12771,7 +12663,6 @@ function completePayment(orderId) {
     }
     
     const planData = SUBSCRIPTION_PLANS[pendingOrder.plan];
-    const user = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
     
     // Calculate expiry
     let expiresAt = null;
@@ -12798,14 +12689,6 @@ function completePayment(orderId) {
     
     localStorage.setItem('badgrules_subscription', JSON.stringify(subscription));
     localStorage.removeItem('badgrules_pending_order');
-    
-    // Логируем покупку и уведомляем бота
-    if (user.id) {
-        const amount = `$${planData.priceUsd}`;
-        siteLogger.logPayment(user.id, user.displayName || user.username, planData.name, amount);
-        notifySubscriptionPurchase(user.id, user.displayName || user.username, pendingOrder.plan, amount);
-        subscriptionChecker.clearCache(user.id);
-    }
     
     // Hide processing
     document.getElementById('paymentProcessing').classList.add('hidden');
