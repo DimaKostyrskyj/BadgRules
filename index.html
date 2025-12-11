@@ -10442,12 +10442,28 @@
         window.addEventListener('DOMContentLoaded', () => {
             console.log('DOM загружен, проверяем авторизацию...');
             checkLoginStatus();
+            
+            // Обновить badge сразу после загрузки
+            setTimeout(() => {
+                console.log('🔄 Инициализация badge...');
+                if (typeof updateAllSubscriptionBadges === 'function') {
+                    updateAllSubscriptionBadges();
+                }
+            }, 500);
         });
 
         window.addEventListener('load', () => {
             if (chatInput) {
                 chatInput.focus();
             }
+            
+            // Ещё раз обновить badge после полной загрузки
+            setTimeout(() => {
+                console.log('🔄 Финальное обновление badge...');
+                if (typeof updateAllSubscriptionBadges === 'function') {
+                    updateAllSubscriptionBadges();
+                }
+            }, 1000);
         });
 
         // Discord OAuth Configuration
@@ -11472,33 +11488,39 @@
 
         // Проверка подписки пользователя
         function checkSubscription() {
-            const userData = localStorage.getItem('badgrules_user');
-            if (!userData) return null;
-
             try {
-                const user = JSON.parse(userData);
-                const userId = user.id;
-
-                // Проверяем в localStorage выданные подписки (от бота)
-                const subscriptions = JSON.parse(localStorage.getItem('badgrules_subscriptions') || '{}');
+                // Читаем подписку из localStorage (сохранённую ботом)
+                const subscriptionData = localStorage.getItem('badgrules_subscription');
                 
-                if (subscriptions[userId]) {
-                    const sub = subscriptions[userId];
-                    
-                    // Проверяем lifetime
-                    if (sub.lifetime) {
-                        return { ...sub, type: 'lifetime' };
-                    }
-
-                    // Проверяем срок действия
-                    if (new Date(sub.expiresAt) > new Date()) {
-                        return { ...sub, type: 'pro' };
-                    }
+                if (!subscriptionData) {
+                    console.log('📭 Нет данных подписки в localStorage');
+                    return null;
                 }
 
-                return null;
+                const sub = JSON.parse(subscriptionData);
+                console.log('📦 Подписка из localStorage:', sub);
+                
+                // Проверяем lifetime
+                if (sub.type === 'lifetime') {
+                    console.log('♾️ Lifetime подписка');
+                    return { ...sub, type: 'lifetime' };
+                }
+
+                // Проверяем срок действия
+                const expiresAt = new Date(sub.expiresAt);
+                const now = new Date();
+                
+                if (expiresAt > now) {
+                    const daysLeft = Math.ceil((expiresAt - now) / (1000 * 60 * 60 * 24));
+                    console.log('💎 PRO подписка активна, дней осталось:', daysLeft);
+                    return { ...sub, type: 'pro', daysLeft };
+                } else {
+                    console.log('⏰ Подписка истекла');
+                    localStorage.removeItem('badgrules_subscription');
+                    return null;
+                }
             } catch (e) {
-                console.error('Error checking subscription:', e);
+                console.error('❌ Ошибка проверки подписки:', e);
                 return null;
             }
         }
@@ -12026,6 +12048,12 @@
             updateProfileSubscriptionBadge();
             updateAllSubscriptionBadges();
         }
+
+        // Постоянное обновление badge каждые 10 секунд
+        setInterval(() => {
+            console.log('⏰ Плановое обновление badge...');
+            updateAllSubscriptionBadges();
+        }, 10000); // 10 секунд
 
         // ═══════════════════════════════════════════════════════════════
         // 🤖 BOT API INTEGRATION
