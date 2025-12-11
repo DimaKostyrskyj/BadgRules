@@ -11860,6 +11860,399 @@
             updateProfileSubscriptionBadge();
         }
 
+        // ═══════════════════════════════════════════════════════════════
+        // 🤖 BOT API INTEGRATION
+        // ═══════════════════════════════════════════════════════════════
+
+        const BOT_API = {
+            BASE_URL: 'http://localhost:5000/api',  // Измени на свой URL бота
+            SECRET: 'CGCEcPOkt0c3FJAT4rq8wFO219zV91ac',  // Должен совпадать с ботом
+            ENABLED: true,  // ✅ ВКЛЮЧЕНО!
+            DEBUG: true     // Показывать отладочные сообщения
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // API CALLS
+        // ═══════════════════════════════════════════════════════════════
+
+        async function botApiCall(endpoint, method = 'GET', data = null) {
+            if (!BOT_API.ENABLED) {
+                console.warn('⚠️ Bot API disabled. Set BOT_API.ENABLED = true');
+                return null;
+            }
+            
+            const url = `${BOT_API.BASE_URL}${endpoint}`;
+            
+            if (BOT_API.DEBUG) {
+                console.log(`📡 API Request: ${method} ${url}`);
+                if (data) console.log('📤 Data:', data);
+            }
+            
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Secret': BOT_API.SECRET
+                    }
+                };
+
+                if (data && method !== 'GET') {
+                    options.body = JSON.stringify(data);
+                }
+
+                const response = await fetch(url, options);
+                
+                if (BOT_API.DEBUG) {
+                    console.log(`📥 Response: ${response.status} ${response.statusText}`);
+                }
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`API Error ${response.status}: ${errorText}`);
+                }
+
+                const result = await response.json();
+                
+                if (BOT_API.DEBUG) {
+                    console.log('✅ Response data:', result);
+                }
+                
+                return result;
+            } catch (error) {
+                console.error('❌ Bot API Error:', error);
+                console.error('URL:', url);
+                console.error('Method:', method);
+                return null;
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // SUBSCRIPTION CHECK FROM BOT
+        // ═══════════════════════════════════════════════════════════════
+
+        async function checkSubscriptionFromBot(userId) {
+            if (BOT_API.DEBUG) console.log('🔍 Проверка подписки для:', userId);
+            
+            const result = await botApiCall(`/subscription/${userId}`);
+            
+            if (BOT_API.DEBUG) console.log('📦 Ответ от бота:', result);
+            
+            if (!result) {
+                console.error('❌ Не удалось получить данные от бота');
+                return null;
+            }
+            
+            // Проверка бана ПЕРВЫМ ДЕЛОМ
+            if (result.banned) {
+                console.warn('🔨 Пользователь забанен!');
+                handleUserBanned();
+                return null;
+            }
+            
+            if (result.subscription) {
+                // Сохранить в localStorage
+                const sub = result.subscription;
+                const now = new Date();
+                const expires = new Date(sub.expires_at);
+                
+                if (BOT_API.DEBUG) {
+                    console.log('💎 Подписка найдена:', {
+                        type: sub.type,
+                        plan: sub.plan,
+                        expires: expires,
+                        isActive: expires > now
+                    });
+                }
+                
+                if (expires > now && sub.active) {
+                    localStorage.setItem('badgrules_subscription', JSON.stringify({
+                        type: sub.type,
+                        plan: sub.plan,
+                        expiresAt: sub.expires_at,
+                        grantedAt: sub.granted_at
+                    }));
+                    
+                    // Обновить UI
+                    if (typeof updateSubscriptionUI === 'function') {
+                        updateSubscriptionUI();
+                    }
+                    
+                    console.log('✅ Подписка синхронизирована:', sub.type);
+                    return sub;
+                } else {
+                    // Подписка истекла
+                    console.log('⏰ Подписка истекла');
+                    localStorage.removeItem('badgrules_subscription');
+                    if (typeof updateSubscriptionUI === 'function') {
+                        updateSubscriptionUI();
+                    }
+                }
+            } else {
+                if (BOT_API.DEBUG) console.log('⚡ Подписка не найдена - FREE план');
+                localStorage.removeItem('badgrules_subscription');
+                if (typeof updateSubscriptionUI === 'function') {
+                    updateSubscriptionUI();
+                }
+            }
+            
+            return null;
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // SEND LOGS TO BOT
+        // ═══════════════════════════════════════════════════════════════
+
+        async function sendLogToBot(eventType, userId, data) {
+            await botApiCall('/log', 'POST', {
+                event_type: eventType,
+                user_id: userId,
+                data: data
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // AUTO SYNC ON LOGIN
+        // ═══════════════════════════════════════════════════════════════
+
+        // Переопределяем функцию входа
+        const originalLoginComplete = window.loginComplete || function() {};
+
+        window.loginComplete = async function(userData) {
+            // Вызываем оригинальную функцию
+            originalLoginComplete(userData);
+            
+            // Синхронизация с ботом
+            if (BOT_API.ENABLED && userData && userData.id) {
+                console.log('🤖 Синхронизация с ботом...');
+                
+                // Проверяем подписку из бота
+                const subscription = await checkSubscriptionFromBot(userData.id);
+                
+                // Отправляем лог входа
+                await sendLogToBot('user_login', userData.id, {
+                    username: userData.username,
+                    discriminator: userData.discriminator,
+                    avatar: userData.avatar,
+                    timestamp: new Date().toISOString()
+                });
+                
+                if (subscription) {
+                    console.log('✅ Синхронизация завершена:', subscription.type);
+                } else {
+                    console.log('✅ Синхронизация завершена: FREE');
+                }
+            }
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // PERIODIC SUBSCRIPTION CHECK
+        // ═══════════════════════════════════════════════════════════════
+
+        function startSubscriptionSync() {
+            if (!BOT_API.ENABLED) return;
+            
+            // Проверять каждые 5 минут
+            setInterval(async () => {
+                const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+                
+                if (userData && userData.id) {
+                    console.log('🔄 Периодическая синхронизация подписки...');
+                    await checkSubscriptionFromBot(userData.id);
+                }
+            }, 5 * 60 * 1000);  // 5 минут
+            
+            console.log('🤖 Автоматическая синхронизация запущена (каждые 5 минут)');
+        }
+
+        // Запустить синхронизацию при загрузке
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startSubscriptionSync);
+        } else {
+            startSubscriptionSync();
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // BAN HANDLER
+        // ═══════════════════════════════════════════════════════════════
+
+        function handleUserBanned() {
+            // Показать модальное окно о бане
+            const banModal = document.createElement('div');
+            banModal.id = 'banModal';
+            banModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            banModal.innerHTML = `
+                <div style="
+                    background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+                    border: 2px solid #ef4444;
+                    border-radius: 24px;
+                    padding: 3rem;
+                    max-width: 500px;
+                    text-align: center;
+                    box-shadow: 0 20px 60px rgba(239, 68, 68, 0.3);
+                    animation: slideIn 0.3s ease;
+                ">
+                    <div style="
+                        width: 80px;
+                        height: 80px;
+                        margin: 0 auto 1.5rem;
+                        background: rgba(239, 68, 68, 0.2);
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 3rem;
+                    ">🔨</div>
+                    
+                    <h2 style="
+                        font-size: 2rem;
+                        font-weight: 800;
+                        color: #ffffff;
+                        margin-bottom: 1rem;
+                    ">Аккаунт заблокирован</h2>
+                    
+                    <p style="
+                        font-size: 1rem;
+                        color: #a0a0a0;
+                        margin-bottom: 2rem;
+                        line-height: 1.6;
+                    ">
+                        Ваш аккаунт был заблокирован администрацией.<br>
+                        Для получения дополнительной информации обратитесь в поддержку.
+                    </p>
+                    
+                    <button onclick="logout(); document.getElementById('banModal').remove();" style="
+                        padding: 1rem 2rem;
+                        background: #ef4444;
+                        border: none;
+                        border-radius: 12px;
+                        color: white;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
+                        Выйти из аккаунта
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(banModal);
+            
+            // Заблокировать все функции
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) {
+                mainContent.style.pointerEvents = 'none';
+                mainContent.style.filter = 'blur(10px)';
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // EVENT LOGGING
+        // ═══════════════════════════════════════════════════════════════
+
+        // Лог отправки сообщения в чат
+        const originalSendMessage = window.sendMessage;
+        if (originalSendMessage) {
+            window.sendMessage = async function() {
+                const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+                
+                if (BOT_API.ENABLED && userData && userData.id) {
+                    const messageInput = document.getElementById('messageInput');
+                    
+                    await sendLogToBot('chat_message', userData.id, {
+                        message_length: messageInput ? messageInput.value.length : 0,
+                        timestamp: new Date().toISOString()
+                    });
+                }
+                
+                return originalSendMessage.apply(this, arguments);
+            };
+        }
+
+        // Лог выхода
+        const originalLogout = window.logout;
+        if (originalLogout) {
+            window.logout = async function() {
+                const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+                
+                if (BOT_API.ENABLED && userData && userData.id) {
+                    await sendLogToBot('user_logout', userData.id, {
+                        timestamp: new Date().toISOString()
+                    });
+                }
+                
+                return originalLogout.apply(this, arguments);
+            };
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════
+
+        async function testBotConnection() {
+            if (!BOT_API.ENABLED) return;
+            
+            console.log('🔌 Проверка подключения к боту...');
+            
+            try {
+                const response = await fetch(`${BOT_API.BASE_URL.replace('/api', '')}/api/health`, {
+                    headers: {
+                        'X-API-Secret': BOT_API.SECRET
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ Бот доступен!', data);
+                    
+                    // Проверить подписку если пользователь залогинен
+                    const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+                    if (userData && userData.id) {
+                        console.log('👤 Проверка подписки для:', userData.username);
+                        await checkSubscriptionFromBot(userData.id);
+                    }
+                } else {
+                    console.error('❌ Бот недоступен. Статус:', response.status);
+                    console.error('💡 Проверьте что bot.py запущен и порт 5000 открыт');
+                }
+            } catch (error) {
+                console.error('❌ Ошибка подключения к боту:', error.message);
+                console.error('💡 Убедитесь что:');
+                console.error('   1. bot.py запущен (python bot.py)');
+                console.error('   2. Порт 5000 доступен');
+                console.error('   3. BOT_API.BASE_URL указан правильно');
+                console.error('   4. BOT_API.SECRET совпадает с .env файлом');
+            }
+        }
+
+        if (BOT_API.ENABLED) {
+            console.log('🤖 Bot API Integration loaded');
+            console.log('📡 API URL:', BOT_API.BASE_URL);
+            console.log('🔑 API Secret:', BOT_API.SECRET.substring(0, 10) + '...');
+            console.log('🔍 Debug mode:', BOT_API.DEBUG ? 'ON' : 'OFF');
+            console.log('🔄 Auto-sync: every 5 minutes');
+            
+            // Тестовое подключение
+            testBotConnection();
+        } else {
+            console.log('🤖 Bot API Integration loaded (DISABLED)');
+            console.log('💡 To enable: set BOT_API.ENABLED = true');
+        }
+
     </script>
 
     </div><!-- /main-content -->
