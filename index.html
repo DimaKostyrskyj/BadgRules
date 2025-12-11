@@ -10511,46 +10511,38 @@
                 // Display avatar
                 if (userAvatar) {
                     if (user.avatar) {
-                        // Use Discord avatar with size parameter
                         const avatarUrl = user.avatar.includes('?')
                             ? user.avatar
                             : `${user.avatar}?size=128`;
 
                         console.log('🖼️ Загрузка аватарки:', avatarUrl);
 
-                        // Проверить что URL валидный
                         if (avatarUrl && avatarUrl.startsWith('http')) {
-                            // Создать img элемент для проверки загрузки
+                            // Загрузить напрямую без crossOrigin
+                            userAvatar.style.backgroundImage = `url("${avatarUrl}")`;
+                            userAvatar.style.backgroundSize = 'cover';
+                            userAvatar.style.backgroundPosition = 'center';
+                            userAvatar.style.backgroundRepeat = 'no-repeat';
+                            userAvatar.textContent = '';
+                            
+                            // Проверка загрузки (для отладки)
                             const img = new Image();
-                            img.crossOrigin = 'anonymous';
-                            
-                            img.onload = () => {
-                                console.log('✅ Аватарка загружена успешно');
-                                userAvatar.style.backgroundImage = `url(${avatarUrl})`;
-                                userAvatar.style.backgroundSize = 'cover';
-                                userAvatar.style.backgroundPosition = 'center';
-                                userAvatar.textContent = '';
-                            };
-                            
-                            img.onerror = (error) => {
-                                console.error('❌ Ошибка загрузки аватарки:', error);
-                                console.error('URL:', avatarUrl);
-                                // Показать инициалы
+                            img.onload = () => console.log('✅ Аватарка загружена');
+                            img.onerror = (e) => {
+                                console.error('❌ Ошибка загрузки аватарки:', e);
                                 const displayName = user.displayName || user.username;
                                 userAvatar.textContent = displayName.charAt(0).toUpperCase();
                                 userAvatar.style.backgroundImage = '';
                             };
-                            
                             img.src = avatarUrl;
                         } else {
-                            console.warn('⚠️ Невалидный URL аватарки:', avatarUrl);
+                            console.warn('⚠️ Невалидный URL аватарки');
                             const displayName = user.displayName || user.username;
                             userAvatar.textContent = displayName.charAt(0).toUpperCase();
                             userAvatar.style.backgroundImage = '';
                         }
                     } else {
                         console.log('ℹ️ Нет аватарки, показываю инициалы');
-                        // No avatar - show initials
                         const displayName = user.displayName || user.username;
                         userAvatar.textContent = displayName.charAt(0).toUpperCase();
                         userAvatar.style.backgroundImage = '';
@@ -10631,26 +10623,23 @@
                     
                     console.log('🖼️ Загрузка аватарки профиля:', avatarUrl);
                     
-                    // Проверить загрузку
                     if (avatarUrl && avatarUrl.startsWith('http')) {
+                        // Загрузить напрямую
+                        profileAvatarImg.style.backgroundImage = `url("${avatarUrl}")`;
+                        profileAvatarImg.style.backgroundSize = 'cover';
+                        profileAvatarImg.style.backgroundPosition = 'center';
+                        profileAvatarImg.style.backgroundRepeat = 'no-repeat';
+                        profileAvatarImg.textContent = '';
+                        
+                        // Проверка для отладки
                         const img = new Image();
-                        img.crossOrigin = 'anonymous';
-                        
-                        img.onload = () => {
-                            console.log('✅ Аватарка профиля загружена');
-                            profileAvatarImg.style.backgroundImage = `url(${avatarUrl})`;
-                            profileAvatarImg.style.backgroundSize = 'cover';
-                            profileAvatarImg.style.backgroundPosition = 'center';
-                            profileAvatarImg.textContent = '';
-                        };
-                        
-                        img.onerror = (error) => {
-                            console.error('❌ Ошибка загрузки аватарки профиля:', error);
+                        img.onload = () => console.log('✅ Аватарка профиля загружена');
+                        img.onerror = (e) => {
+                            console.error('❌ Ошибка загрузки аватарки профиля:', e);
                             const initial = (user.displayName || user.username || 'G').charAt(0).toUpperCase();
                             profileAvatarImg.textContent = initial;
                             profileAvatarImg.style.backgroundImage = '';
                         };
-                        
                         img.src = avatarUrl;
                     } else {
                         const initial = (user.displayName || user.username || 'G').charAt(0).toUpperCase();
@@ -12025,12 +12014,16 @@
                         grantedAt: sub.granted_at
                     }));
                     
-                    // Обновить UI
+                    // Обновить UI везде
                     if (typeof updateSubscriptionUI === 'function') {
                         updateSubscriptionUI();
                     }
+                    if (typeof updateProfileSubscriptionBadge === 'function') {
+                        updateProfileSubscriptionBadge();
+                    }
                     
                     console.log('✅ Подписка синхронизирована:', sub.type);
+                    console.log('🔄 Badge обновлен');
                     return sub;
                 } else {
                     // Подписка истекла
@@ -12039,12 +12032,18 @@
                     if (typeof updateSubscriptionUI === 'function') {
                         updateSubscriptionUI();
                     }
+                    if (typeof updateProfileSubscriptionBadge === 'function') {
+                        updateProfileSubscriptionBadge();
+                    }
                 }
             } else {
                 if (BOT_API.DEBUG) console.log('⚡ Подписка не найдена - FREE план');
                 localStorage.removeItem('badgrules_subscription');
                 if (typeof updateSubscriptionUI === 'function') {
                     updateSubscriptionUI();
+                }
+                if (typeof updateProfileSubscriptionBadge === 'function') {
+                    updateProfileSubscriptionBadge();
                 }
             }
             
