@@ -12580,58 +12580,104 @@
         // ═══════════════════════════════════════════════════════════════
 
         async function testBotConnection() {
-            if (!BOT_API.ENABLED) return;
+    if (!BOT_API.ENABLED) {
+        console.log('⚡ Bot API отключен в настройках');
+        return;
+    }
+    
+    console.log('🔍 Начинаем проверку подключения к боту...');
+    console.log('📡 API URL:', BOT_API.BASE_URL);
+    console.log('🔑 API Secret (первые 5 символов):', BOT_API.SECRET ? BOT_API.SECRET.substring(0, 5) + '...' : 'undefined');
+    
+    // 1. Проверяем health endpoint
+    console.log('\n1️⃣ Проверка /api/health:');
+    try {
+        const healthUrl = `${BOT_API.BASE_URL}/api/health`;
+        console.log('   URL:', healthUrl);
+        
+        const response = await fetch(healthUrl, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        console.log('   Статус:', response.status, response.statusText);
+        
+        if (response.ok) {
+            const data = await response.json();
+            console.log('   ✅ Сервер отвечает:', data);
+        } else {
+            const errorText = await response.text();
+            console.error('   ❌ Ошибка сервера:', errorText);
+            return;
+        }
+    } catch (error) {
+        console.error('   💥 Ошибка сети:', error.message);
+        console.error('   Проблема: не удалось подключиться к серверу');
+        return;
+    }
+    
+    // 2. Проверяем авторизацию
+    console.log('\n2️⃣ Проверка авторизации (запрос подписки):');
+    try {
+        // Используем тестовый ID или ID из localStorage
+        const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+        const userId = userData.id || '710861571919970305';
+        
+        const subUrl = `${BOT_API.BASE_URL}/api/subscription/${userId}`;
+        console.log('   URL:', subUrl);
+        console.log('   User ID:', userId);
+        
+        const response = await fetch(subUrl, {
+            headers: {
+                'X-API-Secret': BOT_API.SECRET,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        console.log('   Статус:', response.status, response.statusText);
+        
+        if (response.ok) {
+            const data = await response.json();
+            console.log('   ✅ Авторизация успешна!');
+            console.log('   Данные:', data);
             
-            console.log('🔌 Проверка подключения к боту...');
+            // Обновляем UI если есть подписка
+            if (data.subscription) {
+                console.log('   🎉 Пользователь имеет подписку!');
+                // Здесь можно обновить UI
+            }
+        } else {
+            const errorText = await response.text();
+            console.error('   ❌ Ошибка авторизации:', errorText);
             
-            try {
-                const response = await fetch(`${BOT_API.BASE_URL.replace('/api', '')}/api/health`, {
-                    headers: {
-                        'X-API-Secret': BOT_API.SECRET
-                        `${BOT_API.BASE_URL}/api/health`          // ✅
-                        `${BOT_API.BASE_URL}/api/subscription/{id}` // ✅
-                        `${BOT_API.BASE_URL}/api/subscriptions`    // ✅
-                        `${BOT_API.BASE_URL}/api/log`    
-                    }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('✅ Бот доступен!', data);
-                    
-                    // Проверить подписку если пользователь залогинен
-                    const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
-                    if (userData && userData.id) {
-                        console.log('👤 Проверка подписки для:', userData.username);
-                        await checkSubscriptionFromBot(userData.id);
-                    }
-                } else {
-                    console.error('❌ Бот недоступен. Статус:', response.status);
-                    console.error('💡 Проверьте что bot.py запущен и порт 5000 открыт');
-                }
-            } catch (error) {
-                console.error('❌ Ошибка подключения к боту:', error.message);
-                console.error('💡 Убедитесь что:');
-                console.error('   1. bot.py запущен (python bot.py)');
-                console.error('   2. Порт 5000 доступен');
-                console.error('   3. BOT_API.BASE_URL указан правильно');
-                console.error('   4. BOT_API.SECRET совпадает с .env файлом');
+            if (response.status === 401) {
+                console.error('   🔐 Неверный API секрет!');
+                console.error('   Убедитесь что BOT_API.SECRET совпадает с API_SECRET в Railway');
             }
         }
+    } catch (error) {
+        console.error('   💥 Ошибка при проверке авторизации:', error.message);
+    }
+    
+    console.log('\n🎯 Проверка завершена!');
+}
 
-        if (BOT_API.ENABLED) {
-            console.log('🤖 Bot API Integration loaded');
-            console.log('📡 API URL:', BOT_API.BASE_URL);
-            console.log('🔑 API Secret:', BOT_API.SECRET.substring(0, 10) + '...');
-            console.log('🔍 Debug mode:', BOT_API.DEBUG ? 'ON' : 'OFF');
-            console.log('🔄 Auto-sync: every 5 minutes');
-            
-            // Тестовое подключение
-            testBotConnection();
-        } else {
-            console.log('🤖 Bot API Integration loaded (DISABLED)');
-            console.log('💡 To enable: set BOT_API.ENABLED = true');
-        }
+// Запускаем проверку при загрузке
+if (BOT_API.ENABLED) {
+    console.log('🤖 Bot API Integration loaded');
+    console.log('📡 API URL:', BOT_API.BASE_URL);
+    console.log('🔑 API Secret:', BOT_API.SECRET ? BOT_API.SECRET.substring(0, 10) + '...' : 'undefined');
+    console.log('🔍 Debug mode:', BOT_API.DEBUG ? 'ON' : 'OFF');
+    
+    // Ждем немного и запускаем проверку
+    setTimeout(() => {
+        testBotConnection();
+    }, 1000);
+} else {
+    console.log('🤖 Bot API Integration loaded (DISABLED)');
+    console.log('💡 To enable: set BOT_API.ENABLED = true');
+}
 
     </script>
 
