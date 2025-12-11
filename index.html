@@ -255,9 +255,7 @@
         }
 
         .subscription-status-badge.free {
-            background: rgba(100, 100, 100, 0.2);
-            border-color: rgba(100, 100, 100, 0.3);
-            color: #999;
+            display: none;
         }
 
         .subscription-status-badge.pro {
@@ -7138,6 +7136,247 @@
             /* Keep border color change */
         }
 
+        /* ═══════════════════════════════════════════════════════════════
+           📋 COMPLAINT FORM & HISTORY STYLES
+           ═══════════════════════════════════════════════════════════════ */
+
+        .complaint-form {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .complaint-form:hover {
+            background: rgba(20, 20, 20, 0.8);
+            border-color: var(--border-glow);
+            box-shadow: 0 8px 32px var(--glow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .form-label svg {
+            color: var(--accent-primary);
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: 'Manrope', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--border-glow);
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15);
+            background: rgba(20, 20, 20, 0.8);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-complaint-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .submit-complaint-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(167, 139, 250, 0.5);
+        }
+
+        .submit-complaint-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .complaint-status {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .complaint-status.success {
+            display: block;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--accent-success);
+        }
+
+        .complaint-status.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        /* History Styles */
+        .history-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .history-empty {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+        }
+
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: rgba(167, 139, 250, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-icon svg {
+            width: 40px;
+            height: 40px;
+            color: var(--accent-primary);
+        }
+
+        .history-empty h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .history-empty p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .history-item {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: rgba(20, 20, 20, 0.8);
+            border-color: var(--border-glow);
+            box-shadow: 0 4px 16px var(--glow);
+            transform: translateY(-2px);
+        }
+
+        .history-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .history-item-type {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .history-item-date {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .history-item-content {
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .complaint-form {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-input,
+            .form-textarea {
+                padding: 0.875rem;
+                font-size: 0.9rem;
+            }
+
+            .submit-complaint-btn {
+                padding: 1rem;
+                font-size: 0.95rem;
+            }
+        }
+
     </style>
 </head>
 
@@ -8352,6 +8591,165 @@
                         Выйти из аккаунта
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Complaints Section (Откат) -->
+        <div class="section" id="complaintsSection">
+            <div class="landing-section">
+                <!-- Hero -->
+                <div class="hero-section">
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <span>Система жалоб</span>
+                    </div>
+
+                    <h1 class="hero-title">Подать жалобу<br>на нарушение</h1>
+
+                    <p class="hero-subtitle">
+                        Заполните форму ниже для подачи жалобы на нарушение правил сервера.
+                        Все поля обязательны для заполнения. Укажите доказательства нарушения.
+                    </p>
+                </div>
+
+                <!-- Complaint Form -->
+                <div class="features-section">
+                    <div class="complaint-form-container" style="max-width: 800px; margin: 0 auto;">
+                        <div class="complaint-form">
+                            <!-- Type -->
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                    </svg>
+                                    Тип нарушения
+                                </label>
+                                <select id="complaintType" class="form-input">
+                                    <option value="">Выберите тип нарушения</option>
+                                    <option value="dm">🔫 DM (DeathMatch)</option>
+                                    <option value="mg">🧠 MG (MetaGaming)</option>
+                                    <option value="pg">💪 PG (PowerGaming)</option>
+                                    <option value="rk">☠️ RK (Revenge Kill)</option>
+                                    <option value="fr">🎭 FailRP</option>
+                                    <option value="other">📋 Другое</option>
+                                </select>
+                            </div>
+
+                            <!-- Violator ID -->
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    ID нарушителя
+                                </label>
+                                <input type="text" id="violatorId" class="form-input" placeholder="Например: 12345">
+                            </div>
+
+                            <!-- Server -->
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                                    </svg>
+                                    Сервер
+                                </label>
+                                <input type="text" id="serverName" class="form-input" placeholder="Например: Downtown">
+                            </div>
+
+                            <!-- Description -->
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
+                                    Описание инцидента
+                                </label>
+                                <textarea id="incidentDescription" class="form-textarea" rows="6" placeholder="Подробно опишите что произошло, время, место и обстоятельства нарушения..."></textarea>
+                            </div>
+
+                            <!-- Evidence -->
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                    </svg>
+                                    Ссылка на доказательства
+                                </label>
+                                <input type="text" id="evidenceLink" class="form-input" placeholder="YouTube, Google Drive или другая ссылка на видео/скриншоты">
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button onclick="submitComplaint()" class="submit-complaint-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 2L11 13"></path>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                                Отправить жалобу
+                            </button>
+
+                            <!-- Status Message -->
+                            <div id="complaintStatus" class="complaint-status"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section (История) -->
+        <div class="section" id="historySection">
+            <div class="landing-section">
+                <!-- Hero -->
+                <div class="hero-section">
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>История запросов</span>
+                    </div>
+
+                    <h1 class="hero-title">История ваших<br>запросов</h1>
+
+                    <p class="hero-subtitle">
+                        Здесь отображаются все ваши запросы к AI помощнику и поданные жалобы.
+                        История сохраняется автоматически и доступна в любое время.
+                    </p>
+                </div>
+
+                <!-- History Content -->
+                <div class="features-section">
+                    <div id="historyContainer" class="history-container">
+                        <!-- Empty State -->
+                        <div class="history-empty">
+                            <div class="empty-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                            </div>
+                            <h3>История пуста</h3>
+                            <p>Начните общаться с AI помощником, и ваши запросы появятся здесь</p>
+                            <button class="cta-primary" onclick="selectLogoMenu('chat')" style="margin-top: 1.5rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                Начать чат
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     <script>
