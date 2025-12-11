@@ -7404,6 +7404,17 @@
             }
         }
 
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .complaint-form {
@@ -8549,6 +8560,22 @@
                             <span class="profile-sub-icon" id="profileSubIcon">⚡</span>
                             <span class="profile-sub-text" id="profileSubText">FREE</span>
                         </div>
+                        <!-- Кнопка обновления подписки -->
+                        <button onclick="manualSyncSubscription()" style="
+                            margin-top: 8px;
+                            padding: 6px 12px;
+                            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(71, 82, 196, 0.1));
+                            border: 1px solid rgba(88, 101, 242, 0.3);
+                            border-radius: 8px;
+                            color: #5865F2;
+                            font-size: 12px;
+                            font-weight: 500;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.background='linear-gradient(135deg, rgba(88, 101, 242, 0.2), rgba(71, 82, 196, 0.2))'" 
+                           onmouseout="this.style.background='linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(71, 82, 196, 0.1))'">
+                            🔄 Обновить подписку
+                        </button>
                     </div>
                 </div>
 
@@ -11055,6 +11082,17 @@
                 }
             }
 
+            // Синхронизация подписки при открытии профиля
+            if (sectionName === 'profile' && BOT_API.ENABLED) {
+                const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+                if (userData && userData.id) {
+                    console.log('🔄 Синхронизация при открытии профиля...');
+                    checkSubscriptionFromBot(userData.id).then(() => {
+                        console.log('✅ Профиль обновлен');
+                    });
+                }
+            }
+
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -12173,6 +12211,94 @@
             document.addEventListener('DOMContentLoaded', startSubscriptionSync);
         } else {
             startSubscriptionSync();
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // MANUAL SUBSCRIPTION SYNC
+        // ═══════════════════════════════════════════════════════════════
+
+        async function manualSyncSubscription() {
+            if (!BOT_API.ENABLED) {
+                alert('❌ Bot API отключен! Включите в настройках.');
+                return;
+            }
+
+            const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+            
+            if (!userData || !userData.id) {
+                alert('❌ Вы не авторизованы!');
+                return;
+            }
+
+            console.log('🔄 Ручная синхронизация подписки...');
+            
+            // Показать индикатор загрузки
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '⏳ Обновление...';
+            button.disabled = true;
+            
+            try {
+                const subscription = await checkSubscriptionFromBot(userData.id);
+                
+                if (subscription) {
+                    console.log('✅ Подписка обновлена:', subscription.type);
+                    button.textContent = '✅ Обновлено!';
+                    
+                    // Показать уведомление
+                    showNotification(`Подписка обновлена: ${subscription.type.toUpperCase()}`, 'success');
+                } else {
+                    console.log('✅ Подписка обновлена: FREE');
+                    button.textContent = '✅ Обновлено!';
+                    
+                    showNotification('Подписка обновлена: FREE', 'info');
+                }
+                
+                // Вернуть текст через 2 секунды
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            } catch (error) {
+                console.error('❌ Ошибка синхронизации:', error);
+                button.textContent = '❌ Ошибка';
+                
+                showNotification('Ошибка синхронизации. Проверьте консоль.', 'error');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }
+        }
+
+        // Простая функция уведомлений
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 16px 24px;
+                background: ${type === 'success' ? 'linear-gradient(135deg, #10b981, #059669)' : 
+                              type === 'error' ? 'linear-gradient(135deg, #ef4444, #dc2626)' :
+                              'linear-gradient(135deg, #5865F2, #4752C4)'};
+                color: white;
+                border-radius: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                z-index: 10000;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
         }
 
         // ═══════════════════════════════════════════════════════════════
