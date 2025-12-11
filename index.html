@@ -12588,6 +12588,10 @@
                 const response = await fetch(`${BOT_API.BASE_URL.replace('/api', '')}/api/health`, {
                     headers: {
                         'X-API-Secret': BOT_API.SECRET
+                        `${BOT_API.BASE_URL}/api/health`          // ✅
+                        `${BOT_API.BASE_URL}/api/subscription/{id}` // ✅
+                        `${BOT_API.BASE_URL}/api/subscriptions`    // ✅
+                        `${BOT_API.BASE_URL}/api/log`    
                     }
                 });
                 
