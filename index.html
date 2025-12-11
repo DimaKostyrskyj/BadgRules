@@ -7137,6 +7137,51 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
+           💎 COMPACT SUBSCRIPTION BADGE IN PROFILE
+           ═══════════════════════════════════════════════════════════════ */
+
+        .profile-subscription-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .profile-subscription-badge.free {
+            background: rgba(100, 100, 100, 0.15);
+            border: 1px solid rgba(100, 100, 100, 0.25);
+            color: #999;
+        }
+
+        .profile-subscription-badge.pro {
+            background: rgba(167, 139, 250, 0.15);
+            border: 1px solid rgba(167, 139, 250, 0.4);
+            color: var(--accent-primary);
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        .profile-subscription-badge.lifetime {
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            color: var(--accent-warning);
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        .profile-sub-icon {
+            font-size: 0.9rem;
+        }
+
+        .profile-sub-text {
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
            📋 COMPLAINT FORM & HISTORY STYLES
            ═══════════════════════════════════════════════════════════════ */
 
@@ -8498,6 +8543,11 @@
                         <div class="profile-status-minimal">
                             <span class="status-dot online"></span>
                             В сети
+                        </div>
+                        <!-- Compact Subscription Badge -->
+                        <div class="profile-subscription-badge" id="profileSubBadge">
+                            <span class="profile-sub-icon" id="profileSubIcon">⚡</span>
+                            <span class="profile-sub-text" id="profileSubText">FREE</span>
                         </div>
                     </div>
                 </div>
@@ -11766,7 +11816,49 @@
                     miniBadge.className = 'sub-badge-mini free';
                 }
             }
+
+            // Update Profile Subscription Badge
+            updateProfileSubscriptionBadge();
         };
+
+        // ═══════════════════════════════════════════════════════════════
+        // 💎 UPDATE COMPACT PROFILE SUBSCRIPTION BADGE
+        // ═══════════════════════════════════════════════════════════════
+
+        function updateProfileSubscriptionBadge() {
+            const sub = checkSubscription();
+            const badge = document.getElementById('profileSubBadge');
+            const icon = document.getElementById('profileSubIcon');
+            const text = document.getElementById('profileSubText');
+            
+            if (!badge || !icon || !text) return;
+
+            if (sub) {
+                if (sub.type === 'lifetime') {
+                    // Lifetime subscription
+                    badge.className = 'profile-subscription-badge lifetime';
+                    icon.textContent = '♾️';
+                    text.textContent = 'LIFETIME';
+                } else {
+                    // Pro subscription
+                    badge.className = 'profile-subscription-badge pro';
+                    icon.textContent = '💎';
+                    text.textContent = 'PRO';
+                }
+            } else {
+                // Free plan
+                badge.className = 'profile-subscription-badge free';
+                icon.textContent = '⚡';
+                text.textContent = 'FREE';
+            }
+        }
+
+        // Call on page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', updateProfileSubscriptionBadge);
+        } else {
+            updateProfileSubscriptionBadge();
+        }
 
     </script>
 
