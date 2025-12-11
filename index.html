@@ -12127,11 +12127,11 @@
         // ═══════════════════════════════════════════════════════════════
 
         async function checkSubscriptionFromBot(userId) {
-            if (BOT_API.DEBUG) console.log('🔍 Проверка подписки для:', userId);
+            console.log('🔍 Проверка подписки для:', userId);
             
             const result = await botApiCall(`/subscription/${userId}`);
             
-            if (BOT_API.DEBUG) console.log('📦 Ответ от бота:', result);
+            console.log('📦 Ответ от бота:', result);
             
             if (!result) {
                 console.error('❌ Не удалось получить данные от бота');
@@ -12145,36 +12145,47 @@
                 return null;
             }
             
+            console.log('✅ Пользователь НЕ забанен');
+            
             if (result.subscription) {
-                // Сохранить в localStorage
                 const sub = result.subscription;
+                console.log('📋 Данные подписки:', sub);
+                
                 const now = new Date();
                 const expires = new Date(sub.expires_at);
                 
-                if (BOT_API.DEBUG) {
-                    console.log('💎 Подписка найдена:', {
-                        type: sub.type,
-                        plan: sub.plan,
-                        expires: expires,
-                        isActive: expires > now
-                    });
-                }
+                console.log('⏰ Проверка времени:');
+                console.log('   Сейчас:', now);
+                console.log('   Истекает:', expires);
+                console.log('   Активна в БД:', sub.active);
+                console.log('   Не истекла:', expires > now);
                 
-                if (expires > now && sub.active) {
-                    localStorage.setItem('badgrules_subscription', JSON.stringify({
+                // УПРОЩЁННАЯ проверка - если подписка есть в БД, она активна
+                if (expires > now) {
+                    console.log('💎 ПОДПИСКА АКТИВНА! Сохраняем...');
+                    
+                    const subData = {
                         type: sub.type,
                         plan: sub.plan,
                         expiresAt: sub.expires_at,
-                        grantedAt: sub.granted_at
-                    }));
+                        grantedAt: sub.granted_at,
+                        active: true
+                    };
+                    
+                    console.log('💾 Сохраняем в localStorage:', subData);
+                    localStorage.setItem('badgrules_subscription', JSON.stringify(subData));
+                    
+                    // Проверка что сохранилось
+                    const saved = localStorage.getItem('badgrules_subscription');
+                    console.log('✅ Проверка сохранения:', saved);
                     
                     // Обновить ВСЕ badge везде
+                    console.log('🔄 Обновляем все badge...');
                     if (typeof updateAllSubscriptionBadges === 'function') {
                         updateAllSubscriptionBadges();
                     }
                     
                     console.log('✅ Подписка синхронизирована:', sub.type);
-                    console.log('🔄 Все badge обновлены');
                     return sub;
                 } else {
                     // Подписка истекла
@@ -12185,7 +12196,8 @@
                     }
                 }
             } else {
-                if (BOT_API.DEBUG) console.log('⚡ Подписка не найдена - FREE план');
+                console.log('⚡ Подписка не найдена - FREE план');
+                console.log('🗑️ Удаляем старые данные из localStorage');
                 localStorage.removeItem('badgrules_subscription');
                 if (typeof updateAllSubscriptionBadges === 'function') {
                     updateAllSubscriptionBadges();
@@ -12249,9 +12261,13 @@
             // КРИТИЧЕСКАЯ синхронизация с ботом ПЕРЕД показом интерфейса
             if (BOT_API.ENABLED && userData && userData.id) {
                 console.log('🤖 КРИТИЧЕСКАЯ синхронизация с ботом...');
+                console.log('   User ID:', userData.id);
+                console.log('   Username:', userData.username);
                 
                 // Сначала проверяем БАН и ПОДПИСКУ
                 const result = await botApiCall(`/subscription/${userData.id}`);
+                
+                console.log('📦 Полный ответ от бота:', result);
                 
                 if (result && result.banned) {
                     console.error('🔨 ПОЛЬЗОВАТЕЛЬ ЗАБАНЕН!');
@@ -12263,8 +12279,28 @@
                     return; // ОСТАНАВЛИВАЕМ ВЫПОЛНЕНИЕ
                 }
                 
+                console.log('✅ Пользователь НЕ забанен, продолжаем...');
+                
                 // Если не забанен - проверяем подписку
                 const subscription = await checkSubscriptionFromBot(userData.id);
+                
+                console.log('📋 Результат проверки подписки:', subscription);
+                
+                // ПРИНУДИТЕЛЬНОЕ обновление badge после небольшой задержки
+                setTimeout(() => {
+                    console.log('🔄 ПРИНУДИТЕЛЬНОЕ обновление всех badge...');
+                    if (typeof updateAllSubscriptionBadges === 'function') {
+                        updateAllSubscriptionBadges();
+                    }
+                }, 500);
+                
+                // И ещё раз через секунду на всякий случай
+                setTimeout(() => {
+                    console.log('🔄 ПОВТОРНОЕ обновление всех badge...');
+                    if (typeof updateAllSubscriptionBadges === 'function') {
+                        updateAllSubscriptionBadges();
+                    }
+                }, 1500);
                 
                 // Отправляем лог входа
                 await sendLogToBot('user_login', userData.id, {
