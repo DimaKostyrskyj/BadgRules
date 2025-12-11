@@ -14,10 +14,6 @@
     <link rel="icon" type="images/logo.png" sizes="16x16" href="images/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/logo.png">
     <style>
-        /* ═══════════════════════════════════════════════════════════════
-           🎨 GLOBAL STYLES - FUTURISTIC GRADIENT THEME
-           ═══════════════════════════════════════════════════════════════ */
-
         * {
             margin: 0;
             padding: 0;
@@ -25,16 +21,17 @@
         }
 
         :root {
-            /* Primary Colors */
+            /* Background Colors */
             --primary-bg: #000000;
             --secondary-bg: #0a0a0a;
             --card-bg: #141414;
             
-            /* Accent Colors */
-            --accent-primary: #a78bfa;
-            --accent-secondary: #ec4899;
-            --accent-success: #10b981;
-            --accent-warning: #fbbf24;
+            /* Accent Colors - Futuristic Palette */
+            --accent-primary: #a78bfa;      /* Purple */
+            --accent-secondary: #ec4899;    /* Pink */
+            --accent-success: #10b981;      /* Green */
+            --accent-warning: #fbbf24;      /* Gold */
+            --accent-color: #f5f5f5;        /* Legacy support */
             
             /* Text Colors */
             --text-primary: #ffffff;
@@ -62,7 +59,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           🌊 GLOBAL GRADIENT MESH BACKGROUND
+           🌊 GLOBAL GRADIENT MESH & PARTICLES - FUTURISTIC DESIGN
            ═══════════════════════════════════════════════════════════════ */
 
         .global-gradient-mesh {
@@ -80,7 +77,7 @@
             position: absolute;
             border-radius: 50%;
             filter: blur(150px);
-            opacity: 0.08;
+            opacity: 0.1;
             animation: globalMeshFloat 25s ease-in-out infinite;
         }
 
@@ -90,7 +87,6 @@
             background: radial-gradient(circle, var(--accent-primary), transparent);
             top: -300px;
             left: -300px;
-            animation-delay: 0s;
         }
 
         .global-gradient-2 {
@@ -121,23 +117,11 @@
         }
 
         @keyframes globalMeshFloat {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-            }
-            25% {
-                transform: translate(80px, -60px) rotate(90deg) scale(1.1);
-            }
-            50% {
-                transform: translate(-40px, 80px) rotate(180deg) scale(0.9);
-            }
-            75% {
-                transform: translate(60px, 40px) rotate(270deg) scale(1.05);
-            }
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(80px, -60px) rotate(90deg) scale(1.1); }
+            50% { transform: translate(-40px, 80px) rotate(180deg) scale(0.9); }
+            75% { transform: translate(60px, 40px) rotate(270deg) scale(1.05); }
         }
-
-        /* ═══════════════════════════════════════════════════════════════
-           ✨ GLOBAL PARTICLES CANVAS
-           ═══════════════════════════════════════════════════════════════ */
 
         .global-particles-canvas {
             position: fixed;
@@ -149,139 +133,157 @@
             pointer-events: none;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
-           📦 CONTAINER
-           ═══════════════════════════════════════════════════════════════ */
-
         .main-content {
             position: relative;
             z-index: 10;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
-           🎯 HEADER
-           ═══════════════════════════════════════════════════════════════ */
-
-        header {
-            text-align: center;
-            padding: 3rem 1rem 2rem;
-            position: relative;
-            z-index: 10;
-            animation: fadeInDown 0.8s ease-out;
+        /* Override all glassmorphism elements */
+        .login-container,
+        .project-card,
+        .server-card,
+        .message-content,
+        .chat-input-box,
+        .profile-dropdown,
+        .modal-content,
+        .settings-section,
+        .user-profile-badge {
+            background: rgba(20, 20, 20, 0.7) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid var(--border-color) !important;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Hover effects for interactive elements */
+        .project-card:hover,
+        .server-card:hover,
+        .message-content:hover,
+        .user-profile-badge:hover,
+        .dropdown-item:hover {
+            background: rgba(20, 20, 20, 0.85) !important;
+            border-color: var(--border-glow) !important;
+            box-shadow: 0 8px 32px var(--glow) !important;
+            transform: translateY(-2px);
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .logo-img {
-            width: 64px;
-            height: 64px;
-            filter: drop-shadow(0 0 30px rgba(167, 139, 250, 0.6));
+        /* Logo glow */
+        .logo-img,
+        .logo-btn-img {
+            filter: drop-shadow(0 0 30px rgba(167, 139, 250, 0.6)) !important;
             animation: logoFloat 3s ease-in-out infinite;
         }
 
         @keyframes logoFloat {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            50% {
-                transform: translateY(-10px) rotate(5deg);
-            }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
         }
 
-        .logo-container h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
+        /* Avatar gradients */
+        .user-avatar,
+        .message.bot .message-avatar {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)) !important;
         }
 
-        .subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            max-width: 600px;
-            margin: 0 auto;
+        /* Button gradients */
+        .discord-login-btn,
+        .login-btn,
+        .send-btn,
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)) !important;
+            border: none !important;
+            transition: all 0.3s ease !important;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
-           👤 USER PROFILE BADGE
-           ═══════════════════════════════════════════════════════════════ */
+        .discord-login-btn:hover,
+        .login-btn:hover,
+        .send-btn:hover:not(:disabled),
+        .btn-primary:hover {
+            box-shadow: 0 8px 32px rgba(167, 139, 250, 0.5) !important;
+            transform: scale(1.05) !important;
+        }
 
-        .user-profile-badge {
-            position: fixed;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: rgba(20, 20, 20, 0.8);
-            backdrop-filter: blur(20px);
+        /* Input focus states */
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none !important;
+            border-color: var(--border-glow) !important;
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15) !important;
+        }
+
+        /* Selected states */
+        .project-card.selected,
+        .server-card.selected {
+            border-color: var(--accent-primary) !important;
+            box-shadow: 0 8px 32px rgba(167, 139, 250, 0.4) !important;
+        }
+
+        /* Dropdown enhancements */
+        .dropdown-server-info {
+            background: rgba(167, 139, 250, 0.1) !important;
+            border: 1px solid rgba(167, 139, 250, 0.3) !important;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(167, 139, 250, 0.15) !important;
+        }
+
+        /* Message animations */
+        .message {
+            animation: messageSlideIn 0.5s ease-out;
+        }
+
+        @keyframes messageSlideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Status badge near avatar */
+        .subscription-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.6rem;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 0.75rem 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-            z-index: 1000;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
             transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-left: 0.5rem;
         }
 
-        .user-profile-badge:hover {
-            background: rgba(20, 20, 20, 0.95);
-            border-color: var(--border-glow);
-            box-shadow: 0 8px 32px var(--glow);
-            transform: translateY(-2px);
+        .subscription-status-badge.free {
+            background: rgba(100, 100, 100, 0.2);
+            border-color: rgba(100, 100, 100, 0.3);
+            color: #999;
         }
 
-        .user-profile-badge.hidden {
-            display: none;
+        .subscription-status-badge.pro {
+            background: rgba(167, 139, 250, 0.15);
+            border-color: rgba(167, 139, 250, 0.4);
+            color: var(--accent-primary);
+            animation: badgePulse 2s ease-in-out infinite;
         }
 
-        .sub-badge-wrapper {
-            position: relative;
-            display: inline-block;
+        .subscription-status-badge.lifetime {
+            background: rgba(251, 191, 36, 0.15);
+            border-color: rgba(251, 191, 36, 0.4);
+            color: var(--accent-warning);
+            animation: badgePulse 2s ease-in-out infinite;
         }
 
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 1rem;
-            overflow: hidden;
-            position: relative;
+        @keyframes badgePulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
         }
 
-        .user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .subscription-status-icon {
+            font-size: 0.85rem;
         }
 
+        /* Mini badge on avatar */
         .sub-badge-mini {
             position: absolute;
             bottom: -2px;
@@ -295,584 +297,42 @@
             justify-content: center;
             font-size: 0.7rem;
             z-index: 10;
-            animation: badgePulse 2s ease-in-out infinite;
         }
 
         .sub-badge-mini.free {
-            background: rgba(100, 100, 100, 0.3);
-            color: #888;
             display: none;
         }
 
         .sub-badge-mini.pro {
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white;
+            animation: badgePulse 2s ease-in-out infinite;
         }
 
         .sub-badge-mini.lifetime {
             background: linear-gradient(135deg, var(--accent-warning), #f59e0b);
             color: white;
+            animation: badgePulse 2s ease-in-out infinite;
         }
 
-        @keyframes badgePulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.1);
-                opacity: 0.8;
-            }
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .user-name {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .user-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-        }
-
-        .user-server-badge {
-            padding: 0.2rem 0.5rem;
-            background: rgba(167, 139, 250, 0.15);
-            border: 1px solid rgba(167, 139, 250, 0.3);
-            border-radius: 6px;
-            color: var(--accent-primary);
-            font-weight: 600;
-        }
-
-        .header-status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            padding: 0.2rem 0.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-            transition: all 0.3s ease;
-        }
-
-        .header-status-badge.pro {
-            background: rgba(167, 139, 250, 0.15);
-            border-color: rgba(167, 139, 250, 0.4);
-            color: var(--accent-primary);
-        }
-
-        .header-status-badge.lifetime {
-            background: rgba(251, 191, 36, 0.15);
-            border-color: rgba(251, 191, 36, 0.4);
-            color: var(--accent-warning);
-        }
-
-        .dropdown-arrow {
-            color: var(--text-secondary);
-            transition: transform 0.3s ease;
-        }
-
-        .user-profile-badge:hover .dropdown-arrow {
-            transform: translateY(2px);
-        }
-        /* ═══════════════════════════════════════════════════════════════
-           💬 CHAT CONTAINER
-           ═══════════════════════════════════════════════════════════════ */
-
-        .chat-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
+        .sub-badge-wrapper {
             position: relative;
-            z-index: 10;
+            display: inline-block;
         }
 
-        .message {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            animation: messageSlideIn 0.5s ease-out;
+        /* Z-index hierarchy */
+        .global-gradient-mesh { z-index: 0 !important; }
+        .global-particles-canvas { z-index: 1 !important; }
+        .main-content { z-index: 10 !important; }
+        .login-overlay { z-index: 1000 !important; }
+        .user-profile-badge { z-index: 1001 !important; }
+        .profile-dropdown { z-index: 1002 !important; }
+
+        /* Reduce background grid opacity */
+        .background-grid {
+            opacity: 0.02 !important;
         }
 
-        @keyframes messageSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .message-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .message.bot .message-avatar {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-        }
-
-        .message.user .message-avatar {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--border-color);
-        }
-
-        .message-content {
-            flex: 1;
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.25rem;
-            transition: all 0.3s ease;
-        }
-
-        .message-content:hover {
-            background: rgba(20, 20, 20, 0.8);
-            border-color: var(--border-glow);
-            box-shadow: 0 8px 24px var(--glow);
-        }
-
-        .message-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 0.75rem;
-        }
-
-        .message-author {
-            font-weight: 700;
-            font-size: 0.95rem;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .message.user .message-author {
-            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .message-time {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .message-text {
-            color: var(--text-primary);
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* ═══════════════════════════════════════════════════════════════
-           🎴 CARDS & CONTAINERS
-           ═══════════════════════════════════════════════════════════════ */
-
-        .card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .card:hover {
-            background: rgba(20, 20, 20, 0.8);
-            border-color: var(--border-glow);
-            box-shadow: 0 12px 40px var(--glow);
-            transform: translateY(-4px);
-        }
-
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        /* ═══════════════════════════════════════════════════════════════
-           🔘 BUTTONS
-           ═══════════════════════════════════════════════════════════════ */
-
-        .btn {
-            padding: 0.875rem 1.5rem;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: var(--border-glow);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--glow);
-        }
-
-        .btn:hover::before {
-            opacity: 1;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border: none;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 8px 32px rgba(167, 139, 250, 0.5);
-            transform: translateY(-2px) scale(1.02);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, var(--accent-success), #059669);
-            border: none;
-            color: white;
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, var(--accent-warning), #f59e0b);
-            border: none;
-            color: white;
-        }
-
-        /* ═══════════════════════════════════════════════════════════════
-           📥 INPUT & TEXTAREA
-           ═══════════════════════════════════════════════════════════════ */
-
-        .input,
-        .textarea {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            font-family: 'Manrope', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .input:focus,
-        .textarea:focus {
-            outline: none;
-            border-color: var(--border-glow);
-            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
-            background: rgba(20, 20, 20, 0.8);
-        }
-
-        .textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        /* ═══════════════════════════════════════════════════════════════
-           🎯 INPUT AREA (Chat Input)
-           ═══════════════════════════════════════════════════════════════ */
-
-        .input-area {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(30px);
-            border-top: 1px solid var(--border-color);
-            padding: 1.5rem;
-            z-index: 100;
-            box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.3);
-        }
-
-        .input-container {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            gap: 1rem;
-            align-items: flex-end;
-        }
-
-        .input-wrapper {
-            flex: 1;
-            position: relative;
-        }
-
-        .chat-input {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            background: rgba(20, 20, 20, 0.8);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            font-family: 'Manrope', sans-serif;
-            resize: none;
-            min-height: 56px;
-            max-height: 200px;
-            transition: all 0.3s ease;
-        }
-
-        .chat-input:focus {
-            outline: none;
-            border-color: var(--border-glow);
-            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15);
-            background: rgba(20, 20, 20, 0.95);
-        }
-
-        .send-button {
-            padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border: none;
-            border-radius: 16px;
-            color: white;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            min-height: 56px;
-        }
-
-        .send-button:hover {
-            box-shadow: 0 8px 32px rgba(167, 139, 250, 0.5);
-            transform: scale(1.05);
-        }
-
-        .send-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* ═══════════════════════════════════════════════════════════════
-           📋 PROFILE DROPDOWN
-           ═══════════════════════════════════════════════════════════════ */
-
-        .profile-dropdown {
-            position: fixed;
-            top: 5.5rem;
-            right: 1.5rem;
-            background: rgba(20, 20, 20, 0.95);
-            backdrop-filter: blur(30px);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1rem;
-            min-width: 260px;
-            z-index: 1001;
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
-            animation: dropdownSlideIn 0.3s ease-out;
-        }
-
-        @keyframes dropdownSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .profile-dropdown.hidden {
-            display: none;
-        }
-
-        .dropdown-server-info {
-            padding: 0.75rem;
-            background: rgba(167, 139, 250, 0.1);
-            border: 1px solid rgba(167, 139, 250, 0.2);
-            border-radius: 12px;
-            margin-bottom: 0.75rem;
-        }
-
-        .dropdown-server-label {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.35rem;
-        }
-
-        .dropdown-server-value {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--accent-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .dropdown-item {
-            width: 100%;
-            padding: 0.875rem;
-            background: transparent;
-            border: 1px solid transparent;
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.35rem;
-        }
-
-        .dropdown-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(167, 139, 250, 0.15);
-            border-color: rgba(167, 139, 250, 0.3);
-            transform: translateX(4px);
-        }
-
-        .dropdown-icon {
-            width: 20px;
-            height: 20px;
-            color: var(--accent-primary);
-        }
-
-        /* ═══════════════════════════════════════════════════════════════
-           📱 RESPONSIVE
-           ═══════════════════════════════════════════════════════════════ */
-
-        @media (max-width: 768px) {
-            .logo-container h1 {
-                font-size: 2rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-
-            .user-profile-badge {
-                top: 1rem;
-                right: 1rem;
-                padding: 0.6rem 0.8rem;
-            }
-
-            .user-avatar {
-                width: 36px;
-                height: 36px;
-            }
-
-            .chat-container {
-                padding: 1.5rem 1rem;
-            }
-
-            .message {
-                gap: 0.75rem;
-            }
-
-            .message-avatar {
-                width: 36px;
-                height: 36px;
-            }
-
-            .message-content {
-                padding: 1rem;
-            }
-
-            .input-area {
-                padding: 1rem;
-            }
-
-            .input-container {
-                gap: 0.75rem;
-            }
-
-            .send-button {
-                padding: 1rem;
-            }
-
-            .profile-dropdown {
-                right: 1rem;
-                min-width: 240px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header {
-                padding: 2rem 1rem 1.5rem;
-            }
-
-            .logo-img {
-                width: 48px;
-                height: 48px;
-            }
-
-            .logo-container h1 {
-                font-size: 1.5rem;
-            }
-
-            .user-info {
-                display: none;
-            }
-
-            .dropdown-arrow {
-                display: none;
-            }
-        }
         /* Login Screen */
         .login-overlay {
             position: fixed;
@@ -1700,408 +1160,845 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           💎 SUBSCRIPTION SECTION - PRICING & PLANS (FULLSCREEN PAGE)
-           ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   💎 REVOLUTIONARY SUBSCRIPTION DESIGN
+   Кардинально новый, футуристичный дизайн с particles и 3D эффектами
+   ═══════════════════════════════════════════════════════════════ */
 
-        .subscription-section {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-bg);
-            z-index: 9999;
-            overflow-y: auto;
-            padding: 6rem 2rem 2rem 2rem;
-            animation: fadeIn 0.3s ease-in-out;
-        }
+.subscription-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    z-index: 9999;
+    overflow-y: auto;
+    animation: sectionFadeIn 0.5s ease-out;
+}
 
-        .subscription-section.hidden {
-            display: none;
-        }
+.subscription-section.hidden {
+    display: none;
+}
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+@keyframes sectionFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-        .subscription-wrapper {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem;
-            background: linear-gradient(135deg, rgba(20, 20, 20, 0.7) 0%, rgba(10, 10, 10, 0.8) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
+/* Particles Canvas */
+.particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
 
-        /* Close Button */
-        .close-subscription {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 10000;
-        }
+/* Gradient Mesh Background */
+.gradient-mesh {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
 
-        .close-subscription:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg) scale(1.1);
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
-        }
+.mesh-gradient {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.3;
+    animation: meshFloat 20s ease-in-out infinite;
+}
 
-        .close-subscription svg {
-            color: var(--text-primary);
-        }
+.gradient-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+    top: -300px;
+    left: -200px;
+    animation-delay: 0s;
+}
 
-        .subscription-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+.gradient-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #ec4899 0%, transparent 70%);
+    top: 50%;
+    right: -150px;
+    animation-delay: 7s;
+}
 
-        .subscription-header h3 {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+.gradient-3 {
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+    bottom: -200px;
+    left: 30%;
+    animation-delay: 14s;
+}
 
-        .subscription-header h3 svg {
-            color: #fbbf24;
-            filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.5));
-        }
+.gradient-4 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, #10b981 0%, transparent 70%);
+    top: 30%;
+    left: 50%;
+    animation-delay: 21s;
+}
 
-        /* Current Status Badge */
-        .current-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.65rem 1.25rem;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+@keyframes meshFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(100px, -100px) rotate(120deg); }
+    66% { transform: translate(-50px, 100px) rotate(240deg); }
+}
 
-        .current-status.free {
-            color: rgba(156, 163, 175, 0.8);
-            border-color: rgba(156, 163, 175, 0.2);
-        }
+/* Close Button */
+.sub-close-btn {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10000;
+}
 
-        .current-status.pro {
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
-            border-color: rgba(167, 139, 250, 0.5);
-            color: #c084fc;
-            box-shadow: 0 0 20px rgba(167, 139, 250, 0.3);
-        }
+.sub-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
 
-        .current-status.lifetime {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.2) 100%);
-            border-color: rgba(251, 191, 36, 0.5);
-            color: #fbbf24;
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
-        }
-        }
+.sub-close-btn svg {
+    color: #ffffff;
+}
 
-        /* Pricing Plans Grid */
-        .pricing-plans {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
+/* Container */
+.sub-container {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    z-index: 10;
+}
 
-        .pricing-card {
-            position: relative;
-            padding: 2.5rem 1.75rem;
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(20, 20, 20, 0.9) 100%);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            overflow: hidden;
-        }
+/* Header */
+.sub-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: headerSlideUp 0.8s ease-out;
+}
 
-        .pricing-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
+@keyframes headerSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        .pricing-card:hover::before {
-            opacity: 1;
-        }
+.sub-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #818cf8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+}
 
-        .pricing-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6),
-                        0 0 30px rgba(255, 255, 255, 0.05);
-        }
+.badge-dot {
+    width: 6px;
+    height: 6px;
+    background: #818cf8;
+    border-radius: 50%;
+    animation: badgePulse 2s ease-in-out infinite;
+}
 
-        .pricing-card.featured {
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%);
-            border-color: rgba(167, 139, 250, 0.4);
-            box-shadow: 0 0 40px rgba(167, 139, 250, 0.2);
-        }
+@keyframes badgePulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.5);
+    }
+}
 
-        .pricing-card.featured::after {
-            content: 'ПОПУЛЯРНЫЙ';
-            position: absolute;
-            top: 1.5rem;
-            right: -2.5rem;
-            transform: rotate(45deg);
-            padding: 0.4rem 3rem;
-            background: linear-gradient(135deg, #a78bfa, #ec4899);
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: white;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(167, 139, 250, 0.4);
-        }
+.sub-title {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
 
-        .pricing-card.lifetime {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%);
-            border-color: rgba(251, 191, 36, 0.4);
-            box-shadow: 0 0 40px rgba(251, 191, 36, 0.2);
-        }
+.title-word {
+    display: inline-block;
+    animation: wordReveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: calc(var(--index) * 0.1s);
+    opacity: 0;
+    transform: translateY(20px);
+}
 
-        .plan-duration {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.75rem;
-        }
+@keyframes wordReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        .plan-price {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
+.title-highlight {
+    background: linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: gradientShift 3s ease-in-out infinite;
+}
 
-        .price-amount {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
 
-        .price-currency {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.6);
-        }
+.sub-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 2rem;
+}
 
-        .price-usd {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 1.25rem;
-        }
+/* Status Card */
+.sub-status {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    overflow: hidden;
+}
 
-        .discount-badge {
-            display: inline-block;
-            padding: 0.35rem 0.9rem;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.3) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.4);
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #10b981;
-            margin-bottom: 1rem;
-            backdrop-filter: blur(10px);
-        }
+.status-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(99, 102, 241, 0.1) 50%, 
+        transparent 100%);
+    animation: statusGlowMove 3s ease-in-out infinite;
+}
 
-        .plan-features {
-            list-style: none;
-            padding: 0;
-            margin: 1.5rem 0;
-        }
+@keyframes statusGlowMove {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
 
-        .plan-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.65rem;
-            padding: 0.6rem 0;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.75);
-        }
+.status-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
 
-        .plan-features li svg {
-            flex-shrink: 0;
-            color: #10b981;
-            filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.3));
-        }
+.status-content svg {
+    color: rgba(255, 255, 255, 0.6);
+}
 
-        .buy-button {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.05) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
+.status-text {
+    display: flex;
+    flex-direction: column;
+}
 
-        .buy-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
+.status-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 
-        .buy-button:hover::before {
-            width: 300px;
-            height: 300px;
-        }
+.status-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
 
-        .buy-button:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
+.status-badge {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    font-size: 1.2rem;
+}
 
-        .pricing-card.featured .buy-button {
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.8) 0%, rgba(236, 72, 153, 0.8) 100%);
-            border: 1px solid rgba(167, 139, 250, 0.5);
-            color: white;
-            box-shadow: 0 4px 20px rgba(167, 139, 250, 0.3);
-        }
+/* Pricing Toggle */
+.pricing-toggle {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    margin: 0 auto 3rem;
+    max-width: 300px;
+}
 
-        .pricing-card.featured .buy-button:hover {
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.9) 0%, rgba(236, 72, 153, 0.9) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(167, 139, 250, 0.5);
-        }
+.toggle-btn {
+    position: relative;
+    padding: 0.75rem 2rem;
+    background: transparent;
+    border: none;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
 
-        .pricing-card.lifetime .buy-button {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.8) 0%, rgba(245, 158, 11, 0.8) 100%);
-            border: 1px solid rgba(251, 191, 36, 0.5);
-            color: white;
-            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
-        }
+.toggle-btn.active {
+    color: #ffffff;
+}
 
-        .pricing-card.lifetime .buy-button:hover {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.9) 0%, rgba(245, 158, 11, 0.9) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(251, 191, 36, 0.5);
-        }
+.toggle-indicator {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    width: calc(50% - 0.5rem);
+    height: calc(100% - 1rem);
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 50px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
 
-        /* Active Plan Indicator */
-        .pricing-card.active {
-            border-color: rgba(16, 185, 129, 0.6);
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
-            box-shadow: 0 0 40px rgba(16, 185, 129, 0.3);
-        }
+/* Cards Grid */
+.sub-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
 
-        .pricing-card.active::after {
-            content: '✓ АКТИВНО';
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.3rem 0.75rem;
-            background: #10b981;
-            border-radius: 8px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: white;
-        }
+/* Pricing Card */
+.sub-pricingcard {
+    position: relative;
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    animation: cardSlideUp 0.8s ease-out backwards;
+}
 
-        /* Mobile Responsive Styles */
-        @media (max-width: 768px) {
-            .subscription-section {
-                padding: 5rem 1rem 1rem 1rem;
-            }
+.sub-pricingcard:nth-child(1) { animation-delay: 0.1s; }
+.sub-pricingcard:nth-child(2) { animation-delay: 0.2s; }
+.sub-pricingcard:nth-child(3) { animation-delay: 0.3s; }
 
-            .subscription-wrapper {
-                padding: 1.5rem;
-            }
+@keyframes cardSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-            .subscription-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
+.sub-pricingcard:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
 
-            .subscription-header h3 {
-                font-size: 1.25rem;
-            }
+.sub-pricingcard.featured {
+    background: linear-gradient(135deg, 
+        rgba(99, 102, 241, 0.1) 0%, 
+        rgba(236, 72, 153, 0.05) 100%);
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 0 60px rgba(99, 102, 241, 0.2);
+}
 
-            .pricing-plans {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
+/* Card Glow */
+.card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
 
-            .close-subscription {
-                top: 1rem;
-                right: 1rem;
-                width: 40px;
-                height: 40px;
-            }
+.sub-pricingcard:hover .card-glow {
+    opacity: 1;
+}
 
-            .pricing-card {
-                padding: 1.5rem 1rem;
-            }
+.card-glow.pro {
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+}
 
-            .price-amount {
-                font-size: 2rem;
-            }
-        }
+.card-glow.lifetime {
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, transparent 70%);
+}
 
+/* Card Shine */
+.card-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 100%);
+    animation: cardShine 3s ease-in-out infinite;
+}
+
+@keyframes cardShine {
+    0% { left: -100%; }
+    50%, 100% { left: 100%; }
+}
+
+/* Card Badge */
+.card-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+}
+
+.card-badge svg {
+    width: 12px;
+    height: 12px;
+}
+
+.card-badge.lifetime {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
+}
+
+/* Card Header */
+.card-header {
+    margin-bottom: 2rem;
+}
+
+.card-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.icon-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.sub-pricingcard:hover .icon-wrapper {
+    transform: rotateY(180deg);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.card-icon.pro .icon-wrapper {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.card-icon.lifetime .icon-wrapper {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+.icon-wrapper svg {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.card-name {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.card-desc {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Card Price */
+.card-price {
+    margin-bottom: 2rem;
+}
+
+.price-tag {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #10b981;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+.price-tag.lifetime {
+    background: rgba(251, 191, 36, 0.1);
+    border-color: rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+}
+
+.price-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.price-currency {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.price-amount {
+    font-size: 3.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+}
+
+.price-period {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.price-subtext {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Card Features */
+.card-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.feature-item:last-child {
+    border-bottom: none;
+}
+
+.feature-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #10b981;
+    flex-shrink: 0;
+}
+
+.feature-icon.pro {
+    background: rgba(99, 102, 241, 0.1);
+    color: #818cf8;
+}
+
+.feature-icon.lifetime {
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+}
+
+/* Card Button */
+.card-btn {
+    position: relative;
+    width: 100%;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.btn-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.card-btn:hover .btn-glow {
+    width: 400px;
+    height: 400px;
+}
+
+.btn-text {
+    position: relative;
+    z-index: 2;
+}
+
+.btn-icon {
+    position: relative;
+    z-index: 2;
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.card-btn:hover .btn-icon {
+    transform: translateX(4px);
+}
+
+.card-btn.pro {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-color: rgba(99, 102, 241, 0.5);
+}
+
+.card-btn.lifetime {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-color: rgba(251, 191, 36, 0.5);
+}
+
+/* Comparison Section */
+.comparison-section {
+    margin-bottom: 3rem;
+    animation: cardSlideUp 0.8s ease-out 0.4s backwards;
+}
+
+.comparison-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 2rem;
+}
+
+.comparison-table {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.comparison-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.comparison-row:last-child {
+    border-bottom: none;
+}
+
+.comparison-row.header {
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: 700;
+}
+
+.comparison-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+}
+
+.comparison-cell.feature {
+    justify-content: flex-start;
+    color: #ffffff;
+}
+
+.comparison-cell.highlight {
+    color: #818cf8;
+    font-weight: 700;
+}
+
+/* Trust Section */
+.trust-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    animation: cardSlideUp 0.8s ease-out 0.5s backwards;
+}
+
+.trust-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.trust-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.trust-text {
+    flex: 1;
+}
+
+.trust-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+}
+
+.trust-desc {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Mobile Responsive */
+@media (max-width: 968px) {
+    .sub-container {
+        padding: 3rem 1.5rem;
+    }
+
+    .sub-title {
+        font-size: 2.5rem;
+    }
+
+    .sub-cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-row {
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        font-size: 0.85rem;
+    }
+
+    .trust-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .sub-title {
+        font-size: 2rem;
+    }
+
+    .price-amount {
+        font-size: 2.5rem;
+    }
+
+    .sub-close-btn {
+        width: 40px;
+        height: 40px;
+    }
+}
         /* Discord Bot Action Buttons */
         /* Bot Settings Modal */
         .settings-modal {
@@ -7467,6 +7364,10 @@
             <div class="user-name" id="userName">Гость</div>
             <div class="user-status" id="userServerBadge">
                 <span class="user-server-badge" id="serverBadge">Сервер</span>
+                <span class="subscription-status-badge free" id="subscriptionStatusBadge">
+                    <span class="subscription-status-icon">⚡</span>
+                    <span id="subscriptionStatusText">FREE</span>
+                </span>
             </div>
         </div>
         <svg class="dropdown-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -7527,195 +7428,315 @@
         </button>
     </div>
 
-    <!-- 💎 SUBSCRIPTION SECTION -->
+    <!-- 💎 REVOLUTIONARY SUBSCRIPTION SECTION -->
     <div class="subscription-section hidden" id="subscriptionSection">
-        <!-- Кнопка закрытия -->
-        <button class="close-subscription" onclick="closeSubscriptionSection()" title="Закрыть">
+        <!-- Particles Background -->
+        <canvas id="particlesCanvas" class="particles-canvas"></canvas>
+        
+        <!-- Gradient Mesh Background -->
+        <div class="gradient-mesh">
+            <div class="mesh-gradient gradient-1"></div>
+            <div class="mesh-gradient gradient-2"></div>
+            <div class="mesh-gradient gradient-3"></div>
+            <div class="mesh-gradient gradient-4"></div>
+        </div>
+
+        <!-- Close Button -->
+        <button class="sub-close-btn" onclick="closeSubscriptionSection()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
         </button>
 
-        <div class="subscription-wrapper">
-            <div class="subscription-header">
-                <h3>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="8" r="7"></circle>
-                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                    </svg>
-                    Подписка BadgRules PRO
-                </h3>
-                <div class="current-status free" id="currentStatusBadge">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    FREE план
+        <div class="sub-container">
+            <!-- Header -->
+            <div class="sub-header">
+                <div class="sub-header-badge">
+                    <span class="badge-dot"></span>
+                    <span>PREMIUM ACCESS</span>
+                </div>
+                <h1 class="sub-title">
+                    <span class="title-word" style="--index: 0">Раз</span><span class="title-word" style="--index: 1">бло</span><span class="title-word" style="--index: 2">ки</span><span class="title-word" style="--index: 3">руй</span>
+                    <br>
+                    <span class="title-highlight">свой потенциал</span>
+                </h1>
+                <p class="sub-subtitle">Выберите план и получите мгновенный доступ к премиум функциям</p>
+                
+                <!-- Status -->
+                <div class="sub-status" id="subStatusCard">
+                    <div class="status-glow"></div>
+                    <div class="status-content">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                        </svg>
+                        <div class="status-text">
+                            <span class="status-label">Статус</span>
+                            <span class="status-value" id="statusValueText">FREE</span>
+                        </div>
+                        <div class="status-badge" id="statusBadgeIcon">⚡</div>
+                    </div>
                 </div>
             </div>
 
-        <div class="pricing-plans">
-            <!-- 1 месяц -->
-            <div class="pricing-card" data-plan="1month" onclick="openPaymentModal('1month')">
-                <div class="plan-duration">1 месяц</div>
-                <div class="plan-price">
-                    <span class="price-amount">200</span>
-                    <span class="price-currency">₽</span>
-                </div>
-                <div class="price-usd">$2.10 USD</div>
-                <ul class="plan-features">
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Полный доступ к AI чату
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Приоритетная поддержка
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Без рекламы
-                    </li>
-                </ul>
-                <button class="buy-button">Купить</button>
+            <!-- Toggle -->
+            <div class="pricing-toggle">
+                <button class="toggle-btn active" data-period="month">Месяц</button>
+                <button class="toggle-btn" data-period="year">Год</button>
+                <div class="toggle-indicator"></div>
             </div>
 
-            <!-- 3 месяца -->
-            <div class="pricing-card" data-plan="3months" onclick="openPaymentModal('3months')">
-                <div class="plan-duration">3 месяца</div>
-                <div class="plan-price">
-                    <span class="price-amount">450</span>
-                    <span class="price-currency">₽</span>
+            <!-- Cards -->
+            <div class="sub-cards-grid">
+                
+                <!-- Basic Card -->
+                <div class="sub-pricingcard" data-plan="1month">
+                    <div class="card-glow"></div>
+                    <div class="card-shine"></div>
+                    
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <div class="icon-wrapper">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="card-name">Базовый</h3>
+                        <p class="card-desc">Для начинающих</p>
+                    </div>
+
+                    <div class="card-price">
+                        <div class="price-wrapper">
+                            <span class="price-currency">₽</span>
+                            <span class="price-amount">200</span>
+                            <span class="price-period">/мес</span>
+                        </div>
+                        <div class="price-subtext">≈ $2.10 USD</div>
+                    </div>
+
+                    <ul class="card-features">
+                        <li class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <span>Полный AI доступ</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <span>Поддержка 24/7</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <span>Без рекламы</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <span>База знаний</span>
+                        </li>
+                    </ul>
+
+                    <button class="card-btn" onclick="openPaymentModal('1month')">
+                        <span class="btn-text">Начать</span>
+                        <span class="btn-icon">→</span>
+                    </button>
                 </div>
-                <div class="price-usd">$4.75 USD</div>
-                <div class="discount-badge">-25% 💰</div>
-                <ul class="plan-features">
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
+
+                <!-- Pro Card -->
+                <div class="sub-pricingcard featured" data-plan="6months">
+                    <div class="card-badge">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
-                        Всё из плана на 1 месяц
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Экономия 150₽
-                    </li>
-                </ul>
-                <button class="buy-button">Купить</button>
+                        <span>ПОПУЛЯРНЫЙ</span>
+                    </div>
+                    
+                    <div class="card-glow pro"></div>
+                    <div class="card-shine"></div>
+                    
+                    <div class="card-header">
+                        <div class="card-icon pro">
+                            <div class="icon-wrapper">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="card-name">Про</h3>
+                        <p class="card-desc">Самый выгодный</p>
+                    </div>
+
+                    <div class="card-price">
+                        <div class="price-tag">-33% СКИДКА</div>
+                        <div class="price-wrapper">
+                            <span class="price-currency">₽</span>
+                            <span class="price-amount">800</span>
+                            <span class="price-period">/6мес</span>
+                        </div>
+                        <div class="price-subtext">≈ $8.45 USD · экономия 400₽</div>
+                    </div>
+
+                    <ul class="card-features">
+                        <li class="feature-item">
+                            <div class="feature-icon pro">✓</div>
+                            <span>Всё из Базового</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon pro">✓</div>
+                            <span>Приоритетная поддержка</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon pro">✓</div>
+                            <span>Premium значок</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon pro">✓</div>
+                            <span>Ранний доступ</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon pro">✓</div>
+                            <span>Эксклюзивный контент</span>
+                        </li>
+                    </ul>
+
+                    <button class="card-btn pro" onclick="openPaymentModal('6months')">
+                        <span class="btn-glow"></span>
+                        <span class="btn-text">Выбрать Pro</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+
+                <!-- Lifetime Card -->
+                <div class="sub-pricingcard" data-plan="lifetime">
+                    <div class="card-badge lifetime">
+                        <span>♾️ НАВСЕГДА</span>
+                    </div>
+                    
+                    <div class="card-glow lifetime"></div>
+                    <div class="card-shine"></div>
+                    
+                    <div class="card-header">
+                        <div class="card-icon lifetime">
+                            <div class="icon-wrapper">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 6v6l4 2"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h3 class="card-name">Вечный</h3>
+                        <p class="card-desc">Один платёж</p>
+                    </div>
+
+                    <div class="card-price">
+                        <div class="price-tag lifetime">ЛУЧШЕЕ ПРЕДЛОЖЕНИЕ</div>
+                        <div class="price-wrapper">
+                            <span class="price-currency">₽</span>
+                            <span class="price-amount">2500</span>
+                            <span class="price-period">навсегда</span>
+                        </div>
+                        <div class="price-subtext">≈ $26.40 USD · платите один раз</div>
+                    </div>
+
+                    <ul class="card-features">
+                        <li class="feature-item">
+                            <div class="feature-icon lifetime">✓</div>
+                            <span>Всё из Про</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon lifetime">✓</div>
+                            <span>Бессрочный доступ</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon lifetime">✓</div>
+                            <span>Legendary статус</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon lifetime">✓</div>
+                            <span>VIP поддержка</span>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon lifetime">✓</div>
+                            <span>Все будущие функции</span>
+                        </li>
+                    </ul>
+
+                    <button class="card-btn lifetime" onclick="openPaymentModal('lifetime')">
+                        <span class="btn-glow"></span>
+                        <span class="btn-text">Купить навсегда</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+
             </div>
 
-            <!-- 6 месяцев - ПОПУЛЯРНЫЙ -->
-            <div class="pricing-card featured" data-plan="6months" onclick="openPaymentModal('6months')">
-                <div class="plan-duration">6 месяцев</div>
-                <div class="plan-price">
-                    <span class="price-amount">800</span>
-                    <span class="price-currency">₽</span>
+            <!-- Comparison Table -->
+            <div class="comparison-section">
+                <h3 class="comparison-title">Сравнение планов</h3>
+                <div class="comparison-table">
+                    <div class="comparison-row header">
+                        <div class="comparison-cell">Функции</div>
+                        <div class="comparison-cell">Базовый</div>
+                        <div class="comparison-cell highlight">Про</div>
+                        <div class="comparison-cell">Вечный</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell feature">AI Ассистент</div>
+                        <div class="comparison-cell">✓</div>
+                        <div class="comparison-cell highlight">✓</div>
+                        <div class="comparison-cell">✓</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell feature">Поддержка 24/7</div>
+                        <div class="comparison-cell">✓</div>
+                        <div class="comparison-cell highlight">✓</div>
+                        <div class="comparison-cell">✓</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell feature">Premium значок</div>
+                        <div class="comparison-cell">—</div>
+                        <div class="comparison-cell highlight">✓</div>
+                        <div class="comparison-cell">✓</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell feature">Ранний доступ</div>
+                        <div class="comparison-cell">—</div>
+                        <div class="comparison-cell highlight">✓</div>
+                        <div class="comparison-cell">✓</div>
+                    </div>
+                    <div class="comparison-row">
+                        <div class="comparison-cell feature">Legendary статус</div>
+                        <div class="comparison-cell">—</div>
+                        <div class="comparison-cell highlight">—</div>
+                        <div class="comparison-cell">✓</div>
+                    </div>
                 </div>
-                <div class="price-usd">$8.45 USD</div>
-                <div class="discount-badge">-33% 🔥</div>
-                <ul class="plan-features">
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Всё из плана на 1 месяц
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Экономия 400₽
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Лучшее соотношение
-                    </li>
-                </ul>
-                <button class="buy-button">Купить сейчас</button>
             </div>
 
-            <!-- Годовая -->
-            <div class="pricing-card" data-plan="1year" onclick="openPaymentModal('1year')">
-                <div class="plan-duration">12 месяцев</div>
-                <div class="plan-price">
-                    <span class="price-amount">1500</span>
-                    <span class="price-currency">₽</span>
+            <!-- Trust Section -->
+            <div class="trust-section">
+                <div class="trust-item">
+                    <div class="trust-icon">🔒</div>
+                    <div class="trust-text">
+                        <div class="trust-title">Безопасные платежи</div>
+                        <div class="trust-desc">256-bit SSL шифрование</div>
+                    </div>
                 </div>
-                <div class="price-usd">$15.85 USD</div>
-                <div class="discount-badge">-37.5% ⚡</div>
-                <ul class="plan-features">
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Всё из плана на 1 месяц
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Экономия 900₽
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Максимальная выгода
-                    </li>
-                </ul>
-                <button class="buy-button">Купить</button>
+                <div class="trust-item">
+                    <div class="trust-icon">💳</div>
+                    <div class="trust-text">
+                        <div class="trust-title">Все способы оплаты</div>
+                        <div class="trust-desc">Карты, электронные кошельки</div>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">⚡</div>
+                    <div class="trust-text">
+                        <div class="trust-title">Мгновенная активация</div>
+                        <div class="trust-desc">Доступ сразу после оплаты</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Бессрочная -->
-            <div class="pricing-card lifetime" data-plan="lifetime" onclick="openPaymentModal('lifetime')">
-                <div class="plan-duration">♾️ НАВСЕГДА</div>
-                <div class="plan-price">
-                    <span class="price-amount">2500</span>
-                    <span class="price-currency">₽</span>
-                </div>
-                <div class="price-usd">$26.40 USD</div>
-                <div class="discount-badge">ВЫГОДА 90%+ ✨</div>
-                <ul class="plan-features">
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Бессрочный доступ
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Всё из плана на 1 месяц
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        Платишь один раз
-                    </li>
-                    <li>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        VIP статус
-                    </li>
-                </ul>
-                <button class="buy-button">Купить LIFETIME</button>
-            </div>
         </div>
-        </div> <!-- END subscription-wrapper -->
     </div>
 
     <!-- Bot Settings Modal -->
@@ -11001,58 +11022,14 @@
             alert(`💎 Оплата подписки\n\nПлан: ${planData.name}\nЦена: ${planData.priceRub}₽ ($${planData.priceUsd})\n\nДля подключения оплаты свяжитесь с администратором.`);
         }
 
-        // Показать секцию подписки
-        function showSubscriptionSection() {
-            const subSection = document.getElementById('subscriptionSection');
-            if (subSection) {
-                subSection.classList.remove('hidden');
-                updateSubscriptionUI();
-                // Блокируем прокрутку основной страницы
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        // Закрыть секцию подписки
-        function closeSubscriptionSection() {
-            const subSection = document.getElementById('subscriptionSection');
-            if (subSection) {
-                subSection.classList.add('hidden');
-                // Восстанавливаем прокрутку
-                document.body.style.overflow = '';
-            }
-        }
-
-        // Закрытие по Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeSubscriptionSection();
-            }
-        });
-
-        // Инициализация подписки при загрузке
-        document.addEventListener('DOMContentLoaded', () => {
-            updateSubscriptionUI();
-            
-            // Обновляем каждую минуту
-            setInterval(updateSubscriptionUI, 60000);
-        });
-
-        // ═══════════════════════════════════════════════════════════════════════
-        // ═══════════════════════════════════════════════════════════════════════
-
         // ═══════════════════════════════════════════════════════════════
-        // ✨ GLOBAL PARTICLES ANIMATION
+        // 💎 PARTICLES ANIMATION FOR SUBSCRIPTION SECTION
         // ═══════════════════════════════════════════════════════════════
 
-        let globalParticlesInitialized = false;
-
-        function initGlobalParticles() {
-            if (globalParticlesInitialized) return;
-            
-            const canvas = document.getElementById('globalParticlesCanvas');
+        function initParticles() {
+            const canvas = document.getElementById('particlesCanvas');
             if (!canvas) return;
 
-            globalParticlesInitialized = true;
             const ctx = canvas.getContext('2d');
             let particles = [];
             let animationFrameId;
@@ -11067,25 +11044,14 @@
             window.addEventListener('resize', resizeCanvas);
 
             // Particle class
-            class GlobalParticle {
+            class Particle {
                 constructor() {
                     this.x = Math.random() * canvas.width;
                     this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 2.5 + 1;
-                    this.speedX = Math.random() * 0.6 - 0.3;
-                    this.speedY = Math.random() * 0.6 - 0.3;
-                    this.opacity = Math.random() * 0.6 + 0.2;
-                    this.color = this.getRandomColor();
-                }
-
-                getRandomColor() {
-                    const colors = [
-                        'rgba(167, 139, 250, ', // purple
-                        'rgba(236, 72, 153, ',  // pink
-                        'rgba(16, 185, 129, ',  // green
-                        'rgba(255, 255, 255, '  // white
-                    ];
-                    return colors[Math.floor(Math.random() * colors.length)];
+                    this.size = Math.random() * 2 + 1;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                    this.opacity = Math.random() * 0.5 + 0.2;
                 }
 
                 update() {
@@ -11100,7 +11066,7 @@
                 }
 
                 draw() {
-                    ctx.fillStyle = this.color + this.opacity + ')';
+                    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                     ctx.fill();
@@ -11109,9 +11075,9 @@
 
             // Create particles
             function createParticles() {
-                const particleCount = Math.floor((canvas.width * canvas.height) / 12000);
+                const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
                 for (let i = 0; i < particleCount; i++) {
-                    particles.push(new GlobalParticle());
+                    particles.push(new Particle());
                 }
             }
 
@@ -11123,9 +11089,8 @@
                         const dy = particles[i].y - particles[j].y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
 
-                        if (distance < 120) {
-                            const opacity = 0.15 * (1 - distance / 120);
-                            ctx.strokeStyle = `rgba(167, 139, 250, ${opacity})`;
+                        if (distance < 100) {
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * (1 - distance / 100)})`;
                             ctx.lineWidth = 1;
                             ctx.beginPath();
                             ctx.moveTo(particles[i].x, particles[i].y);
@@ -11160,6 +11125,188 @@
             };
         }
 
+        // Показать секцию подписки
+        function showSubscriptionSection() {
+            const subSection = document.getElementById('subscriptionSection');
+            if (subSection) {
+                subSection.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                
+                // Initialize particles
+                setTimeout(() => {
+                    initParticles();
+                }, 100);
+                
+                updateSubscriptionUI();
+            }
+        }
+
+        // Закрыть секцию подписки
+        function closeSubscriptionSection() {
+            const subSection = document.getElementById('subscriptionSection');
+            if (subSection) {
+                subSection.classList.add('hidden');
+                // Восстанавливаем прокрутку
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSubscriptionSection();
+            }
+        });
+
+        // Инициализация подписки при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSubscriptionUI();
+            
+            // Обновляем каждую минуту
+            setInterval(updateSubscriptionUI, 60000);
+
+            // Pricing toggle functionality
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            const indicator = document.querySelector('.toggle-indicator');
+
+            toggleBtns.forEach((btn, index) => {
+                btn.addEventListener('click', () => {
+                    // Remove active from all
+                    toggleBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active to clicked
+                    btn.classList.add('active');
+                    
+                    // Move indicator
+                    if (indicator) {
+                        indicator.style.transform = `translateX(${index * 100}%)`;
+                    }
+
+                    // Update prices based on period
+                    const period = btn.dataset.period;
+                    console.log('Selected period:', period);
+                });
+            });
+        });
+
+        // ═══════════════════════════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════════════════════════
+
+        // ⚠️ ВАЖНО: Замените YOUR_PAYPAL_EMAIL на ваш реальный PayPal email
+        const PAYPAL_EMAIL = 'YOUR_PAYPAL_EMAIL@example.com';
+
+        // ═══════════════════════════════════════════════════════════════
+        // ✨ GLOBAL PARTICLES ANIMATION
+        // ═══════════════════════════════════════════════════════════════
+
+        let globalParticlesInitialized = false;
+
+        function initGlobalParticles() {
+            if (globalParticlesInitialized) return;
+            
+            const canvas = document.getElementById('globalParticlesCanvas');
+            if (!canvas) return;
+
+            globalParticlesInitialized = true;
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let animationFrameId;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            class GlobalParticle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2.5 + 1;
+                    this.speedX = Math.random() * 0.6 - 0.3;
+                    this.speedY = Math.random() * 0.6 - 0.3;
+                    this.opacity = Math.random() * 0.6 + 0.2;
+                    this.color = this.getRandomColor();
+                }
+
+                getRandomColor() {
+                    const colors = [
+                        'rgba(167, 139, 250, ',
+                        'rgba(236, 72, 153, ',
+                        'rgba(16, 185, 129, ',
+                        'rgba(255, 255, 255, '
+                    ];
+                    return colors[Math.floor(Math.random() * colors.length)];
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    if (this.x > canvas.width) this.x = 0;
+                    if (this.x < 0) this.x = canvas.width;
+                    if (this.y > canvas.height) this.y = 0;
+                    if (this.y < 0) this.y = canvas.height;
+                }
+
+                draw() {
+                    ctx.fillStyle = this.color + this.opacity + ')';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function createParticles() {
+                const particleCount = Math.floor((canvas.width * canvas.height) / 12000);
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new GlobalParticle());
+                }
+            }
+
+            function connectParticles() {
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < 120) {
+                            const opacity = 0.15 * (1 - distance / 120);
+                            ctx.strokeStyle = `rgba(167, 139, 250, ${opacity})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+
+                connectParticles();
+                animationFrameId = requestAnimationFrame(animate);
+            }
+
+            createParticles();
+            animate();
+
+            return () => {
+                cancelAnimationFrame(animationFrameId);
+                window.removeEventListener('resize', resizeCanvas);
+            };
+        }
+
         // Initialize global particles on page load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initGlobalParticles);
@@ -11167,11 +11314,61 @@
             initGlobalParticles();
         }
 
-        // ═══════════════════════════════════════════════════════════════════════
-        // ═══════════════════════════════════════════════════════════════════════
+        // ═══════════════════════════════════════════════════════════════
+        // 💎 UPDATE SUBSCRIPTION STATUS BADGE
+        // ═══════════════════════════════════════════════════════════════
 
-        // ⚠️ ВАЖНО: Замените YOUR_PAYPAL_EMAIL на ваш реальный PayPal email
-        const PAYPAL_EMAIL = 'YOUR_PAYPAL_EMAIL@example.com';
+        // Wrap original updateSubscriptionUI
+        const originalUpdateSubscriptionUI = window.updateSubscriptionUI || function() {};
+
+        window.updateSubscriptionUI = function() {
+            // Call original function if exists
+            if (typeof originalUpdateSubscriptionUI === 'function') {
+                originalUpdateSubscriptionUI();
+            }
+
+            // Update status badge
+            const sub = checkSubscription();
+            const statusBadge = document.getElementById('subscriptionStatusBadge');
+            const statusText = document.getElementById('subscriptionStatusText');
+            const statusIcon = statusBadge?.querySelector('.subscription-status-icon');
+            const miniBadge = document.getElementById('subBadgeMini');
+
+            if (!statusBadge || !statusText) return;
+
+            if (sub) {
+                if (sub.type === 'lifetime') {
+                    // Lifetime subscription
+                    statusBadge.className = 'subscription-status-badge lifetime';
+                    statusIcon.textContent = '♾️';
+                    statusText.textContent = 'LIFETIME';
+                    
+                    if (miniBadge) {
+                        miniBadge.className = 'sub-badge-mini lifetime';
+                        miniBadge.textContent = '♾️';
+                    }
+                } else {
+                    // Pro subscription
+                    statusBadge.className = 'subscription-status-badge pro';
+                    statusIcon.textContent = '💎';
+                    statusText.textContent = 'PRO';
+                    
+                    if (miniBadge) {
+                        miniBadge.className = 'sub-badge-mini pro';
+                        miniBadge.textContent = '💎';
+                    }
+                }
+            } else {
+                // Free plan
+                statusBadge.className = 'subscription-status-badge free';
+                statusIcon.textContent = '⚡';
+                statusText.textContent = 'FREE';
+                
+                if (miniBadge) {
+                    miniBadge.className = 'sub-badge-mini free';
+                }
+            }
+        };
 
     </script>
 
