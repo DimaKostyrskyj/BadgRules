@@ -10516,17 +10516,44 @@
                             ? user.avatar
                             : `${user.avatar}?size=128`;
 
-                        userAvatar.style.backgroundImage = `url(${avatarUrl})`;
-                        userAvatar.style.backgroundSize = 'cover';
-                        userAvatar.style.backgroundPosition = 'center';
-                        userAvatar.textContent = '';
-                        console.log('Avatar loaded:', avatarUrl);
+                        console.log('🖼️ Загрузка аватарки:', avatarUrl);
+
+                        // Проверить что URL валидный
+                        if (avatarUrl && avatarUrl.startsWith('http')) {
+                            // Создать img элемент для проверки загрузки
+                            const img = new Image();
+                            img.crossOrigin = 'anonymous';
+                            
+                            img.onload = () => {
+                                console.log('✅ Аватарка загружена успешно');
+                                userAvatar.style.backgroundImage = `url(${avatarUrl})`;
+                                userAvatar.style.backgroundSize = 'cover';
+                                userAvatar.style.backgroundPosition = 'center';
+                                userAvatar.textContent = '';
+                            };
+                            
+                            img.onerror = (error) => {
+                                console.error('❌ Ошибка загрузки аватарки:', error);
+                                console.error('URL:', avatarUrl);
+                                // Показать инициалы
+                                const displayName = user.displayName || user.username;
+                                userAvatar.textContent = displayName.charAt(0).toUpperCase();
+                                userAvatar.style.backgroundImage = '';
+                            };
+                            
+                            img.src = avatarUrl;
+                        } else {
+                            console.warn('⚠️ Невалидный URL аватарки:', avatarUrl);
+                            const displayName = user.displayName || user.username;
+                            userAvatar.textContent = displayName.charAt(0).toUpperCase();
+                            userAvatar.style.backgroundImage = '';
+                        }
                     } else {
+                        console.log('ℹ️ Нет аватарки, показываю инициалы');
                         // No avatar - show initials
                         const displayName = user.displayName || user.username;
                         userAvatar.textContent = displayName.charAt(0).toUpperCase();
                         userAvatar.style.backgroundImage = '';
-                        console.log('No avatar, showing initial');
                     }
                 }
             } else {
@@ -10601,10 +10628,35 @@
                     const avatarUrl = user.avatar.includes('?')
                         ? user.avatar
                         : `${user.avatar}?size=256`;
-                    profileAvatarImg.style.backgroundImage = `url(${avatarUrl})`;
-                    profileAvatarImg.style.backgroundSize = 'cover';
-                    profileAvatarImg.style.backgroundPosition = 'center';
-                    profileAvatarImg.textContent = '';
+                    
+                    console.log('🖼️ Загрузка аватарки профиля:', avatarUrl);
+                    
+                    // Проверить загрузку
+                    if (avatarUrl && avatarUrl.startsWith('http')) {
+                        const img = new Image();
+                        img.crossOrigin = 'anonymous';
+                        
+                        img.onload = () => {
+                            console.log('✅ Аватарка профиля загружена');
+                            profileAvatarImg.style.backgroundImage = `url(${avatarUrl})`;
+                            profileAvatarImg.style.backgroundSize = 'cover';
+                            profileAvatarImg.style.backgroundPosition = 'center';
+                            profileAvatarImg.textContent = '';
+                        };
+                        
+                        img.onerror = (error) => {
+                            console.error('❌ Ошибка загрузки аватарки профиля:', error);
+                            const initial = (user.displayName || user.username || 'G').charAt(0).toUpperCase();
+                            profileAvatarImg.textContent = initial;
+                            profileAvatarImg.style.backgroundImage = '';
+                        };
+                        
+                        img.src = avatarUrl;
+                    } else {
+                        const initial = (user.displayName || user.username || 'G').charAt(0).toUpperCase();
+                        profileAvatarImg.textContent = initial;
+                        profileAvatarImg.style.backgroundImage = '';
+                    }
                 } else if (profileAvatarImg) {
                     const initial = (user.displayName || user.username || 'G').charAt(0).toUpperCase();
                     profileAvatarImg.textContent = initial;
