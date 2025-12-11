@@ -12051,6 +12051,34 @@
             return null;
         }
 
+        async function checkSubscriptionStatus() {
+            try {
+                const userId = localStorage.getItem('userId');
+                if (!userId) return;
+
+                const response = await fetch(`https://your-api.com/subscriptions/${userId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const subscription = await response.json();
+                    updateSubscriptionUI(subscription);
+                }
+            } catch (error) {
+                console.error('Ошибка проверки подписки:', error);
+            }
+        }
+
+        // Проверяем статус при загрузке страницы
+        window.addEventListener('load', () => {
+            checkSubscriptionStatus();
+            
+            // Проверяем каждые 60 секунд на случай, если WebSocket недоступен
+            setInterval(checkSubscriptionStatus, 60000);
+        });
+
         // ═══════════════════════════════════════════════════════════════
         // SEND LOGS TO BOT
         // ═══════════════════════════════════════════════════════════════
@@ -12308,6 +12336,66 @@
     </script>
 
     </div><!-- /main-content -->
+
+    <!-- WebSocket для реального обновления статуса подписки -->
+<script>
+    let ws = null;
+    const userId = localStorage.getItem('userId'); // или из данных пользователя
+
+    function initWebSocket() {
+        if (!userId) return;
+
+        // Подключаемся к вашему WebSocket серверу
+        const wsUrl = 'wss://your-domain.com/ws/subscriptions'; // замените на ваш URL
+        ws = new WebSocket(wsUrl);
+
+        ws.onopen = () => {
+            console.log('WebSocket подключен');
+            // Отправляем ID пользователя для подписки на его обновления
+            ws.send(JSON.stringify({ type: 'subscribe', userId }));
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            
+            if (data.type === 'subscription_updated') {
+                // Обновляем статус подписки на фронтенде
+                updateSubscriptionUI(data.subscription);
+                showNotification('Подписка обновлена!', 'success');
+            }
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket отключен, переподключение через 3 секунды...');
+            setTimeout(initWebSocket, 3000);
+        };
+    }
+
+    function updateSubscriptionUI(subscription) {
+        const statusText = document.getElementById('subscriptionStatusText');
+        const statusBadge = document.getElementById('subscriptionStatusBadge');
+        const miniBadge = document.getElementById('subBadgeMini');
+        
+        // Обновляем текстовый статус
+        if (statusText) {
+            statusText.textContent = subscription.plan.toUpperCase();
+        }
+        
+        // Обновляем бейдж
+        if (statusBadge) {
+            statusBadge.className = `subscription-status-badge ${subscription.plan}`;
+        }
+        
+        // Обновляем мини-бейдж на аватарке
+        if (miniBadge) {
+            miniBadge.className = `sub-badge-mini ${subscription.plan}`;
+            miniBadge.textContent = subscription.plan === 'lifetime' ? '♾️' : '⚡';
+        }
+        
+        // Сохраняем в localStorage
+        localStorage.setItem('userSubscription', JSON.stringify(subscription));
+    }
+</script>
 </body>
 
 </html>
