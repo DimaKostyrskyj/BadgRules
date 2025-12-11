@@ -12278,6 +12278,7 @@
                 return originalLogout.apply(this, arguments);
             };
         }
+        
 
         // ═══════════════════════════════════════════════════════════════
         // INITIALIZATION
@@ -12335,67 +12336,6 @@
 
     </script>
 
-    </div><!-- /main-content -->
-
-    <!-- WebSocket для реального обновления статуса подписки -->
-<script>
-    let ws = null;
-    const userId = localStorage.getItem('userId'); // или из данных пользователя
-
-    function initWebSocket() {
-        if (!userId) return;
-
-        // Подключаемся к вашему WebSocket серверу
-        const wsUrl = 'wss://your-domain.com/ws/subscriptions'; // замените на ваш URL
-        ws = new WebSocket(wsUrl);
-
-        ws.onopen = () => {
-            console.log('WebSocket подключен');
-            // Отправляем ID пользователя для подписки на его обновления
-            ws.send(JSON.stringify({ type: 'subscribe', userId }));
-        };
-
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            
-            if (data.type === 'subscription_updated') {
-                // Обновляем статус подписки на фронтенде
-                updateSubscriptionUI(data.subscription);
-                showNotification('Подписка обновлена!', 'success');
-            }
-        };
-
-        ws.onclose = () => {
-            console.log('WebSocket отключен, переподключение через 3 секунды...');
-            setTimeout(initWebSocket, 3000);
-        };
-    }
-
-    function updateSubscriptionUI(subscription) {
-        const statusText = document.getElementById('subscriptionStatusText');
-        const statusBadge = document.getElementById('subscriptionStatusBadge');
-        const miniBadge = document.getElementById('subBadgeMini');
-        
-        // Обновляем текстовый статус
-        if (statusText) {
-            statusText.textContent = subscription.plan.toUpperCase();
-        }
-        
-        // Обновляем бейдж
-        if (statusBadge) {
-            statusBadge.className = `subscription-status-badge ${subscription.plan}`;
-        }
-        
-        // Обновляем мини-бейдж на аватарке
-        if (miniBadge) {
-            miniBadge.className = `sub-badge-mini ${subscription.plan}`;
-            miniBadge.textContent = subscription.plan === 'lifetime' ? '♾️' : '⚡';
-        }
-        
-        // Сохраняем в localStorage
-        localStorage.setItem('userSubscription', JSON.stringify(subscription));
-    }
-</script>
 </body>
 
 </html>
