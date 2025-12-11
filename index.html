@@ -11956,11 +11956,75 @@
             }
         }
 
+        // Универсальная функция обновления ВСЕХ badge
+        function updateAllSubscriptionBadges() {
+            const sub = checkSubscription();
+            console.log('🔄 Обновление всех badge:', sub);
+            
+            // 1. Badge в хедере (subBadgeMini)
+            const headerBadge = document.getElementById('subBadgeMini');
+            if (headerBadge) {
+                headerBadge.classList.remove('free', 'pro', 'lifetime');
+                if (sub) {
+                    if (sub.type === 'lifetime') {
+                        headerBadge.classList.add('lifetime');
+                        headerBadge.textContent = '♾️';
+                    } else {
+                        headerBadge.classList.add('pro');
+                        headerBadge.textContent = '💎';
+                    }
+                } else {
+                    headerBadge.classList.add('free');
+                    headerBadge.textContent = '⚡';
+                }
+                console.log('✅ Header badge обновлен:', headerBadge.className);
+            }
+            
+            // 2. Badge в dropdown (subscriptionStatusBadge)
+            const dropdownBadge = document.getElementById('subscriptionStatusBadge');
+            const dropdownIcon = dropdownBadge?.querySelector('.subscription-status-icon');
+            const dropdownText = document.getElementById('subscriptionStatusText');
+            
+            if (dropdownBadge) {
+                dropdownBadge.classList.remove('free', 'pro', 'lifetime');
+                if (sub) {
+                    if (sub.type === 'lifetime') {
+                        dropdownBadge.classList.add('lifetime');
+                        if (dropdownIcon) dropdownIcon.textContent = '♾️';
+                        if (dropdownText) dropdownText.textContent = 'LIFETIME';
+                    } else {
+                        dropdownBadge.classList.add('pro');
+                        if (dropdownIcon) dropdownIcon.textContent = '💎';
+                        if (dropdownText) dropdownText.textContent = 'PRO';
+                    }
+                } else {
+                    dropdownBadge.classList.add('free');
+                    if (dropdownIcon) dropdownIcon.textContent = '⚡';
+                    if (dropdownText) dropdownText.textContent = 'FREE';
+                }
+                console.log('✅ Dropdown badge обновлен:', dropdownBadge.className);
+            }
+            
+            // 3. Badge в профиле
+            updateProfileSubscriptionBadge();
+            console.log('✅ Profile badge обновлен');
+            
+            // 4. Badge на странице подписок
+            updateSubscriptionUI();
+            console.log('✅ Subscription page обновлена');
+            
+            console.log('🎉 Все badge обновлены!');
+        }
+
         // Call on page load
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', updateProfileSubscriptionBadge);
+            document.addEventListener('DOMContentLoaded', () => {
+                updateProfileSubscriptionBadge();
+                updateAllSubscriptionBadges();
+            });
         } else {
             updateProfileSubscriptionBadge();
+            updateAllSubscriptionBadges();
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -12076,36 +12140,27 @@
                         grantedAt: sub.granted_at
                     }));
                     
-                    // Обновить UI везде
-                    if (typeof updateSubscriptionUI === 'function') {
-                        updateSubscriptionUI();
-                    }
-                    if (typeof updateProfileSubscriptionBadge === 'function') {
-                        updateProfileSubscriptionBadge();
+                    // Обновить ВСЕ badge везде
+                    if (typeof updateAllSubscriptionBadges === 'function') {
+                        updateAllSubscriptionBadges();
                     }
                     
                     console.log('✅ Подписка синхронизирована:', sub.type);
-                    console.log('🔄 Badge обновлен');
+                    console.log('🔄 Все badge обновлены');
                     return sub;
                 } else {
                     // Подписка истекла
                     console.log('⏰ Подписка истекла');
                     localStorage.removeItem('badgrules_subscription');
-                    if (typeof updateSubscriptionUI === 'function') {
-                        updateSubscriptionUI();
-                    }
-                    if (typeof updateProfileSubscriptionBadge === 'function') {
-                        updateProfileSubscriptionBadge();
+                    if (typeof updateAllSubscriptionBadges === 'function') {
+                        updateAllSubscriptionBadges();
                     }
                 }
             } else {
                 if (BOT_API.DEBUG) console.log('⚡ Подписка не найдена - FREE план');
                 localStorage.removeItem('badgrules_subscription');
-                if (typeof updateSubscriptionUI === 'function') {
-                    updateSubscriptionUI();
-                }
-                if (typeof updateProfileSubscriptionBadge === 'function') {
-                    updateProfileSubscriptionBadge();
+                if (typeof updateAllSubscriptionBadges === 'function') {
+                    updateAllSubscriptionBadges();
                 }
             }
             
