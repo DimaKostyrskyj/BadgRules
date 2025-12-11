@@ -12246,11 +12246,24 @@
             // Вызываем оригинальную функцию
             originalLoginComplete(userData);
             
-            // Синхронизация с ботом
+            // КРИТИЧЕСКАЯ синхронизация с ботом ПЕРЕД показом интерфейса
             if (BOT_API.ENABLED && userData && userData.id) {
-                console.log('🤖 Синхронизация с ботом...');
+                console.log('🤖 КРИТИЧЕСКАЯ синхронизация с ботом...');
                 
-                // Проверяем подписку из бота
+                // Сначала проверяем БАН и ПОДПИСКУ
+                const result = await botApiCall(`/subscription/${userData.id}`);
+                
+                if (result && result.banned) {
+                    console.error('🔨 ПОЛЬЗОВАТЕЛЬ ЗАБАНЕН!');
+                    console.error('   User ID:', userData.id);
+                    console.error('   Блокируем доступ...');
+                    
+                    // НЕ показываем интерфейс!
+                    handleUserBanned();
+                    return; // ОСТАНАВЛИВАЕМ ВЫПОЛНЕНИЕ
+                }
+                
+                // Если не забанен - проверяем подписку
                 const subscription = await checkSubscriptionFromBot(userData.id);
                 
                 // Отправляем лог входа
@@ -12276,17 +12289,31 @@
         function startSubscriptionSync() {
             if (!BOT_API.ENABLED) return;
             
-            // Проверять каждые 5 минут
+            // Проверять каждые 30 секунд (чаще чем раньше!)
             setInterval(async () => {
                 const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
                 
                 if (userData && userData.id) {
-                    console.log('🔄 Периодическая синхронизация подписки...');
-                    await checkSubscriptionFromBot(userData.id);
+                    console.log('🔄 Периодическая проверка бана и подписки...');
+                    
+                    // Получить данные напрямую от бота
+                    const result = await botApiCall(`/subscription/${userData.id}`);
+                    
+                    if (result) {
+                        // ПРОВЕРКА БАНА ПЕРВЫМ ДЕЛОМ
+                        if (result.banned) {
+                            console.error('🔨 ОБНАРУЖЕН БАН! Блокируем доступ...');
+                            handleUserBanned();
+                            return;
+                        }
+                        
+                        // Если не забанен - обновляем подписку
+                        await checkSubscriptionFromBot(userData.id);
+                    }
                 }
-            }, 5 * 60 * 1000);  // 5 минут
+            }, 30 * 1000);  // 30 секунд
             
-            console.log('🤖 Автоматическая синхронизация запущена (каждые 5 минут)');
+            console.log('🤖 Автоматическая синхронизация запущена (каждые 30 секунд)');
         }
 
         // Запустить синхронизацию при загрузке
