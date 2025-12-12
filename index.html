@@ -12684,7 +12684,7 @@ if (BOT_API.ENABLED) {
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// 🔨 СИСТЕМА БАНА - ПОЛНАЯ БЛОКИРОВКА САЙТА
+// 🔨 СИСТЕМА БАНА - ПОЛНАЯ БЛОКИРОВКА (АДАПТИРОВАНА ПОД СТИЛЬ САЙТА)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /**
@@ -12703,57 +12703,87 @@ function showBanScreen(banInfo) {
     banScreen.innerHTML = `
         <div class="ban-container">
             <div class="ban-icon">
-                <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                    <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+                <svg width="140" height="140" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+                    <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="1.5"/>
                 </svg>
             </div>
             
-            <h1 class="ban-title">Доступ заблокирован</h1>
+            <h1 class="ban-title">🔒 ДОСТУП ЗАБЛОКИРОВАН</h1>
             
             <div class="ban-message">
-                <p class="ban-reason-label">Причина:</p>
+                <div class="ban-reason-header">
+                    <span class="ban-emoji">⚠️</span>
+                    <span class="ban-reason-label">ПРИЧИНА БЛОКИРОВКИ</span>
+                </div>
                 <p class="ban-reason">${banInfo.reason || 'Нарушение правил сервиса'}</p>
             </div>
             
             <div class="ban-details">
-                ${banInfo.temporary ? `
-                    <div class="ban-info-row">
-                        <span class="ban-info-label">⏰ Тип:</span>
-                        <span class="ban-info-value">Временный (${formatBanExpiry(banInfo.expires_at)})</span>
+                <div class="ban-info-grid">
+                    <div class="ban-info-item">
+                        <div class="ban-info-icon">⏰</div>
+                        <div class="ban-info-content">
+                            <div class="ban-info-label">Тип бана</div>
+                            <div class="ban-info-value">${banInfo.temporary ? `Временный` : 'Постоянный'}</div>
+                        </div>
                     </div>
-                ` : `
-                    <div class="ban-info-row">
-                        <span class="ban-info-label">⏰ Тип:</span>
-                        <span class="ban-info-value">Постоянный</span>
+                    
+                    ${banInfo.temporary && banInfo.expires_at ? `
+                    <div class="ban-info-item">
+                        <div class="ban-info-icon">⌛</div>
+                        <div class="ban-info-content">
+                            <div class="ban-info-label">Истекает</div>
+                            <div class="ban-info-value">${formatBanExpiry(banInfo.expires_at)}</div>
+                        </div>
                     </div>
-                `}
-                
-                <div class="ban-info-row">
-                    <span class="ban-info-label">📅 Дата бана:</span>
-                    <span class="ban-info-value">${formatBanDate(banInfo.banned_at)}</span>
-                </div>
-                
-                <div class="ban-info-row">
-                    <span class="ban-info-label">👤 Забанил:</span>
-                    <span class="ban-info-value">Администратор</span>
+                    ` : ''}
+                    
+                    <div class="ban-info-item">
+                        <div class="ban-info-icon">📅</div>
+                        <div class="ban-info-content">
+                            <div class="ban-info-label">Дата бана</div>
+                            <div class="ban-info-value">${formatBanDate(banInfo.banned_at)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="ban-info-item">
+                        <div class="ban-info-icon">👤</div>
+                        <div class="ban-info-content">
+                            <div class="ban-info-label">Забанил</div>
+                            <div class="ban-info-value">Администратор</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <div class="ban-footer">
-                <p>Если вы считаете что это ошибка, свяжитесь с администрацией</p>
-                <button class="btn-contact" onclick="window.open('https://discord.gg/ваш-сервер', '_blank')">
-                    💬 Связаться в Discord
+                <p class="ban-footer-text">Если вы считаете что это ошибка, свяжитесь с администрацией</p>
+                <button class="btn-ban-contact" onclick="window.open('https://discord.gg/ваш-сервер', '_blank')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                    Связаться в Discord
                 </button>
             </div>
+        </div>
+        
+        <!-- Анимированный фон -->
+        <div class="ban-bg-animation">
+            <div class="ban-particle"></div>
+            <div class="ban-particle"></div>
+            <div class="ban-particle"></div>
+            <div class="ban-particle"></div>
+            <div class="ban-particle"></div>
         </div>
     `;
     
     document.body.appendChild(banScreen);
     addBanStyles();
     
-    // Сохранить в кэш для оффлайн проверки
+    // Сохранить в кэш
     localStorage.setItem('badgrules_ban_info', JSON.stringify(banInfo));
+    localStorage.setItem('badgrules_banned', 'true');
 }
 
 /**
@@ -12773,8 +12803,10 @@ function formatBanExpiry(expiresAt) {
     
     if (days > 0) {
         return `${days} дн. ${hours} ч.`;
-    } else {
+    } else if (hours > 0) {
         return `${hours} часов`;
+    } else {
+        return `${Math.floor(diff / (1000 * 60))} минут`;
     }
 }
 
@@ -12795,7 +12827,7 @@ function formatBanDate(bannedAt) {
 }
 
 /**
- * Добавить стили для экрана бана
+ * Добавить стили для экрана бана (АДАПТИРОВАНО ПОД СТИЛЬ САЙТА)
  */
 function addBanStyles() {
     const style = document.createElement('style');
@@ -12806,149 +12838,344 @@ function addBanStyles() {
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: #000000;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 999999;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: #fff;
+            color: #ffffff;
+            overflow: hidden;
+        }
+        
+        .ban-bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .ban-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(135deg, #a78bfa, #ec4899);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 20s infinite;
+        }
+        
+        .ban-particle:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 15s;
+        }
+        
+        .ban-particle:nth-child(2) {
+            left: 30%;
+            animation-delay: 3s;
+            animation-duration: 18s;
+        }
+        
+        .ban-particle:nth-child(3) {
+            left: 50%;
+            animation-delay: 6s;
+            animation-duration: 22s;
+        }
+        
+        .ban-particle:nth-child(4) {
+            left: 70%;
+            animation-delay: 9s;
+            animation-duration: 20s;
+        }
+        
+        .ban-particle:nth-child(5) {
+            left: 90%;
+            animation-delay: 12s;
+            animation-duration: 17s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
         }
         
         .ban-container {
-            max-width: 600px;
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
             width: 90%;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(20px);
             border-radius: 24px;
             padding: 48px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 0 0 1px rgba(167, 139, 250, 0.2),
+                0 20px 60px rgba(0, 0, 0, 0.8),
+                0 0 100px rgba(167, 139, 250, 0.1);
+            border: 1px solid rgba(167, 139, 250, 0.15);
             text-align: center;
-            animation: slideIn 0.5s ease-out;
+            animation: banSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         
-        @keyframes slideIn {
+        @keyframes banSlideIn {
             from {
                 opacity: 0;
-                transform: translateY(-30px);
+                transform: translateY(-50px) scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
         
         .ban-icon {
             margin: 0 auto 32px;
-            width: 120px;
-            height: 120px;
-            color: #ff4757;
-            animation: pulse 2s infinite;
+            width: 140px;
+            height: 140px;
+            color: #ec4899;
+            filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.4));
+            animation: banPulse 3s infinite;
         }
         
-        @keyframes pulse {
+        @keyframes banPulse {
             0%, 100% {
                 opacity: 1;
                 transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.4));
             }
             50% {
-                opacity: 0.8;
+                opacity: 0.7;
                 transform: scale(1.05);
+                filter: drop-shadow(0 0 30px rgba(236, 72, 153, 0.6));
             }
         }
         
         .ban-title {
-            font-size: 2.5em;
+            font-size: 2.2em;
             font-weight: 700;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, #a78bfa, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
         
         .ban-message {
-            background: rgba(255, 71, 87, 0.1);
-            border: 2px solid rgba(255, 71, 87, 0.3);
+            background: linear-gradient(135deg, 
+                rgba(236, 72, 153, 0.1), 
+                rgba(167, 139, 250, 0.1));
+            border: 2px solid rgba(236, 72, 153, 0.3);
             border-radius: 16px;
-            padding: 24px;
+            padding: 28px;
             margin: 32px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ban-message::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(90deg, 
+                transparent,
+                rgba(236, 72, 153, 0.2),
+                transparent);
+            animation: banGlow 3s infinite;
+            border-radius: 16px;
+            z-index: -1;
+        }
+        
+        @keyframes banGlow {
+            0%, 100% {
+                transform: translateX(-100%);
+            }
+            50% {
+                transform: translateX(100%);
+            }
+        }
+        
+        .ban-reason-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .ban-emoji {
+            font-size: 1.8em;
+            animation: banShake 2s infinite;
+        }
+        
+        @keyframes banShake {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-5deg);
+            }
+            75% {
+                transform: rotate(5deg);
+            }
         }
         
         .ban-reason-label {
             font-size: 0.9em;
-            opacity: 0.7;
-            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            opacity: 0.8;
         }
         
         .ban-reason {
-            font-size: 1.3em;
+            font-size: 1.4em;
             font-weight: 600;
-            color: #ff6b81;
+            color: #ec4899;
             line-height: 1.5;
             word-wrap: break-word;
+            text-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
         }
         
         .ban-details {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 24px;
-            margin: 24px 0;
-            text-align: left;
+            background: rgba(20, 20, 20, 0.6);
+            border: 1px solid rgba(167, 139, 250, 0.15);
+            border-radius: 16px;
+            padding: 28px;
+            margin: 28px 0;
         }
         
-        .ban-info-row {
+        .ban-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .ban-info-item {
             display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(167, 139, 250, 0.05);
+            border: 1px solid rgba(167, 139, 250, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
         }
         
-        .ban-info-row:last-child {
-            border-bottom: none;
+        .ban-info-item:hover {
+            background: rgba(167, 139, 250, 0.08);
+            border-color: rgba(167, 139, 250, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .ban-info-icon {
+            font-size: 1.8em;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .ban-info-content {
+            text-align: left;
+            flex: 1;
         }
         
         .ban-info-label {
-            opacity: 0.7;
+            font-size: 0.85em;
+            opacity: 0.6;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .ban-info-value {
+            font-size: 1.05em;
             font-weight: 600;
-            text-align: right;
+            color: #a78bfa;
         }
         
         .ban-footer {
-            margin-top: 32px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 36px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(167, 139, 250, 0.15);
         }
         
-        .ban-footer p {
+        .ban-footer-text {
             opacity: 0.7;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
         
-        .btn-contact {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
+        .btn-ban-contact {
+            background: linear-gradient(135deg, #a78bfa, #ec4899);
+            color: #ffffff;
             border: none;
-            padding: 14px 32px;
+            padding: 16px 36px;
             border-radius: 12px;
-            font-size: 1em;
+            font-size: 1.05em;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+            box-shadow: 
+                0 0 0 1px rgba(167, 139, 250, 0.3),
+                0 8px 24px rgba(167, 139, 250, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
         }
         
-        .btn-contact:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(102, 126, 234, 0.6);
+        .btn-ban-contact::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
         }
         
-        .btn-contact:active {
-            transform: translateY(0);
+        .btn-ban-contact:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 0 0 1px rgba(167, 139, 250, 0.5),
+                0 12px 32px rgba(167, 139, 250, 0.5);
+        }
+        
+        .btn-ban-contact:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-ban-contact:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn-ban-contact svg {
+            position: relative;
+            z-index: 1;
         }
         
         /* Mobile */
@@ -12958,16 +13185,25 @@ function addBanStyles() {
             }
             
             .ban-title {
-                font-size: 2em;
+                font-size: 1.6em;
             }
             
             .ban-icon {
-                width: 80px;
-                height: 80px;
+                width: 100px;
+                height: 100px;
             }
             
             .ban-reason {
                 font-size: 1.1em;
+            }
+            
+            .ban-info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-ban-contact {
+                padding: 14px 28px;
+                font-size: 0.95em;
             }
         }
     `;
@@ -12975,7 +13211,27 @@ function addBanStyles() {
 }
 
 /**
- * Проверить статус бана пользователя
+ * Скрыть экран бана (при разбане)
+ */
+function hideBanScreen() {
+    console.log('✅ Разбан подтверждён - убираем экран бана');
+    
+    const banScreen = document.getElementById('ban-screen');
+    if (banScreen) {
+        banScreen.style.animation = 'banSlideOut 0.5s ease-out forwards';
+        
+        setTimeout(() => {
+            localStorage.removeItem('badgrules_ban_info');
+            localStorage.removeItem('badgrules_banned');
+            
+            // Перезагрузить страницу для восстановления интерфейса
+            window.location.reload();
+        }, 500);
+    }
+}
+
+/**
+ * Проверить статус бана пользователя (С ФИКСОМ РАЗБАНА)
  */
 async function checkBanStatus(userId) {
     if (!userId) return false;
@@ -12998,7 +13254,10 @@ async function checkBanStatus(userId) {
         const data = await response.json();
         console.log('📦 Данные пользователя:', data);
         
-        if (data.banned) {
+        // КРИТИЧНО: Проверить если пользователь БЫЛ забанен но теперь разбанен
+        const wasBanned = localStorage.getItem('badgrules_banned') === 'true';
+        
+        if (data.banned === true) {
             console.error('🔨 ПОЛЬЗОВАТЕЛЬ ЗАБАНЕН!');
             
             // Получить информацию о бане
@@ -13014,13 +13273,23 @@ async function checkBanStatus(userId) {
             
             console.log('Ban Info:', banInfo);
             
-            // Показать экран бана
-            showBanScreen(banInfo);
+            // Показать экран бана только если его ещё нет
+            if (!document.getElementById('ban-screen')) {
+                showBanScreen(banInfo);
+            }
             
             return true;
+            
+        } else if (data.banned === false && wasBanned) {
+            // ПОЛЬЗОВАТЕЛЬ БЫЛ ЗАБАНЕН, НО ТЕПЕРЬ РАЗБАНЕН!
+            console.log('🎉 ПОЛЬЗОВАТЕЛЬ РАЗБАНЕН!');
+            hideBanScreen();
+            return false;
+            
         } else {
-            // Убрать информацию о бане если разбанен
+            // Пользователь не забанен
             localStorage.removeItem('badgrules_ban_info');
+            localStorage.removeItem('badgrules_banned');
             console.log('✅ Пользователь НЕ забанен');
             return false;
         }
@@ -13032,7 +13301,9 @@ async function checkBanStatus(userId) {
         const cachedBan = localStorage.getItem('badgrules_ban_info');
         if (cachedBan) {
             console.warn('⚠️ Используем кэшированную информацию о бане');
-            showBanScreen(JSON.parse(cachedBan));
+            if (!document.getElementById('ban-screen')) {
+                showBanScreen(JSON.parse(cachedBan));
+            }
             return true;
         }
         
@@ -13135,6 +13406,7 @@ function startBanMonitoring(userId) {
             if (expires < new Date()) {
                 console.log('✅ Временный бан истёк, удаляем из кэша');
                 localStorage.removeItem('badgrules_ban_info');
+                localStorage.removeItem('badgrules_banned');
                 return;
             }
         }
@@ -13144,11 +13416,28 @@ function startBanMonitoring(userId) {
     }
 })();
 
+// Добавить CSS для анимации скрытия
+const hideBanAnimation = document.createElement('style');
+hideBanAnimation.textContent = `
+    @keyframes banSlideOut {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+        to {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+    }
+`;
+document.head.appendChild(hideBanAnimation);
+
 console.log('✅ Система бана полностью активирована!');
 console.log('📋 Функции доступны:');
 console.log('   - checkBanStatus(userId)');
 console.log('   - startBanMonitoring(userId)');
 console.log('   - showBanScreen(banInfo)');
+console.log('   - hideBanScreen()');
 
     </script>
 
