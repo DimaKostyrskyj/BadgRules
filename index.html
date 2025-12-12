@@ -12595,7 +12595,7 @@
     // 1. Проверяем health endpoint
     console.log('\n1️⃣ Проверка /api/health:');
     try {
-        const healthUrl = `${BOT_API.BASE_URL}/api/health`;
+        const healthUrl = `${BOT_API.BASE_URL}/health`;
         console.log('   URL:', healthUrl);
         
         const response = await fetch(healthUrl, {
@@ -12627,7 +12627,7 @@
         const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
         const userId = userData.id || '710861571919970305';
         
-        const subUrl = `${BOT_API.BASE_URL}/api/subscription/${userId}`;
+        const subUrl = `${BOT_API.BASE_URL}/subscription/${userId}`;
         console.log('   URL:', subUrl);
         console.log('   User ID:', userId);
         
