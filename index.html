@@ -12682,6 +12682,474 @@ if (BOT_API.ENABLED) {
     console.log('💡 To enable: set BOT_API.ENABLED = true');
 }
 
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// 🔨 СИСТЕМА БАНА - ПОЛНАЯ БЛОКИРОВКА САЙТА
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Показать экран бана с полной блокировкой
+ */
+function showBanScreen(banInfo) {
+    console.error('🔨 ПОЛЬЗОВАТЕЛЬ ЗАБАНЕН!');
+    console.log('Ban Info:', banInfo);
+    
+    // Скрыть весь контент
+    document.body.innerHTML = '';
+    
+    // Создать экран бана
+    const banScreen = document.createElement('div');
+    banScreen.id = 'ban-screen';
+    banScreen.innerHTML = `
+        <div class="ban-container">
+            <div class="ban-icon">
+                <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+                </svg>
+            </div>
+            
+            <h1 class="ban-title">Доступ заблокирован</h1>
+            
+            <div class="ban-message">
+                <p class="ban-reason-label">Причина:</p>
+                <p class="ban-reason">${banInfo.reason || 'Нарушение правил сервиса'}</p>
+            </div>
+            
+            <div class="ban-details">
+                ${banInfo.temporary ? `
+                    <div class="ban-info-row">
+                        <span class="ban-info-label">⏰ Тип:</span>
+                        <span class="ban-info-value">Временный (${formatBanExpiry(banInfo.expires_at)})</span>
+                    </div>
+                ` : `
+                    <div class="ban-info-row">
+                        <span class="ban-info-label">⏰ Тип:</span>
+                        <span class="ban-info-value">Постоянный</span>
+                    </div>
+                `}
+                
+                <div class="ban-info-row">
+                    <span class="ban-info-label">📅 Дата бана:</span>
+                    <span class="ban-info-value">${formatBanDate(banInfo.banned_at)}</span>
+                </div>
+                
+                <div class="ban-info-row">
+                    <span class="ban-info-label">👤 Забанил:</span>
+                    <span class="ban-info-value">Администратор</span>
+                </div>
+            </div>
+            
+            <div class="ban-footer">
+                <p>Если вы считаете что это ошибка, свяжитесь с администрацией</p>
+                <button class="btn-contact" onclick="window.open('https://discord.gg/ваш-сервер', '_blank')">
+                    💬 Связаться в Discord
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(banScreen);
+    addBanStyles();
+    
+    // Сохранить в кэш для оффлайн проверки
+    localStorage.setItem('badgrules_ban_info', JSON.stringify(banInfo));
+}
+
+/**
+ * Форматировать дату истечения бана
+ */
+function formatBanExpiry(expiresAt) {
+    if (!expiresAt) return 'Не указано';
+    
+    const date = new Date(expiresAt);
+    const now = new Date();
+    const diff = date - now;
+    
+    if (diff <= 0) return 'Истёк';
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    
+    if (days > 0) {
+        return `${days} дн. ${hours} ч.`;
+    } else {
+        return `${hours} часов`;
+    }
+}
+
+/**
+ * Форматировать дату бана
+ */
+function formatBanDate(bannedAt) {
+    if (!bannedAt) return 'Не указано';
+    
+    const date = new Date(bannedAt);
+    return date.toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+/**
+ * Добавить стили для экрана бана
+ */
+function addBanStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        #ban-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #fff;
+        }
+        
+        .ban-container {
+            max-width: 600px;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .ban-icon {
+            margin: 0 auto 32px;
+            width: 120px;
+            height: 120px;
+            color: #ff4757;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+        
+        .ban-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .ban-message {
+            background: rgba(255, 71, 87, 0.1);
+            border: 2px solid rgba(255, 71, 87, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+        
+        .ban-reason-label {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+        
+        .ban-reason {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #ff6b81;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        
+        .ban-details {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+            text-align: left;
+        }
+        
+        .ban-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .ban-info-row:last-child {
+            border-bottom: none;
+        }
+        
+        .ban-info-label {
+            opacity: 0.7;
+        }
+        
+        .ban-info-value {
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .ban-footer {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .ban-footer p {
+            opacity: 0.7;
+            margin-bottom: 16px;
+        }
+        
+        .btn-contact {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn-contact:active {
+            transform: translateY(0);
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .ban-container {
+                padding: 32px 24px;
+            }
+            
+            .ban-title {
+                font-size: 2em;
+            }
+            
+            .ban-icon {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .ban-reason {
+                font-size: 1.1em;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+/**
+ * Проверить статус бана пользователя
+ */
+async function checkBanStatus(userId) {
+    if (!userId) return false;
+    
+    try {
+        console.log('🔍 Проверка статуса бана для:', userId);
+        
+        const response = await fetch(`${BOT_API.BASE_URL}/subscription/${userId}`, {
+            headers: {
+                'X-API-Secret': BOT_API.SECRET,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            console.error('❌ Ошибка проверки бана:', response.status);
+            return false;
+        }
+        
+        const data = await response.json();
+        console.log('📦 Данные пользователя:', data);
+        
+        if (data.banned) {
+            console.error('🔨 ПОЛЬЗОВАТЕЛЬ ЗАБАНЕН!');
+            
+            // Получить информацию о бане
+            const banInfo = {
+                user_id: userId,
+                banned: true,
+                reason: data.ban_info?.reason || 'Нарушение правил сервиса',
+                banned_at: data.ban_info?.banned_at || new Date().toISOString(),
+                banned_by: data.ban_info?.banned_by || 'admin',
+                temporary: data.ban_info?.temporary || false,
+                expires_at: data.ban_info?.expires_at || null
+            };
+            
+            console.log('Ban Info:', banInfo);
+            
+            // Показать экран бана
+            showBanScreen(banInfo);
+            
+            return true;
+        } else {
+            // Убрать информацию о бане если разбанен
+            localStorage.removeItem('badgrules_ban_info');
+            console.log('✅ Пользователь НЕ забанен');
+            return false;
+        }
+        
+    } catch (error) {
+        console.error('❌ Ошибка проверки бана:', error);
+        
+        // Проверить локальный кэш
+        const cachedBan = localStorage.getItem('badgrules_ban_info');
+        if (cachedBan) {
+            console.warn('⚠️ Используем кэшированную информацию о бане');
+            showBanScreen(JSON.parse(cachedBan));
+            return true;
+        }
+        
+        return false;
+    }
+}
+
+/**
+ * Запустить мониторинг бана (проверка каждые 30 секунд)
+ */
+function startBanMonitoring(userId) {
+    if (!userId) return;
+    
+    console.log('👁️ Мониторинг бана запущен (проверка каждые 30 секунд)');
+    
+    setInterval(async () => {
+        console.log('🔄 Периодическая проверка статуса бана...');
+        await checkBanStatus(userId);
+    }, 30 * 1000); // 30 секунд
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ИНТЕГРАЦИЯ С СУЩЕСТВУЮЩИМ КОДОМ
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/**
+ * Модифицировать loginComplete для проверки бана
+ */
+(function() {
+    const originalLoginComplete = window.loginComplete;
+    
+    window.loginComplete = async function(userData) {
+        console.log('🔐 Login complete, проверка статуса бана...');
+        
+        if (userData && userData.id) {
+            // КРИТИЧНО: Проверить бан ПЕРЕД загрузкой интерфейса
+            const isBanned = await checkBanStatus(userData.id);
+            
+            if (isBanned) {
+                console.error('🔨 Доступ заблокирован - интерфейс не загружается');
+                return; // STOP - не загружать интерфейс
+            }
+            
+            console.log('✅ Пользователь не забанен, загружаем интерфейс');
+            
+            // Продолжить как обычно
+            if (originalLoginComplete) {
+                await originalLoginComplete(userData);
+            }
+            
+            // Запустить мониторинг бана
+            startBanMonitoring(userData.id);
+        }
+    };
+    
+    console.log('✅ loginComplete модифицирован для проверки бана');
+})();
+
+/**
+ * Модифицировать checkSubscriptionFromBot для проверки бана
+ */
+(function() {
+    const originalCheckSub = window.checkSubscriptionFromBot;
+    
+    window.checkSubscriptionFromBot = async function(userId) {
+        console.log('📋 Проверка подписки и статуса бана...');
+        
+        // Сначала проверить бан
+        const isBanned = await checkBanStatus(userId);
+        
+        if (isBanned) {
+            console.error('🔨 Пользователь забанен - подписка недоступна');
+            return null;
+        }
+        
+        // Если не забанен - проверить подписку
+        if (originalCheckSub) {
+            return await originalCheckSub(userId);
+        }
+        
+        return null;
+    };
+    
+    console.log('✅ checkSubscriptionFromBot модифицирован для проверки бана');
+})();
+
+/**
+ * Проверить бан при первой загрузке страницы
+ */
+(function() {
+    // Проверить есть ли сохранённая информация о бане
+    const cachedBan = localStorage.getItem('badgrules_ban_info');
+    if (cachedBan) {
+        console.warn('⚠️ Обнаружена кэшированная информация о бане');
+        const banInfo = JSON.parse(cachedBan);
+        
+        // Проверить не истёк ли временный бан
+        if (banInfo.temporary && banInfo.expires_at) {
+            const expires = new Date(banInfo.expires_at);
+            if (expires < new Date()) {
+                console.log('✅ Временный бан истёк, удаляем из кэша');
+                localStorage.removeItem('badgrules_ban_info');
+                return;
+            }
+        }
+        
+        // Показать экран бана из кэша
+        showBanScreen(banInfo);
+    }
+})();
+
+console.log('✅ Система бана полностью активирована!');
+console.log('📋 Функции доступны:');
+console.log('   - checkBanStatus(userId)');
+console.log('   - startBanMonitoring(userId)');
+console.log('   - showBanScreen(banInfo)');
+
     </script>
 
 </body>
