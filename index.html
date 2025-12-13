@@ -861,27 +861,39 @@
 
         /* Dropdown Server Info */
         .dropdown-server-info {
-            padding: 0.75rem;
-            margin-bottom: 0.35rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
+            padding: 0.85rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.05), rgba(236, 72, 153, 0.05));
+            border: 1px solid rgba(167, 139, 250, 0.15);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-server-info:hover {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), rgba(236, 72, 153, 0.08));
+            border-color: rgba(167, 139, 250, 0.25);
         }
 
         .dropdown-server-label {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
             color: var(--text-secondary);
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.35rem;
+            font-weight: 600;
         }
 
         .dropdown-server-value {
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             color: var(--text-primary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
+        }
+
+        .dropdown-server-value span {
+            filter: drop-shadow(0 0 4px currentColor);
         }
 
         @media (max-width: 500px) {
@@ -3437,6 +3449,25 @@
             flex-shrink: 0;
             background-size: cover;
             background-position: center;
+            border: 3px solid rgba(120, 120, 120, 0.4);
+            box-shadow: 0 4px 20px rgba(100, 100, 100, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Цветные рамки по статусу подписки */
+        .profile-avatar-minimal.subscription-free {
+            border: 3px solid rgba(120, 120, 120, 0.5);
+            box-shadow: 0 4px 20px rgba(120, 120, 120, 0.2);
+        }
+
+        .profile-avatar-minimal.subscription-pro {
+            border: 3px solid #a78bfa;
+            box-shadow: 0 4px 24px rgba(167, 139, 250, 0.6), 0 0 0 2px rgba(167, 139, 250, 0.3);
+        }
+
+        .profile-avatar-minimal.subscription-lifetime {
+            border: 3px solid #fbbf24;
+            box-shadow: 0 4px 24px rgba(251, 191, 36, 0.6), 0 0 0 2px rgba(251, 191, 36, 0.3);
         }
 
         .profile-user-info {
@@ -7162,44 +7193,57 @@
            ═══════════════════════════════════════════════════════════════ */
 
         .profile-subscription-badge {
-            display: inline-flex;
+            display: none !important;
+        }
+
+        /* Показываем бейдж только в секции подписки */
+        #subscriptionSection .profile-subscription-badge,
+        .subscription-info .profile-subscription-badge {
+            display: inline-flex !important;
             align-items: center;
-            gap: 0.4rem;
-            padding: 0.4rem 0.75rem;
-            border-radius: 8px;
-            font-size: 0.8rem;
+            gap: 0.5rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
             font-weight: 700;
-            margin-top: 0.5rem;
-            transition: all 0.3s ease;
+            margin-top: 0.65rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
         }
 
-        .profile-subscription-badge.free {
-            background: rgba(100, 100, 100, 0.15);
-            border: 1px solid rgba(100, 100, 100, 0.25);
-            color: #999;
+        #subscriptionSection .profile-subscription-badge.free,
+        .subscription-info .profile-subscription-badge.free {
+            background: linear-gradient(135deg, rgba(100, 100, 100, 0.15), rgba(80, 80, 80, 0.15));
+            border: 1px solid rgba(120, 120, 120, 0.35);
+            color: #aaa;
         }
 
-        .profile-subscription-badge.pro {
-            background: rgba(167, 139, 250, 0.15);
-            border: 1px solid rgba(167, 139, 250, 0.4);
-            color: var(--accent-primary);
-            animation: badgePulse 2s ease-in-out infinite;
+        #subscriptionSection .profile-subscription-badge.pro,
+        .subscription-info .profile-subscription-badge.pro {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.2), rgba(236, 72, 153, 0.2));
+            border: 1px solid rgba(167, 139, 250, 0.5);
+            color: #c4b5fd;
+            box-shadow: 0 0 20px rgba(167, 139, 250, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
-        .profile-subscription-badge.lifetime {
-            background: rgba(251, 191, 36, 0.15);
-            border: 1px solid rgba(251, 191, 36, 0.4);
-            color: var(--accent-warning);
-            animation: badgePulse 2s ease-in-out infinite;
+        #subscriptionSection .profile-subscription-badge.lifetime,
+        .subscription-info .profile-subscription-badge.lifetime {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.2));
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            color: #fcd34d;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .profile-sub-icon {
-            font-size: 0.9rem;
+            font-size: 1rem;
+            filter: drop-shadow(0 0 4px currentColor);
         }
 
         .profile-sub-text {
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            font-weight: 800;
         }
 
         /* ═══════════════════════════════════════════════════════════════
@@ -8581,22 +8625,6 @@
                             <span class="profile-sub-icon" id="profileSubIcon">⚡</span>
                             <span class="profile-sub-text" id="profileSubText">FREE</span>
                         </div>
-                        <!-- Кнопка обновления подписки -->
-                        <button onclick="manualSyncSubscription()" style="
-                            margin-top: 8px;
-                            padding: 6px 12px;
-                            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(71, 82, 196, 0.1));
-                            border: 1px solid rgba(88, 101, 242, 0.3);
-                            border-radius: 8px;
-                            color: #5865F2;
-                            font-size: 12px;
-                            font-weight: 500;
-                            cursor: pointer;
-                            transition: all 0.3s ease;
-                        " onmouseover="this.style.background='linear-gradient(135deg, rgba(88, 101, 242, 0.2), rgba(71, 82, 196, 0.2))'" 
-                           onmouseout="this.style.background='linear-gradient(135deg, rgba(88, 101, 242, 0.1), rgba(71, 82, 196, 0.1))'">
-                            🔄 Обновить подписку
-                        </button>
                     </div>
                 </div>
 
@@ -11997,6 +12025,22 @@
             const badge = document.getElementById('profileSubBadge');
             const icon = document.getElementById('profileSubIcon');
             const text = document.getElementById('profileSubText');
+            const profileAvatar = document.getElementById('profileAvatarImg');
+            
+            // Обновляем класс аватарки в личном кабинете
+            if (profileAvatar) {
+                profileAvatar.classList.remove('subscription-free', 'subscription-pro', 'subscription-lifetime');
+                
+                if (sub) {
+                    if (sub.type === 'lifetime') {
+                        profileAvatar.classList.add('subscription-lifetime');
+                    } else {
+                        profileAvatar.classList.add('subscription-pro');
+                    }
+                } else {
+                    profileAvatar.classList.add('subscription-free');
+                }
+            }
             
             if (!badge || !icon || !text) return;
 
