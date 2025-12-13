@@ -238,37 +238,19 @@
 
         /* Status badge near avatar */
         .subscription-status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            padding: 0.2rem 0.5rem;
-            background: transparent;
-            border: 1px solid transparent;
-            border-radius: 6px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            margin-left: 0.4rem;
-            letter-spacing: 0.03em;
+            display: none !important;
         }
 
         .subscription-status-badge.free {
-            display: none;
+            display: none !important;
         }
 
         .subscription-status-badge.pro {
-            background: linear-gradient(135deg, rgba(167, 139, 250, 0.12), rgba(236, 72, 153, 0.12));
-            border: 1px solid rgba(167, 139, 250, 0.25);
-            color: var(--accent-primary);
-            box-shadow: 0 0 12px rgba(167, 139, 250, 0.1);
+            display: none !important;
         }
 
         .subscription-status-badge.lifetime {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(245, 158, 11, 0.12));
-            border: 1px solid rgba(251, 191, 36, 0.25);
-            color: var(--accent-warning);
-            box-shadow: 0 0 12px rgba(251, 191, 36, 0.1);
+            display: none !important;
         }
 
         @keyframes badgePulse {
@@ -973,14 +955,42 @@
             position: relative;
             box-shadow: 0 3px 15px rgba(167, 139, 250, 0.25);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 2px solid rgba(167, 139, 250, 0.2);
+            border: 2px solid rgba(100, 100, 100, 0.3);
             flex-shrink: 0;
+        }
+
+        /* Статус подписки через цвет рамки */
+        .user-avatar.subscription-free {
+            border: 2px solid rgba(100, 100, 100, 0.3);
+            box-shadow: 0 3px 15px rgba(100, 100, 100, 0.15);
+        }
+
+        .user-avatar.subscription-pro {
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 3px 15px rgba(167, 139, 250, 0.4), 0 0 0 1px rgba(167, 139, 250, 0.2);
+        }
+
+        .user-avatar.subscription-lifetime {
+            border: 2px solid var(--accent-warning);
+            box-shadow: 0 3px 15px rgba(251, 191, 36, 0.4), 0 0 0 1px rgba(251, 191, 36, 0.2);
         }
 
         .user-profile-badge:hover .user-avatar {
             transform: scale(1.08);
-            box-shadow: 0 6px 24px rgba(167, 139, 250, 0.4);
-            border-color: rgba(167, 139, 250, 0.35);
+        }
+
+        .user-profile-badge:hover .user-avatar.subscription-pro {
+            box-shadow: 0 6px 24px rgba(167, 139, 250, 0.5), 0 0 0 1px rgba(167, 139, 250, 0.3);
+            border-color: var(--accent-primary);
+        }
+
+        .user-profile-badge:hover .user-avatar.subscription-lifetime {
+            box-shadow: 0 6px 24px rgba(251, 191, 36, 0.5), 0 0 0 1px rgba(251, 191, 36, 0.3);
+            border-color: var(--accent-warning);
+        }
+
+        .user-profile-badge:hover .user-avatar.subscription-free {
+            box-shadow: 0 6px 24px rgba(100, 100, 100, 0.2);
         }
 
         .user-avatar img {
@@ -11910,8 +11920,14 @@
             const statusText = document.getElementById('subscriptionStatusText');
             const statusIcon = statusBadge?.querySelector('.subscription-status-icon');
             const miniBadge = document.getElementById('subBadgeMini');
+            const userAvatar = document.getElementById('userAvatar');
 
             if (!statusBadge || !statusText) return;
+
+            // Удаляем все классы подписки с аватарки
+            if (userAvatar) {
+                userAvatar.classList.remove('subscription-free', 'subscription-pro', 'subscription-lifetime');
+            }
 
             if (sub) {
                 if (sub.type === 'lifetime') {
@@ -11924,6 +11940,11 @@
                         miniBadge.className = 'sub-badge-mini lifetime';
                         miniBadge.textContent = '♾️';
                     }
+                    
+                    // Добавляем класс к аватарке
+                    if (userAvatar) {
+                        userAvatar.classList.add('subscription-lifetime');
+                    }
                 } else {
                     // Pro subscription
                     statusBadge.className = 'subscription-status-badge pro';
@@ -11934,6 +11955,11 @@
                         miniBadge.className = 'sub-badge-mini pro';
                         miniBadge.textContent = '💎';
                     }
+                    
+                    // Добавляем класс к аватарке
+                    if (userAvatar) {
+                        userAvatar.classList.add('subscription-pro');
+                    }
                 }
             } else {
                 // Free plan
@@ -11943,6 +11969,11 @@
                 
                 if (miniBadge) {
                     miniBadge.className = 'sub-badge-mini free';
+                }
+                
+                // Добавляем класс к аватарке
+                if (userAvatar) {
+                    userAvatar.classList.add('subscription-free');
                 }
             }
 
