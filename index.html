@@ -1438,6 +1438,62 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50px;
     overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Цветные варианты статуса */
+.sub-status.status-free {
+    border-color: rgba(120, 120, 120, 0.3);
+}
+
+.sub-status.status-free .status-value {
+    color: #aaa;
+}
+
+.sub-status.status-free .status-badge {
+    background: linear-gradient(135deg, rgba(100, 100, 100, 0.15), rgba(80, 80, 80, 0.15));
+}
+
+.sub-status.status-pro {
+    border-color: rgba(167, 139, 250, 0.5);
+    background: linear-gradient(135deg, rgba(167, 139, 250, 0.05), rgba(236, 72, 153, 0.05));
+    box-shadow: 0 0 30px rgba(167, 139, 250, 0.2);
+}
+
+.sub-status.status-pro .status-value {
+    color: #c4b5fd;
+}
+
+.sub-status.status-pro .status-badge {
+    background: linear-gradient(135deg, rgba(167, 139, 250, 0.3), rgba(236, 72, 153, 0.3));
+}
+
+.sub-status.status-pro .status-glow {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(167, 139, 250, 0.2) 50%, 
+        transparent 100%);
+}
+
+.sub-status.status-lifetime {
+    border-color: rgba(251, 191, 36, 0.5);
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), rgba(245, 158, 11, 0.05));
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+}
+
+.sub-status.status-lifetime .status-value {
+    color: #fcd34d;
+}
+
+.sub-status.status-lifetime .status-badge {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.3));
+}
+
+.sub-status.status-lifetime .status-glow {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(251, 191, 36, 0.2) 50%, 
+        transparent 100%);
 }
 
 .status-glow {
@@ -12113,11 +12169,38 @@
                 console.log('✅ Dropdown badge обновлен:', dropdownBadge.className);
             }
             
-            // 3. Badge в профиле
+            // 3. Статус в разделе подписки (subscriptionSection)
+            const statusValue = document.getElementById('statusValueText');
+            const statusBadge = document.getElementById('statusBadgeIcon');
+            const statusCard = document.getElementById('subStatusCard');
+            
+            if (statusValue && statusBadge && statusCard) {
+                // Удаляем старые классы
+                statusCard.classList.remove('status-free', 'status-pro', 'status-lifetime');
+                
+                if (sub) {
+                    if (sub.type === 'lifetime') {
+                        statusValue.textContent = 'LIFETIME';
+                        statusBadge.textContent = '♾️';
+                        statusCard.classList.add('status-lifetime');
+                    } else {
+                        statusValue.textContent = 'PRO';
+                        statusBadge.textContent = '💎';
+                        statusCard.classList.add('status-pro');
+                    }
+                } else {
+                    statusValue.textContent = 'FREE';
+                    statusBadge.textContent = '⚡';
+                    statusCard.classList.add('status-free');
+                }
+                console.log('✅ Subscription section status обновлен:', statusValue.textContent);
+            }
+            
+            // 4. Badge в профиле
             updateProfileSubscriptionBadge();
             console.log('✅ Profile badge обновлен');
             
-            // 4. Badge на странице подписок
+            // 5. Badge на странице подписок
             updateSubscriptionUI();
             console.log('✅ Subscription page обновлена');
             
