@@ -1623,6 +1623,45 @@
 .sub-pricingcard:nth-child(1) { animation-delay: 0.1s; }
 .sub-pricingcard:nth-child(2) { animation-delay: 0.2s; }
 .sub-pricingcard:nth-child(3) { animation-delay: 0.3s; }
+.sub-pricingcard:nth-child(4) { animation-delay: 0.4s; }
+.sub-pricingcard:nth-child(5) { animation-delay: 0.5s; }
+
+/* Compact Cards */
+.sub-pricingcard.compact {
+    padding: 1.75rem;
+}
+
+.sub-pricingcard.compact .card-header {
+    margin-bottom: 1.25rem;
+    text-align: center;
+}
+
+.sub-pricingcard.compact .card-name {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.sub-pricingcard.compact .card-desc {
+    font-size: 0.85rem;
+}
+
+.sub-pricingcard.compact .card-price {
+    margin-bottom: 1.5rem;
+}
+
+/* Discount Badge */
+.discount-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.35rem 0.75rem;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    z-index: 2;
+}
 
 @keyframes cardSlideUp {
     from {
@@ -7895,60 +7934,26 @@
                 </div>
             </div>
 
-            <!-- Toggle -->
-            <div class="pricing-toggle">
-                <button class="toggle-btn active" data-period="month">Месяц</button>
-                <button class="toggle-btn" data-period="year">Год</button>
-                <div class="toggle-indicator"></div>
-            </div>
-
             <!-- Cards -->
             <div class="sub-cards-grid">
                 
-                <!-- Basic Card -->
-                <div class="sub-pricingcard" data-plan="1month">
+                <!-- 1 месяц - 200₽ -->
+                <div class="sub-pricingcard compact" data-plan="1month">
                     <div class="card-glow"></div>
                     <div class="card-shine"></div>
                     
                     <div class="card-header">
-                        <div class="card-icon">
-                            <div class="icon-wrapper">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <h3 class="card-name">Базовый</h3>
-                        <p class="card-desc">Для начинающих</p>
+                        <h3 class="card-name">1 месяц</h3>
+                        <p class="card-desc">Попробуйте</p>
                     </div>
 
                     <div class="card-price">
                         <div class="price-wrapper">
                             <span class="price-currency">₽</span>
                             <span class="price-amount">200</span>
-                            <span class="price-period">/мес</span>
                         </div>
-                        <div class="price-subtext">≈ $2.10 USD</div>
+                        <div class="price-subtext">Скидка: 0%</div>
                     </div>
-
-                    <ul class="card-features">
-                        <li class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <span>Полный AI доступ</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <span>Поддержка 24/7</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <span>Без рекламы</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon">✓</div>
-                            <span>База знаний</span>
-                        </li>
-                    </ul>
 
                     <button class="card-btn" onclick="openPaymentModal('1month')">
                         <span class="btn-text">Начать</span>
@@ -7956,134 +7961,108 @@
                     </button>
                 </div>
 
-                <!-- Pro Card -->
-                <div class="sub-pricingcard featured" data-plan="6months">
-                    <div class="card-badge">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <span>ПОПУЛЯРНЫЙ</span>
-                    </div>
-                    
-                    <div class="card-glow pro"></div>
+                <!-- 3 месяца - 450₽ -->
+                <div class="sub-pricingcard compact" data-plan="3month">
+                    <div class="card-glow"></div>
                     <div class="card-shine"></div>
+                    <div class="discount-badge">-25%</div>
                     
                     <div class="card-header">
-                        <div class="card-icon pro">
-                            <div class="icon-wrapper">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                                </svg>
-                            </div>
-                        </div>
-                        <h3 class="card-name">Про</h3>
-                        <p class="card-desc">Самый выгодный</p>
+                        <h3 class="card-name">3 месяца</h3>
+                        <p class="card-desc">Популярный</p>
                     </div>
 
                     <div class="card-price">
-                        <div class="price-tag">-33% СКИДКА</div>
                         <div class="price-wrapper">
                             <span class="price-currency">₽</span>
-                            <span class="price-amount">800</span>
-                            <span class="price-period">/6мес</span>
+                            <span class="price-amount">450</span>
                         </div>
-                        <div class="price-subtext">≈ $8.45 USD · экономия 400₽</div>
+                        <div class="price-subtext">≈ 150₽/мес</div>
                     </div>
 
-                    <ul class="card-features">
-                        <li class="feature-item">
-                            <div class="feature-icon pro">✓</div>
-                            <span>Всё из Базового</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon pro">✓</div>
-                            <span>Приоритетная поддержка</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon pro">✓</div>
-                            <span>Premium значок</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon pro">✓</div>
-                            <span>Ранний доступ</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon pro">✓</div>
-                            <span>Эксклюзивный контент</span>
-                        </li>
-                    </ul>
-
-                    <button class="card-btn pro" onclick="openPaymentModal('6months')">
-                        <span class="btn-glow"></span>
-                        <span class="btn-text">Выбрать Pro</span>
+                    <button class="card-btn" onclick="openPaymentModal('3month')">
+                        <span class="btn-text">Начать</span>
                         <span class="btn-icon">→</span>
                     </button>
                 </div>
 
-                <!-- Lifetime Card -->
-                <div class="sub-pricingcard" data-plan="lifetime">
-                    <div class="card-badge lifetime">
-                        <span>♾️ НАВСЕГДА</span>
-                    </div>
-                    
-                    <div class="card-glow lifetime"></div>
+                <!-- 6 месяцев - 800₽ -->
+                <div class="sub-pricingcard compact featured" data-plan="6month">
+                    <div class="card-glow"></div>
                     <div class="card-shine"></div>
+                    <div class="featured-badge">🔥 ВЫГОДНО</div>
+                    <div class="discount-badge">-33%</div>
                     
                     <div class="card-header">
-                        <div class="card-icon lifetime">
-                            <div class="icon-wrapper">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M12 6v6l4 2"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <h3 class="card-name">Вечный</h3>
-                        <p class="card-desc">Один платёж</p>
+                        <h3 class="card-name">6 месяцев</h3>
+                        <p class="card-desc">Лучший выбор</p>
                     </div>
 
                     <div class="card-price">
-                        <div class="price-tag lifetime">ЛУЧШЕЕ ПРЕДЛОЖЕНИЕ</div>
+                        <div class="price-wrapper">
+                            <span class="price-currency">₽</span>
+                            <span class="price-amount">800</span>
+                        </div>
+                        <div class="price-subtext">≈ 133₽/мес</div>
+                    </div>
+
+                    <button class="card-btn" onclick="openPaymentModal('6month')">
+                        <span class="btn-text">Начать</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+
+                <!-- Годовая - 1500₽ -->
+                <div class="sub-pricingcard compact" data-plan="1year">
+                    <div class="card-glow"></div>
+                    <div class="card-shine"></div>
+                    <div class="discount-badge">-37.5%</div>
+                    
+                    <div class="card-header">
+                        <h3 class="card-name">Годовая</h3>
+                        <p class="card-desc">Максимум выгоды</p>
+                    </div>
+
+                    <div class="card-price">
+                        <div class="price-wrapper">
+                            <span class="price-currency">₽</span>
+                            <span class="price-amount">1500</span>
+                        </div>
+                        <div class="price-subtext">≈ 125₽/мес</div>
+                    </div>
+
+                    <button class="card-btn" onclick="openPaymentModal('1year')">
+                        <span class="btn-text">Начать</span>
+                        <span class="btn-icon">→</span>
+                    </button>
+                </div>
+
+                <!-- Бессрочная - 2500₽ -->
+                <div class="sub-pricingcard compact premium" data-plan="lifetime">
+                    <div class="card-glow"></div>
+                    <div class="card-shine"></div>
+                    <div class="featured-badge premium-badge">♾️ LIFETIME</div>
+                    
+                    <div class="card-header">
+                        <h3 class="card-name">Бессрочная</h3>
+                        <p class="card-desc">Навсегда</p>
+                    </div>
+
+                    <div class="card-price">
                         <div class="price-wrapper">
                             <span class="price-currency">₽</span>
                             <span class="price-amount">2500</span>
-                            <span class="price-period">навсегда</span>
                         </div>
-                        <div class="price-subtext">≈ $26.40 USD · платите один раз</div>
+                        <div class="price-subtext">Один платеж</div>
                     </div>
 
-                    <ul class="card-features">
-                        <li class="feature-item">
-                            <div class="feature-icon lifetime">✓</div>
-                            <span>Всё из Про</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon lifetime">✓</div>
-                            <span>Бессрочный доступ</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon lifetime">✓</div>
-                            <span>Legendary статус</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon lifetime">✓</div>
-                            <span>VIP поддержка</span>
-                        </li>
-                        <li class="feature-item">
-                            <div class="feature-icon lifetime">✓</div>
-                            <span>Все будущие функции</span>
-                        </li>
-                    </ul>
-
-                    <button class="card-btn lifetime" onclick="openPaymentModal('lifetime')">
-                        <span class="btn-glow"></span>
+                    <button class="card-btn premium" onclick="openPaymentModal('lifetime')">
                         <span class="btn-text">Купить навсегда</span>
-                        <span class="btn-icon">→</span>
+                        <span class="btn-icon">♾️</span>
                     </button>
                 </div>
 
             </div>
-
             <!-- Comparison Table -->
             <div class="comparison-section">
                 <h3 class="comparison-title">Сравнение планов</h3>
