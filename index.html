@@ -10788,18 +10788,7 @@
         // ═══════════════════════════════════════════════════════════════
         
         const API_CONFIG = {
-            // Google Gemini
-            gemini: {
-                enabled: true,
-                name: 'Google Gemini',
-                apiKey: 'AIzaSyA-2QrhQt4O_wqChrCxl4lDXpz8Hi6B_iI', // ДОБАВЬТЕ НОВЫЙ КЛЮЧ с aistudio.google.com/apikey
-                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
-                model: 'gemini-2.0-flash-exp',
-                type: 'gemini',
-                icon: '🔷'
-            },
-
-            // DeepSeek
+            // DeepSeek - РАБОТАЕТ СРАЗУ!
             deepseek: {
                 enabled: true,
                 name: 'DeepSeek',
@@ -10807,23 +10796,37 @@
                 endpoint: 'https://api.deepseek.com/chat/completions',
                 model: 'deepseek-chat',
                 type: 'openai',
-                icon: '🔮'
+                icon: '🔮',
+                status: '✅ Работает'
             },
             
-            // Grok (X.AI)
+            // Google Gemini - НУЖЕН НОВЫЙ КЛЮЧ!
+            gemini: {
+                enabled: false, // Отключен пока не добавите новый ключ
+                name: 'Google Gemini',
+                apiKey: 'AIzaSyA-2QrhQt4O_wqChrCxl4lDXpz8Hi6B_iI', // ДОБАВЬТЕ НОВЫЙ КЛЮЧ: https://aistudio.google.com/apikey
+                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
+                model: 'gemini-2.0-flash-exp',
+                type: 'gemini',
+                icon: '🔷',
+                status: '⚠️ Нужен ключ'
+            },
+            
+            // Grok (X.AI) - НУЖЕН КЛЮЧ
             grok: {
-                enabled: true,
+                enabled: false, // Отключен пока не добавите ключ
                 name: 'Grok (X.AI)',
-                apiKey: '', // ДОБАВЬТЕ КЛЮЧ с x.ai/api
+                apiKey: '', // ДОБАВЬТЕ КЛЮЧ: https://console.x.ai
                 endpoint: 'https://api.x.ai/v1/chat/completions',
                 model: 'grok-beta',
                 type: 'openai',
-                icon: '🚀'
+                icon: '🚀',
+                status: '⚠️ Нужен ключ'
             }
         };
 
         // Текущая выбранная модель
-        let currentModel = 'deepseek';  // По умолчанию DeepSeek - работает сразу!
+        let currentModel = 'deepseek';  // DeepSeek работает сразу!
 
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
@@ -11824,7 +11827,22 @@
             addTypingIndicator();
 
             try {
-                console.log(`🤖 Используется модель: ${currentModel}`);
+                const config = API_CONFIG[currentModel];
+                
+                // Проверка перед запросом
+                if (!config) {
+                    throw new Error(`Модель ${currentModel} не найдена`);
+                }
+                
+                if (!config.enabled) {
+                    throw new Error(`${config.name} отключена. ${config.status}`);
+                }
+                
+                if (!config.apiKey) {
+                    throw new Error(`Нет API ключа для ${config.name}. Получите ключ и добавьте в код.`);
+                }
+                
+                console.log(`🤖 ${config.name} (${config.icon}) обрабатывает запрос...`);
                 
                 // Получаем выбранный сервер
                 const selectedServer = loadServerSelection();
@@ -11836,28 +11854,24 @@
                     (selectedServer.project === 'gta5rp' ? 'forum.gta5rp.com' : 'forum.majestic-rp.ru') : 
                     'forum.gta5rp.com';
                 
-                // ВСЕГДА запускаем AI - больше НЕ ищем в базе знаний
-                console.log(`🔍 AI будет искать на форуме ${forumUrl}...`);
+                // AI ищет на форуме
+                console.log(`🔍 ${config.name} ищет ответ на ${forumUrl}...`);
                 const aiResponse = await getAIResponseFromForum(message, serverName, forumUrl);
                 
                 removeTypingIndicator();
                 
                 if (aiResponse) {
-                    const formatted = formatMinimalistAIResponse(aiResponse, serverName, forumUrl);
+                    const formatted = formatBeautifulAIResponse(aiResponse, serverName, forumUrl);
                     addMessageHtml(formatted, true);
                 } else {
-                    showMinimalistHelp(message, serverName);
+                    showBeautifulHelp(message, serverName);
                 }
 
             } catch (error) {
                 console.error('❌ Ошибка:', error);
                 removeTypingIndicator();
                 
-                const errorHtml = `<div style="padding: 16px; background: rgba(239, 68, 68, 0.1); border-left: 3px solid #ef4444; border-radius: 8px;">
-                    <div style="font-weight: 600; margin-bottom: 8px; color: #ef4444;">⚠️ Ошибка</div>
-                    <div style="font-size: 0.9rem; color: var(--text-secondary);">${error.message}</div>
-                    <div style="margin-top: 8px; font-size: 0.85rem; color: var(--text-muted);">Попробуйте выбрать другую модель AI</div>
-                </div>`;
+                const errorHtml = formatBeautifulError(error.message);
                 addMessageHtml(errorHtml, true);
             } finally {
                 isProcessing = false;
@@ -11866,53 +11880,62 @@
             }
         }
 
-        // 🌐 AI ищет информацию НА ФОРУМЕ, а не в коде
+        // 🌐 AI ищет информацию НА ФОРУМЕ
         async function getAIResponseFromForum(question, serverName, forumUrl) {
             const config = API_CONFIG[currentModel];
             
-            if (!config || !config.enabled) {
-                throw new Error(`Модель ${currentModel} не настроена или отключена`);
-            }
+            console.log(`📡 Отправка запроса к ${config.name}...`);
             
-            if (!config.apiKey) {
-                throw new Error(`Не указан API ключ для ${config.name}. Добавьте ключ в коде.`);
-            }
-            
-            console.log(`📡 Запрос к ${config.name} для поиска на ${forumUrl}...`);
-            
-            // Промпт для AI - просим искать на ФОРУМЕ
+            // Промпт для AI - ищет на форуме
             const prompt = `Ты - эксперт по серверу ${serverName}.
-
-ВАЖНО: Отвечай НА ОСНОВЕ ПРАВИЛ ФОРУМА ${forumUrl}, а не выдуманной информации.
 
 Сервер: ${serverName}
 Форум: ${forumUrl}
 
-ВОПРОС ПОЛЬЗОВАТЕЛЯ: ${question}
+ВОПРОС: "${question}"
+
+БАЗА ЗНАНИЙ:
+- Зеленая зона (Government, Police, EMS, News) - ЗАПРЕЩЕНО грабить и убивать. Правило 6.11
+- Гетто - РАЗРЕШЕН криминал с RP причиной
+- Такси, бизнесы, заправки - НЕ зеленая зона, грабить МОЖНО
+- Маска НУЖНА для ограблений вне гетто. Правило 6.31
+- DM (убийство без причины) - ЗАПРЕЩЕНО. Правило 6.9
+- VDM (убийство машиной) - ЗАПРЕЩЕНО. Правило 6.3
+- NLR (New Life Rule) - забыть 15 минут после смерти. Правило 6.4
 
 ИНСТРУКЦИИ:
-1. Дай конкретный ответ на русском языке (2-4 предложения)
-2. Если это вопрос о правилах - укажи номер правила
-3. Если это вопрос типа "можно ли грабить такси на трассе" - дай четкий ответ ДА/НЕТ и объясни почему
-4. Используй знания о правилах ${serverName}:
-   - Зеленая зона (Government, Police, EMS, News) - запрещено грабить и убивать
-   - Гетто - разрешен криминал с RP причиной
-   - Маска нужна для ограблений вне гетто
-   - DM (убийство без причины) запрещено
-   - Такси, Бизнес - НЕ являются зеленой зоной
-5. Отвечай кратко и по делу
+1. Дай ЧЕТКИЙ ответ ДА или НЕТ если это вопрос о разрешении
+2. Объясни ПОЧЕМУ (1-2 предложения)
+3. Укажи номер правила если есть
+4. Отвечай КРАТКО на русском языке
 
 ОТВЕТ:`;
 
             try {
+                let response;
+                
                 if (config.type === 'openai') {
-                    return await callOpenAICompatible(config, prompt);
+                    response = await callOpenAICompatible(config, prompt);
                 } else if (config.type === 'gemini') {
-                    return await callGeminiAPI(config, prompt);
+                    response = await callGeminiAPI(config, prompt);
                 }
+                
+                console.log(`✅ ${config.name} ответил успешно`);
+                return response;
+                
             } catch (error) {
                 console.error(`❌ Ошибка ${config.name}:`, error);
-                throw error; // Больше НЕ используем fallback на базу
+                
+                // Более детальная ошибка
+                if (error.message.includes('429')) {
+                    throw new Error(`${config.name}: Превышен лимит запросов. Попробуйте позже или смените модель.`);
+                } else if (error.message.includes('401') || error.message.includes('403')) {
+                    throw new Error(`${config.name}: Неверный API ключ. Проверьте ключ в коде.`);
+                } else if (error.message.includes('404')) {
+                    throw new Error(`${config.name}: API недоступен. Проверьте endpoint.`);
+                }
+                
+                throw new Error(`${config.name}: ${error.message}`);
             }
         }
 
@@ -11987,30 +12010,168 @@
             throw new Error('Неверный формат ответа от Gemini');
         }
 
-        // 🎨 Минималистичный дизайн ответа AI с иконкой модели
-        function formatMinimalistAIResponse(text, serverName, forumUrl) {
+        // 🎨 КРАСИВЫЙ дизайн ответа AI
+        function formatBeautifulAIResponse(text, serverName, forumUrl) {
             const config = API_CONFIG[currentModel];
             const modelIcon = config ? config.icon : '🤖';
             const modelName = config ? config.name : currentModel.toUpperCase();
             
-            return `<div style="padding: 0;">
-                <div style="padding: 16px 0; border-bottom: 1px solid rgba(96, 165, 250, 0.15);">
-                    <div style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-primary); margin-bottom: 12px;">
-                        ${modelIcon} ${modelName}
-                    </div>
-                    <div style="font-size: 0.95rem; line-height: 1.7; color: var(--text-primary);">
-                        ${text}
+            // Выделяем ДА/НЕТ в тексте
+            let formattedText = text
+                .replace(/(^|\s)(ДА|DA|YES)(\s|,|\.|$)/gi, '$1<span style="color: #10b981; font-weight: 700;">$2</span>$3')
+                .replace(/(^|\s)(НЕТ|NET|NO)(\s|,|\.|$)/gi, '$1<span style="color: #ef4444; font-weight: 700;">$2</span>$3')
+                .replace(/Правило\s+([\d.]+)/gi, '<span style="color: var(--accent-primary); font-weight: 600;">Правило $1</span>');
+            
+            return `<div style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.08), rgba(59, 130, 246, 0.05)); border-radius: 12px; overflow: hidden;">
+                <!-- Заголовок -->
+                <div style="padding: 14px 18px; background: rgba(96, 165, 250, 0.1); border-bottom: 1px solid rgba(96, 165, 250, 0.2);">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.4rem;">${modelIcon}</span>
+                        <div style="flex: 1;">
+                            <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent-primary);">
+                                ${modelName}
+                            </div>
+                            <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">
+                                Ответ с форума ${serverName}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div style="padding-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
-                    <span style="padding: 4px 10px; background: rgba(96, 165, 250, 0.1); border-radius: 6px; font-size: 0.75rem; color: var(--text-secondary);">
-                        ${serverName}
+                
+                <!-- Контент -->
+                <div style="padding: 18px;">
+                    <div style="font-size: 0.95rem; line-height: 1.8; color: var(--text-primary);">
+                        ${formattedText}
+                    </div>
+                </div>
+                
+                <!-- Футер -->
+                <div style="padding: 12px 18px; background: rgba(0, 0, 0, 0.2); display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                    <span style="padding: 5px 12px; background: rgba(96, 165, 250, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                        🎮 ${serverName}
                     </span>
-                    <span style="padding: 4px 10px; background: rgba(59, 130, 246, 0.1); border-radius: 6px; font-size: 0.75rem; color: var(--text-secondary);">
-                        ${forumUrl}
+                    <span style="padding: 5px 12px; background: rgba(59, 130, 246, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                        🌐 ${forumUrl}
+                    </span>
+                    <span style="padding: 5px 12px; background: rgba(16, 185, 129, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--accent-success); font-weight: 500;">
+                        ✓ Проверено AI
                     </span>
                 </div>
             </div>`;
+        }
+
+        // ⚠️ Красивое форматирование ошибки
+        function formatBeautifulError(errorMessage) {
+            const availableModels = Object.entries(API_CONFIG)
+                .filter(([key, cfg]) => cfg.enabled && cfg.apiKey)
+                .map(([key, cfg]) => `<button onclick="switchModel('${key}')" style="padding: 8px 16px; background: rgba(96, 165, 250, 0.15); border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 8px; font-size: 0.85rem; color: var(--text-primary); cursor: pointer; transition: all 0.2s;">${cfg.icon} ${cfg.name}</button>`)
+                .join('');
+            
+            return `<div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05)); border-radius: 12px; overflow: hidden; border: 1px solid rgba(239, 68, 68, 0.2);">
+                <!-- Заголовок -->
+                <div style="padding: 14px 18px; background: rgba(239, 68, 68, 0.15); border-bottom: 1px solid rgba(239, 68, 68, 0.2);">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.4rem;">⚠️</span>
+                        <div style="font-size: 0.9rem; font-weight: 700; color: #ef4444;">
+                            Ошибка AI
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Сообщение -->
+                <div style="padding: 18px;">
+                    <div style="font-size: 0.9rem; line-height: 1.6; color: var(--text-primary); margin-bottom: 16px;">
+                        ${errorMessage}
+                    </div>
+                    
+                    ${availableModels ? `
+                        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(239, 68, 68, 0.2);">
+                            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 10px;">
+                                💡 Попробуйте другую модель:
+                            </div>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                ${availableModels}
+                            </div>
+                        </div>
+                    ` : `
+                        <div style="margin-top: 16px; padding: 12px; background: rgba(251, 191, 36, 0.1); border-radius: 8px; border-left: 3px solid var(--accent-warning);">
+                            <div style="font-size: 0.85rem; font-weight: 600; color: var(--accent-warning); margin-bottom: 6px;">
+                                🔧 Как исправить:
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+                                1. Получите API ключ для Gemini: <a href="https://aistudio.google.com/apikey" target="_blank" style="color: var(--accent-primary);">aistudio.google.com/apikey</a><br>
+                                2. Или для Grok: <a href="https://console.x.ai" target="_blank" style="color: var(--accent-primary);">console.x.ai</a><br>
+                                3. Добавьте ключ в код (API_CONFIG)
+                            </div>
+                        </div>
+                    `}
+                </div>
+            </div>`;
+        }
+
+        // 📋 Красивая справка
+        function showBeautifulHelp(query, serverName) {
+            const helpHtml = `<div style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.08), rgba(59, 130, 246, 0.05)); border-radius: 12px; overflow: hidden;">
+                <div style="padding: 18px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                        <span style="font-size: 1.4rem;">🔍</span>
+                        <div>
+                            <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary);">
+                                Не удалось найти ответ
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">
+                                По запросу: "${query}"
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(96, 165, 250, 0.15);">
+                        <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px;">
+                            📜 Популярные вопросы:
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px;">
+                            <button onclick="askQuickQuestion('Можно грабить такси?')" style="padding: 10px 14px; background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.2); border-radius: 8px; font-size: 0.85rem; color: var(--text-primary); cursor: pointer; text-align: left; transition: all 0.2s;">
+                                🚕 Грабить такси?
+                            </button>
+                            <button onclick="askQuickQuestion('Что такое DM?')" style="padding: 10px 14px; background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.2); border-radius: 8px; font-size: 0.85rem; color: var(--text-primary); cursor: pointer; text-align: left;">
+                                💀 Что такое DM?
+                            </button>
+                            <button onclick="askQuickQuestion('Зеленая зона')" style="padding: 10px 14px; background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.2); border-radius: 8px; font-size: 0.85rem; color: var(--text-primary); cursor: pointer; text-align: left;">
+                                🟢 Зеленая зона
+                            </button>
+                            <button onclick="askQuickQuestion('Правила гетто')" style="padding: 10px 14px; background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.2); border-radius: 8px; font-size: 0.85rem; color: var(--text-primary); cursor: pointer; text-align: left;">
+                                🔴 Гетто
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="padding: 12px 18px; background: rgba(0, 0, 0, 0.2);">
+                    <span style="padding: 5px 12px; background: rgba(96, 165, 250, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                        ${serverName}
+                    </span>
+                </div>
+            </div>`;
+            
+            addMessageHtml(helpHtml, true);
+        }
+
+        // 🔄 Функция переключения модели
+        function switchModel(modelKey) {
+            currentModel = modelKey;
+            const config = API_CONFIG[modelKey];
+            console.log(`✓ Переключено на ${config.name} ${config.icon}`);
+            
+            // Показываем уведомление
+            const notification = document.createElement('div');
+            notification.style.cssText = 'position: fixed; top: 20px; right: 20px; padding: 12px 20px; background: rgba(16, 185, 129, 0.9); color: white; border-radius: 8px; font-size: 0.9rem; font-weight: 600; z-index: 10000; animation: slideIn 0.3s ease-out;';
+            notification.textContent = `${config.icon} Переключено на ${config.name}`;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
         }
 
         // 🎨 Минималистичный дизайн обычного ответа
