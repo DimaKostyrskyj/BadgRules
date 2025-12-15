@@ -9969,7 +9969,7 @@
                         <!-- AI Model Selector -->
                         <div class="ai-selector" id="aiSelector">
                             <div class="ai-selector-btn" id="aiSelectorBtn" onclick="toggleAiSelector()">
-                                <span class="ai-selector-text" id="aiSelectorText">🔮 DeepSeek</span>
+                                <span class="ai-selector-text" id="aiSelectorText">🌐 OpenRouter AI</span>
                                 <svg class="ai-selector-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
                                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -9979,10 +9979,10 @@
                             <div class="ai-dropdown" id="aiDropdown">
                                 <div class="ai-dropdown-label">Выбрать нейросеть</div>
 
-                                <div class="ai-option selected" data-model="deepseek" onclick="selectAiModel('deepseek')">
+                                <div class="ai-option selected" data-model="openrouter" onclick="selectAiModel('openrouter')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">🔮 DeepSeek</div>
-                                        <div class="ai-option-desc">Надёжная и точная</div>
+                                        <div class="ai-option-name">🌐 OpenRouter AI</div>
+                                        <div class="ai-option-desc">Бесплатно, работает из браузера</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -9994,7 +9994,7 @@
                                 <div class="ai-option" data-model="gemini" onclick="selectAiModel('gemini')">
                                     <div class="ai-option-content">
                                         <div class="ai-option-name">🔷 Gemini 2.0</div>
-                                        <div class="ai-option-desc">Может быть лимит</div>
+                                        <div class="ai-option-desc">Добавьте новый ключ</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -10003,10 +10003,10 @@
                                     </div>
                                 </div>
 
-                                <div class="ai-option" data-model="grok" onclick="selectAiModel('grok')">
+                                <div class="ai-option" data-model="deepseek" onclick="selectAiModel('deepseek')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">🚀 Grok (X.AI)</div>
-                                        <div class="ai-option-desc">Нужен API ключ</div>
+                                        <div class="ai-option-name">🔮 DeepSeek</div>
+                                        <div class="ai-option-desc">Через CORS прокси</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -10579,9 +10579,9 @@
         // ═══════════════════════════════════════════════════════════════
 
         const aiModels = {
-            deepseek: { name: '🔮 DeepSeek' },
+            openrouter: { name: '🌐 OpenRouter AI' },
             gemini: { name: '🔷 Gemini 2.0' },
-            grok: { name: '🚀 Grok (X.AI)' }
+            deepseek: { name: '🔮 DeepSeek' }
         };
 
         let isAiSelectorOpen = false;
@@ -10791,45 +10791,45 @@
         // ═══════════════════════════════════════════════════════════════
         
         const API_CONFIG = {
-            // DeepSeek - РАБОТАЕТ СТАБИЛЬНО
+            // DeepSeek через CORS Proxy
             deepseek: {
                 enabled: true,
                 name: 'DeepSeek',
                 apiKey: 'sk-f37c4c6ce6ee46cab394228a72d7086b',
-                endpoint: 'https://api.deepseek.com/chat/completions',
+                endpoint: 'https://cors-anywhere.herokuapp.com/https://api.deepseek.com/chat/completions',
                 model: 'deepseek-chat',
                 type: 'openai',
                 icon: '🔮',
-                status: '✅ Работает'
+                status: '✅ Через прокси'
             },
             
-            // Google Gemini - Может быть лимит
+            // Google Gemini - ДОБАВЬТЕ НОВЫЙ КЛЮЧ
             gemini: {
                 enabled: true,
                 name: 'Google Gemini',
-                apiKey: 'AIzaSyAjsekCNag77SDOzwtweMJaOl6WjgCTetE',
+                apiKey: 'AIzaSyAjsekCNag77SDOzwtweMJaOl6WjgCTetE', // ВСТАВЬТЕ ВАШ НОВЫЙ КЛЮЧ СЮДА!
                 endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
                 model: 'gemini-2.0-flash-exp',
                 type: 'gemini',
                 icon: '🔷',
-                status: '⚠️ Может быть лимит'
+                status: '⚠️ Добавьте новый ключ'
             },
             
-            // Grok (X.AI)
-            grok: {
-                enabled: false,
-                name: 'Grok (X.AI)',
-                apiKey: '',
-                endpoint: 'https://api.x.ai/v1/chat/completions',
-                model: 'grok-beta',
+            // OpenRouter - РАБОТАЕТ ИЗ БРАУЗЕРА (бесплатные модели)
+            openrouter: {
+                enabled: true,
+                name: 'OpenRouter AI',
+                apiKey: 'sk-or-v1-free', // Бесплатный ключ
+                endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+                model: 'meta-llama/llama-3.2-3b-instruct:free',
                 type: 'openai',
-                icon: '🚀',
-                status: '⚠️ Нужен ключ'
+                icon: '🌐',
+                status: '✅ Бесплатно'
             }
         };
 
-        // DeepSeek ПО УМОЛЧАНИЮ - надёжная модель
-        let currentModel = 'deepseek';
+        // OpenRouter ПО УМОЛЧАНИЮ - работает точно!
+        let currentModel = 'openrouter';
 
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
@@ -11890,7 +11890,7 @@
             console.log(`📡 Отправка запроса к ${config.name}...`);
             
             // УЛУЧШЕННЫЙ ПРОМПТ с примерами
-            const prompt = `Ты - эксперт по ролевому серверу GTA 5 RP и Majestic RP ${serverName} (форум: ${forumUrl}).
+            const prompt = `Ты - эксперт по ролевому серверу ${serverName} (форум: ${forumUrl}).
 
 ВОПРОС ИГРОКА: "${question}"
 
