@@ -3399,14 +3399,14 @@
         }
 
         .message-text {
-            background: var(--primary-bg);
+            background: transparent; /* Убрали фон */
             padding: 1rem 1.5rem;
             border-radius: 16px;
-            border: 1px solid var(--border-color);
+            border: none; /* Убрали бордер */
         }
 
         .message.user .message-text {
-            background: var(--border-color);
+            background: transparent; /* Убрали фон у пользователя */
         }
 
         /* ═══════════════════════════════════════════════════════════════ */
@@ -9969,7 +9969,7 @@
                         <!-- AI Model Selector -->
                         <div class="ai-selector" id="aiSelector">
                             <div class="ai-selector-btn" id="aiSelectorBtn" onclick="toggleAiSelector()">
-                                <span class="ai-selector-text" id="aiSelectorText">🔷 Gemini 2.0</span>
+                                <span class="ai-selector-text" id="aiSelectorText">🔮 DeepSeek</span>
                                 <svg class="ai-selector-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
                                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -9979,10 +9979,10 @@
                             <div class="ai-dropdown" id="aiDropdown">
                                 <div class="ai-dropdown-label">Выбрать нейросеть</div>
 
-                                <div class="ai-option selected" data-model="gemini" onclick="selectAiModel('gemini')">
+                                <div class="ai-option selected" data-model="deepseek" onclick="selectAiModel('deepseek')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">🔷 Gemini 2.0</div>
-                                        <div class="ai-option-desc">Умная и быстрая</div>
+                                        <div class="ai-option-name">🔮 DeepSeek</div>
+                                        <div class="ai-option-desc">Надёжная и точная</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -9991,10 +9991,10 @@
                                     </div>
                                 </div>
 
-                                <div class="ai-option" data-model="deepseek" onclick="selectAiModel('deepseek')">
+                                <div class="ai-option" data-model="gemini" onclick="selectAiModel('gemini')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">🔮 DeepSeek</div>
-                                        <div class="ai-option-desc">Точная и надёжная</div>
+                                        <div class="ai-option-name">🔷 Gemini 2.0</div>
+                                        <div class="ai-option-desc">Может быть лимит</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -10579,8 +10579,8 @@
         // ═══════════════════════════════════════════════════════════════
 
         const aiModels = {
-            gemini: { name: '🔷 Gemini 2.0' },
             deepseek: { name: '🔮 DeepSeek' },
+            gemini: { name: '🔷 Gemini 2.0' },
             grok: { name: '🚀 Grok (X.AI)' }
         };
 
@@ -10787,23 +10787,11 @@
         // ═══════════════════════════════════════════════════════════════
 
         // ═══════════════════════════════════════════════════════════════
-        // 🤖 КОНФИГУРАЦИЯ AI МОДЕЛЕЙ - ТОЛЬКО 3 МОДЕЛИ
+        // 🤖 КОНФИГУРАЦИЯ AI МОДЕЛЕЙ
         // ═══════════════════════════════════════════════════════════════
         
         const API_CONFIG = {
-            // Google Gemini - ПО УМОЛЧАНИЮ
-            gemini: {
-                enabled: true, // ✅ ВКЛЮЧЕНА
-                name: 'Google Gemini',
-                apiKey: 'AIzaSyA-2QrhQt4O_wqChrCxl4lDXpz8Hi6B_iI', // ВАШ КЛЮЧ
-                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
-                model: 'gemini-2.0-flash-exp',
-                type: 'gemini',
-                icon: '🔷',
-                status: '✅ Работает'
-            },
-
-            // DeepSeek
+            // DeepSeek - РАБОТАЕТ СТАБИЛЬНО
             deepseek: {
                 enabled: true,
                 name: 'DeepSeek',
@@ -10815,11 +10803,23 @@
                 status: '✅ Работает'
             },
             
+            // Google Gemini - Может быть лимит
+            gemini: {
+                enabled: true,
+                name: 'Google Gemini',
+                apiKey: 'AIzaSyA-2QrhQt4O_wqChrCxl4lDXpz8Hi6B_iI',
+                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
+                model: 'gemini-2.0-flash-exp',
+                type: 'gemini',
+                icon: '🔷',
+                status: '⚠️ Может быть лимит'
+            },
+            
             // Grok (X.AI)
             grok: {
-                enabled: false, // Отключен, нужен ключ
+                enabled: false,
                 name: 'Grok (X.AI)',
-                apiKey: '', // ДОБАВЬТЕ КЛЮЧ: https://console.x.ai
+                apiKey: '',
                 endpoint: 'https://api.x.ai/v1/chat/completions',
                 model: 'grok-beta',
                 type: 'openai',
@@ -10828,8 +10828,8 @@
             }
         };
 
-        // Текущая выбранная модель - GEMINI ПО УМОЛЧАНИЮ
-        let currentModel = 'gemini';
+        // DeepSeek ПО УМОЛЧАНИЮ - надёжная модель
+        let currentModel = 'deepseek';
 
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
@@ -11889,30 +11889,33 @@
             
             console.log(`📡 Отправка запроса к ${config.name}...`);
             
-            // Промпт для AI - ищет на форуме
-            const prompt = `Ты - эксперт по серверу ${serverName}.
+            // УЛУЧШЕННЫЙ ПРОМПТ с примерами
+            const prompt = `Ты - эксперт по ролевому серверу GTA 5 RP и Majestic RP ${serverName} (форум: ${forumUrl}).
 
-Сервер: ${serverName}
-Форум: ${forumUrl}
+ВОПРОС ИГРОКА: "${question}"
 
-ВОПРОС: "${question}"
-
-БАЗА ЗНАНИЙ:
-- Зеленая зона (Government, Police, EMS, News) - ЗАПРЕЩЕНО грабить и убивать. Правило 6.11
-- Гетто - РАЗРЕШЕН криминал с RP причиной
-- Такси, бизнесы, заправки - НЕ зеленая зона, грабить МОЖНО
-- Маска НУЖНА для ограблений вне гетто. Правило 6.31
-- DM (убийство без причины) - ЗАПРЕЩЕНО. Правило 6.9
-- VDM (убийство машиной) - ЗАПРЕЩЕНО. Правило 6.3
-- NLR (New Life Rule) - забыть 15 минут после смерти. Правило 6.4
+КОНТЕКСТ ПРАВИЛ ${serverName}:
+- Зеленая зона (Government, Police, EMS, News) - ПОЛНОСТЬЮ ЗАПРЕЩЕНЫ грабежи и убийства. Правило 6.11
+- Такси, заправки, магазины, бизнесы - ЭТО НЕ ЗЕЛЕНАЯ ЗОНА (можно грабить с маской)
+- Гетто - разрешен криминал между бандами с RP причиной
+- Маска ОБЯЗАТЕЛЬНА для грабежей везде кроме гетто. Правило 6.31
+- DM = убийство без RP причины (запрещено). Правило 6.9
+- VDM = убийство машиной (запрещено). Правило 6.3
 
 ИНСТРУКЦИИ:
-1. Дай ЧЕТКИЙ ответ ДА или НЕТ если это вопрос о разрешении
+1. Если вопрос "можно ли..." - дай ЧЕТКИЙ ответ: ДА или НЕТ
 2. Объясни ПОЧЕМУ (1-2 предложения)
-3. Укажи номер правила если есть
-4. Отвечай КРАТКО на русском языке
+3. Укажи номер правила
+4. Максимум 4 предложения
 
-ОТВЕТ:`;
+ПРИМЕРЫ:
+Вопрос: "Можно грабить такси?"
+Ответ: "ДА, такси можно грабить. Такси не зеленая зона. Нужна маска. Правило 6.31."
+
+Вопрос: "Можно убить в больнице?"
+Ответ: "НЕТ, больница (EMS) - зеленая зона. Убийства там запрещены. Правило 6.11."
+
+ОТВЕТЬ:`;
 
             try {
                 let response;
