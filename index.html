@@ -9969,7 +9969,7 @@
                         <!-- AI Model Selector -->
                         <div class="ai-selector" id="aiSelector">
                             <div class="ai-selector-btn" id="aiSelectorBtn" onclick="toggleAiSelector()">
-                                <span class="ai-selector-text" id="aiSelectorText">Claude Sonnet 4</span>
+                                <span class="ai-selector-text" id="aiSelectorText">🔷 Gemini 2.0</span>
                                 <svg class="ai-selector-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
                                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -9979,9 +9979,10 @@
                             <div class="ai-dropdown" id="aiDropdown">
                                 <div class="ai-dropdown-label">Выбрать нейросеть</div>
 
-                                <div class="ai-option selected" data-model="claude" onclick="selectAiModel('claude')">
+                                <div class="ai-option selected" data-model="gemini" onclick="selectAiModel('gemini')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">Claude Sonnet 4</div>
+                                        <div class="ai-option-name">🔷 Gemini 2.0</div>
+                                        <div class="ai-option-desc">Умная и быстрая</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -9990,9 +9991,10 @@
                                     </div>
                                 </div>
 
-                                <div class="ai-option" data-model="gemini" onclick="selectAiModel('gemini')">
+                                <div class="ai-option" data-model="deepseek" onclick="selectAiModel('deepseek')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">Gemini 2.5</div>
+                                        <div class="ai-option-name">🔮 DeepSeek</div>
+                                        <div class="ai-option-desc">Точная и надёжная</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -10003,7 +10005,8 @@
 
                                 <div class="ai-option" data-model="grok" onclick="selectAiModel('grok')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">Grok 4.1</div>
+                                        <div class="ai-option-name">🚀 Grok (X.AI)</div>
+                                        <div class="ai-option-desc">Нужен API ключ</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -10576,9 +10579,9 @@
         // ═══════════════════════════════════════════════════════════════
 
         const aiModels = {
-            claude: { name: 'Claude Sonnet 4' },
-            gemini: { name: 'Gemini 2.5' },
-            grok: { name: 'Grok 4.1' }
+            gemini: { name: '🔷 Gemini 2.0' },
+            deepseek: { name: '🔮 DeepSeek' },
+            grok: { name: '🚀 Grok (X.AI)' }
         };
 
         let isAiSelectorOpen = false;
@@ -10788,7 +10791,19 @@
         // ═══════════════════════════════════════════════════════════════
         
         const API_CONFIG = {
-            // DeepSeek - РАБОТАЕТ СРАЗУ!
+            // Google Gemini - ПО УМОЛЧАНИЮ
+            gemini: {
+                enabled: true, // ✅ ВКЛЮЧЕНА
+                name: 'Google Gemini',
+                apiKey: 'AIzaSyA-2QrhQt4O_wqChrCxl4lDXpz8Hi6B_iI', // ВАШ КЛЮЧ
+                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
+                model: 'gemini-2.0-flash-exp',
+                type: 'gemini',
+                icon: '🔷',
+                status: '✅ Работает'
+            },
+
+            // DeepSeek
             deepseek: {
                 enabled: true,
                 name: 'DeepSeek',
@@ -10800,21 +10815,9 @@
                 status: '✅ Работает'
             },
             
-            // Google Gemini - НУЖЕН НОВЫЙ КЛЮЧ!
-            gemini: {
-                enabled: false, // Отключен пока не добавите новый ключ
-                name: 'Google Gemini',
-                apiKey: 'AIzaSyA-2QrhQt4O_wqChrCxl4lDXpz8Hi6B_iI', // ДОБАВЬТЕ НОВЫЙ КЛЮЧ: https://aistudio.google.com/apikey
-                endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
-                model: 'gemini-2.0-flash-exp',
-                type: 'gemini',
-                icon: '🔷',
-                status: '⚠️ Нужен ключ'
-            },
-            
-            // Grok (X.AI) - НУЖЕН КЛЮЧ
+            // Grok (X.AI)
             grok: {
-                enabled: false, // Отключен пока не добавите ключ
+                enabled: false, // Отключен, нужен ключ
                 name: 'Grok (X.AI)',
                 apiKey: '', // ДОБАВЬТЕ КЛЮЧ: https://console.x.ai
                 endpoint: 'https://api.x.ai/v1/chat/completions',
@@ -10825,8 +10828,8 @@
             }
         };
 
-        // Текущая выбранная модель
-        let currentModel = 'deepseek';  // DeepSeek работает сразу!
+        // Текущая выбранная модель - GEMINI ПО УМОЛЧАНИЮ
+        let currentModel = 'gemini';
 
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
