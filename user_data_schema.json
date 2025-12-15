@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "id": "…",
+      "email": "…",
+      "name": null,
+      "passwordHash": "…",
+      "registeredAt": "2025-12-14T12:34:56.789Z",
+      "lastLoginAt": null
+    }
+  ]
+}
