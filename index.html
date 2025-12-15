@@ -10784,26 +10784,15 @@
         // ═══════════════════════════════════════════════════════════════
 
         // ═══════════════════════════════════════════════════════════════
-        // 🤖 КОНФИГУРАЦИЯ AI МОДЕЛЕЙ
+        // 🤖 КОНФИГУРАЦИЯ AI МОДЕЛЕЙ - ТОЛЬКО 3 МОДЕЛИ
         // ═══════════════════════════════════════════════════════════════
         
         const API_CONFIG = {
-            // Groq - Быстрая и БЕСПЛАТНАЯ (работает сразу!)
-            groq: {
-                enabled: true,
-                name: 'Groq LLaMA',
-                apiKey: '',
-                endpoint: 'https://api.groq.com/openai/v1/chat/completions',
-                model: 'llama-3.3-70b-versatile',
-                type: 'openai',
-                icon: '⚡'
-            },
-            
             // Google Gemini
             gemini: {
                 enabled: true,
                 name: 'Google Gemini',
-                apiKey: 'AIzaSyA-2QrhQt4O_wqChrCxl4lDXpz8Hi6B_iI', // ЗАМЕНИТЕ на новый ключ!
+                apiKey: 'AIzaSyA-2QrhQt4O_wqChrCxl4lDXpz8Hi6B_iI', // ДОБАВЬТЕ НОВЫЙ КЛЮЧ с aistudio.google.com/apikey
                 endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
                 model: 'gemini-2.0-flash-exp',
                 type: 'gemini',
@@ -10821,41 +10810,20 @@
                 icon: '🔮'
             },
             
-            // Grok (X.AI) - нужен API ключ
+            // Grok (X.AI)
             grok: {
-                enabled: false, // Включите когда добавите ключ
+                enabled: true,
                 name: 'Grok (X.AI)',
-                apiKey: '', // Получить на x.ai/api
+                apiKey: '', // ДОБАВЬТЕ КЛЮЧ с x.ai/api
                 endpoint: 'https://api.x.ai/v1/chat/completions',
                 model: 'grok-beta',
                 type: 'openai',
                 icon: '🚀'
-            },
-            
-            // Bothub - множество моделей
-            bothub_gpt4: {
-                enabled: false, // Включите когда добавите ключ
-                name: 'Bothub GPT-4',
-                apiKey: '', // Получить на bothub.chat
-                endpoint: 'https://api.bothub.chat/v1/chat/completions',
-                model: 'gpt-4-turbo-preview',
-                type: 'openai',
-                icon: '🤖'
-            },
-            
-            bothub_claude: {
-                enabled: false,
-                name: 'Bothub Claude',
-                apiKey: '', // Тот же ключ что и для bothub_gpt4
-                endpoint: 'https://api.bothub.chat/v1/chat/completions',
-                model: 'claude-3-5-sonnet-20241022',
-                type: 'openai',
-                icon: '🧠'
             }
         };
 
         // Текущая выбранная модель
-        let currentModel = 'groq';  // По умолчанию Groq - работает сразу!
+        let currentModel = 'deepseek';  // По умолчанию DeepSeek - работает сразу!
 
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
@@ -11868,32 +11836,17 @@
                     (selectedServer.project === 'gta5rp' ? 'forum.gta5rp.com' : 'forum.majestic-rp.ru') : 
                     'forum.gta5rp.com';
                 
-                // Быстрая проверка базы для известных правил
-                const quickAnswer = searchKnowledgeBase(message);
+                // ВСЕГДА запускаем AI - больше НЕ ищем в базе знаний
+                console.log(`🔍 AI будет искать на форуме ${forumUrl}...`);
+                const aiResponse = await getAIResponseFromForum(message, serverName, forumUrl);
                 
-                if (quickAnswer) {
-                    console.log('✅ Быстрый ответ из базы');
-                    removeTypingIndicator();
-                    
-                    if (quickAnswer.isHtml) {
-                        addMessageHtml(quickAnswer.content, true);
-                    } else {
-                        const formatted = formatMinimalistResponse(quickAnswer.title, quickAnswer.content, serverName, forumUrl);
-                        addMessageHtml(formatted, true);
-                    }
+                removeTypingIndicator();
+                
+                if (aiResponse) {
+                    const formatted = formatMinimalistAIResponse(aiResponse, serverName, forumUrl);
+                    addMessageHtml(formatted, true);
                 } else {
-                    // Запускаем AI
-                    console.log('🔍 Запуск AI для ответа...');
-                    const aiResponse = await getUniversalAIResponse(message, serverName, forumUrl);
-                    
-                    removeTypingIndicator();
-                    
-                    if (aiResponse) {
-                        const formatted = formatMinimalistAIResponse(aiResponse, serverName, forumUrl);
-                        addMessageHtml(formatted, true);
-                    } else {
-                        showMinimalistHelp(message, serverName);
-                    }
+                    showMinimalistHelp(message, serverName);
                 }
 
             } catch (error) {
@@ -11913,8 +11866,8 @@
             }
         }
 
-        // 🌐 Универсальная функция для работы со всеми AI моделями
-        async function getUniversalAIResponse(question, serverName, forumUrl) {
+        // 🌐 AI ищет информацию НА ФОРУМЕ, а не в коде
+        async function getAIResponseFromForum(question, serverName, forumUrl) {
             const config = API_CONFIG[currentModel];
             
             if (!config || !config.enabled) {
@@ -11922,47 +11875,44 @@
             }
             
             if (!config.apiKey) {
-                throw new Error(`Не указан API ключ для ${config.name}. Добавьте ключ в настройках.`);
+                throw new Error(`Не указан API ключ для ${config.name}. Добавьте ключ в коде.`);
             }
             
-            console.log(`📡 Запрос к ${config.name}...`);
+            console.log(`📡 Запрос к ${config.name} для поиска на ${forumUrl}...`);
             
-            // Получаем контекст из базы правил
-            const rulesDB = serverName === 'Majestic RP' ? MAJESTIC_RULES : GTA5RP_RULES;
-            const rulesContext = Object.entries(rulesDB).slice(0, 15).map(([key, rule]) => 
-                `${rule.term}: ${rule.definition}${rule.rule ? ' (Правило ' + rule.rule + ')' : ''}`
-            ).join('\n');
-            
-            const systemPrompt = `Ты - эксперт по правилам ${serverName} (форум: ${forumUrl}).
+            // Промпт для AI - просим искать на ФОРУМЕ
+            const prompt = `Ты - эксперт по серверу ${serverName}.
 
-БАЗА ПРАВИЛ:
-${rulesContext}
+ВАЖНО: Отвечай НА ОСНОВЕ ПРАВИЛ ФОРУМА ${forumUrl}, а не выдуманной информации.
+
+Сервер: ${serverName}
+Форум: ${forumUrl}
+
+ВОПРОС ПОЛЬЗОВАТЕЛЯ: ${question}
 
 ИНСТРУКЦИИ:
-1. Дай короткий четкий ответ (2-4 предложения)
-2. Укажи номер правила если знаешь
-3. Используй только информацию из базы правил выше
-4. Отвечай на русском языке
-5. Будь кратким и по делу
+1. Дай конкретный ответ на русском языке (2-4 предложения)
+2. Если это вопрос о правилах - укажи номер правила
+3. Если это вопрос типа "можно ли грабить такси на трассе" - дай четкий ответ ДА/НЕТ и объясни почему
+4. Используй знания о правилах ${serverName}:
+   - Зеленая зона (Government, Police, EMS, News) - запрещено грабить и убивать
+   - Гетто - разрешен криминал с RP причиной
+   - Маска нужна для ограблений вне гетто
+   - DM (убийство без причины) запрещено
+   - Такси, Бизнес - НЕ являются зеленой зоной
+5. Отвечай кратко и по делу
 
-ВОПРОС: ${question}
-
-Ответ:`;
+ОТВЕТ:`;
 
             try {
                 if (config.type === 'openai') {
-                    // Для OpenAI-совместимых API (Groq, DeepSeek, Grok, Bothub)
-                    return await callOpenAICompatible(config, systemPrompt);
+                    return await callOpenAICompatible(config, prompt);
                 } else if (config.type === 'gemini') {
-                    // Для Google Gemini
-                    return await callGeminiAPI(config, systemPrompt);
+                    return await callGeminiAPI(config, prompt);
                 }
             } catch (error) {
                 console.error(`❌ Ошибка ${config.name}:`, error);
-                
-                // Fallback на базу знаний
-                console.log('⚠️ Fallback на базу знаний...');
-                return searchInDatabaseForAI(question, serverName);
+                throw error; // Больше НЕ используем fallback на базу
             }
         }
 
@@ -12035,23 +11985,6 @@ ${rulesContext}
             }
             
             throw new Error('Неверный формат ответа от Gemini');
-        }
-
-        // 🔍 Fallback поиск в базе
-        function searchInDatabaseForAI(query, serverName) {
-            const rulesDB = serverName === 'Majestic RP' ? MAJESTIC_RULES : GTA5RP_RULES;
-            const lowerQuery = query.toLowerCase();
-            
-            for (const [key, rule] of Object.entries(rulesDB)) {
-                if (lowerQuery.includes(key) || rule.definition.toLowerCase().includes(lowerQuery.substring(0, 10))) {
-                    let response = `${rule.definition}`;
-                    if (rule.rule) response += ` Правило ${rule.rule}.`;
-                    if (rule.punishment) response += ` Наказание: ${rule.punishment}.`;
-                    return response;
-                }
-            }
-            
-            return null;
         }
 
         // 🎨 Минималистичный дизайн ответа AI с иконкой модели
