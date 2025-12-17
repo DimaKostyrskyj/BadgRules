@@ -1,0 +1,63 @@
+# RULES_LINKS.txt
+# Формат: Описание темы (ссылка)
+# AI сам выберет нужные темы на основе вашего вопроса
+
+# ═══════════════════════════════════════════════════════════
+# GTA5RP - ПРАВИЛА
+# ═══════════════════════════════════════════════════════════
+
+Основные правила где DM, RDM, RK, TK, SK, VDM, PG, MG, NLR и другие базовые понятия (https://forum.gta5rp.com/threads/pravila-proekta.652405/)
+
+Правила государственных структур - Police, Government, EMS, Army, FIB (https://forum.gta5rp.com/threads/pravila-gos-struktur.123456/)
+
+Правила ограблений - банки, магазины, дома, инкассаторы, маски (https://forum.gta5rp.com/threads/pravila-ograblenij.234567/)
+
+Правила зеленых зон - где нельзя убивать, грабить, похищать (https://forum.gta5rp.com/threads/zelenye-zony.345678/)
+
+Правила гетто и красных зон - территории банд, массовые РП (https://forum.gta5rp.com/threads/pravila-getto.456789/)
+
+Правила фракций и организаций - вступление, увольнение, взаимодействие (https://forum.gta5rp.com/threads/pravila-frakcij.567890/)
+
+Правила для лидеров фракций и заместителей (https://forum.gta5rp.com/threads/pravila-liderov.678901/)
+
+Правила похищений и заложников (https://forum.gta5rp.com/threads/pravila-pohishhenij.789012/)
+
+Правила использования транспорта - погони, ДТП, парковка (https://forum.gta5rp.com/threads/pravila-transporta.890123/)
+
+
+# ═══════════════════════════════════════════════════════════
+# MAJESTIC RP - ПРАВИЛА  
+# ═══════════════════════════════════════════════════════════
+
+Основные правила Majestic где DM, RDM, VDM, PG, MG, NLR и базовые понятия (https://forum.majestic-rp.ru/threads/obshhie-pravila-servera.1/)
+
+Правила государственных структур Majestic - Police, Government, EMS (https://forum.majestic-rp.ru/threads/pravila-gos-struktur-majestic.2/)
+
+Правила ограблений Majestic - банки, магазины, инкассаторы (https://forum.majestic-rp.ru/threads/pravila-ograblenij-majestic.3/)
+
+Правила зеленых зон Majestic - безопасные территории (https://forum.majestic-rp.ru/threads/zelenye-zony-majestic.4/)
+
+Правила гетто Majestic - территории банд (https://forum.majestic-rp.ru/threads/pravila-getto-majestic.5/)
+
+Правила фракций Majestic (https://forum.majestic-rp.ru/threads/pravila-frakcij-majestic.6/)
+
+
+# ═══════════════════════════════════════════════════════════
+# ИНСТРУКЦИЯ
+# ═══════════════════════════════════════════════════════════
+
+# 1. Замените все ссылки на РЕАЛЬНЫЕ с форумов
+# 2. Можете добавлять любые темы в таком же формате
+# 3. AI автоматически выберет нужные темы по ключевым словам
+# 4. Строки начинающиеся с # игнорируются
+
+# Примеры ключевых слов которые AI ищет:
+# - "DM, убийство, убить" → выберет тему с DM/RDM
+# - "граб, ограбл, банк" → выберет тему про ограбления
+# - "зеленая зона, больница" → выберет тему про зеленые зоны
+# - "гетто, банда" → выберет тему про гетто
+# - "полиция, коп" → выберет тему про гос.структуры
+# - "маска" → выберет тему про ограбления
+# - "похитить, заложник" → выберет тему про похищения
+
+# ВАЖНО: Ссылки должны вести на КОНКРЕТНЫЕ темы, а не на разделы форума!
