@@ -8282,6 +8282,28 @@
             }
         }
 
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .complaint-form {
@@ -11857,15 +11879,58 @@
                     (selectedServer.project === 'gta5rp' ? 'forum.gta5rp.com' : 'forum.majestic-rp.ru') : 
                     'forum.gta5rp.com';
                 
-                // AI ищет на форуме
-                console.log(`🔍 ${config.name} ищет ответ на ${forumUrl}...`);
-                const aiResponse = await getAIResponseFromForum(message, serverName, forumUrl);
+                // 1. Сначала проверяем локальную базу данных
+                console.log('🔍 Проверка локальной базы данных...');
+                const localResult = searchKnowledgeBase(message);
+                
+                // 2. Всегда используем AI для улучшенного ответа
+                console.log(`🤖 ${config.name} анализирует запрос...`);
+                let aiResponse = null;
+                
+                try {
+                    aiResponse = await getAIResponseFromForum(message, serverName, forumUrl, localResult);
+                } catch (aiError) {
+                    console.warn('⚠️ AI не смог обработать запрос:', aiError.message);
+                    // Если AI не работает, используем локальные данные
+                    if (localResult) {
+                        removeTypingIndicator();
+                        if (localResult.isHtml) {
+                            addMessageHtml(localResult.content, true);
+                        } else {
+                            addMessage(localResult.content, true);
+                        }
+                        isProcessing = false;
+                        sendButton.disabled = false;
+                        chatInput.focus();
+                        return;
+                    }
+                    throw aiError;
+                }
                 
                 removeTypingIndicator();
                 
+                // 3. Показываем результат
                 if (aiResponse) {
                     const formatted = formatBeautifulAIResponse(aiResponse, serverName, forumUrl);
                     addMessageHtml(formatted, true);
+                    
+                    // Добавляем локальные данные как дополнительную информацию
+                    if (localResult && localResult.isHtml) {
+                        setTimeout(() => {
+                            const additionalInfo = `<div style="margin-top: 15px; padding: 15px; background: rgba(96, 165, 250, 0.05); border-radius: 8px; border-left: 3px solid var(--accent-primary);">
+                                <div style="font-size: 0.8rem; font-weight: 600; color: var(--accent-primary); margin-bottom: 10px;">📚 Дополнительная информация из базы данных:</div>
+                                ${localResult.content}
+                            </div>`;
+                            addMessageHtml(additionalInfo, true);
+                        }, 500);
+                    }
+                } else if (localResult) {
+                    // Если AI не дал ответа, показываем локальные данные
+                    if (localResult.isHtml) {
+                        addMessageHtml(localResult.content, true);
+                    } else {
+                        addMessage(localResult.content, true);
+                    }
                 } else {
                     showBeautifulHelp(message, serverName);
                 }
@@ -11884,10 +11949,20 @@
         }
 
         // 🌐 AI ищет информацию НА ФОРУМЕ
-        async function getAIResponseFromForum(question, serverName, forumUrl) {
+        async function getAIResponseFromForum(question, serverName, forumUrl, localResult = null) {
             const config = API_CONFIG[currentModel];
             
             console.log(`📡 Отправка запроса к ${config.name}...`);
+            
+            // Формируем контекст из локальной базы данных если есть
+            let contextInfo = '';
+            if (localResult && localResult.isHtml) {
+                // Извлекаем текст из HTML для контекста
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = localResult.content;
+                const localText = tempDiv.textContent || tempDiv.innerText || '';
+                contextInfo = `\n\nДОПОЛНИТЕЛЬНЫЙ КОНТЕКСТ ИЗ БАЗЫ ДАННЫХ:\n${localText.substring(0, 500)}`;
+            }
             
             // УЛУЧШЕННЫЙ ПРОМПТ с примерами
             const prompt = `Ты - эксперт по ролевому серверу ${serverName} (форум: ${forumUrl}).
@@ -11901,21 +11976,28 @@
 - Маска ОБЯЗАТЕЛЬНА для грабежей везде кроме гетто. Правило 6.31
 - DM = убийство без RP причины (запрещено). Правило 6.9
 - VDM = убийство машиной (запрещено). Правило 6.3
+- NLR (New Life Rule) = после смерти забываешь последние 15 минут
+- PG (PowerGaming) = нереалистичные действия в RP
+- MG (MetaGaming) = использование информации вне игры${contextInfo}
 
 ИНСТРУКЦИИ:
-1. Если вопрос "можно ли..." - дай ЧЕТКИЙ ответ: ДА или НЕТ
+1. Если вопрос "можно ли..." - дай ЧЕТКИЙ ответ: ДА или НЕТ в начале
 2. Объясни ПОЧЕМУ (1-2 предложения)
-3. Укажи номер правила
-4. Максимум 4 предложения
+3. Укажи номер правила если знаешь
+4. Максимум 4-5 предложений
+5. Будь конкретным и полезным
 
 ПРИМЕРЫ:
 Вопрос: "Можно грабить такси?"
-Ответ: "ДА, такси можно грабить. Такси не зеленая зона. Нужна маска. Правило 6.31."
+Ответ: "ДА, такси можно грабить. Такси не является зеленой зоной. Обязательно нужна маска. Правило 6.31."
 
 Вопрос: "Можно убить в больнице?"
-Ответ: "НЕТ, больница (EMS) - зеленая зона. Убийства там запрещены. Правило 6.11."
+Ответ: "НЕТ, больница (EMS) - это зеленая зона. Убийства и грабежи там полностью запрещены. Правило 6.11."
 
-ОТВЕТЬ:`;
+Вопрос: "Что такое DM?"
+Ответ: "DM (DeathMatch) - это убийство игрока без ролевой причины. Запрещено на всех серверах. Нужна веская RP причина для убийства. Правило 6.9."
+
+ОТВЕТЬ КРАТКО И ЧЕТКО:`;
 
             try {
                 let response;
@@ -12155,6 +12237,32 @@
                     `}
                 </div>
             </div>`;
+        }
+
+        // 🔄 Быстрое переключение модели из ошибки
+        function switchModel(modelKey) {
+            selectModel(modelKey);
+            // Показываем уведомление
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.8));
+                color: white;
+                border-radius: 8px;
+                font-weight: 600;
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+            `;
+            const modelName = API_CONFIG[modelKey] ? API_CONFIG[modelKey].name : modelKey;
+            notification.textContent = `✅ Переключено на ${modelName}`;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
         }
 
         // 📋 Красивая справка
