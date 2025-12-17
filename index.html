@@ -3399,14 +3399,14 @@
         }
 
         .message-text {
-            background: transparent; /* Убрали фон */
-            padding: 1rem 1.5rem;
-            border-radius: 16px;
-            border: none; /* Убрали бордер */
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            border: none;
         }
 
         .message.user .message-text {
-            background: transparent; /* Убрали фон у пользователя */
+            background: transparent;
         }
 
         /* ═══════════════════════════════════════════════════════════════ */
@@ -3414,10 +3414,10 @@
         /* ═══════════════════════════════════════════════════════════════ */
 
         .rule-card {
-            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
-            border: 1px solid rgba(88, 101, 242, 0.3);
+            background: transparent;
+            border: 1px solid rgba(96, 165, 250, 0.2);
             border-radius: 16px;
-            padding: 1.25rem;
+            padding: 1.25rem 0;
             margin-bottom: 1rem;
         }
 
@@ -3451,10 +3451,10 @@
         }
 
         .rule-definition {
-            background: rgba(0, 0, 0, 0.2);
-            border-left: 3px solid #5865F2;
-            padding: 1rem;
-            border-radius: 0 8px 8px 0;
+            background: transparent;
+            border-left: 3px solid var(--accent-primary);
+            padding: 0.5rem 0 0.5rem 1rem;
+            border-radius: 0;
             margin-bottom: 1rem;
             font-size: 0.95rem;
             color: var(--text-primary);
@@ -8282,28 +8282,6 @@
             }
         }
 
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideOutRight {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .complaint-form {
@@ -11879,58 +11857,15 @@
                     (selectedServer.project === 'gta5rp' ? 'forum.gta5rp.com' : 'forum.majestic-rp.ru') : 
                     'forum.gta5rp.com';
                 
-                // 1. Сначала проверяем локальную базу данных
-                console.log('🔍 Проверка локальной базы данных...');
-                const localResult = searchKnowledgeBase(message);
-                
-                // 2. Всегда используем AI для улучшенного ответа
-                console.log(`🤖 ${config.name} анализирует запрос...`);
-                let aiResponse = null;
-                
-                try {
-                    aiResponse = await getAIResponseFromForum(message, serverName, forumUrl, localResult);
-                } catch (aiError) {
-                    console.warn('⚠️ AI не смог обработать запрос:', aiError.message);
-                    // Если AI не работает, используем локальные данные
-                    if (localResult) {
-                        removeTypingIndicator();
-                        if (localResult.isHtml) {
-                            addMessageHtml(localResult.content, true);
-                        } else {
-                            addMessage(localResult.content, true);
-                        }
-                        isProcessing = false;
-                        sendButton.disabled = false;
-                        chatInput.focus();
-                        return;
-                    }
-                    throw aiError;
-                }
+                // AI ищет на форуме
+                console.log(`🔍 ${config.name} ищет ответ на ${forumUrl}...`);
+                const aiResponse = await getAIResponseFromForum(message, serverName, forumUrl);
                 
                 removeTypingIndicator();
                 
-                // 3. Показываем результат
                 if (aiResponse) {
                     const formatted = formatBeautifulAIResponse(aiResponse, serverName, forumUrl);
                     addMessageHtml(formatted, true);
-                    
-                    // Добавляем локальные данные как дополнительную информацию
-                    if (localResult && localResult.isHtml) {
-                        setTimeout(() => {
-                            const additionalInfo = `<div style="margin-top: 15px; padding: 15px; background: rgba(96, 165, 250, 0.05); border-radius: 8px; border-left: 3px solid var(--accent-primary);">
-                                <div style="font-size: 0.8rem; font-weight: 600; color: var(--accent-primary); margin-bottom: 10px;">📚 Дополнительная информация из базы данных:</div>
-                                ${localResult.content}
-                            </div>`;
-                            addMessageHtml(additionalInfo, true);
-                        }, 500);
-                    }
-                } else if (localResult) {
-                    // Если AI не дал ответа, показываем локальные данные
-                    if (localResult.isHtml) {
-                        addMessageHtml(localResult.content, true);
-                    } else {
-                        addMessage(localResult.content, true);
-                    }
                 } else {
                     showBeautifulHelp(message, serverName);
                 }
@@ -11949,20 +11884,10 @@
         }
 
         // 🌐 AI ищет информацию НА ФОРУМЕ
-        async function getAIResponseFromForum(question, serverName, forumUrl, localResult = null) {
+        async function getAIResponseFromForum(question, serverName, forumUrl) {
             const config = API_CONFIG[currentModel];
             
             console.log(`📡 Отправка запроса к ${config.name}...`);
-            
-            // Формируем контекст из локальной базы данных если есть
-            let contextInfo = '';
-            if (localResult && localResult.isHtml) {
-                // Извлекаем текст из HTML для контекста
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = localResult.content;
-                const localText = tempDiv.textContent || tempDiv.innerText || '';
-                contextInfo = `\n\nДОПОЛНИТЕЛЬНЫЙ КОНТЕКСТ ИЗ БАЗЫ ДАННЫХ:\n${localText.substring(0, 500)}`;
-            }
             
             // УЛУЧШЕННЫЙ ПРОМПТ с примерами
             const prompt = `Ты - эксперт по ролевому серверу ${serverName} (форум: ${forumUrl}).
@@ -11976,28 +11901,21 @@
 - Маска ОБЯЗАТЕЛЬНА для грабежей везде кроме гетто. Правило 6.31
 - DM = убийство без RP причины (запрещено). Правило 6.9
 - VDM = убийство машиной (запрещено). Правило 6.3
-- NLR (New Life Rule) = после смерти забываешь последние 15 минут
-- PG (PowerGaming) = нереалистичные действия в RP
-- MG (MetaGaming) = использование информации вне игры${contextInfo}
 
 ИНСТРУКЦИИ:
-1. Если вопрос "можно ли..." - дай ЧЕТКИЙ ответ: ДА или НЕТ в начале
+1. Если вопрос "можно ли..." - дай ЧЕТКИЙ ответ: ДА или НЕТ
 2. Объясни ПОЧЕМУ (1-2 предложения)
-3. Укажи номер правила если знаешь
-4. Максимум 4-5 предложений
-5. Будь конкретным и полезным
+3. Укажи номер правила
+4. Максимум 4 предложения
 
 ПРИМЕРЫ:
 Вопрос: "Можно грабить такси?"
-Ответ: "ДА, такси можно грабить. Такси не является зеленой зоной. Обязательно нужна маска. Правило 6.31."
+Ответ: "ДА, такси можно грабить. Такси не зеленая зона. Нужна маска. Правило 6.31."
 
 Вопрос: "Можно убить в больнице?"
-Ответ: "НЕТ, больница (EMS) - это зеленая зона. Убийства и грабежи там полностью запрещены. Правило 6.11."
+Ответ: "НЕТ, больница (EMS) - зеленая зона. Убийства там запрещены. Правило 6.11."
 
-Вопрос: "Что такое DM?"
-Ответ: "DM (DeathMatch) - это убийство игрока без ролевой причины. Запрещено на всех серверах. Нужна веская RP причина для убийства. Правило 6.9."
-
-ОТВЕТЬ КРАТКО И ЧЕТКО:`;
+ОТВЕТЬ:`;
 
             try {
                 let response;
@@ -12146,15 +12064,22 @@
             const modelIcon = config ? config.icon : '🤖';
             const modelName = config ? config.name : currentModel.toUpperCase();
             
+            // Определяем ссылку на форум для правил
+            const forumLink = forumUrl.includes('gta5rp') ? 
+                'https://forum.gta5rp.com/forums/pravila/' : 
+                'https://forum.majestic-rp.ru/forums/pravila-servera/';
+            
             // Выделяем ДА/НЕТ в тексте
             let formattedText = text
                 .replace(/(^|\s)(ДА|DA|YES)(\s|,|\.|$)/gi, '$1<span style="color: #10b981; font-weight: 700;">$2</span>$3')
                 .replace(/(^|\s)(НЕТ|NET|NO)(\s|,|\.|$)/gi, '$1<span style="color: #ef4444; font-weight: 700;">$2</span>$3')
-                .replace(/Правило\s+([\d.]+)/gi, '<span style="color: var(--accent-primary); font-weight: 600;">Правило $1</span>');
+                .replace(/Правило\s+([\d.]+)/gi, (match, ruleNum) => {
+                    return `<a href="${forumLink}" target="_blank" style="color: var(--accent-primary); font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--accent-primary); transition: all 0.2s; cursor: pointer;" onmouseover="this.style.color='#3b82f6'; this.style.borderColor='#3b82f6'" onmouseout="this.style.color='var(--accent-primary)'; this.style.borderColor='var(--accent-primary)'">Правило ${ruleNum}</a>`;
+                });
             
-            return `<div style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.08), rgba(59, 130, 246, 0.05)); border-radius: 12px; overflow: hidden;">
+            return `<div style="background: transparent; border-radius: 12px; overflow: hidden;">
                 <!-- Заголовок -->
-                <div style="padding: 14px 18px; background: rgba(96, 165, 250, 0.1); border-bottom: 1px solid rgba(96, 165, 250, 0.2);">
+                <div style="padding: 14px 18px; background: transparent; border-bottom: 1px solid rgba(96, 165, 250, 0.2);">
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <span style="font-size: 1.4rem;">${modelIcon}</span>
                         <div style="flex: 1;">
@@ -12169,20 +12094,20 @@
                 </div>
                 
                 <!-- Контент -->
-                <div style="padding: 18px;">
+                <div style="padding: 18px 0;">
                     <div style="font-size: 0.95rem; line-height: 1.8; color: var(--text-primary);">
                         ${formattedText}
                     </div>
                 </div>
                 
                 <!-- Футер -->
-                <div style="padding: 12px 18px; background: rgba(0, 0, 0, 0.2); display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                <div style="padding: 12px 0; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
                     <span style="padding: 5px 12px; background: rgba(96, 165, 250, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">
                         🎮 ${serverName}
                     </span>
-                    <span style="padding: 5px 12px; background: rgba(59, 130, 246, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">
-                        🌐 ${forumUrl}
-                    </span>
+                    <a href="${forumLink}" target="_blank" style="padding: 5px 12px; background: rgba(59, 130, 246, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(59, 130, 246, 0.25)'" onmouseout="this.style.background='rgba(59, 130, 246, 0.15)'">
+                        🌐 Открыть правила →
+                    </a>
                     <span style="padding: 5px 12px; background: rgba(16, 185, 129, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--accent-success); font-weight: 500;">
                         ✓ Проверено AI
                     </span>
@@ -12237,32 +12162,6 @@
                     `}
                 </div>
             </div>`;
-        }
-
-        // 🔄 Быстрое переключение модели из ошибки
-        function switchModel(modelKey) {
-            selectModel(modelKey);
-            // Показываем уведомление
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 20px;
-                background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.8));
-                color: white;
-                border-radius: 8px;
-                font-weight: 600;
-                z-index: 10000;
-                animation: slideInRight 0.3s ease;
-            `;
-            const modelName = API_CONFIG[modelKey] ? API_CONFIG[modelKey].name : modelKey;
-            notification.textContent = `✅ Переключено на ${modelName}`;
-            document.body.appendChild(notification);
-            setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 2000);
         }
 
         // 📋 Красивая справка
@@ -12750,6 +12649,11 @@
             });
 
             console.log(`Модель ${model} активирована`);
+        }
+
+        // Alias for compatibility with error messages
+        function switchModel(model) {
+            return selectModel(model);
         }
 
         // Initialize model buttons based on config
