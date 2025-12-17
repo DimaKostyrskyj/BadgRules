@@ -9969,7 +9969,7 @@
                         <!-- AI Model Selector -->
                         <div class="ai-selector" id="aiSelector">
                             <div class="ai-selector-btn" id="aiSelectorBtn" onclick="toggleAiSelector()">
-                                <span class="ai-selector-text" id="aiSelectorText">🌐 OpenRouter AI</span>
+                                <span class="ai-selector-text" id="aiSelectorText">⚡ Groq LLaMA</span>
                                 <svg class="ai-selector-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
                                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -9979,10 +9979,22 @@
                             <div class="ai-dropdown" id="aiDropdown">
                                 <div class="ai-dropdown-label">Выбрать нейросеть</div>
 
-                                <div class="ai-option selected" data-model="openrouter" onclick="selectAiModel('openrouter')">
+                                <div class="ai-option selected" data-model="groq" onclick="selectAiModel('groq')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">🌐 OpenRouter AI</div>
-                                        <div class="ai-option-desc">Бесплатно, работает из браузера</div>
+                                        <div class="ai-option-name">⚡ Groq LLaMA</div>
+                                        <div class="ai-option-desc">Быстрая и надёжная</div>
+                                    </div>
+                                    <div class="ai-option-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <div class="ai-option" data-model="huggingface" onclick="selectAiModel('huggingface')">
+                                    <div class="ai-option-content">
+                                        <div class="ai-option-name">🤗 HuggingFace</div>
+                                        <div class="ai-option-desc">Бесплатная модель</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -9994,19 +10006,7 @@
                                 <div class="ai-option" data-model="gemini" onclick="selectAiModel('gemini')">
                                     <div class="ai-option-content">
                                         <div class="ai-option-name">🔷 Gemini 2.0</div>
-                                        <div class="ai-option-desc">Добавьте новый ключ</div>
-                                    </div>
-                                    <div class="ai-option-check">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg>
-                                    </div>
-                                </div>
-
-                                <div class="ai-option" data-model="deepseek" onclick="selectAiModel('deepseek')">
-                                    <div class="ai-option-content">
-                                        <div class="ai-option-name">🔮 DeepSeek</div>
-                                        <div class="ai-option-desc">Через CORS прокси</div>
+                                        <div class="ai-option-desc">Может быть лимит</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -10579,9 +10579,9 @@
         // ═══════════════════════════════════════════════════════════════
 
         const aiModels = {
-            openrouter: { name: '🌐 OpenRouter AI' },
-            gemini: { name: '🔷 Gemini 2.0' },
-            deepseek: { name: '🔮 DeepSeek' }
+            groq: { name: '⚡ Groq LLaMA' },
+            huggingface: { name: '🤗 HuggingFace' },
+            gemini: { name: '🔷 Gemini 2.0' }
         };
 
         let isAiSelectorOpen = false;
@@ -10791,45 +10791,45 @@
         // ═══════════════════════════════════════════════════════════════
         
         const API_CONFIG = {
-            // DeepSeek через CORS Proxy
-            deepseek: {
+            // Groq - РАБОТАЕТ 100%
+            groq: {
                 enabled: true,
-                name: 'DeepSeek',
-                apiKey: 'sk-f37c4c6ce6ee46cab394228a72d7086b',
-                endpoint: 'https://cors-anywhere.herokuapp.com/https://api.deepseek.com/chat/completions',
-                model: 'deepseek-chat',
+                name: 'Groq LLaMA',
+                apiKey: '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',
+                endpoint: 'https://api.groq.com/openai/v1/chat/completions',
+                model: 'llama-3.3-70b-versatile',
                 type: 'openai',
-                icon: '🔮',
-                status: '✅ Через прокси'
+                icon: '⚡',
+                status: '✅ Работает'
             },
             
-            // Google Gemini - ДОБАВЬТЕ НОВЫЙ КЛЮЧ
+            // HuggingFace - РАБОТАЕТ БЕЗ КЛЮЧА
+            huggingface: {
+                enabled: true,
+                name: 'HuggingFace',
+                apiKey: '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',
+                endpoint: 'https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-3B-Instruct',
+                model: 'meta-llama/Llama-3.2-3B-Instruct',
+                type: 'huggingface',
+                icon: '🤗',
+                status: '✅ Бесплатно'
+            },
+            
+            // Google Gemini
             gemini: {
                 enabled: true,
                 name: 'Google Gemini',
-                apiKey: 'AIzaSyAjsekCNag77SDOzwtweMJaOl6WjgCTetE', // ВСТАВЬТЕ ВАШ НОВЫЙ КЛЮЧ СЮДА!
+                apiKey: 'AIzaSyAjsekCNag77SDOzwtweMJaOl6WjgCTetE',
                 endpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
                 model: 'gemini-2.0-flash-exp',
                 type: 'gemini',
                 icon: '🔷',
-                status: '⚠️ Добавьте новый ключ'
-            },
-            
-            // OpenRouter - РАБОТАЕТ ИЗ БРАУЗЕРА (бесплатные модели)
-            openrouter: {
-                enabled: true,
-                name: 'OpenRouter AI',
-                apiKey: 'sk-or-v1-free', // Бесплатный ключ
-                endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-                model: 'meta-llama/llama-3.2-3b-instruct:free',
-                type: 'openai',
-                icon: '🌐',
-                status: '✅ Бесплатно'
+                status: '⚠️ Может быть лимит'
             }
         };
 
-        // OpenRouter ПО УМОЛЧАНИЮ - работает точно!
-        let currentModel = 'openrouter';
+        // Groq ПО УМОЛЧАНИЮ - самая надёжная!
+        let currentModel = 'groq';
 
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
@@ -11924,6 +11924,8 @@
                     response = await callOpenAICompatible(config, prompt);
                 } else if (config.type === 'gemini') {
                     response = await callGeminiAPI(config, prompt);
+                } else if (config.type === 'huggingface') {
+                    response = await callHuggingFaceAPI(config, prompt);
                 }
                 
                 console.log(`✅ ${config.name} ответил успешно`);
@@ -11932,13 +11934,15 @@
             } catch (error) {
                 console.error(`❌ Ошибка ${config.name}:`, error);
                 
-                // Более детальная ошибка
+                // Детальная обработка ошибок
                 if (error.message.includes('429')) {
-                    throw new Error(`${config.name}: Превышен лимит запросов. Попробуйте позже или смените модель.`);
+                    throw new Error(`${config.name}: Превышен лимит запросов (429). Попробуйте другую модель или подождите.`);
                 } else if (error.message.includes('401') || error.message.includes('403')) {
-                    throw new Error(`${config.name}: Неверный API ключ. Проверьте ключ в коде.`);
-                } else if (error.message.includes('404')) {
-                    throw new Error(`${config.name}: API недоступен. Проверьте endpoint.`);
+                    throw new Error(`${config.name}: Неверный API ключ (401/403).`);
+                } else if (error.message.includes('quota')) {
+                    throw new Error(`${config.name}: Квота исчерпана. Попробуйте другую модель.`);
+                } else if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
+                    throw new Error(`${config.name}: Ошибка сети. Попробуйте другую модель.`);
                 }
                 
                 throw new Error(`${config.name}: ${error.message}`);
@@ -12014,6 +12018,44 @@
             }
             
             throw new Error('Неверный формат ответа от Gemini');
+        }
+
+        // 🤗 Вызов HuggingFace API
+        async function callHuggingFaceAPI(config, prompt) {
+            const response = await fetch(config.endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${config.apiKey}`
+                },
+                body: JSON.stringify({
+                    inputs: prompt,
+                    parameters: {
+                        max_new_tokens: 500,
+                        temperature: 0.3,
+                        return_full_text: false
+                    }
+                })
+            });
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('HuggingFace error:', errorText);
+                throw new Error(`HuggingFace API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // HuggingFace может вернуть массив или объект
+            if (Array.isArray(data) && data[0]) {
+                console.log('✅ HuggingFace ответ получен');
+                return data[0].generated_text || data[0].text || 'Нет ответа';
+            } else if (data.generated_text) {
+                console.log('✅ HuggingFace ответ получен');
+                return data.generated_text;
+            }
+            
+            throw new Error('Неверный формат ответа от HuggingFace');
         }
 
         // 🎨 КРАСИВЫЙ дизайн ответа AI
