@@ -152,6 +152,15 @@
             }
         }
         
+        @keyframes loaderProgress {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -1026,10 +1035,7 @@
 
         /* Step Indicator */
         .step-indicator {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            display: none;
         }
 
         .step-dot {
@@ -3210,7 +3216,7 @@
 /* Modern Input Box */
 .chat-input-box {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: none;
     border-radius: 20px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -3218,31 +3224,20 @@
 }
 
 .chat-input-box::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 20px;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(59, 130, 246, 0.3), rgba(96, 165, 250, 0.3));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
+    display: none;
 }
 
 .chat-input-box:focus-within::before {
-    opacity: 1;
+    display: none;
 }
 
 .chat-input-box:hover {
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: transparent;
 }
 
 .chat-input-box:focus-within {
     border-color: transparent;
-    box-shadow: 0 0 30px rgba(96, 165, 250, 0.15), 0 10px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: none;
 }
 
 /* Input Area - Main */
@@ -4402,7 +4397,7 @@
         .info-row .value {
             font-size: 0.85rem;
             font-weight: 600;
-            color: var(--text-primary);
+            color: rgba(255, 255, 255, 0.7);
             font-family: 'JetBrains Mono', monospace;
         }
 
@@ -8477,10 +8472,10 @@
             background: #60a5fa;
             box-shadow: 0 0 20px rgba(96, 165, 250, 0.6),
                         0 0 40px rgba(96, 165, 250, 0.4);
-            height: 8px;
-            width: 24px;
+            height: 24px;
+            width: 8px;
             border-radius: 4px;
-            transform: translateX(8px);
+            transform: translateY(0);
         }
 
         .scroll-dot.active::before {
@@ -9206,8 +9201,8 @@
         }
         
         .team-card[data-role="senior"] .team-avatar-wrapper {
-            width: 110px;
-            height: 110px;
+            width: 100px;
+            height: 100px;
         }
 
         .team-avatar {
@@ -9385,9 +9380,12 @@
     <!-- 🛡️ INITIAL LOADER - Защита от черного экрана -->
     <div id="initialLoader">
         <div class="loader-content">
-            <img src="images/logo.png" alt="BadgRules" class="loader-logo" style="width: 80px; height: 80px; margin: 0 auto 30px; display: block; filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.6)); animation: loaderPulse 2s ease-in-out infinite;">
-            <div class="loader-text">Загрузка BadgRules...</div>
-            <div class="loader-subtext">Пожалуйста, подождите</div>
+            <img src="images/logo.png" alt="BadgRules" class="loader-logo" style="width: 100px; height: 100px; margin: 0 auto 40px; display: block; filter: drop-shadow(0 0 40px rgba(96, 165, 250, 0.8)); animation: loaderPulse 2s ease-in-out infinite;">
+            <div class="loader-text" style="font-size: 24px; margin-bottom: 15px;">BadgRules</div>
+            <div class="loader-subtext" style="margin-bottom: 30px;">Загрузка...</div>
+            <div style="width: 200px; height: 4px; background: rgba(96, 165, 250, 0.2); border-radius: 2px; overflow: hidden; margin: 0 auto;">
+                <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #60a5fa, #3b82f6); border-radius: 2px; animation: loaderProgress 1.5s ease-in-out infinite;"></div>
+            </div>
             <div class="loader-error" id="loaderError">
                 <div class="error-title">⚠️ Ошибка загрузки</div>
                 <div class="error-message">
@@ -11032,28 +11030,28 @@
 
         const SERVERS = {
             gta5rp: [
-                { id: 1, name: 'DOWNTOWN', emoji: '', players: '', bonus: '' },
-                { id: 2, name: 'STRAWBERRY', emoji: '', players: '', bonus: '' },
-                { id: 3, name: 'VINEWOOD', emoji: '', players: '', bonus: '' },
-                { id: 4, name: 'BLACKBERRY', emoji: '', players: '', bonus: '' },
-                { id: 5, name: 'INSQUAD', emoji: '', players: '', bonus: '' },
-                { id: 6, name: 'SUNRISE', emoji: '', players: '', bonus: '' },
-                { id: 7, name: 'RAINBOW', emoji: '', players: '', bonus: '' },
-                { id: 8, name: 'RICHMAN', emoji: '', players: '', bonus: '' },
-                { id: 9, name: 'ECLIPSE', emoji: '', players: '', bonus: '' },
-                { id: 10, name: 'LA MESA', emoji: '', players: '', bonus: '' },
-                { id: 11, name: 'BURTON', emoji: '', players: '', bonus: '' },
-                { id: 12, name: 'ROCKFORD', emoji: '', players: '', bonus: '' },
-                { id: 13, name: 'ALTA', emoji: '', players: '', bonus: '' },
-                { id: 14, name: 'DEL PERRO', emoji: '', players: '', bonus: '' },
-                { id: 15, name: 'DAVIS', emoji: '', players: '', bonus: '' },
-                { id: 16, name: 'HARMONY', emoji: '', players: '', bonus: '' },
-                { id: 17, name: 'REDWOOD', emoji: '', players: '', bonus: '' },
-                { id: 18, name: 'HAWICK', emoji: '', players: '', bonus: '' },
-                { id: 19, name: 'GRAPESEED', emoji: '', players: '', bonus: '' },
-                { id: 20, name: 'MURRIETA', emoji: '', players: '', bonus: '' },
-                { id: 21, name: 'VESPUCCI', emoji: '', players: '', bonus: '' },
-                { id: 22, name: 'MILTON', emoji: '', players: '', bonus: '' }
+                { id: 1, name: 'Downtown', emoji: '', players: '', bonus: '' },
+                { id: 2, name: 'Strawberry', emoji: '', players: '', bonus: '' },
+                { id: 3, name: 'Vinewood', emoji: '', players: '', bonus: '' },
+                { id: 4, name: 'Blackberry', emoji: '', players: '', bonus: '' },
+                { id: 5, name: 'Insquad', emoji: '', players: '', bonus: '' },
+                { id: 6, name: 'Sunrise', emoji: '', players: '', bonus: '' },
+                { id: 7, name: 'Rainbow', emoji: '', players: '', bonus: '' },
+                { id: 8, name: 'Richman', emoji: '', players: '', bonus: '' },
+                { id: 9, name: 'Eclipse', emoji: '', players: '', bonus: '' },
+                { id: 10, name: 'La Mesa', emoji: '', players: '', bonus: '' },
+                { id: 11, name: 'Burton', emoji: '', players: '', bonus: '' },
+                { id: 12, name: 'Rockford', emoji: '', players: '', bonus: '' },
+                { id: 13, name: 'Alta', emoji: '', players: '', bonus: '' },
+                { id: 14, name: 'Del Perro', emoji: '', players: '', bonus: '' },
+                { id: 15, name: 'Davis', emoji: '', players: '', bonus: '' },
+                { id: 16, name: 'Harmony', emoji: '', players: '', bonus: '' },
+                { id: 17, name: 'Redwood', emoji: '', players: '', bonus: '' },
+                { id: 18, name: 'Hawick', emoji: '', players: '', bonus: '' },
+                { id: 19, name: 'Grapeseed', emoji: '', players: '', bonus: '' },
+                { id: 20, name: 'Murrieta', emoji: '', players: '', bonus: '' },
+                { id: 21, name: 'Vespucci', emoji: '', players: '', bonus: '' },
+                { id: 22, name: 'Milton', emoji: '', players: '', bonus: '' }
             ],
             majestic: [
                 { id: 1, name: 'Denver', emoji: '️', players: '—', bonus: '' },
