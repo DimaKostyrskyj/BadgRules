@@ -2973,12 +2973,14 @@
             backdrop-filter: none;
             height: 64px;
             border-bottom: none;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform, opacity;
         }
 
         .top-logo.hidden {
             transform: translateY(-100%);
             opacity: 0;
+            pointer-events: none;
         }
 
         /* Logo Part - слева */
@@ -3143,7 +3145,7 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 0 1.5rem;
-            padding-top: 100px;
+            padding-top: 90px;
             padding-bottom: 50px;
             min-height: 100vh;
             box-sizing: border-box;
@@ -6939,7 +6941,7 @@
 
         .landing-section {
             min-height: auto;
-            padding-top: 20px;
+            padding-top: 30px;
             padding-bottom: 3rem;
             overflow: visible;
         }
@@ -16987,33 +16989,61 @@ console.log('⚡ Система молний отключена');
 
     let lastScrollTop = 0;
     let scrollTimeout;
+    let isScrolling = false;
+    const scrollThreshold = 5; // Минимальная разница для реакции
 
     function handleScroll() {
         const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-        // Игнорируем если скролл в самом верху
-        if (currentScroll <= 100) {
+        // Игнорируем если скролл в самом верху (с небольшим запасом)
+        if (currentScroll <= 120) {
             navbar.classList.remove('hidden');
             lastScrollTop = currentScroll;
             return;
         }
 
-        // Скролл вниз - прячем
-        if (currentScroll > lastScrollTop) {
-            navbar.classList.add('hidden');
+        // Вычисляем разницу скролла
+        const scrollDifference = Math.abs(currentScroll - lastScrollTop);
+        
+        // Игнорируем минимальные изменения
+        if (scrollDifference < scrollThreshold) {
+            return;
+        }
+
+        // Скролл вниз - прячем (с задержкой)
+        if (currentScroll > lastScrollTop && scrollDifference > scrollThreshold) {
+            if (!isScrolling) {
+                isScrolling = true;
+                setTimeout(() => {
+                    navbar.classList.add('hidden');
+                }, 150); // Небольшая задержка перед скрытием
+            }
         } 
-        // Скролл вверх - показываем
+        // Скролл вверх - показываем сразу
         else if (currentScroll < lastScrollTop) {
+            isScrolling = false;
             navbar.classList.remove('hidden');
         }
 
         lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     }
 
-    // Добавляем debounce для плавности
-    window.addEventListener('scroll', function() {
+    // Debounced scroll handler
+    function onScroll() {
         clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(handleScroll, 10);
+        scrollTimeout = setTimeout(handleScroll, 15);
+    }
+
+    // Добавляем слушатель с passive для лучшей производительности
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // При остановке скролла проверяем состояние
+    let stopScrollTimeout;
+    window.addEventListener('scroll', function() {
+        clearTimeout(stopScrollTimeout);
+        stopScrollTimeout = setTimeout(() => {
+            isScrolling = false;
+        }, 150);
     }, { passive: true });
 
     console.log('📱 Автоскрытие навигации активно');
