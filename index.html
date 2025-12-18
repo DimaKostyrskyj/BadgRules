@@ -1382,15 +1382,16 @@
             padding: 0.15rem 0.5rem;
             border-radius: 4px;
             font-weight: 600;
+            background: transparent;
         }
 
         .user-server-badge.gta5rp {
-            background: rgba(231, 76, 60, 0.2);
+            background: transparent;
             color: #e74c3c;
         }
 
         .user-server-badge.majestic {
-            background: rgba(155, 89, 182, 0.2);
+            background: transparent;
             color: #9b59b6;
         }
 
@@ -1398,15 +1399,15 @@
         .dropdown-server-info {
             padding: 0.85rem;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.05), rgba(59, 130, 246, 0.05));
-            border: 1px solid rgba(96, 165, 250, 0.15);
+            background: transparent;
+            border: none;
             border-radius: 10px;
             transition: all 0.3s ease;
         }
 
         .dropdown-server-info:hover {
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.08), rgba(59, 130, 246, 0.08));
-            border-color: rgba(96, 165, 250, 0.25);
+            background: transparent;
+            border: none;
         }
 
         .dropdown-server-label {
@@ -1428,7 +1429,7 @@
         }
 
         .dropdown-server-value span {
-            filter: drop-shadow(0 0 4px currentColor);
+            filter: none;
         }
 
         @media (max-width: 500px) {
@@ -1625,7 +1626,7 @@
             height: 6px;
             border-radius: 50%;
             background: var(--accent-success);
-            box-shadow: 0 0 8px var(--accent-success);
+            box-shadow: none;
             animation: statusPulse 2s ease-in-out infinite;
         }
 
@@ -7059,21 +7060,22 @@
             align-items: center;
             gap: 0.6rem;
             padding: 1rem 2rem;
-            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
             border: none;
             border-radius: 12px;
-            color: #2c3e50;
+            color: #ffffff;
             font-family: 'Manrope', sans-serif;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
+            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.3);
         }
 
         .cta-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(96, 165, 250, 0.5);
         }
 
         .cta-primary svg {
@@ -9637,7 +9639,7 @@
                 <circle cx="12" cy="8" r="7"></circle>
                 <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
             </svg>
-            <span>💎 Подписка</span>
+            <span>Подписка</span>
         </button>
         <button class="dropdown-item" onclick="changeServer(); closeProfileMenu()">
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
