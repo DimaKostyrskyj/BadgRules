@@ -18,8 +18,8 @@
     <!-- Cache Control for better availability -->
     <meta http-equiv="Cache-Control" content="public, max-age=31536000">
     
-    <!-- Content Security Policy - Allow all origins -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline'; img-src * data: blob:; font-src * data:; connect-src *;">
+    <!-- Content Security Policy - Simplified for blocked regions -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     
     <title>BadgRules - Нейросеть по правилам GTA 5 RP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17170,6 +17170,96 @@ async function checkGlobalAccess() {
 
 // Запускаем проверку при загрузке
 checkGlobalAccess();
+
+// ═══════════════════════════════════════════════════════════════
+// 🚫 RUSSIA BLOCK DETECTION - Определение блокировок РФ
+// ═══════════════════════════════════════════════════════════════
+
+let pageLoadTimeout;
+let isRussiaBlocked = false;
+
+// Таймаут для бесконечной загрузки (5 секунд)
+pageLoadTimeout = setTimeout(() => {
+    if (document.readyState !== 'complete') {
+        console.warn('⚠️ Обнаружена медленная загрузка - возможна блокировка провайдера');
+        isRussiaBlocked = true;
+        
+        // Показываем предупреждение пользователю
+        showBlockWarning();
+    }
+}, 5000);
+
+// Очищаем таймаут когда страница загружена
+window.addEventListener('load', () => {
+    clearTimeout(pageLoadTimeout);
+});
+
+// Функция показа предупреждения о блокировке
+function showBlockWarning() {
+    const warningDiv = document.createElement('div');
+    warningDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(251, 191, 36, 0.95);
+        color: #000;
+        padding: 15px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        z-index: 999999;
+        box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
+        max-width: 90%;
+        text-align: center;
+        animation: slideDown 0.5s ease;
+    `;
+    
+    warningDiv.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>Обнаружены проблемы с подключением. Используйте VPN для стабильной работы.</span>
+        </div>
+    `;
+    
+    document.body.appendChild(warningDiv);
+    
+    // Убираем предупреждение через 10 секунд
+    setTimeout(() => {
+        warningDiv.style.animation = 'slideUp 0.5s ease';
+        setTimeout(() => warningDiv.remove(), 500);
+    }, 10000);
+}
+
+// Добавляем анимации
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+    
+    @keyframes slideUp {
+        from {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-20px);
+        }
+    }
+`;
+document.head.appendChild(style);
 
 // ═══════════════════════════════════════════════════════════════
 // 🔄 FAILOVER - Автоматическое переключение на альтернативы
