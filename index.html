@@ -9117,11 +9117,11 @@
         
         .team-card {
             position: relative;
-            background: rgba(30, 30, 30, 0.6);
+            background: var(--team-card-bg, rgba(30, 30, 30, 0.6));
             border-radius: 20px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--team-card-border, rgba(255, 255, 255, 0.1));
             backdrop-filter: blur(10px);
             animation: fadeInUp 0.6s ease-out forwards;
             opacity: 0;
@@ -9129,13 +9129,18 @@
 
         .team-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(96, 165, 250, 0.4);
-            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.2);
+            border-color: var(--team-card-hover-border, rgba(96, 165, 250, 0.4));
+            box-shadow: 0 20px 40px var(--team-card-hover-shadow, rgba(96, 165, 250, 0.2));
         }
 
         .team-card[data-role="owner"]:hover {
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
+            border-color: var(--owner-card-hover-border, rgba(255, 215, 0, 0.5));
+            box-shadow: 0 20px 40px var(--owner-card-hover-shadow, rgba(255, 215, 0, 0.3));
+        }
+
+        .team-card[data-role="senior"]:hover {
+            border-color: var(--senior-card-hover-border, rgba(168, 85, 247, 0.5));
+            box-shadow: 0 20px 40px var(--senior-card-hover-shadow, rgba(168, 85, 247, 0.3));
         }
 
         .team-card:nth-child(1) { animation-delay: 0.1s; }
@@ -9150,12 +9155,16 @@
             left: 0;
             right: 0;
             height: 150px;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.1));
+            background: var(--team-card-gradient, linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.1)));
             transition: all 0.4s ease;
         }
 
         .team-card[data-role="owner"] .team-card-bg {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 193, 7, 0.1));
+            background: var(--owner-card-gradient, linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 193, 7, 0.1)));
+        }
+
+        .team-card[data-role="senior"] .team-card-bg {
+            background: var(--senior-card-gradient, linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(126, 58, 242, 0.1)));
         }
 
         .team-card:hover .team-card-bg {
@@ -9182,15 +9191,20 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 4px solid rgba(96, 165, 250, 0.3);
+            border: 4px solid var(--team-avatar-border, rgba(96, 165, 250, 0.3));
             object-fit: cover;
             transition: all 0.3s ease;
             background: rgba(40, 40, 40, 0.8);
         }
 
         .team-card[data-role="owner"] .team-avatar {
-            border-color: rgba(255, 215, 0, 0.5);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            border-color: var(--owner-avatar-border, rgba(255, 215, 0, 0.5));
+            box-shadow: 0 0 30px var(--owner-avatar-glow, rgba(255, 215, 0, 0.3));
+        }
+
+        .team-card[data-role="senior"] .team-avatar {
+            border-color: var(--senior-avatar-border, rgba(168, 85, 247, 0.5));
+            box-shadow: 0 0 30px var(--senior-avatar-glow, rgba(168, 85, 247, 0.3));
         }
 
         .team-card:hover .team-avatar {
@@ -9214,6 +9228,11 @@
             border-color: rgba(255, 215, 0, 0.5);
         }
 
+        .team-card[data-role="senior"] .team-avatar-placeholder {
+            background: linear-gradient(135deg, #a855f7, #7e3af2);
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+
         .team-role-badge {
             position: absolute;
             bottom: -10px;
@@ -9235,17 +9254,24 @@
         }
 
         .team-role-badge.owner {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 193, 7, 0.15));
-            border-color: rgba(255, 215, 0, 0.5);
-            color: #ffd700;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            background: var(--owner-badge-bg, linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 193, 7, 0.15)));
+            border-color: var(--owner-badge-border, rgba(255, 215, 0, 0.5));
+            color: var(--owner-badge-color, #ffd700);
+            box-shadow: 0 4px 15px var(--owner-badge-shadow, rgba(255, 215, 0, 0.3));
+        }
+
+        .team-role-badge.senior {
+            background: var(--senior-badge-bg, linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(126, 58, 242, 0.15)));
+            border-color: var(--senior-badge-border, rgba(168, 85, 247, 0.5));
+            color: var(--senior-badge-color, #a855f7);
+            box-shadow: 0 4px 15px var(--senior-badge-shadow, rgba(168, 85, 247, 0.3));
         }
 
         .team-role-badge.team {
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(59, 130, 246, 0.15));
-            border-color: rgba(96, 165, 250, 0.5);
-            color: #60a5fa;
-            box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);
+            background: var(--team-badge-bg, linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(59, 130, 246, 0.15)));
+            border-color: var(--team-badge-border, rgba(96, 165, 250, 0.5));
+            color: var(--team-badge-color, #60a5fa);
+            box-shadow: 0 4px 15px var(--team-badge-shadow, rgba(96, 165, 250, 0.3));
         }
 
         .team-card:hover .team-role-badge {
@@ -9270,14 +9296,18 @@
         .team-title {
             font-size: 0.95rem;
             font-weight: 600;
-            color: #60a5fa;
+            color: var(--team-title-color, #60a5fa);
             margin: 0;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         .team-card[data-role="owner"] .team-title {
-            color: #ffd700;
+            color: var(--owner-title-color, #ffd700);
+        }
+
+        .team-card[data-role="senior"] .team-title {
+            color: var(--senior-title-color, #a855f7);
         }
 
         .team-description {
@@ -10795,8 +10825,37 @@
 
                     </div>
 
-                    <!-- Team Members Row - 3 cards centered -->
-                    <div style="display: grid; grid-template-columns: repeat(3, minmax(280px, 350px)); gap: 2rem; max-width: 1200px; margin: 0 auto; justify-content: center;">
+                    <!-- Senior Moderator Row - 1 card centered -->
+                    <div style="display: grid; grid-template-columns: minmax(280px, 350px); gap: 2rem; max-width: 400px; margin: 0 auto 3rem auto; justify-content: center;">
+                        
+                        <!-- Senior Модератор -->
+                        <div class="team-card" data-role="senior">
+                            <div class="team-card-bg"></div>
+                            <div class="team-card-content">
+                                <div class="team-avatar-wrapper">
+                                    <img src="images/team3.png" alt="Senior Модератор" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                    <div class="team-avatar-placeholder" style="display: none;">
+                                        <div style="font-size: 3rem;">⭐</div>
+                                    </div>
+                                    <div class="team-role-badge senior">
+                                        <span>⭐</span>
+                                        <span>Команда</span>
+                                    </div>
+                                </div>
+                                <div class="team-info">
+                                    <h3 class="team-name">Kingo</h3>
+                                    <p class="team-title">Senior-Moderator</p>
+                                    <p class="team-description">
+                                        Главный специалист, отвечающий за техническую поддержку, коммуникацию с пользователями и веб-разработку.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Team Members Row - 2 cards centered -->
+                    <div style="display: grid; grid-template-columns: repeat(2, minmax(280px, 350px)); gap: 2rem; max-width: 800px; margin: 0 auto; justify-content: center;">
 
                         <!-- Команда 1 -->
                         <div class="team-card" data-role="team">
@@ -10813,11 +10872,10 @@
                                     </div>
                                 </div>
                                 <div class="team-info">
-                                    <h3 class="team-name">Kingo</h3>
-                                    <p class="team-title">Senior-MODERATOR</p>
+                                    <h3 class="team-name">Lesya</h3>
+                                    <p class="team-title">Moderator</p>
                                     <p class="team-description">
-                                        Главный специалист, отвечающий за техническую поддержку,
-                                        коммуникацию с пользователями и веб-разработку.
+                                        Создает контент для проекта, модерирует сообщество и помогает пользователям с вопросами.
                                     </p>
                                 </div>
                             </div>
@@ -10838,36 +10896,10 @@
                                     </div>
                                 </div>
                                 <div class="team-info">
-                                    <h3 class="team-name">Lesya</h3>
-                                    <p class="team-title">MODERATOR</p>
-                                    <p class="team-description">
-                                        Создает контент для проекта, 
-                                        модерирует сообщество и помогает пользователям с вопросами.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Команда 3 -->
-                        <div class="team-card" data-role="team">
-                            <div class="team-card-bg"></div>
-                            <div class="team-card-content">
-                                <div class="team-avatar-wrapper">
-                                    <img src="images/team3.png" alt="Команда" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-                                    <div class="team-avatar-placeholder" style="display: none;">
-                                        <div style="font-size: 3rem;">👥</div>
-                                    </div>
-                                    <div class="team-role-badge team">
-                                        <span>👥</span>
-                                        <span>Команда</span>
-                                    </div>
-                                </div>
-                                <div class="team-info">
                                     <h3 class="team-name">Yuki</h3>
-                                    <p class="team-title">MODERATOR</p>
+                                    <p class="team-title">Moderator</p>
                                     <p class="team-description">
-                                        Отвечает за дизайн интерфейса, 
-                                        пользовательский опыт и визуальную составляющую проекта.
+                                        Отвечает за дизайн интерфейса, пользовательский опыт и визуальную составляющую проекта.
                                     </p>
                                 </div>
                             </div>
@@ -17106,10 +17138,10 @@ const OWNER_IDS = [
 
 // ID команды с фиксированными статиками 0001-0010
 const TEAM_STATIC_IDS = {
-    '685507278400782376': '0001',  // #0001 - Kai
-    '1170537060277428324': '0002',   // #0002 - Участник команды
+    '1170537060277428324': '0001',  // #0001 - Kai
+    '994390088190529586': '0002',   // #0002 - Участник команды
     '1346385347319169038': '0003',  // #0003 - Участник команды
-    // #0004 - Участник команды
+    '638817513173680140': '0004',   // #0004 - Участник команды
     // Добавляйте участников команды до 0010
     // 'DISCORD_ID': '0005',
     // 'DISCORD_ID': '0006',
@@ -17511,6 +17543,90 @@ window.addEventListener('offline', () => {
     
     console.log('🛡️ Система защиты от черного экрана активирована');
 })();
+
+
+// ═══════════════════════════════════════════════════════════════
+// 🎨 TEAM CARDS COLOR CUSTOMIZATION - Кастомизация цветов карточек команды
+// ═══════════════════════════════════════════════════════════════
+
+// Цвета по умолчанию
+const DEFAULT_TEAM_COLORS = {
+    // Карточки команды
+    teamCardBg: 'rgba(30, 30, 30, 0.6)',
+    teamCardBorder: 'rgba(255, 255, 255, 0.1)',
+    teamCardHoverBorder: 'rgba(96, 165, 250, 0.4)',
+    teamCardHoverShadow: 'rgba(96, 165, 250, 0.2)',
+    teamCardGradient: 'linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.1))',
+    teamAvatarBorder: 'rgba(96, 165, 250, 0.3)',
+    teamBadgeBg: 'linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(59, 130, 246, 0.15))',
+    teamBadgeBorder: 'rgba(96, 165, 250, 0.5)',
+    teamBadgeColor: '#60a5fa',
+    teamBadgeShadow: 'rgba(96, 165, 250, 0.3)',
+    teamTitleColor: '#60a5fa',
+    
+    // Карточки владельцев
+    ownerCardHoverBorder: 'rgba(255, 215, 0, 0.5)',
+    ownerCardHoverShadow: 'rgba(255, 215, 0, 0.3)',
+    ownerCardGradient: 'linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 193, 7, 0.1))',
+    ownerAvatarBorder: 'rgba(255, 215, 0, 0.5)',
+    ownerAvatarGlow: 'rgba(255, 215, 0, 0.3)',
+    ownerBadgeBg: 'linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 193, 7, 0.15))',
+    ownerBadgeBorder: 'rgba(255, 215, 0, 0.5)',
+    ownerBadgeColor: '#ffd700',
+    ownerBadgeShadow: 'rgba(255, 215, 0, 0.3)',
+    ownerTitleColor: '#ffd700',
+    
+    // Карточки Senior-модератора
+    seniorCardHoverBorder: 'rgba(168, 85, 247, 0.5)',
+    seniorCardHoverShadow: 'rgba(168, 85, 247, 0.3)',
+    seniorCardGradient: 'linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(126, 58, 242, 0.1))',
+    seniorAvatarBorder: 'rgba(168, 85, 247, 0.5)',
+    seniorAvatarGlow: 'rgba(168, 85, 247, 0.3)',
+    seniorBadgeBg: 'linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(126, 58, 242, 0.15))',
+    seniorBadgeBorder: 'rgba(168, 85, 247, 0.5)',
+    seniorBadgeColor: '#a855f7',
+    seniorBadgeShadow: 'rgba(168, 85, 247, 0.3)',
+    seniorTitleColor: '#a855f7'
+};
+
+// Загрузка сохраненных цветов
+function loadTeamColors() {
+    const savedColors = localStorage.getItem('badgrules_team_colors');
+    const colors = savedColors ? JSON.parse(savedColors) : DEFAULT_TEAM_COLORS;
+    applyTeamColors(colors);
+    return colors;
+}
+
+// Применение цветов
+function applyTeamColors(colors) {
+    const root = document.documentElement;
+    
+    // Применяем каждый цвет
+    Object.keys(colors).forEach(key => {
+        const cssVarName = '--' + key.replace(/([A-Z])/g, '-$1').toLowerCase();
+        root.style.setProperty(cssVarName, colors[key]);
+    });
+    
+    console.log('🎨 Цвета карточек команды применены');
+}
+
+// Сохранение цветов
+function saveTeamColors(colors) {
+    localStorage.setItem('badgrules_team_colors', JSON.stringify(colors));
+    applyTeamColors(colors);
+    console.log('💾 Цвета карточек команды сохранены');
+}
+
+// Сброс к цветам по умолчанию
+function resetTeamColors() {
+    saveTeamColors(DEFAULT_TEAM_COLORS);
+    console.log('🔄 Цвета карточек сброшены к значениям по умолчанию');
+}
+
+// Загружаем цвета при старте страницы
+document.addEventListener('DOMContentLoaded', () => {
+    loadTeamColors();
+});
 
 
 </script>
