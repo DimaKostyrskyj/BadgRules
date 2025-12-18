@@ -3081,18 +3081,12 @@
 
         .logo-menu-item.active {
             background: transparent;
-            color: #ffffff;
+            color: #60a5fa;
+            text-shadow: 0 0 20px rgba(96, 165, 250, 0.6);
         }
 
         .logo-menu-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 2px;
-            background: #ffffff;
+            display: none;
         }
 
         .logo-menu-item svg {
@@ -4203,10 +4197,11 @@
             align-items: center;
             gap: 1.25rem;
             padding: 1.5rem;
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(59, 130, 246, 0.03) 100%);
+            border: 1px solid rgba(96, 165, 250, 0.15);
             border-radius: 16px;
             margin-bottom: 1rem;
+            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.1);
         }
 
         .profile-avatar-minimal {
@@ -4348,8 +4343,8 @@
         .stat-item {
             text-align: center;
             padding: 1rem 0.5rem;
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(59, 130, 246, 0.03) 100%);
+            border: 1px solid rgba(96, 165, 250, 0.15);
             border-radius: 12px;
         }
 
@@ -4372,8 +4367,8 @@
 
         /* Info List */
         .profile-info-list {
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(59, 130, 246, 0.03) 100%);
+            border: 1px solid rgba(96, 165, 250, 0.15);
             border-radius: 14px;
             overflow: hidden;
             margin-bottom: 1rem;
@@ -8483,16 +8478,17 @@
             box-shadow: 0 0 20px rgba(96, 165, 250, 0.6),
                         0 0 40px rgba(96, 165, 250, 0.4);
             height: 8px;
-            width: 8px;
-            border-radius: 50%;
+            width: 24px;
+            border-radius: 4px;
+            transform: translateX(8px);
         }
 
         .scroll-dot.active::before {
             content: '';
             position: absolute;
             inset: -4px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(96, 165, 250, 0.3), transparent);
+            border-radius: 6px;
+            background: radial-gradient(ellipse, rgba(96, 165, 250, 0.3), transparent);
             z-index: -1;
         }
 
@@ -9208,6 +9204,11 @@
             width: 140px;
             height: 140px;
         }
+        
+        .team-card[data-role="senior"] .team-avatar-wrapper {
+            width: 110px;
+            height: 110px;
+        }
 
         .team-avatar {
             width: 100%;
@@ -9655,7 +9656,7 @@
                 <circle cx="12" cy="8" r="7"></circle>
                 <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
             </svg>
-            <span>💎 Подписка</span>
+            <span>Подписка</span>
         </button>
         <button class="dropdown-item" onclick="changeServer(); closeProfileMenu()">
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
