@@ -141,6 +141,17 @@
             to { transform: rotate(360deg); }
         }
         
+        @keyframes loaderPulse {
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.6;
+                transform: scale(1.05);
+            }
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -3002,18 +3013,18 @@
         }
 
         .logo-btn-img {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             border-radius: 8px;
             transition: all 0.3s ease;
         }
 
         .logo-btn-text {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: var(--text-primary);
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            text-transform: none;
         }
 
         /* Кнопка меню - скрыта */
@@ -4119,7 +4130,7 @@
         }
 
         .model-option-compact.active {
-            background: rgba(138, 43, 226, 0.15);
+            background: transparent;
         }
 
         .model-option-compact.disabled {
@@ -8471,15 +8482,16 @@
             background: #60a5fa;
             box-shadow: 0 0 20px rgba(96, 165, 250, 0.6),
                         0 0 40px rgba(96, 165, 250, 0.4);
-            height: 40px;
-            border-radius: 4px;
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
         }
 
         .scroll-dot.active::before {
             content: '';
             position: absolute;
             inset: -4px;
-            border-radius: 6px;
+            border-radius: 50%;
             background: radial-gradient(circle, rgba(96, 165, 250, 0.3), transparent);
             z-index: -1;
         }
@@ -9296,7 +9308,7 @@
         }
 
         .team-name {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--text-primary);
             margin: 0;
@@ -9304,7 +9316,7 @@
         }
 
         .team-title {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--team-title-color, #60a5fa);
             margin: 0;
@@ -9321,7 +9333,7 @@
         }
 
         .team-description {
-            font-size: 0.95rem;
+            font-size: 1.05rem;
             line-height: 1.6;
             color: var(--text-secondary);
             margin: 0;
@@ -9372,7 +9384,7 @@
     <!-- 🛡️ INITIAL LOADER - Защита от черного экрана -->
     <div id="initialLoader">
         <div class="loader-content">
-            <div class="loader-spinner"></div>
+            <img src="images/logo.png" alt="BadgRules" class="loader-logo" style="width: 80px; height: 80px; margin: 0 auto 30px; display: block; filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.6)); animation: loaderPulse 2s ease-in-out infinite;">
             <div class="loader-text">Загрузка BadgRules...</div>
             <div class="loader-subtext">Пожалуйста, подождите</div>
             <div class="loader-error" id="loaderError">
@@ -10369,7 +10381,7 @@
                         <!-- AI Model Selector -->
                         <div class="ai-selector" id="aiSelector">
                             <div class="ai-selector-btn" id="aiSelectorBtn" onclick="toggleAiSelector()">
-                                <span class="ai-selector-text" id="aiSelectorText">⚡ Groq LLaMA</span>
+                                <span class="ai-selector-text" id="aiSelectorText">Groq LLaMA</span>
                                 <svg class="ai-selector-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
                                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -10381,7 +10393,7 @@
 
                                 <div class="ai-option selected" data-model="groq" onclick="selectAiModel('groq')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">⚡ Groq LLaMA</div>
+                                        <div class="ai-option-name">Groq LLaMA</div>
                                         <div class="ai-option-desc">Быстрая и надёжная</div>
                                     </div>
                                     <div class="ai-option-check">
@@ -10393,7 +10405,7 @@
 
                                 <div class="ai-option" data-model="huggingface" onclick="selectAiModel('huggingface')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">🤗 HuggingFace</div>
+                                        <div class="ai-option-name">HuggingFace</div>
                                         <div class="ai-option-desc">Бесплатная модель</div>
                                     </div>
                                     <div class="ai-option-check">
@@ -10405,7 +10417,7 @@
 
                                 <div class="ai-option" data-model="gemini" onclick="selectAiModel('gemini')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">🔷 Gemini 2.0</div>
+                                        <div class="ai-option-name">Gemini 2.0</div>
                                         <div class="ai-option-desc">Может быть лимит</div>
                                     </div>
                                     <div class="ai-option-check">
@@ -10871,10 +10883,9 @@
                                 <div class="team-avatar-wrapper">
                                     <img src="images/team1.png" alt="Команда" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                                     <div class="team-avatar-placeholder" style="display: none;">
-                                        <div style="font-size: 3rem;">👥</div>
+                                        <div style="font-size: 3rem;">L</div>
                                     </div>
                                     <div class="team-role-badge team">
-                                        <span>👥</span>
                                         <span>Команда</span>
                                     </div>
                                 </div>
@@ -10896,10 +10907,9 @@
                                 <div class="team-avatar-wrapper">
                                     <img src="images/team2.png" alt="Команда" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                                     <div class="team-avatar-placeholder" style="display: none;">
-                                        <div style="font-size: 3rem;">👥</div>
+                                        <div style="font-size: 3rem;">Y</div>
                                     </div>
                                     <div class="team-role-badge team">
-                                        <span>👥</span>
                                         <span>Команда</span>
                                     </div>
                                 </div>
@@ -11250,9 +11260,9 @@
         // ═══════════════════════════════════════════════════════════════
 
         const aiModels = {
-            groq: { name: '⚡ Groq LLaMA' },
-            huggingface: { name: '🤗 HuggingFace' },
-            gemini: { name: '🔷 Gemini 2.0' }
+            groq: { name: 'Groq LLaMA' },
+            huggingface: { name: 'HuggingFace' },
+            gemini: { name: 'Gemini 2.0' }
         };
 
         let isAiSelectorOpen = false;
@@ -12208,7 +12218,7 @@
             messageDiv.className = `message ${isBot ? 'bot' : 'user'}`;
 
             messageDiv.innerHTML = `
-                <div class="message-avatar">${isBot ? 'BR' : 'Вы'}</div>
+                <div class="message-avatar">${isBot ? '<img src="images/logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;">' : 'Вы'}</div>
                 <div class="message-content">
                     <div class="message-text">${text}</div>
                     <div class="message-time">${getCurrentTime()}</div>
@@ -12227,7 +12237,7 @@
             messageDiv.className = `message ${isBot ? 'bot' : 'user'}`;
 
             messageDiv.innerHTML = `
-                <div class="message-avatar">${isBot ? 'BR' : 'Вы'}</div>
+                <div class="message-avatar">${isBot ? '<img src="images/logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;">' : 'Вы'}</div>
                 <div class="message-content">
                     <div class="message-text html-content">${htmlContent}</div>
                     <div class="message-time">${getCurrentTime()}</div>
@@ -12243,7 +12253,7 @@
             typingDiv.className = 'message bot';
             typingDiv.id = 'typingIndicator';
             typingDiv.innerHTML = `
-                <div class="message-avatar">BR</div>
+                <div class="message-avatar"><img src="images/logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;"></div>
                 <div class="message-content">
                     <div class="typing-indicator">
                         <div class="typing-dot"></div>
