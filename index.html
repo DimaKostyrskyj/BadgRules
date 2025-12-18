@@ -697,7 +697,7 @@
         .logo-img,
         .logo-btn-img {
             filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.6)) !important;
-            animation: logoFloat 3s ease-in-out infinite;
+            animation: none;
         }
 
         @keyframes logoFloat {
@@ -875,11 +875,11 @@
             width: 80px;
             height: 80px;
             filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-            animation: float 3s ease-in-out infinite;
+            animation: none;
         }
 
         .login-logo h2 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 800;
             letter-spacing: -0.02em;
             background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
@@ -1480,11 +1480,11 @@
 
         .user-profile-badge:hover {
             background: transparent;
-            transform: translateY(-50%) translateY(-2px);
+            transform: translateY(-50%);
         }
 
         .user-profile-badge:active {
-            transform: translateY(-50%) scale(0.98);
+            transform: translateY(-50%);
         }
 
         .user-profile-badge.hidden {
@@ -1530,22 +1530,22 @@
         }
 
         .user-profile-badge:hover .user-avatar {
-            transform: scale(1.08);
+            transform: none;
         }
 
         .user-profile-badge:hover .user-avatar.subscription-pro {
-            box-shadow: 0 8px 32px rgba(96, 165, 250, 0.7), 0 0 0 2px rgba(96, 165, 250, 0.5);
-            border-color: #c4b5fd;
+            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.6), 0 0 0 2px rgba(96, 165, 250, 0.3);
+            border-color: #a78bfa;
         }
 
         .user-profile-badge:hover .user-avatar.subscription-lifetime {
-            box-shadow: 0 8px 32px rgba(251, 191, 36, 0.7), 0 0 0 2px rgba(251, 191, 36, 0.5);
-            border-color: #fcd34d;
+            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.6), 0 0 0 2px rgba(251, 191, 36, 0.3);
+            border-color: #fbbf24;
         }
 
         .user-profile-badge:hover .user-avatar.subscription-free {
-            box-shadow: 0 8px 32px rgba(120, 120, 120, 0.3);
-            border-color: rgba(140, 140, 140, 0.6);
+            box-shadow: 0 4px 20px rgba(120, 120, 120, 0.2);
+            border-color: rgba(120, 120, 120, 0.5);
         }
 
         .user-avatar img {
@@ -1637,14 +1637,14 @@
 
         .dropdown-arrow {
             color: var(--text-secondary);
-            transition: all 0.3s ease;
+            transition: none;
             flex-shrink: 0;
             font-size: 1rem;
         }
 
         .user-profile-badge:hover .dropdown-arrow {
-            color: var(--accent-primary);
-            transform: translateY(2px);
+            color: var(--text-secondary);
+            transform: none;
         }
 
         /* Profile Dropdown Menu */
@@ -3547,7 +3547,7 @@
 
         .rule-card {
             background: transparent;
-            border: 1px solid rgba(96, 165, 250, 0.2);
+            border: none;
             border-radius: 16px;
             padding: 1.25rem 0;
             margin-bottom: 1rem;
@@ -3615,8 +3615,8 @@
         }
 
         .punishment-box {
-            background: linear-gradient(135deg, rgba(237, 66, 69, 0.15) 0%, rgba(237, 66, 69, 0.05) 100%);
-            border: 1px solid rgba(237, 66, 69, 0.3);
+            background: transparent;
+            border: none;
             border-radius: 10px;
             padding: 0.75rem 1rem;
             display: flex;
@@ -3641,8 +3641,8 @@
         }
 
         .examples-list li {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: transparent;
+            border: none;
             border-radius: 8px;
             padding: 0.6rem 1rem;
             margin-bottom: 0.5rem;
@@ -3670,8 +3670,8 @@
         }
 
         .notes-list li {
-            background: rgba(250, 166, 26, 0.1);
-            border-left: 3px solid #faa61a;
+            background: transparent;
+            border-left: 2px solid rgba(250, 166, 26, 0.3);
             padding: 0.6rem 1rem;
             margin-bottom: 0.5rem;
             border-radius: 0 8px 8px 0;
@@ -8798,11 +8798,11 @@
         /* News Footer */
         .news-footer {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             padding: 1rem 1.5rem;
-            background: rgba(10, 10, 15, 0.4);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: transparent;
+            border-top: none;
         }
 
         .news-author,
@@ -8810,15 +8810,19 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .news-author {
+            display: none;
         }
 
         .news-author svg,
         .news-date svg {
-            width: 16px;
-            height: 16px;
-            opacity: 0.6;
+            width: 14px;
+            height: 14px;
+            opacity: 0.3;
         }
 
         /* Responsive */
@@ -9475,7 +9479,7 @@
         <div class="login-container">
             <div class="login-logo">
                 <img src="images/logo.png" alt="BadgRules Logo" class="login-logo-img">
-                <h2>BADGRULES</h2>
+                <h2>BadgRules</h2>
             </div>
 
             <!-- Step Indicator -->
@@ -9613,7 +9617,7 @@
         <div class="logo-container">
             <!-- ЗАМЕНИТЕ ПУТЬ НИЖЕ НА СВОЙ ЛОГОТИП -->
             <img src="images/logo.png" alt="BadgRules Logo" class="logo-img">
-            <h1>BADGRULES</h1>
+            <h1>BadgRules</h1>
         </div>
         <p class="subtitle">BudgeRulse — твой помощник в сфере правил серверов GTA5.</p>
     </header>
@@ -9639,7 +9643,7 @@
                 <circle cx="12" cy="8" r="7"></circle>
                 <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
             </svg>
-            <span>Подписка</span>
+            <span>💎 Подписка</span>
         </button>
         <button class="dropdown-item" onclick="changeServer(); closeProfileMenu()">
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -10786,10 +10790,9 @@
                                 <div class="team-avatar-wrapper">
                                     <img src="images/owner1.png" alt="Владелец" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                                     <div class="team-avatar-placeholder" style="display: none;">
-                                        <div style="font-size: 3rem;">👑</div>
+                                        <div style="font-size: 3rem;">K</div>
                                     </div>
                                     <div class="team-role-badge owner">
-                                        <span>👑</span>
                                         <span>Владелец</span>
                                     </div>
                                 </div>
@@ -10811,10 +10814,9 @@
                                 <div class="team-avatar-wrapper">
                                     <img src="images/owner2.png" alt="Со-владелец" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                                     <div class="team-avatar-placeholder" style="display: none;">
-                                        <div style="font-size: 3rem;">👑</div>
+                                        <div style="font-size: 3rem;">V</div>
                                     </div>
                                     <div class="team-role-badge owner">
-                                        <span>👑</span>
                                         <span>Владелец</span>
                                     </div>
                                 </div>
@@ -10841,10 +10843,9 @@
                                 <div class="team-avatar-wrapper">
                                     <img src="images/team3.png" alt="Senior Модератор" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
                                     <div class="team-avatar-placeholder" style="display: none;">
-                                        <div style="font-size: 3rem;">⭐</div>
+                                        <div style="font-size: 3rem;">K</div>
                                     </div>
                                     <div class="team-role-badge senior">
-                                        <span>⭐</span>
                                         <span>Команда</span>
                                     </div>
                                 </div>
@@ -11009,16 +11010,6 @@
                     </div>
                 </div>
 
-                <!-- Bottom Info -->
-                <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(96, 165, 250, 0.05); border-radius: 20px; border: 1px solid rgba(96, 165, 250, 0.1);">
-                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.75rem;">
-                        Будьте на связи
-                    </h3>
-                    <p style="font-size: 1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto;">
-                        Подписывайтесь на наши социальные сети, чтобы не пропустить важные новости,
-                        обновления и эксклюзивный контент от команды BadgRules!
-                    </p>
-                </div>
             </div>
         </div>
 
@@ -14568,14 +14559,14 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             // Добавляем роль в дропдаун если пользователь в команде или владелец
             if (teamRole && teamRole !== 'Пользователь') {
                 const roleText = teamRole === 'Владелец' ? 'Владелец проекта' : 'Команда проекта';
-                const roleIcon = teamRole === 'Владелец' ? '👑' : '⭐';
+                const roleIcon = '';
                 const roleColor = teamRole === 'Владелец' ? '#ffd700' : '#60a5fa';
 
                 // Создаем элемент с ролью в дропдауне
                 const roleElement = document.createElement('div');
                 roleElement.className = 'dropdown-item';
                 roleElement.innerHTML = `
-            <span style="color: ${roleColor}">${roleIcon}</span>
+            <span style="color: ${roleColor}">${teamRole}</span>
             <span>${roleText}</span>
         `;
 
