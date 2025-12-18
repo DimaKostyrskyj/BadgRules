@@ -21,7 +21,7 @@
     <!-- Content Security Policy - Simplified for blocked regions -->
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     
-    <title>BadgRules - Нейросеть по правилам GTA 5 RP и Majestic RP</RP></title>
+    <title>BadgRules - Нейросеть по правилам GTA 5 RP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -11886,24 +11886,129 @@
         // 🌐 ФУНКЦИЯ ПАРСИНГА ПРАВИЛ С ФОРУМА
         // ═══════════════════════════════════════════════════════════════
         
+        
+        // ═══════════════════════════════════════════════════════════════
+        // 💾 CACHE API - Агрессивное кэширование ответов форума
+        // ═══════════════════════════════════════════════════════════════
+        
+        const CACHE_NAME = 'badgrules-forum-cache-v1';
+        const CACHE_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000; // 7 дней
+        
+        // Сохранение в Cache API
+        async function saveToCacheAPI(url, content) {
+            if (!('caches' in window)) {
+                console.warn('⚠️ Cache API не поддерживается');
+                return;
+            }
+            
+            try {
+                const cache = await caches.open(CACHE_NAME);
+                const response = new Response(JSON.stringify({
+                    content: content,
+                    timestamp: Date.now()
+                }), {
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                await cache.put(url, response);
+                console.log('💾 Сохранено в Cache API:', url);
+            } catch (e) {
+                console.warn('⚠️ Ошибка Cache API:', e);
+            }
+        }
+        
+        // Загрузка из Cache API
+        async function loadFromCacheAPI(url) {
+            if (!('caches' in window)) return null;
+            
+            try {
+                const cache = await caches.open(CACHE_NAME);
+                const response = await cache.match(url);
+                
+                if (!response) return null;
+                
+                const data = await response.json();
+                
+                // Проверяем срок годности
+                const age = Date.now() - data.timestamp;
+                if (age > CACHE_EXPIRY_MS) {
+                    console.log('🗑️ Кэш устарел:', url);
+                    await cache.delete(url);
+                    return null;
+                }
+                
+                console.log('📦 Загружено из Cache API:', url);
+                return data.content;
+            } catch (e) {
+                console.warn('⚠️ Ошибка чтения Cache API:', e);
+                return null;
+            }
+        }
+        
+        // Очистка старого кэша
+        async function clearExpiredCache() {
+            if (!('caches' in window)) return;
+            
+            try {
+                const cache = await caches.open(CACHE_NAME);
+                const requests = await cache.keys();
+                let deletedCount = 0;
+                
+                for (const request of requests) {
+                    const response = await cache.match(request);
+                    if (response) {
+                        const data = await response.json();
+                        const age = Date.now() - data.timestamp;
+                        
+                        if (age > CACHE_EXPIRY_MS) {
+                            await cache.delete(request);
+                            deletedCount++;
+                        }
+                    }
+                }
+                
+                if (deletedCount > 0) {
+                    console.log(`🗑️ Очищено ${deletedCount} устаревших записей`);
+                }
+            } catch (e) {
+                console.warn('⚠️ Ошибка очистки кэша:', e);
+            }
+        }
+        
+        // Очищаем кэш при загрузке
+        window.addEventListener('load', () => {
+            clearExpiredCache();
+        });
+
         async function fetchRulesFromForum(url) {
-            // Проверяем кэш
+            // 1. Проверяем память (самый быстрый)
             if (rulesCache[url]) {
-                console.log('📦 Правила взяты из кэша:', url);
+                console.log('📦 Правила из памяти:', url);
                 return rulesCache[url];
+            }
+            
+            // 2. Проверяем Cache API (средняя скорость)
+            const cachedContent = await loadFromCacheAPI(url);
+            if (cachedContent) {
+                rulesCache[url] = cachedContent; // Сохраняем в память для следующих запросов
+                return cachedContent;
             }
 
             console.log('🌐 Загружаю правила с:', url);
             
             try {
                 // Используем CORS прокси для доступа к форуму
+                // Расширенный список CORS прокси (проверенные)
                 const corsProxies = [
                     'https://api.allorigins.win/raw?url=',
                     'https://corsproxy.io/?',
                     'https://api.codetabs.com/v1/proxy?quest=',
                     'https://cors-anywhere.herokuapp.com/',
                     'https://thingproxy.freeboard.io/fetch/',
-                    'https://yacdn.org/proxy/'
+                    'https://yacdn.org/proxy/',
+                    // Дополнительные надежные прокси
+                    'https://proxy.cors.sh/',
+                    'https://api.allorigins.win/get?url=',
                 ];
 
                 let response = null;
@@ -11986,8 +12091,10 @@
                 if (rulesText.length > 100) {
                     console.log('✅ Правила загружены, символов:', rulesText.length);
                     
-                    // Сохраняем в кэш
-                    rulesCache[url] = rulesText;
+                    // Сохраняем в ВСЕ уровни кэша
+                    rulesCache[url] = rulesText;              // Память
+                    saveRuleCacheToStorage();                  // localStorage
+                    saveToCacheAPI(url, rulesText);           // Cache API
                     
                     return rulesText;
                 } else {
@@ -13080,7 +13187,16 @@
 
             addMessage(message, false);
             chatInput.value = '';
+            // Показываем что AI думает
             addTypingIndicator();
+            
+            // Показываем статус загрузки в реальном времени
+            const statusMsg = addMessage('🔍 Ищу информацию на форуме...', true);
+            setTimeout(() => {
+                if (statusMsg && statusMsg.parentNode) {
+                    statusMsg.remove();
+                }
+            }, 2000);
 
             try {
                 const config = API_CONFIG[currentModel];
@@ -14864,6 +14980,71 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             chatInput.value = `Расскажи подробно о разделе правил: ${title}`;
             showSection('home');
             setTimeout(() => sendMessage(), 300);
+        }
+
+        
+        // Очистка всего кэша правил
+        async function clearAllRulesCache() {
+            // Очистка памяти
+            rulesCache = {};
+            console.log('🗑️ Кэш памяти очищен');
+            
+            // Очистка localStorage
+            try {
+                localStorage.removeItem('badgrules_rules_cache');
+                console.log('🗑️ localStorage кэш очищен');
+            } catch (e) {
+                console.warn('⚠️ Ошибка очистки localStorage:', e);
+            }
+            
+            // Очистка Cache API
+            if ('caches' in window) {
+                try {
+                    await caches.delete(CACHE_NAME);
+                    console.log('🗑️ Cache API очищен');
+                } catch (e) {
+                    console.warn('⚠️ Ошибка очистки Cache API:', e);
+                }
+            }
+            
+            alert('✅ Весь кэш правил очищен! Следующий запрос загрузит свежие данные.');
+        }
+        
+        // Показать статистику кэша
+        async function showCacheStats() {
+            let stats = 'СТАТИСТИКА КЭША:\n\n';
+            
+            // Память
+            const memoryCount = Object.keys(rulesCache).length;
+            stats += `💾 В памяти: ${memoryCount} страниц\n`;
+            
+            // localStorage
+            try {
+                const saved = localStorage.getItem('badgrules_rules_cache');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    stats += `📦 localStorage: ${Object.keys(parsed).length} страниц\n`;
+                } else {
+                    stats += '📦 localStorage: 0 страниц\n';
+                }
+            } catch (e) {
+                stats += '📦 localStorage: ошибка\n';
+            }
+            
+            // Cache API
+            if ('caches' in window) {
+                try {
+                    const cache = await caches.open(CACHE_NAME);
+                    const requests = await cache.keys();
+                    stats += `🌐 Cache API: ${requests.length} страниц\n`;
+                } catch (e) {
+                    stats += '🌐 Cache API: ошибка\n';
+                }
+            } else {
+                stats += '🌐 Cache API: не поддерживается\n';
+            }
+            
+            alert(stats);
         }
 
         // ═══════════════════════════════════════════════════════════════
