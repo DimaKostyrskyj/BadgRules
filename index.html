@@ -4192,11 +4192,11 @@
             align-items: center;
             gap: 1.25rem;
             padding: 1.5rem;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(59, 130, 246, 0.03) 100%);
-            border: 1px solid rgba(96, 165, 250, 0.15);
+            background: rgba(10, 15, 25, 0.6);
+            border: 1px solid rgba(96, 165, 250, 0.2);
             border-radius: 16px;
             margin-bottom: 1rem;
-            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.1);
+            box-shadow: 0 4px 20px rgba(96, 165, 250, 0.15);
         }
 
         .profile-avatar-minimal {
@@ -4338,8 +4338,8 @@
         .stat-item {
             text-align: center;
             padding: 1rem 0.5rem;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(59, 130, 246, 0.03) 100%);
-            border: 1px solid rgba(96, 165, 250, 0.15);
+            background: rgba(10, 15, 25, 0.6);
+            border: 1px solid rgba(96, 165, 250, 0.2);
             border-radius: 12px;
         }
 
@@ -4362,8 +4362,8 @@
 
         /* Info List */
         .profile-info-list {
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.05) 0%, rgba(59, 130, 246, 0.03) 100%);
-            border: 1px solid rgba(96, 165, 250, 0.15);
+            background: rgba(10, 15, 25, 0.6);
+            border: 1px solid rgba(96, 165, 250, 0.2);
             border-radius: 14px;
             overflow: hidden;
             margin-bottom: 1rem;
@@ -9199,11 +9199,6 @@
             width: 140px;
             height: 140px;
         }
-        
-        .team-card[data-role="senior"] .team-avatar-wrapper {
-            width: 100px;
-            height: 100px;
-        }
 
         .team-avatar {
             width: 100%;
@@ -13553,16 +13548,16 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                     ⚠️ Базовые знания AI
                 </span>`;
             
-            return `<div style="background: transparent; border-radius: 12px; overflow: hidden;">
+            return `<div style="background: transparent; border-radius: 16px; overflow: hidden; border: 1px solid rgba(96, 165, 250, 0.15);">
                 <!-- Заголовок -->
-                <div style="padding: 14px 18px; background: transparent; border-bottom: 1px solid rgba(96, 165, 250, 0.2);">
-                    <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="padding: 16px 20px; background: rgba(10, 15, 25, 0.4); border-bottom: 1px solid rgba(96, 165, 250, 0.2);">
+                    <div style="display: flex; align-items: center; gap: 12px;">
                         <span style="font-size: 1.4rem;">${modelIcon}</span>
                         <div style="flex: 1;">
-                            <div style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent-primary);">
+                            <div style="font-size: 0.9rem; font-weight: 700; letter-spacing: 0.3px; color: #60a5fa;">
                                 ${modelName}
                             </div>
-                            <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">
+                            <div style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); margin-top: 3px;">
                                 ${wasParsed ? 'Ответ на основе правил форума' : 'Ответ на основе базовых знаний'}
                             </div>
                         </div>
@@ -13570,18 +13565,18 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 </div>
                 
                 <!-- Контент -->
-                <div style="padding: 18px 0;">
+                <div style="padding: 20px;">
                     <div style="font-size: 0.95rem; line-height: 1.8; color: var(--text-primary);">
                         ${formattedText}
                     </div>
                 </div>
                 
                 <!-- Футер -->
-                <div style="padding: 12px 0; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-                    <span style="padding: 5px 12px; background: rgba(96, 165, 250, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500;">
+                <div style="padding: 12px 20px; background: rgba(10, 15, 25, 0.3); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; border-top: 1px solid rgba(96, 165, 250, 0.15);">
+                    <span style="padding: 6px 14px; background: rgba(96, 165, 250, 0.15); border: 1px solid rgba(96, 165, 250, 0.2); border-radius: 8px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); font-weight: 500;">
                         🎮 ${serverName}
                     </span>
-                    <a href="${forumLink}" target="_blank" style="padding: 5px 12px; background: rgba(59, 130, 246, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--text-secondary); font-weight: 500; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(59, 130, 246, 0.25)'" onmouseout="this.style.background='rgba(59, 130, 246, 0.15)'">
+                    <a href="${forumLink}" target="_blank" style="padding: 6px 14px; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 8px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); font-weight: 500; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(59, 130, 246, 0.25)'" onmouseout="this.style.background='rgba(59, 130, 246, 0.15)'">
                         🌐 Открыть правила →
                     </a>
                     ${sourceStatus}
