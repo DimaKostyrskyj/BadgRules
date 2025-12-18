@@ -8984,6 +8984,206 @@
         .team-member-card:nth-child(5) { animation-delay: 0.25s; }
         .team-member-card:nth-child(6) { animation-delay: 0.3s; }
 
+        /* ═══════════════════════════════════════════════════════════════
+           NEW TEAM CARDS - Similar to uploaded image style
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .team-card {
+            position: relative;
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(96, 165, 250, 0.4);
+            box-shadow: 0 20px 40px rgba(96, 165, 250, 0.2);
+        }
+
+        .team-card[data-role="owner"]:hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .team-card:nth-child(1) { animation-delay: 0.1s; }
+        .team-card:nth-child(2) { animation-delay: 0.2s; }
+        .team-card:nth-child(3) { animation-delay: 0.3s; }
+        .team-card:nth-child(4) { animation-delay: 0.4s; }
+        .team-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .team-card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.1));
+            transition: all 0.4s ease;
+        }
+
+        .team-card[data-role="owner"] .team-card-bg {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 193, 7, 0.1));
+        }
+
+        .team-card:hover .team-card-bg {
+            height: 180px;
+        }
+
+        .team-card-content {
+            position: relative;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
+        }
+
+        .team-avatar-wrapper {
+            position: relative;
+            width: 140px;
+            height: 140px;
+        }
+
+        .team-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid rgba(96, 165, 250, 0.3);
+            object-fit: cover;
+            transition: all 0.3s ease;
+            background: rgba(40, 40, 40, 0.8);
+        }
+
+        .team-card[data-role="owner"] .team-avatar {
+            border-color: rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .team-card:hover .team-avatar {
+            transform: scale(1.05);
+            border-width: 5px;
+        }
+
+        .team-avatar-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .team-card[data-role="owner"] .team-avatar-placeholder {
+            background: linear-gradient(135deg, #ffd700, #ffc107);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .team-role-badge {
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            border: 2px solid;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .team-role-badge.owner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 193, 7, 0.15));
+            border-color: rgba(255, 215, 0, 0.5);
+            color: #ffd700;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .team-role-badge.team {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(59, 130, 246, 0.15));
+            border-color: rgba(96, 165, 250, 0.5);
+            color: #60a5fa;
+            box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);
+        }
+
+        .team-card:hover .team-role-badge {
+            transform: translateX(-50%) translateY(-3px);
+        }
+
+        .team-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding-top: 1rem;
+        }
+
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #60a5fa;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .team-card[data-role="owner"] .team-title {
+            color: #ffd700;
+        }
+
+        .team-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin: 0;
+            max-width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .team-card-content {
+                padding: 1.5rem;
+            }
+
+            .team-avatar-wrapper {
+                width: 120px;
+                height: 120px;
+            }
+
+            .team-name {
+                font-size: 1.3rem;
+            }
+
+            .team-title {
+                font-size: 0.85rem;
+            }
+
+            .team-description {
+                font-size: 0.9rem;
+            }
+        }
+
 </style>
 </head>
 
@@ -8994,6 +9194,8 @@
         <div class="scroll-dot" data-section="complaints"></div>
         <div class="scroll-dot" data-section="history"></div>
         <div class="scroll-dot" data-section="news"></div>
+        <div class="scroll-dot" data-section="team"></div>
+        <div class="scroll-dot" data-section="social"></div>
     </div>
 
     <!-- Discord Link Icon - Left Bottom -->
@@ -9049,6 +9251,12 @@
             </div>
             <div class="logo-menu-item" data-section="news" onclick="selectLogoMenu('news')">
                 <span>Новости</span>
+            </div>
+            <div class="logo-menu-item" data-section="team" onclick="selectLogoMenu('team')">
+                <span>Команда</span>
+            </div>
+            <div class="logo-menu-item" data-section="social" onclick="selectLogoMenu('social')">
+                <span>Соц. сети</span>
             </div>
         </div>
 
@@ -10355,6 +10563,261 @@
             </div>
         </div>
 
+        <!-- Team Section -->
+        <div class="section" id="teamSection">
+            <div class="landing-section">
+                <!-- Hero -->
+                <div class="hero-section">
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        <span>Наша команда</span>
+                    </div>
+
+                    <h1 class="hero-title">Команда проекта<br>BadgRules</h1>
+
+                    <p class="hero-subtitle">
+                        Познакомьтесь с людьми, которые создают и поддерживают проект.
+                        Наша команда работает для того, чтобы сделать игру лучше для всех.
+                    </p>
+                </div>
+
+                <!-- Team Grid -->
+                <div class="features-section">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 900px; margin: 0 auto;">
+                        
+                        <!-- Владелец 1 -->
+                        <div class="team-card" data-role="owner">
+                            <div class="team-card-bg"></div>
+                            <div class="team-card-content">
+                                <div class="team-avatar-wrapper">
+                                    <img src="images/owner1.png" alt="Владелец" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                    <div class="team-avatar-placeholder" style="display: none;">
+                                        <div style="font-size: 3rem;">👑</div>
+                                    </div>
+                                    <div class="team-role-badge owner">
+                                        <span>👑</span>
+                                        <span>Владелец</span>
+                                    </div>
+                                </div>
+                                <div class="team-info">
+                                    <h3 class="team-name">Владелец</h3>
+                                    <p class="team-title">Основатель проекта</p>
+                                    <p class="team-description">
+                                        Создатель и идейный вдохновитель BadgRules. 
+                                        Отвечает за общее развитие проекта и принятие стратегических решений.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Владелец 2 -->
+                        <div class="team-card" data-role="owner">
+                            <div class="team-card-bg"></div>
+                            <div class="team-card-content">
+                                <div class="team-avatar-wrapper">
+                                    <img src="images/owner2.png" alt="Со-владелец" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                    <div class="team-avatar-placeholder" style="display: none;">
+                                        <div style="font-size: 3rem;">👑</div>
+                                    </div>
+                                    <div class="team-role-badge owner">
+                                        <span>👑</span>
+                                        <span>Владелец</span>
+                                    </div>
+                                </div>
+                                <div class="team-info">
+                                    <h3 class="team-name">Владелец</h3>
+                                    <p class="team-title">Со-основатель проекта</p>
+                                    <p class="team-description">
+                                        Со-основатель BadgRules. 
+                                        Управляет технической частью проекта и координирует работу команды.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Команда 1 -->
+                        <div class="team-card" data-role="team">
+                            <div class="team-card-bg"></div>
+                            <div class="team-card-content">
+                                <div class="team-avatar-wrapper">
+                                    <img src="images/team1.png" alt="Команда" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                    <div class="team-avatar-placeholder" style="display: none;">
+                                        <div style="font-size: 3rem;">👥</div>
+                                    </div>
+                                    <div class="team-role-badge team">
+                                        <span>👥</span>
+                                        <span>Команда</span>
+                                    </div>
+                                </div>
+                                <div class="team-info">
+                                    <h3 class="team-name">Команда проекта</h3>
+                                    <p class="team-title">Разработка и поддержка</p>
+                                    <p class="team-description">
+                                        Занимается разработкой новых функций, 
+                                        исправлением ошибок и технической поддержкой пользователей.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Команда 2 -->
+                        <div class="team-card" data-role="team">
+                            <div class="team-card-bg"></div>
+                            <div class="team-card-content">
+                                <div class="team-avatar-wrapper">
+                                    <img src="images/team2.png" alt="Команда" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                    <div class="team-avatar-placeholder" style="display: none;">
+                                        <div style="font-size: 3rem;">👥</div>
+                                    </div>
+                                    <div class="team-role-badge team">
+                                        <span>👥</span>
+                                        <span>Команда</span>
+                                    </div>
+                                </div>
+                                <div class="team-info">
+                                    <h3 class="team-name">Команда проекта</h3>
+                                    <p class="team-title">Контент и модерация</p>
+                                    <p class="team-description">
+                                        Создает контент для проекта, 
+                                        модерирует сообщество и помогает пользователям с вопросами.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Команда 3 -->
+                        <div class="team-card" data-role="team">
+                            <div class="team-card-bg"></div>
+                            <div class="team-card-content">
+                                <div class="team-avatar-wrapper">
+                                    <img src="images/team3.png" alt="Команда" class="team-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                    <div class="team-avatar-placeholder" style="display: none;">
+                                        <div style="font-size: 3rem;">👥</div>
+                                    </div>
+                                    <div class="team-role-badge team">
+                                        <span>👥</span>
+                                        <span>Команда</span>
+                                    </div>
+                                </div>
+                                <div class="team-info">
+                                    <h3 class="team-name">Команда проекта</h3>
+                                    <p class="team-title">Дизайн и UX</p>
+                                    <p class="team-description">
+                                        Отвечает за дизайн интерфейса, 
+                                        пользовательский опыт и визуальную составляющую проекта.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Networks Section -->
+        <div class="section" id="socialSection">
+            <div class="landing-section">
+                <!-- Hero -->
+                <div class="hero-section">
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                        </svg>
+                        <span>Социальные сети</span>
+                    </div>
+
+                    <h1 class="hero-title">Мы в социальных<br>сетях</h1>
+
+                    <p class="hero-subtitle">
+                        Следите за новостями проекта, общайтесь с сообществом
+                        и будьте в курсе всех обновлений BadgRules.
+                    </p>
+                </div>
+
+                <!-- Social Cards -->
+                <div class="features-section">
+                    <div style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1000px; margin-left: auto; margin-right: auto;">
+                        
+                        <!-- Discord Card -->
+                        <div style="background: rgba(88, 101, 242, 0.1); border: 1px solid rgba(88, 101, 242, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(88, 101, 242, 0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(88, 101, 242, 0.3)'">
+                            <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #5865F2, #7289DA); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+                                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                                </svg>
+                            </div>
+                            <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Discord</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem;">Официальный Discord сервер проекта</p>
+                            <a href="https://discord.gg/FmFp9MHj" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #5865F2; text-decoration: none; font-weight: 600; transition: all 0.3s;">
+                                discord.gg/FmFp9MHj
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </a>
+                        </div>
+
+                        <!-- Email Card -->
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(16, 185, 129, 0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(16, 185, 129, 0.3)'">
+                            <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #10b981, #059669); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Email</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem;">Напишите нам электронное письмо</p>
+                            <a href="mailto:support@badgrules.ru" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #10b981; text-decoration: none; font-weight: 600; transition: all 0.3s;">
+                                support@badgrules.ru
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </a>
+                        </div>
+
+                        <!-- Telegram Card -->
+                        <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 20px; padding: 2rem; text-align: center; transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.borderColor='rgba(59, 130, 246, 0.5)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(59, 130, 246, 0.3)'">
+                            <div style="width: 80px; height: 80px; margin: 0 auto 1.5rem; background: linear-gradient(135deg, #3b82f6, #2563eb); border-radius: 20px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                                </svg>
+                            </div>
+                            <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Telegram</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem;">Наш официальный Telegram канал</p>
+                            <a href="https://t.me/badgrules" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #3b82f6; text-decoration: none; font-weight: 600; transition: all 0.3s;">
+                                @badgrules
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Bottom Info -->
+                <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(96, 165, 250, 0.05); border-radius: 20px; border: 1px solid rgba(96, 165, 250, 0.1);">
+                    <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.75rem;">
+                        Будьте на связи
+                    </h3>
+                    <p style="font-size: 1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto;">
+                        Подписывайтесь на наши социальные сети, чтобы не пропустить важные новости,
+                        обновления и эксклюзивный контент от команды BadgRules!
+                    </p>
+                </div>
+            </div>
+        </div>
+
 
     <script>
         // ═══════════════════════════════════════════════════════════════
@@ -10531,6 +10994,19 @@
                 server: selectedServer
             };
             localStorage.setItem('badgrules_server_selection', JSON.stringify(selection));
+            
+            // Сохраняем в профиль пользователя для AI
+            try {
+                const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+                if (userData && userData.id) {
+                    userData.server = selectedServer.name;
+                    userData.project = selectedProject;
+                    localStorage.setItem('badgrules_user', JSON.stringify(userData));
+                    console.log(`✅ Сервер ${selectedServer.name} сохранен в профиль`);
+                }
+            } catch (e) {
+                console.warn('⚠️ Не удалось сохранить в профиль');
+            }
         }
 
         function loadServerSelection() {
@@ -10947,7 +11423,262 @@
         loadRulesLinksFromTxt().then(topics => {
             RULES_TOPICS = topics;
             console.log('✅ Ссылки на правила готовы!');
+            
+            // Запускаем автоматическое сканирование форумов
+            startForumAutoScraping();
         });
+
+        // ═══════════════════════════════════════════════════════════════
+        // 🌐 АВТОМАТИЧЕСКОЕ СКАНИРОВАНИЕ ФОРУМОВ GTA5RP & MAJESTIC
+        // ═══════════════════════════════════════════════════════════════
+        
+        // База данных всех просканированных страниц
+        const FORUM_DATABASE = {
+            gta5rp: {
+                indexed: false,
+                pages: [],
+                lastUpdate: null
+            },
+            majestic: {
+                indexed: false,
+                pages: [],
+                lastUpdate: null
+            }
+        };
+        
+        // Форумы для сканирования
+        const FORUM_BASES = {
+            gta5rp: {
+                name: 'GTA 5 RP',
+                baseUrl: 'https://forum.gta5rp.com',
+                rulesSection: 'https://forum.gta5rp.com/forums/pravila/',
+                servers: ['Arizona', 'Chocolate', 'Rodina', 'Phoenix', 'Mesa', 'Red-Rock', 
+                         'Yuma', 'Surprise', 'Prescott', 'Glendale', 'Kingman', 'Winslow']
+            },
+            majestic: {
+                name: 'Majestic RP',
+                baseUrl: 'https://forum.majestic-rp.ru',
+                rulesSection: 'https://forum.majestic-rp.ru/forums/pravila-servera/',
+                servers: ['Majestic01', 'Majestic02', 'Majestic03', 'Majestic04', 'Majestic05', 'Majestic06']
+            }
+        };
+        
+        // Запуск автоматического сканирования
+        async function startForumAutoScraping() {
+            console.log('🌐 Запуск автоматического сканирования форумов GTA5RP и Majestic...');
+            
+            // Проверяем кэш
+            const cacheKey = 'forum_database_cache';
+            const cached = localStorage.getItem(cacheKey);
+            
+            if (cached) {
+                try {
+                    const data = JSON.parse(cached);
+                    const cacheAge = Date.now() - (data.timestamp || 0);
+                    
+                    // Если кэш свежий (меньше 24 часов)
+                    if (cacheAge < 24 * 60 * 60 * 1000) {
+                        console.log(`📦 Используем кэш форума (возраст: ${Math.round(cacheAge/3600000)} ч)`);
+                        FORUM_DATABASE.gta5rp = data.gta5rp || FORUM_DATABASE.gta5rp;
+                        FORUM_DATABASE.majestic = data.majestic || FORUM_DATABASE.majestic;
+                        return;
+                    }
+                } catch (e) {
+                    console.warn('⚠️ Ошибка чтения кэша');
+                }
+            }
+            
+            console.log('🔍 Сканирую форумы в фоновом режиме...');
+            
+            // GTA5RP
+            scrapeForumSection('gta5rp', FORUM_BASES.gta5rp.rulesSection)
+                .then(pages => {
+                    FORUM_DATABASE.gta5rp.pages = pages;
+                    FORUM_DATABASE.gta5rp.indexed = true;
+                    FORUM_DATABASE.gta5rp.lastUpdate = Date.now();
+                    console.log(`✅ GTA5RP: ${pages.length} страниц проиндексировано`);
+                    saveForumDatabaseToCache();
+                })
+                .catch(err => console.error('❌ Ошибка GTA5RP:', err));
+            
+            // Majestic (через 5 сек)
+            setTimeout(() => {
+                scrapeForumSection('majestic', FORUM_BASES.majestic.rulesSection)
+                    .then(pages => {
+                        FORUM_DATABASE.majestic.pages = pages;
+                        FORUM_DATABASE.majestic.indexed = true;
+                        FORUM_DATABASE.majestic.lastUpdate = Date.now();
+                        console.log(`✅ Majestic: ${pages.length} страниц проиндексировано`);
+                        saveForumDatabaseToCache();
+                    })
+                    .catch(err => console.error('❌ Ошибка Majestic:', err));
+            }, 5000);
+        }
+        
+        // Сканирование раздела форума
+        async function scrapeForumSection(forumKey, sectionUrl) {
+            console.log(`📥 Сканирую: ${sectionUrl}`);
+            
+            try {
+                const html = await fetchPageHTML(sectionUrl);
+                if (!html) return [];
+                
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                const threadLinks = [];
+                const selectors = [
+                    'a.PreviewTooltip',
+                    '.structItem-title a',
+                    'h3.threadTitle a',
+                    '.discussionListItem .title a'
+                ];
+                
+                for (const selector of selectors) {
+                    const links = doc.querySelectorAll(selector);
+                    links.forEach(link => {
+                        const href = link.getAttribute('href');
+                        const title = link.textContent?.trim() || '';
+                        
+                        if (href && title && href.includes('threads/')) {
+                            let fullUrl = href;
+                            if (href.startsWith('/')) {
+                                fullUrl = FORUM_BASES[forumKey].baseUrl + href;
+                            }
+                            
+                            threadLinks.push({
+                                title: title,
+                                url: fullUrl,
+                                forum: forumKey
+                            });
+                        }
+                    });
+                    
+                    if (threadLinks.length > 0) break;
+                }
+                
+                console.log(`📊 Найдено ${threadLinks.length} тем`);
+                return threadLinks.slice(0, 20); // Первые 20
+                
+            } catch (error) {
+                console.error('❌ Ошибка сканирования:', error);
+                return [];
+            }
+        }
+        
+        // Загрузка HTML страницы
+        async function fetchPageHTML(url) {
+            const corsProxies = [
+                'https://api.allorigins.win/raw?url=',
+                'https://corsproxy.io/?',
+                'https://api.codetabs.com/v1/proxy?quest='
+            ];
+            
+            for (const proxy of corsProxies) {
+                try {
+                    const response = await fetch(proxy + encodeURIComponent(url), {
+                        method: 'GET',
+                        headers: { 'Accept': 'text/html' }
+                    });
+                    
+                    if (response.ok) {
+                        return await response.text();
+                    }
+                } catch (err) {
+                    continue;
+                }
+            }
+            
+            return null;
+        }
+        
+        // Сохранение в localStorage
+        function saveForumDatabaseToCache() {
+            try {
+                const data = {
+                    timestamp: Date.now(),
+                    gta5rp: FORUM_DATABASE.gta5rp,
+                    majestic: FORUM_DATABASE.majestic
+                };
+                
+                localStorage.setItem('forum_database_cache', JSON.stringify(data));
+                console.log('💾 База форума сохранена');
+            } catch (e) {
+                console.warn('⚠️ Не удалось сохранить кэш');
+            }
+        }
+        
+        // ═══════════════════════════════════════════════════════════════
+        // 🔍 УМНЫЙ ПОИСК ПО БАЗЕ С УЧЕТОМ СЕРВЕРА
+        // ═══════════════════════════════════════════════════════════════
+        
+        function searchInForumDatabase(question, serverName, userServer) {
+            const lowerQ = question.toLowerCase();
+            const forumKey = serverName.toLowerCase().includes('majestic') ? 'majestic' : 'gta5rp';
+            const database = FORUM_DATABASE[forumKey];
+            
+            if (!database.indexed || database.pages.length === 0) {
+                console.log('⚠️ База еще не проиндексирована');
+                return [];
+            }
+            
+            console.log(`🔍 Ищу в базе ${forumKey} (${database.pages.length} страниц)`);
+            
+            const results = [];
+            const keywords = extractSearchKeywords(lowerQ);
+            
+            for (const page of database.pages) {
+                const pageTitle = page.title.toLowerCase();
+                let score = 0;
+                
+                // Ключевые слова
+                for (const keyword of keywords) {
+                    if (pageTitle.includes(keyword)) {
+                        score += 3;
+                    }
+                }
+                
+                // Сервер пользователя - ВЫСОКИЙ ПРИОРИТЕТ
+                if (userServer && pageTitle.includes(userServer.toLowerCase())) {
+                    score += 5;
+                }
+                
+                if (score > 0) {
+                    results.push({ ...page, score: score });
+                }
+            }
+            
+            results.sort((a, b) => b.score - a.score);
+            
+            if (results.length > 0) {
+                console.log(`✅ Найдено ${results.length} релевантных:`);
+                results.slice(0, 3).forEach((r, i) => {
+                    console.log(`  ${i+1}. ${r.title.substring(0, 60)}... (${r.score})`);
+                });
+            }
+            
+            return results.slice(0, 2);
+        }
+        
+        // Извлечение ключевых слов
+        function extractSearchKeywords(question) {
+            const keywords = [];
+            const q = question.toLowerCase();
+            
+            if (q.includes('dm') || q.includes('убий')) keywords.push('dm', 'rdm', 'убийств');
+            if (q.includes('vdm') || q.includes('машин')) keywords.push('vdm', 'транспорт');
+            if (q.includes('pg')) keywords.push('pg', 'powergaming');
+            if (q.includes('mg')) keywords.push('mg', 'metagaming');
+            if (q.includes('nlr')) keywords.push('nlr');
+            if (q.includes('зелен') || q.includes('больниц')) keywords.push('зелен', 'green', 'зона');
+            if (q.includes('гетто') || q.includes('банд')) keywords.push('гетто', 'ghetto');
+            if (q.includes('граб') || q.includes('ограбл')) keywords.push('ограбл', 'грабеж');
+            if (q.includes('похит')) keywords.push('похищ', 'заложник');
+            if (q.includes('гос') || q.includes('полиц')) keywords.push('государ', 'police', 'ems');
+            if (q.includes('фракц')) keywords.push('фракц', 'организац');
+            
+            return keywords;
+        }
 
         // Кэш для загруженных правил (чтобы не парсить каждый раз)
         const rulesCache = {};
@@ -12215,61 +12946,103 @@
             console.log(`📡 Отправка запроса к ${config.name}...`);
             
             // ═══════════════════════════════════════════════════════════
-            // 🌐 ЗАГРУЖАЕМ РЕАЛЬНЫЕ ПРАВИЛА С ФОРУМА
+            // 👤 ОПРЕДЕЛЯЕМ СЕРВЕР ПОЛЬЗОВАТЕЛЯ
             // ═══════════════════════════════════════════════════════════
             
-            console.log('🔍 Определяю релевантные ссылки...');
-            const relevantLinks = selectRelevantLinks(question, serverName);
+            let userServer = null;
+            try {
+                const userData = JSON.parse(localStorage.getItem('badgrules_user') || '{}');
+                if (userData && userData.server) {
+                    userServer = userData.server;
+                    console.log(`👤 Сервер пользователя: ${userServer}`);
+                }
+            } catch (e) {
+                console.log('ℹ️ Сервер не указан в профиле');
+            }
+            
+            // ═══════════════════════════════════════════════════════════
+            // 🌐 ИЩЕМ В АВТО-СКРАПЕРЕ (ПРИОРИТЕТ!)
+            // ═══════════════════════════════════════════════════════════
+            
+            console.log('🔍 Ищу в базе проиндексированных страниц...');
+            const forumResults = searchInForumDatabase(question, serverName, userServer);
             
             let forumRulesText = '';
             let loadedTopicsInfo = [];
             
-            // Загружаем правила с релевантных страниц
-            for (const link of relevantLinks) {
-                const shortDesc = link.description.substring(0, 50);
-                console.log(`📥 Загружаю: ${shortDesc}...`);
-                console.log(`   URL: ${link.url}`);
+            // Если нашли в базе - используем
+            if (forumResults.length > 0) {
+                console.log(`✅ Использую страницы из базы (${forumResults.length} шт.)`);
                 
-                const rules = await fetchRulesFromForum(link.url);
-                
-                if (rules) {
-                    forumRulesText += `\n\n=== ${link.description.toUpperCase()} ===\n${rules}\n`;
-                    loadedTopicsInfo.push(link.description);
-                    console.log(`✅ Загружено: ${shortDesc}... (${rules.length} символов)`);
+                for (const page of forumResults) {
+                    console.log(`📥 Загружаю: ${page.title.substring(0, 50)}...`);
+                    
+                    const rules = await fetchRulesFromForum(page.url);
+                    
+                    if (rules) {
+                        forumRulesText += `\n\n=== ${page.title.toUpperCase()} ===\n${rules}\n`;
+                        loadedTopicsInfo.push(page.title);
+                        console.log(`✅ Загружено: (${rules.length} символов)`);
+                    }
                 }
             }
             
-            // Если не удалось загрузить - используем базовый контекст
+            // ═══════════════════════════════════════════════════════════
+            // 📄 FALLBACK: TXT ФАЙЛ
+            // ═══════════════════════════════════════════════════════════
+            
             if (!forumRulesText) {
-                console.warn('⚠️ Не удалось загрузить правила, использую базовый контекст');
+                console.log('📄 База не помогла, использую TXT...');
+                const relevantLinks = selectRelevantLinks(question, serverName);
+                
+                for (const link of relevantLinks) {
+                    const shortDesc = link.description.substring(0, 50);
+                    console.log(`📥 Загружаю: ${shortDesc}...`);
+                    
+                    const rules = await fetchRulesFromForum(link.url);
+                    
+                    if (rules) {
+                        forumRulesText += `\n\n=== ${link.description.toUpperCase()} ===\n${rules}\n`;
+                        loadedTopicsInfo.push(link.description);
+                        console.log(`✅ Загружено: (${rules.length} символов)`);
+                    }
+                }
+            }
+            
+            // Если совсем ничего - базовый контекст
+            if (!forumRulesText) {
+                console.warn('⚠️ Использую базовый контекст');
                 forumRulesText = `
-БАЗОВЫЙ КОНТЕКСТ (правила не загружены с форума):
+БАЗОВЫЙ КОНТЕКСТ (правила не загружены):
 - Зеленая зона (Government, Police, EMS, News) - ПОЛНОСТЬЮ ЗАПРЕЩЕНЫ грабежи и убийства
-- Такси, заправки, магазины, бизнесы - ЭТО НЕ ЗЕЛЕНАЯ ЗОНА (можно грабить с маской)
-- Гетто - разрешен криминал между бандами с RP причиной
-- Маска ОБЯЗАТЕЛЬНА для грабежей везде кроме гетто
+- Такси, заправки, магазины - НЕ ЗЕЛЕНАЯ ЗОНА (можно грабить с маской)
+- Гетто - разрешен криминал с RP причиной
+- Маска ОБЯЗАТЕЛЬНА для грабежей
 - DM = убийство без RP причины (запрещено)
 - VDM = убийство машиной (запрещено)
 `;
             } else {
-                console.log('✅ Правила успешно загружены с форума!');
+                console.log('✅ Правила загружены!');
             }
             
-            // УЛУЧШЕННЫЙ ПРОМПТ с РЕАЛЬНЫМИ правилами
-            const prompt = `Ты - эксперт по ролевому серверу ${serverName} (форум: ${forumUrl}).
+            // Информация о сервере для промпта
+            const serverInfo = userServer ? `\n\n⚠️ ВАЖНО: Игрок играет на сервере ${userServer}. Если правила отличаются для разных серверов, дай ответ для ${userServer}.` : '';
+            
+            // УЛУЧШЕННЫЙ ПРОМПТ
+            const prompt = `Ты - эксперт по ${serverName} (форум: ${forumUrl}).${serverInfo}
 
-ВОПРОС ИГРОКА: "${question}"
+ВОПРОС: "${question}"
 
-ПРАВИЛА С ОФИЦИАЛЬНОГО ФОРУМА:
+ПРАВИЛА С ФОРУМА:
 ${forumRulesText}
 
 ИНСТРУКЦИИ:
 1. Используй ТОЛЬКО информацию из правил выше
-2. Если вопрос "можно ли..." - дай ЧЕТКИЙ ответ: ДА или НЕТ
+2. Если "можно ли..." - дай ЧЕТКИЙ ответ: ДА или НЕТ
 3. Объясни ПОЧЕМУ (1-2 предложения)
-4. Укажи номер правила если найдешь в тексте
+4. Укажи номер правила если найдешь
 5. Максимум 4-5 предложений
-6. Будь конкретным и точным
+${userServer ? `6. Учитывай что игрок на сервере ${userServer}` : ''}
 
 ПРИМЕРЫ:
 Вопрос: "Можно грабить такси?"
@@ -12278,7 +13051,7 @@ ${forumRulesText}
 Вопрос: "Можно убить в больнице?"
 Ответ: "НЕТ, больница (EMS) - зеленая зона. Убийства там запрещены. Правило 6.11."
 
-ОТВЕТЬ КРАТКО И ЧЕТКО:`;
+ОТВЕТЬ:`;
             
             try {
                 let response;
@@ -13712,7 +14485,9 @@ ${forumRulesText}
                 'complaints': 'complaintsSection',
                 'rules': 'rulesSection',
                 'history': 'historySection',
-                'news': 'newsSection'
+                'news': 'newsSection',
+                'team': 'teamSection',
+                'social': 'socialSection'
             };
 
             const targetSection = document.getElementById(sectionMap[sectionName]);
