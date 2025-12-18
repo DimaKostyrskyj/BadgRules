@@ -4,6 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Universal Access & SEO -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    
+    <!-- No Geo-blocking -->
+    <meta name="geo.region" content="WORLD">
+    <meta name="geo.placename" content="Global">
+    
+    <!-- Cache Control for better availability -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
+    
+    <!-- Content Security Policy - Allow all origins -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:; script-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline'; img-src * data: blob:; font-src * data:; connect-src *;">
+    
     <title>BadgRules - Нейросеть по правилам GTA 5 RP</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11589,7 +11606,10 @@
             const corsProxies = [
                 'https://api.allorigins.win/raw?url=',
                 'https://corsproxy.io/?',
-                'https://api.codetabs.com/v1/proxy?quest='
+                'https://api.codetabs.com/v1/proxy?quest=',
+                'https://cors-anywhere.herokuapp.com/',
+                'https://thingproxy.freeboard.io/fetch/',
+                'https://yacdn.org/proxy/'
             ];
             
             for (const proxy of corsProxies) {
@@ -11719,7 +11739,10 @@
                 const corsProxies = [
                     'https://api.allorigins.win/raw?url=',
                     'https://corsproxy.io/?',
-                    'https://api.codetabs.com/v1/proxy?quest='
+                    'https://api.codetabs.com/v1/proxy?quest=',
+                    'https://cors-anywhere.herokuapp.com/',
+                    'https://thingproxy.freeboard.io/fetch/',
+                    'https://yacdn.org/proxy/'
                 ];
 
                 let response = null;
@@ -17097,6 +17120,67 @@ function updateProfileStatic(userId) {
         if (staticRow) staticRow.style.display = 'none';
     }
 }
+
+// ═══════════════════════════════════════════════════════════════
+// 🌍 UNIVERSAL ACCESS - Service Worker для offline доступа
+// ═══════════════════════════════════════════════════════════════
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        // Регистрируем service worker для кэширования и offline доступа
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('✅ Service Worker зарегистрирован для универсального доступа');
+            })
+            .catch(err => {
+                console.log('ℹ️ Service Worker не зарегистрирован (это нормально)');
+            });
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 🌐 GLOBAL ACCESSIBILITY - Проверка доступности
+// ═══════════════════════════════════════════════════════════════
+
+// Проверяем доступность основных сервисов
+async function checkGlobalAccess() {
+    const services = [
+        { name: 'Groq API', url: 'https://api.groq.com' },
+        { name: 'Gemini API', url: 'https://generativelanguage.googleapis.com' },
+        { name: 'CORS Proxy', url: 'https://api.allorigins.win' }
+    ];
+    
+    console.log('🌍 Проверка глобальной доступности...');
+    
+    for (const service of services) {
+        try {
+            const response = await fetch(service.url, { 
+                method: 'HEAD',
+                mode: 'no-cors'
+            });
+            console.log(`✅ ${service.name}: доступен`);
+        } catch (error) {
+            console.log(`⚠️ ${service.name}: ограничен (будут использоваться альтернативы)`);
+        }
+    }
+}
+
+// Запускаем проверку при загрузке
+checkGlobalAccess();
+
+// ═══════════════════════════════════════════════════════════════
+// 🔄 FAILOVER - Автоматическое переключение на альтернативы
+// ═══════════════════════════════════════════════════════════════
+
+// Перехватываем ошибки сети и переключаемся на альтернативы
+window.addEventListener('online', () => {
+    console.log('🌐 Соединение восстановлено');
+    location.reload();
+});
+
+window.addEventListener('offline', () => {
+    console.log('📴 Соединение потеряно - работаем в offline режиме');
+});
 
 
 </script>

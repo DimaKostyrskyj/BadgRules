@@ -1,0 +1,146 @@
+# BadgRules - Universal Access Configuration
+# Для Apache серверов
+
+# ═══════════════════════════════════════════════════════════════
+# 🌍 CORS - Разрешаем доступ из любых стран и доменов
+# ═══════════════════════════════════════════════════════════════
+
+<IfModule mod_headers.c>
+    # Разрешаем все источники
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+    Header set Access-Control-Allow-Credentials "true"
+    Header set Access-Control-Max-Age "86400"
+    
+    # Убираем X-Frame-Options для встраивания
+    Header always unset X-Frame-Options
+    Header set X-Frame-Options "ALLOWALL"
+    
+    # Безопасность но без блокировок
+    Header set X-Content-Type-Options "nosniff"
+    Header set Referrer-Policy "no-referrer-when-downgrade"
+</IfModule>
+
+# ═══════════════════════════════════════════════════════════════
+# 🚀 GZIP Compression - Быстрая загрузка из любой точки мира
+# ═══════════════════════════════════════════════════════════════
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript
+    AddOutputFilterByType DEFLATE application/json application/xml
+</IfModule>
+
+# ═══════════════════════════════════════════════════════════════
+# 📦 Browser Caching - Кэширование для офлайн доступа
+# ═══════════════════════════════════════════════════════════════
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # HTML
+    ExpiresByType text/html "access plus 1 hour"
+    
+    # CSS и JavaScript
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    
+    # Изображения
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # Шрифты
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# ═══════════════════════════════════════════════════════════════
+# 🔄 URL Rewriting - Красивые URL
+# ═══════════════════════════════════════════════════════════════
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Перенаправление на HTTPS (если доступен)
+    RewriteCond %{HTTPS} off
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+    
+    # Главная страница
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.html [L,QSA]
+</IfModule>
+
+# ═══════════════════════════════════════════════════════════════
+# 🛡️ Security без гео-блокировок
+# ═══════════════════════════════════════════════════════════════
+
+# Отключаем показ версии сервера
+ServerSignature Off
+
+# Блокируем только явный вредоносный трафик
+<IfModule mod_rewrite.c>
+    # Блокируем SQL инъекции
+    RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# ═══════════════════════════════════════════════════════════════
+# 📱 Mobile & Desktop - Одинаковый доступ
+# ═══════════════════════════════════════════════════════════════
+
+<IfModule mod_headers.c>
+    # Отключаем трансформацию контента мобильными операторами
+    Header set Cache-Control "no-transform"
+    
+    # Viewport для всех устройств
+    Header set X-UA-Compatible "IE=edge"
+</IfModule>
+
+# ═══════════════════════════════════════════════════════════════
+# 🌐 Character Encoding - UTF-8 для всех языков
+# ═══════════════════════════════════════════════════════════════
+
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .htm .js .css .json .xml
+
+# ═══════════════════════════════════════════════════════════════
+# ⚡ Performance - Максимальная скорость доступа
+# ═══════════════════════════════════════════════════════════════
+
+<IfModule mod_headers.c>
+    # HTTP/2 Server Push
+    <FilesMatch "\.html$">
+        Header add Link "</style.css>; rel=preload; as=style"
+        Header add Link "</script.js>; rel=preload; as=script"
+    </FilesMatch>
+</IfModule>
+
+# Отключаем ETags для лучшего кэширования
+FileETag None
+
+# ═══════════════════════════════════════════════════════════════
+# 🔍 Options - Безопасность и доступность
+# ═══════════════════════════════════════════════════════════════
+
+# Отключаем листинг директорий
+Options -Indexes
+
+# Разрешаем SymLinks
+Options +FollowSymLinks
+
+# Отключаем MultiViews
+Options -MultiViews
+
+# ═══════════════════════════════════════════════════════════════
+# END OF CONFIGURATION
+# ═══════════════════════════════════════════════════════════════
