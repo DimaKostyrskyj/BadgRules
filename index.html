@@ -34,6 +34,113 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/logo.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="images/logo.ico">
     <style>
+        /* ═══════════════════════════════════════════════════════════════
+           🛡️ LOADING PROTECTION - Защита от черного экрана
+           ═══════════════════════════════════════════════════════════════ */
+        
+        /* Минимальный экран загрузки пока не загрузятся стили */
+        body {
+            background: #000 !important;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Экран загрузки по умолчанию */
+        #initialLoader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 50%, 
+                rgba(10, 20, 35, 1) 0%,
+                rgba(5, 10, 20, 1) 50%,
+                rgba(0, 0, 0, 1) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+            color: white;
+        }
+        
+        #initialLoader .loader-content {
+            text-align: center;
+        }
+        
+        #initialLoader .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(96, 165, 250, 0.2);
+            border-top-color: #60a5fa;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        #initialLoader .loader-text {
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #60a5fa;
+            margin-bottom: 10px;
+        }
+        
+        #initialLoader .loader-subtext {
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+        
+        #initialLoader .loader-error {
+            display: none;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            max-width: 500px;
+        }
+        
+        #initialLoader .loader-error.active {
+            display: block;
+        }
+        
+        #initialLoader .error-title {
+            color: #ef4444;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        #initialLoader .error-message {
+            color: #fca5a5;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        #initialLoader .retry-button {
+            background: #60a5fa;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        #initialLoader .retry-button:hover {
+            background: #3b82f6;
+            transform: translateY(-2px);
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -9222,6 +9329,25 @@
 </head>
 
 <body>
+    <!-- 🛡️ INITIAL LOADER - Защита от черного экрана -->
+    <div id="initialLoader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Загрузка BadgRules...</div>
+            <div class="loader-subtext">Пожалуйста, подождите</div>
+            <div class="loader-error" id="loaderError">
+                <div class="error-title">⚠️ Ошибка загрузки</div>
+                <div class="error-message">
+                    Возможные причины:<br>
+                    • Блокировка провайдером (попробуйте VPN)<br>
+                    • Проблемы с подключением к Discord<br>
+                    • Медленное интернет-соединение
+                </div>
+                <button class="retry-button" onclick="location.reload()">Перезагрузить страницу</button>
+            </div>
+        </div>
+    </div>
+
     <!-- VERTICAL SCROLL INDICATOR - LEFT SIDE -->
     <div class="vertical-scroll-indicator">
         <div class="scroll-dot active" data-section="chat"></div>
@@ -14225,12 +14351,12 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             // ═══ ДОБАВЬТЕ DISCORD ID ВАШЕЙ КОМАНДЫ НИЖЕ ═══
             '701782316623855668': '0000',      // #0000 - Владелец
             '482499344982081546': '0001',     // #0001 - Владелец
-            '685507278400782376': '0002',     // #0002 - Команда
+            '994390088190529586': '0002',     // #0002 - Команда
             '1170537060277428324': '0003',     // #0003 - Команда
             '1346385347319169038': '0004',     // #0004 - Команда
-            '994390088190529586': '0005',    // #0005 - Команда
+            'HELPER1_DISCORD_ID_HERE': '0005',    // #0005 - Команда
             '638817513173680140': '0006',    // #0006 - Команда
-            '': '0007',      // #0007 - Команда
+            'TEAM1_DISCORD_ID_HERE': '0007',      // #0007 - Команда
             'TEAM2_DISCORD_ID_HERE': '0008',      // #0008 - Команда
             'TEAM3_DISCORD_ID_HERE': '0009',      // #0009 - Команда
             'TEAM4_DISCORD_ID_HERE': '0010',      // #0010 - Команда
@@ -17025,55 +17151,93 @@ document.addEventListener('DOMContentLoaded', function() {
 // STATIC SYSTEM - Система статиков
 // ═══════════════════════════════════════════════════════════════
 
-// ID владельцев (без статика)
+// ID владельцев (БЕЗ СТАТИКА)
 const OWNER_IDS = [
     '482499344982081546',
     '701782316623855668'
 ];
 
-// ID команды с статиками 0001-0010
+// ID команды с фиксированными статиками 0001-0010
 const TEAM_STATIC_IDS = {
-    '1170537060277428324': '0001',
-    '994390088190529586': '0002',
-    '1346385347319169038': '0003'
-    // Добавьте больше по необходимости до 0010
+    '1170537060277428324': '0001',  // 
+    '994390088190529586': '0002',   // Участник команды 2
+    '685507278400782376': '0003',  // Участник команды 3
+    '1346385347319169038': '0004',// Добавляйте участников команды до 0010
+    '1346385347319169038': '0003',// 'DISCORD_ID': '0004',
+    // 'DISCORD_ID': '0005',
+    // и так далее до 0010
 };
 
-// Функция получения следующего свободного статика
+// Максимальный статик для команды
+const MAX_TEAM_STATIC = 10;
+
+// Функция проверки - является ли пользователь владельцем
+function isOwner(userId) {
+    return OWNER_IDS.includes(userId);
+}
+
+// Функция проверки - является ли пользователь участником команды
+function isTeamMember(userId) {
+    return TEAM_STATIC_IDS.hasOwnProperty(userId);
+}
+
+// Функция получения следующего свободного статика для обычных пользователей
 function getNextAvailableStatic() {
-    const usedStatics = new Set(Object.values(TEAM_STATIC_IDS));
+    // Получаем все выданные статики
     const allStatics = JSON.parse(localStorage.getItem('badgrules_all_statics') || '{}');
+    const usedStatics = new Set();
     
-    // Объединяем используемые статики
-    Object.values(allStatics).forEach(static => usedStatics.add(static));
+    // Добавляем фиксированные статики команды (0001-0010) в занятые
+    Object.values(TEAM_STATIC_IDS).forEach(staticNum => {
+        usedStatics.add(staticNum);
+    });
     
-    // Ищем первый свободный с 0011
-    for (let i = 11; i <= 9999; i++) {
+    // Добавляем все выданные статики пользователям
+    Object.values(allStatics).forEach(staticNum => {
+        usedStatics.add(staticNum);
+    });
+    
+    // Ищем первый свободный статик начиная с 0011
+    for (let i = MAX_TEAM_STATIC + 1; i <= 9999; i++) {
         const staticNum = i.toString().padStart(4, '0');
         if (!usedStatics.has(staticNum)) {
             return staticNum;
         }
     }
     
+    // Если все статики заняты (маловероятно)
+    console.error('❌ Все статики заняты! Достигнут лимит 9999 пользователей');
     return null;
 }
 
-// Функция получения статика пользователя
+// Основная функция получения статика пользователя
 function getUserStatic(userId) {
-    // Проверяем, является ли пользователь владельцем
-    if (OWNER_IDS.includes(userId)) {
-        return null; // Владельцы не имеют статика
+    if (!userId) {
+        console.error('❌ userId не предоставлен');
+        return null;
     }
     
-    // Проверяем, есть ли у пользователя фиксированный статик (0001-0010)
-    if (TEAM_STATIC_IDS[userId]) {
-        return TEAM_STATIC_IDS[userId];
+    // 1. ВЛАДЕЛЬЦЫ - без статика
+    if (isOwner(userId)) {
+        console.log(`👑 Пользователь ${userId} - Владелец (без статика)`);
+        return null;
     }
+    
+    // 2. КОМАНДА - фиксированные статики 0001-0010
+    if (isTeamMember(userId)) {
+        const teamStatic = TEAM_STATIC_IDS[userId];
+        console.log(`⭐ Пользователь ${userId} - Команда (статик ${teamStatic})`);
+        return teamStatic;
+    }
+    
+    // 3. ОБЫЧНЫЕ ПОЛЬЗОВАТЕЛИ - динамические статики от 0011
+    const allStatics = JSON.parse(localStorage.getItem('badgrules_all_statics') || '{}');
     
     // Проверяем, был ли уже выдан статик ранее
-    const allStatics = JSON.parse(localStorage.getItem('badgrules_all_statics') || '{}');
     if (allStatics[userId]) {
-        return allStatics[userId];
+        const existingStatic = allStatics[userId];
+        console.log(`✅ Пользователь ${userId} уже имеет статик ${existingStatic}`);
+        return existingStatic;
     }
     
     // Выдаем новый статик
@@ -17081,65 +17245,121 @@ function getUserStatic(userId) {
     if (newStatic) {
         allStatics[userId] = newStatic;
         localStorage.setItem('badgrules_all_statics', JSON.stringify(allStatics));
-        console.log(`✅ Выдан новый статик ${newStatic} для пользователя ${userId}`);
+        console.log(`🆕 Выдан новый статик ${newStatic} для пользователя ${userId}`);
         return newStatic;
     }
     
+    console.error(`❌ Не удалось выдать статик для пользователя ${userId}`);
     return null;
 }
 
 // Функция получения роли пользователя
 function getUserRole(userId) {
-    if (OWNER_IDS.includes(userId)) {
+    if (!userId) return 'Гость';
+    
+    if (isOwner(userId)) {
         return 'Владелец';
     }
     
-    if (TEAM_STATIC_IDS[userId]) {
+    if (isTeamMember(userId)) {
         return 'Команда';
     }
     
     return 'Пользователь';
 }
 
+// Функция получения красивого отображения роли с иконкой
+function getUserRoleWithIcon(userId) {
+    if (!userId) return '👤 Гость';
+    
+    if (isOwner(userId)) {
+        return '👑 Владелец';
+    }
+    
+    if (isTeamMember(userId)) {
+        return '⭐ Команда';
+    }
+    
+    return '👤 Пользователь';
+}
+
 // Обновление отображения статика в профиле
 function updateProfileStatic(userId) {
+    console.log('🔄 Обновление профиля для userId:', userId);
+    
     const staticElement = document.getElementById('userStatic');
     const roleElement = document.getElementById('userRole');
     const staticRow = document.getElementById('staticRow');
     
-    if (!staticElement || !roleElement) return;
+    if (!staticElement || !roleElement) {
+        console.warn('⚠️ Элементы профиля не найдены');
+        return;
+    }
     
+    // Получаем статик и роль пользователя
     const userStatic = getUserStatic(userId);
     const userRole = getUserRole(userId);
+    const userRoleWithIcon = getUserRoleWithIcon(userId);
     
-    // Обновляем роль
+    console.log(`📊 Статик: ${userStatic || 'НЕТ'}, Роль: ${userRole}`);
+    
+    // Обновляем роль (можно использовать с иконкой)
     roleElement.textContent = userRole;
     
-    // Показываем/скрываем статик
+    // Показываем/скрываем строку со статиком
     if (userStatic) {
+        // У пользователя есть статик - показываем
         staticElement.textContent = `#${userStatic}`;
-        if (staticRow) staticRow.style.display = 'flex';
+        if (staticRow) {
+            staticRow.style.display = 'flex';
+            console.log(`✅ Статик #${userStatic} отображается`);
+        }
     } else {
-        if (staticRow) staticRow.style.display = 'none';
+        // Владельцы - скрываем строку со статиком
+        if (staticRow) {
+            staticRow.style.display = 'none';
+            console.log(`👑 Владелец - статик скрыт`);
+        }
+    }
+}
+
+// Функция для просмотра всех выданных статиков (для отладки)
+function debugShowAllStatics() {
+    const allStatics = JSON.parse(localStorage.getItem('badgrules_all_statics') || '{}');
+    console.log('📋 Все выданные статики:');
+    console.table(allStatics);
+    console.log('⭐ Команда:', TEAM_STATIC_IDS);
+    console.log('👑 Владельцы (без статика):', OWNER_IDS);
+}
+
+// Функция для сброса всех статиков (только для отладки!)
+function debugResetAllStatics() {
+    if (confirm('⚠️ Вы уверены? Это удалит все выданные статики!')) {
+        localStorage.removeItem('badgrules_all_statics');
+        console.log('🗑️ Все статики сброшены');
+        location.reload();
     }
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 🌍 UNIVERSAL ACCESS - Service Worker для offline доступа
+// 🌍 UNIVERSAL ACCESS - Service Worker ОТКЛЮЧЕН (может вызывать проблемы)
 // ═══════════════════════════════════════════════════════════════
 
+// Service Worker временно отключен из-за проблем с загрузкой
+// Раскомментируйте если нужен offline режим
+/*
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        // Регистрируем service worker для кэширования и offline доступа
         navigator.serviceWorker.register('/sw.js')
             .then(registration => {
-                console.log('✅ Service Worker зарегистрирован для универсального доступа');
+                console.log('✅ Service Worker зарегистрирован');
             })
             .catch(err => {
-                console.log('ℹ️ Service Worker не зарегистрирован (это нормально)');
+                console.log('ℹ️ Service Worker не зарегистрирован');
             });
     });
 }
+*/
 
 // ═══════════════════════════════════════════════════════════════
 // 🌐 GLOBAL ACCESSIBILITY - Проверка доступности
@@ -17274,6 +17494,75 @@ window.addEventListener('online', () => {
 window.addEventListener('offline', () => {
     console.log('📴 Соединение потеряно - работаем в offline режиме');
 });
+
+
+// ═══════════════════════════════════════════════════════════════
+// 🛡️ PAGE LOAD PROTECTION - Защита от черного экрана
+// ═══════════════════════════════════════════════════════════════
+
+(function() {
+    const loader = document.getElementById('initialLoader');
+    const loaderError = document.getElementById('loaderError');
+    let loadTimeout;
+    let errorTimeout;
+    
+    // Таймаут на полную загрузку - 8 секунд
+    loadTimeout = setTimeout(() => {
+        console.error('⚠️ Страница не загрузилась за 8 секунд');
+        if (loaderError) {
+            loaderError.classList.add('active');
+        }
+    }, 8000);
+    
+    // Полная загрузка страницы
+    window.addEventListener('load', () => {
+        clearTimeout(loadTimeout);
+        console.log('✅ Страница полностью загружена');
+        
+        // Убираем loader с анимацией
+        if (loader) {
+            loader.style.opacity = '0';
+            loader.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        }
+    });
+    
+    // DOM готов (базовая защита)
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('✅ DOM загружен');
+        
+        // Если за 15 секунд не произошло событие load, показываем ошибку
+        errorTimeout = setTimeout(() => {
+            if (loader && loader.style.display !== 'none') {
+                console.error('⚠️ Критическая ошибка загрузки');
+                if (loaderError) {
+                    loaderError.classList.add('active');
+                }
+            }
+        }, 15000);
+    });
+    
+    // Глобальный обработчик ошибок
+    window.addEventListener('error', (e) => {
+        console.error('❌ Глобальная ошибка:', e.message, e.filename, e.lineno);
+        
+        // Если критическая ошибка в первые 5 секунд, показываем экран ошибки
+        if (performance.now() < 5000) {
+            if (loaderError) {
+                loaderError.classList.add('active');
+            }
+        }
+    });
+    
+    // Обработчик необработанных промисов
+    window.addEventListener('unhandledrejection', (e) => {
+        console.error('❌ Необработанный промис:', e.reason);
+    });
+    
+    console.log('🛡️ Система защиты от черного экрана активирована');
+})();
 
 
 </script>
