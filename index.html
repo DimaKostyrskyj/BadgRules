@@ -2971,14 +2971,16 @@
             padding: 0;
             background: transparent;
             backdrop-filter: none;
-            height: 64px;
+            -webkit-backdrop-filter: none;
+            height: 80px;
             border-bottom: none;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), 
+                        opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             will-change: transform, opacity;
         }
 
         .top-logo.hidden {
-            transform: translateY(-100%);
+            transform: translateY(-120%);
             opacity: 0;
             pointer-events: none;
         }
@@ -3145,7 +3147,7 @@
             max-width: 900px;
             margin: 0 auto;
             padding: 0 1.5rem;
-            padding-top: 90px;
+            padding-top: 120px;
             padding-bottom: 50px;
             min-height: 100vh;
             box-sizing: border-box;
@@ -16989,64 +16991,35 @@ console.log('⚡ Система молний отключена');
 
     let lastScrollTop = 0;
     let scrollTimeout;
-    let isScrolling = false;
-    const scrollThreshold = 5; // Минимальная разница для реакции
+    const scrollThreshold = 30; // Минимальный скролл для скрытия меню
 
     function handleScroll() {
         const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
 
-        // Игнорируем если скролл в самом верху (с небольшим запасом)
-        if (currentScroll <= 120) {
+        // Показываем меню только в самом верху страницы
+        if (currentScroll <= scrollThreshold) {
             navbar.classList.remove('hidden');
-            lastScrollTop = currentScroll;
-            return;
-        }
-
-        // Вычисляем разницу скролла
-        const scrollDifference = Math.abs(currentScroll - lastScrollTop);
-        
-        // Игнорируем минимальные изменения
-        if (scrollDifference < scrollThreshold) {
-            return;
-        }
-
-        // Скролл вниз - прячем (с задержкой)
-        if (currentScroll > lastScrollTop && scrollDifference > scrollThreshold) {
-            if (!isScrolling) {
-                isScrolling = true;
-                setTimeout(() => {
-                    navbar.classList.add('hidden');
-                }, 150); // Небольшая задержка перед скрытием
-            }
-        } 
-        // Скролл вверх - показываем сразу
-        else if (currentScroll < lastScrollTop) {
-            isScrolling = false;
-            navbar.classList.remove('hidden');
+        } else {
+            // Прячем меню при любом скролле вниз
+            navbar.classList.add('hidden');
         }
 
         lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     }
 
-    // Debounced scroll handler
+    // Debounced scroll handler для оптимизации производительности
     function onScroll() {
         clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(handleScroll, 15);
+        scrollTimeout = setTimeout(handleScroll, 5);
     }
 
     // Добавляем слушатель с passive для лучшей производительности
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // При остановке скролла проверяем состояние
-    let stopScrollTimeout;
-    window.addEventListener('scroll', function() {
-        clearTimeout(stopScrollTimeout);
-        stopScrollTimeout = setTimeout(() => {
-            isScrolling = false;
-        }, 150);
-    }, { passive: true });
+    // Инициализация - показываем меню если страница вверху
+    handleScroll();
 
-    console.log('📱 Автоскрытие навигации активно');
+    console.log('📱 Минималистичная навигация активирована');
 })();
 
     
