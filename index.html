@@ -10198,32 +10198,141 @@
             display: block;
         }
 
+        /* ═══════════════════════════════════════════════════════════════
+           🎨 КРАСИВЫЕ КАРТОЧКИ УРОВНЕЙ
+           ═══════════════════════════════════════════════════════════════ */
+        
         .admin-level-block {
             margin-bottom: 3rem;
+            background: rgba(15, 15, 20, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .admin-level-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--level-color-1, #10b981) 0%, 
+                var(--level-color-2, #22c55e) 100%);
+            opacity: 0.8;
+        }
+
+        .admin-level-block:hover {
+            border-color: var(--level-color-1, var(--accent-primary));
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 
+                        0 0 0 1px var(--level-color-1, var(--accent-primary));
+            transform: translateY(-2px);
+        }
+
+        /* Уровень 1 - Зеленый */
+        .admin-level-block:has(.level-1) {
+            --level-color-1: #10b981;
+            --level-color-2: #22c55e;
+        }
+
+        /* Уровень 2 - Голубой */
+        .admin-level-block:has(.level-2) {
+            --level-color-1: #60a5fa;
+            --level-color-2: #3b82f6;
+        }
+
+        /* Уровень 3 - Фиолетовый */
+        .admin-level-block:has(.level-3) {
+            --level-color-1: #a855f7;
+            --level-color-2: #8b5cf6;
+        }
+
+        /* Уровень 4 - Золотой */
+        .admin-level-block:has(.level-4) {
+            --level-color-1: #fbbf24;
+            --level-color-2: #f59e0b;
         }
 
         .admin-level-block .admin-level-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 1.5rem;
+            padding: 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            background: linear-gradient(135deg, 
+                rgba(var(--level-rgb, 96, 165, 250), 0.15) 0%, 
+                rgba(var(--level-rgb, 96, 165, 250), 0.05) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px 20px 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-level-block:has(.level-1) .admin-level-header {
+            --level-rgb: 16, 185, 129;
+        }
+
+        .admin-level-block:has(.level-2) .admin-level-header {
+            --level-rgb: 96, 165, 250;
+        }
+
+        .admin-level-block:has(.level-3) .admin-level-header {
+            --level-rgb: 168, 85, 247;
+        }
+
+        .admin-level-block:has(.level-4) .admin-level-header {
+            --level-rgb: 251, 191, 36;
+        }
+
+        /* Добавляем паттерн на фон заголовка */
+        .admin-level-block .admin-level-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .admin-level-block .level-badge {
+            background: var(--level-color-1, var(--accent-primary));
+            color: white;
+            padding: 0.75rem 1.5rem;
             border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
         }
 
         .admin-level-block .admin-category-title {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--accent-primary);
+            color: #ffffff;
             margin: 0;
             border: none;
             padding: 0;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 1;
         }
 
         /* Команды в ряд - используем всю ширину */
         .admin-level-block .admin-commands-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1rem;
         }
 
@@ -10395,18 +10504,45 @@
         }
 
         .admin-command-card {
-            background: rgba(30, 30, 30, 0.6);
-            border: 1px solid var(--border-color);
+            background: linear-gradient(135deg, 
+                rgba(30, 30, 35, 0.8) 0%, 
+                rgba(25, 25, 30, 0.6) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             padding: 1.25rem;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .admin-command-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(96, 165, 250, 0.05) 0%, 
+                transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .admin-command-card:hover::before {
+            opacity: 1;
         }
 
         .admin-command-card:hover {
-            background: rgba(40, 40, 40, 0.8);
-            border-color: var(--accent-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(96, 165, 250, 0.1);
+            background: linear-gradient(135deg, 
+                rgba(40, 40, 45, 0.9) 0%, 
+                rgba(35, 35, 40, 0.8) 100%);
+            border-color: var(--level-color-1, var(--accent-primary));
+            transform: translateY(-4px);
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.4),
+                0 0 0 1px var(--level-color-1, var(--accent-primary)),
+                0 4px 16px rgba(var(--level-rgb, 96, 165, 250), 0.2);
         }
 
         .admin-command-card.warning {
@@ -10415,7 +10551,10 @@
 
         .admin-command-card.warning:hover {
             border-color: #ef4444;
-            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.2);
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.4),
+                0 0 0 1px #ef4444,
+                0 4px 16px rgba(239, 68, 68, 0.3);
         }
 
         .command-header {
@@ -10426,16 +10565,19 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.95rem;
             font-weight: 600;
-            color: var(--accent-primary);
-            background: rgba(96, 165, 250, 0.1);
+            color: var(--level-color-1, var(--accent-primary));
+            background: linear-gradient(135deg, 
+                rgba(var(--level-rgb, 96, 165, 250), 0.15) 0%, 
+                rgba(var(--level-rgb, 96, 165, 250), 0.08) 100%);
             padding: 0.4rem 0.8rem;
             border-radius: 6px;
             display: inline-block;
+            border: 1px solid rgba(var(--level-rgb, 96, 165, 250), 0.2);
         }
 
         .command-description {
             font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.8);
             line-height: 1.6;
             margin: 0;
         }
@@ -10443,11 +10585,11 @@
         .command-note {
             margin-top: 0.75rem;
             padding: 0.75rem;
-            background: rgba(96, 165, 250, 0.05);
-            border-left: 2px solid var(--accent-primary);
+            background: rgba(var(--level-rgb, 96, 165, 250), 0.08);
+            border-left: 2px solid var(--level-color-1, var(--accent-primary));
             border-radius: 6px;
             font-size: 0.85rem;
-            color: var(--text-secondary);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .command-note strong {
