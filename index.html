@@ -4288,6 +4288,82 @@
             color: rgba(251, 191, 36, 0.8);
         }
 
+        /* Premium-Only Hidden Feature */
+        .quick-question.premium-only-hidden {
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.15) 0%, rgba(167, 139, 250, 0.08) 100%);
+            border: 1px solid rgba(147, 51, 234, 0.4);
+            animation: fadeInSlide 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .quick-question.premium-only-hidden::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .quick-question.premium-only-hidden:hover::before {
+            left: 100%;
+        }
+
+        .quick-question.premium-only-hidden:hover {
+            border-color: rgba(147, 51, 234, 0.6);
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.2) 0%, rgba(167, 139, 250, 0.12) 100%);
+            box-shadow: 0 0 25px rgba(147, 51, 234, 0.2), 0 0 50px rgba(147, 51, 234, 0.1);
+        }
+
+        .quick-question.premium-only-hidden .quick-question-title {
+            color: rgba(167, 139, 250, 1);
+            font-weight: 600;
+        }
+
+        .quick-question.premium-only-hidden .lock-icon {
+            color: rgba(167, 139, 250, 1);
+            font-size: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .premium-badge.exclusive {
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.3) 0%, rgba(167, 139, 250, 0.3) 100%);
+            color: rgba(167, 139, 250, 1);
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            box-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
+        }
+
+        .quick-question.premium-only-hidden:hover .premium-badge.exclusive {
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.4) 0%, rgba(167, 139, 250, 0.4) 100%);
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.4);
+        }
+
         /* Recent Dialogs Section */
         .recent-dialogs {
             margin-top: 2.5rem;
@@ -10698,6 +10774,18 @@
                                     PRO
                                 </span>
                             </div>
+
+                            <!-- Hidden Premium-Only Feature - Visible only with subscription -->
+                            <div class="quick-question premium premium-only-hidden" id="premiumExclusiveInsider" onclick="openPremiumFeature('exclusive-insider')" style="display: none;">
+                                <span class="lock-icon">💎</span>
+                                <span class="quick-question-title">Инсайдерская информация</span>
+                                <span class="premium-badge exclusive">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                                    </svg>
+                                    EXCLUSIVE
+                                </span>
+                            </div>
                         </div>
 
                         <div class="recent-dialogs">
@@ -15760,14 +15848,26 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             const premiumButtons = document.querySelectorAll('.quick-question.premium');
             
             premiumButtons.forEach(btn => {
-                if (isPremium) {
-                    btn.classList.remove('locked');
-                    const lockIcon = btn.querySelector('.lock-icon');
-                    if (lockIcon) lockIcon.textContent = '✨';
+                // Скрытая эксклюзивная кнопка
+                if (btn.classList.contains('premium-only-hidden')) {
+                    if (isPremium) {
+                        btn.style.display = 'inline-flex';
+                        const lockIcon = btn.querySelector('.lock-icon');
+                        if (lockIcon) lockIcon.textContent = '💎';
+                    } else {
+                        btn.style.display = 'none';
+                    }
                 } else {
-                    btn.classList.add('locked');
-                    const lockIcon = btn.querySelector('.lock-icon');
-                    if (lockIcon) lockIcon.textContent = '🔒';
+                    // Обычные премиум кнопки
+                    if (isPremium) {
+                        btn.classList.remove('locked');
+                        const lockIcon = btn.querySelector('.lock-icon');
+                        if (lockIcon) lockIcon.textContent = '✨';
+                    } else {
+                        btn.classList.add('locked');
+                        const lockIcon = btn.querySelector('.lock-icon');
+                        if (lockIcon) lockIcon.textContent = '🔒';
+                    }
                 }
             });
             
@@ -15795,6 +15895,9 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                     break;
                 case 'secrets':
                     openSecretsDatabase();
+                    break;
+                case 'exclusive-insider':
+                    openExclusiveInsider();
                     break;
             }
         }
@@ -15985,6 +16088,14 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         function openSecretsDatabase() {
             addMessage(false, '🔐 **Секретная информация серверов**\n\n**Доступная информация:**\n\n🔹 **Скрытые механики** - Недокументированные особенности серверов\n🔹 **Экономика серверов** - Статистика доходов, популярности фракций\n🔹 **Инсайды разработки** - Планы обновлений и изменений\n🔹 **База багов** - Известные баги и способы их использования/избежания\n🔹 **VIP информация** - Эксклюзивные данные для премиум игроков\n\n⚠️ **Внимание:** Информация предоставлена в ознакомительных целях.');
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 💎 EXCLUSIVE PREMIUM FEATURE: Инсайдерская информация
+        // ═══════════════════════════════════════════════════════════════
+
+        function openExclusiveInsider() {
+            addMessage(false, '💎 **ЭКСКЛЮЗИВ: Инсайдерская информация**\n\n**Доступ к закрытым данным:**\n\n🔸 **Внутренняя кухня серверов**\n   • Реальные доходы владельцев серверов\n   • Схемы монетизации и донат-стратегии\n   • Конфликты в команде разработчиков\n   • Скандалы и инциденты за кулисами\n\n🔸 **Инсайды обновлений**\n   • Запланированные изменения на 6-12 месяцев вперед\n   • Отмененные функции и причины отказа\n   • Секретные тесты новых механик\n   • Эксклюзивные скриншоты и концепт-арты\n\n🔸 **База данных игроков**\n   • Топ донатеров и их реальные траты\n   • Статистика нарушений по серверам\n   • Скрытые VIP-привилегии\n   • Неофициальные договоренности с влиятельными игроками\n\n🔸 **Технические секреты**\n   • Архитектура серверов и слабые места\n   • Способы обхода античита (для понимания защиты)\n   • Эксплойты в коде и недокументированные баги\n   • Бэкдоры и скрытые возможности\n\n🔸 **Политика и интриги**\n   • Конкуренция между серверами\n   • Договоренности между администрациями\n   • Скандалы с утечками данных\n   • Закулисные войны за аудиторию\n\n🔸 **Будущее проектов**\n   • Планы закрытия/слияния серверов\n   • Инвестиции и финансовое состояние\n   • Риски и угрозы для проектов\n   • Инсайды по смене владельцев\n\n⚠️ **СТРОГО КОНФИДЕНЦИАЛЬНО**\nИнформация получена из надежных источников внутри команд разработчиков и администрации. Использовать исключительно для личного понимания ситуации.\n\n💡 **Спросите о конкретном сервере или теме для получения детальной информации.**');
         }
 
         // ═══════════════════════════════════════════════════════════════
