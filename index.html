@@ -691,7 +691,6 @@
         .login-container,
         .project-card,
         .server-card,
-        .message-content,
         .chat-input-box,
         .profile-dropdown,
         .modal-content,
@@ -705,7 +704,6 @@
         /* Hover effects for interactive elements */
         .project-card:hover,
         .server-card:hover,
-        .message-content:hover,
         .dropdown-item:hover {
             background: rgba(20, 20, 20, 0.85) !important;
             border-color: var(--border-glow) !important;
@@ -756,6 +754,27 @@
             outline: none !important;
             border-color: var(--border-glow) !important;
             box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15) !important;
+        }
+
+        /* Убираем цвет выделения текста при поиске */
+        ::selection {
+            background: transparent !important;
+            color: inherit !important;
+        }
+
+        ::-moz-selection {
+            background: transparent !important;
+            color: inherit !important;
+        }
+
+        /* Убираем outline для всех элементов сообщений */
+        .message,
+        .message *,
+        .message-content,
+        .message-content *,
+        .message-text,
+        .message-text * {
+            outline: none !important;
         }
 
         /* Selected states */
@@ -3491,6 +3510,14 @@
             animation: messageSlideIn 0.4s ease-out;
         }
 
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message.bot {
+            flex-direction: row;
+        }
+
         @keyframes messageSlideIn {
             from {
                 opacity: 0;
@@ -3528,6 +3555,20 @@
         .message-content {
             flex: 1;
             line-height: 1.6;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .message.user .message-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .message.bot .message-content {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .message-text {
@@ -3535,11 +3576,9 @@
             padding: 0;
             border-radius: 0;
             border: none;
+            color: var(--text-primary);
         }
 
-        .message.user .message-text {
-            background: transparent;
-        }
 
         /* ═══════════════════════════════════════════════════════════════ */
         /* 📜 КРАСИВОЕ ФОРМАТИРОВАНИЕ ОТВЕТОВ БОТА */
@@ -6015,6 +6054,17 @@
             30% {
                 transform: translateY(-10px);
             }
+        }
+
+        /* Динамический статус загрузки */
+        .typing-status {
+            color: var(--accent-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+            font-family: 'Manrope', sans-serif;
         }
 
         /* Responsive - Settings Modal */
@@ -12211,8 +12261,22 @@
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isBot ? 'bot' : 'user'}`;
 
+            // Получаем аватар пользователя
+            let userAvatarHtml = 'Вы';
+            if (!isBot) {
+                const userAvatarElement = document.getElementById('userAvatar');
+                if (userAvatarElement) {
+                    const avatarImg = userAvatarElement.querySelector('img');
+                    if (avatarImg) {
+                        userAvatarHtml = `<img src="${avatarImg.src}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">`;
+                    } else {
+                        userAvatarHtml = userAvatarElement.textContent || 'Вы';
+                    }
+                }
+            }
+
             messageDiv.innerHTML = `
-                <div class="message-avatar">${isBot ? '<img src="images/logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;">' : 'Вы'}</div>
+                <div class="message-avatar">${isBot ? '<img src="images/logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;">' : userAvatarHtml}</div>
                 <div class="message-content">
                     <div class="message-text">${text}</div>
                     <div class="message-time">${getCurrentTime()}</div>
@@ -12230,8 +12294,22 @@
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isBot ? 'bot' : 'user'}`;
 
+            // Получаем аватар пользователя
+            let userAvatarHtml = 'Вы';
+            if (!isBot) {
+                const userAvatarElement = document.getElementById('userAvatar');
+                if (userAvatarElement) {
+                    const avatarImg = userAvatarElement.querySelector('img');
+                    if (avatarImg) {
+                        userAvatarHtml = `<img src="${avatarImg.src}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">`;
+                    } else {
+                        userAvatarHtml = userAvatarElement.textContent || 'Вы';
+                    }
+                }
+            }
+
             messageDiv.innerHTML = `
-                <div class="message-avatar">${isBot ? '<img src="images/logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;">' : 'Вы'}</div>
+                <div class="message-avatar">${isBot ? '<img src="images/logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;">' : userAvatarHtml}</div>
                 <div class="message-content">
                     <div class="message-text html-content">${htmlContent}</div>
                     <div class="message-time">${getCurrentTime()}</div>
@@ -12242,6 +12320,17 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
+        let typingInterval = null;
+        let currentStatusIndex = 0;
+        const typingStatuses = [
+            'Думаю...',
+            'Анализирую вопрос...',
+            'Ищу информацию...',
+            'Проверяю базу правил...',
+            'Формирую ответ...',
+            'Генерирую ответ...'
+        ];
+
         function addTypingIndicator() {
             const typingDiv = document.createElement('div');
             typingDiv.className = 'message bot';
@@ -12249,18 +12338,32 @@
             typingDiv.innerHTML = `
                 <div class="message-avatar"><img src="images/logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;"></div>
                 <div class="message-content">
-                    <div class="typing-indicator">
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                    </div>
+                    <div class="typing-status" id="typingStatus">${typingStatuses[0]}</div>
                 </div>
             `;
             chatMessages.appendChild(typingDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Запускаем циклическую смену статусов
+            currentStatusIndex = 0;
+            typingInterval = setInterval(() => {
+                currentStatusIndex = (currentStatusIndex + 1) % typingStatuses.length;
+                const statusElement = document.getElementById('typingStatus');
+                if (statusElement) {
+                    statusElement.style.opacity = '0';
+                    setTimeout(() => {
+                        statusElement.textContent = typingStatuses[currentStatusIndex];
+                        statusElement.style.opacity = '1';
+                    }, 200);
+                }
+            }, 2000); // Меняем статус каждые 2 секунды
         }
 
         function removeTypingIndicator() {
+            if (typingInterval) {
+                clearInterval(typingInterval);
+                typingInterval = null;
+            }
             const typingIndicator = document.getElementById('typingIndicator');
             if (typingIndicator) {
                 typingIndicator.remove();
