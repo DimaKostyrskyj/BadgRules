@@ -10624,23 +10624,25 @@
 
 
 /* ═══════════════════════════════════════════════════════════════
-   ⚡ КОМПАКТНАЯ АДМИН-ПАНЕЛЬ
+   ⚡ АДМИН-ПАНЕЛЬ MAJESTIC RP
    ═══════════════════════════════════════════════════════════════ */
 
 .admin-panel-wrapper {
-    max-width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
     padding: 2rem;
 }
 
 .admin-header-compact {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .admin-header-compact h1 {
     font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
     margin-bottom: 1rem;
-    color: #fff;
 }
 
 .admin-header-badges {
@@ -10651,15 +10653,15 @@
 }
 
 .badge-majestic, .badge-date {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.25rem;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 600;
 }
 
 .badge-majestic {
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1));
-    border: 1px solid rgba(251, 191, 36, 0.4);
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
     color: #fbbf24;
 }
 
@@ -10676,34 +10678,35 @@
     margin-bottom: 2rem;
     overflow-x: auto;
     padding: 0.5rem;
-    background: rgba(20, 20, 25, 0.6);
-    border-radius: 16px;
+    background: rgba(30, 30, 30, 0.4);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
 }
 
 .admin-tab-btn {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 1rem 1.5rem;
-    background: rgba(30, 30, 35, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    color: rgba(255, 255, 255, 0.7);
+    padding: 0.875rem 1.5rem;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: var(--text-secondary);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .admin-tab-btn:hover {
-    background: rgba(40, 40, 45, 0.8);
-    border-color: var(--accent-primary);
-    color: #fff;
+    background: rgba(40, 40, 40, 0.6);
+    color: var(--text-primary);
 }
 
 .admin-tab-btn.active {
-    background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(96, 165, 250, 0.1));
+    background: rgba(96, 165, 250, 0.1);
     border-color: var(--accent-primary);
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .tab-num {
@@ -10714,25 +10717,29 @@
     justify-content: center;
     border-radius: 8px;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    color: white;
 }
 
 .tab-num.lv4 { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
 .tab-num.lv3 { background: linear-gradient(135deg, #a855f7, #8b5cf6); }
 .tab-num.lv2 { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
 .tab-num.lv1 { background: linear-gradient(135deg, #10b981, #22c55e); }
-.tab-num.lvinfo { background: linear-gradient(135deg, #6b7280, #4b5563); }
+.tab-num.lvinfo { 
+    background: linear-gradient(135deg, #6b7280, #4b5563); 
+    font-size: 1.2rem;
+}
 
 .tab-text {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
 }
 
 /* Панели */
 .admin-tab-panels {
-    background: rgba(20, 20, 25, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    background: rgba(30, 30, 30, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     padding: 2rem;
 }
 
@@ -10746,8 +10753,187 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.admin-panel h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.admin-note-inline {
+    background: rgba(16, 185, 129, 0.1);
+    border-left: 3px solid #10b981;
+    padding: 0.875rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Команды */
+.cmd-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 0.875rem;
+}
+
+.cmd {
+    background: rgba(40, 40, 40, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: all 0.2s ease;
+}
+
+.cmd:hover {
+    background: rgba(50, 50, 50, 0.6);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+}
+
+.cmd.warn {
+    border-left: 3px solid #ef4444;
+}
+
+.cmd code {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+    background: rgba(96, 165, 250, 0.1);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid rgba(96, 165, 250, 0.2);
+}
+
+.cmd p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.cmd a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-left: 0.375rem;
+}
+
+.cmd a:hover {
+    text-decoration: underline;
+}
+
+/* Справка */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.info-box {
+    background: rgba(40, 40, 40, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.info-box h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: 1rem;
+}
+
+.info-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.info-tags span {
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    padding: 0.5rem 0.875rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.info-tags span:hover {
+    background: rgba(96, 165, 250, 0.15);
+    border-color: var(--accent-primary);
+}
+
+.info-tags span.danger {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.info-tags span b {
+    color: var(--accent-primary);
+    font-weight: 700;
+}
+
+/* Адаптив */
+@media (max-width: 1200px) {
+    .cmd-list {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-panel-wrapper {
+        padding: 1rem;
+    }
+    
+    .admin-tabs-bar {
+        flex-direction: column;
+    }
+    
+    .admin-tab-btn {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .admin-tab-panels {
+        padding: 1.25rem;
+    }
+    
+    .cmd-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Scrollbar */
+.admin-tabs-bar::-webkit-scrollbar {
+    height: 6px;
+}
+
+.admin-tabs-bar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.admin-tabs-bar::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 3px;
+}
+
 }
 
 .admin-panel h2 {
@@ -20030,7 +20216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTeamColors();
 });
 
-// Переключение вкладок админ-панели
+// Функция переключения вкладок админ-панели
 function switchAdminTab(tabId) {
     console.log('Switching admin tab to:', tabId);
     
@@ -20039,7 +20225,7 @@ function switchAdminTab(tabId) {
         btn.classList.remove('active');
     });
     
-    // Добавляем active нужной кнопке
+    // Добавляем active нажатой кнопке
     event.target.closest('.admin-tab-btn').classList.add('active');
     
     // Скрываем все панели
@@ -20053,11 +20239,9 @@ function switchAdminTab(tabId) {
         targetPanel.classList.add('active');
     }
 }
-</script>
 
 
 </script>
-
 
 
 </body>
