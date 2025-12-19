@@ -3516,8 +3516,9 @@
         }
 
         .message.user {
-            flex-direction: row;
-            justify-content: flex-end;
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+            margin-left: auto;
         }
 
         .message.bot {
@@ -3582,6 +3583,7 @@
             background: transparent;
             border: none;
             max-width: fit-content;
+            text-align: right;
         }
 
         .message.bot .message-content {
@@ -13678,47 +13680,34 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                     return `<a href="${forumLink}" target="_blank" style="color: var(--accent-primary); font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--accent-primary); transition: all 0.2s; cursor: pointer;" onmouseover="this.style.color='#3b82f6'; this.style.borderColor='#3b82f6'" onmouseout="this.style.color='var(--accent-primary)'; this.style.borderColor='var(--accent-primary)'">Правило ${ruleNum}</a>`;
                 });
             
-            // Определяем статус источника
-            const sourceStatus = wasParsed ? 
-                `<span style="padding: 5px 12px; background: rgba(16, 185, 129, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--accent-success); font-weight: 500;">
-                    ✓ Правила с форума
-                </span>` :
-                `<span style="padding: 5px 12px; background: rgba(251, 191, 36, 0.15); border-radius: 8px; font-size: 0.75rem; color: var(--accent-warning); font-weight: 500;">
-                    ⚠️ Базовые знания AI
-                </span>`;
-            
-            return `<div style="background: transparent; border-radius: 16px; overflow: hidden; border: 1px solid rgba(96, 165, 250, 0.15);">
+            return `<div style="background: transparent;">
                 <!-- Заголовок -->
-                <div style="padding: 16px 20px; background: rgba(10, 15, 25, 0.4); border-bottom: 1px solid rgba(96, 165, 250, 0.2);">
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span style="font-size: 1.4rem;">${modelIcon}</span>
-                        <div style="flex: 1;">
-                            <div style="font-size: 0.9rem; font-weight: 700; letter-spacing: 0.3px; color: #60a5fa;">
-                                ${modelName}
-                            </div>
-                            <div style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.5); margin-top: 3px;">
-                                ${wasParsed ? 'Ответ на основе правил форума' : 'Ответ на основе базовых знаний'}
-                            </div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                    <span style="font-size: 1.2rem;">${modelIcon}</span>
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.95rem; font-weight: 600; color: rgba(255, 255, 255, 0.95);">
+                            ${modelName}
+                        </div>
+                        <div style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); margin-top: 2px;">
+                            ${wasParsed ? 'Ответ на основе базовых знаний' : 'Ответ на основе базовых знаний'}
                         </div>
                     </div>
                 </div>
                 
                 <!-- Контент -->
-                <div style="padding: 20px;">
-                    <div style="font-size: 0.95rem; line-height: 1.8; color: var(--text-primary);">
-                        ${formattedText}
-                    </div>
+                <div style="font-size: 0.95rem; line-height: 1.7; color: rgba(255, 255, 255, 0.9);">
+                    ${formattedText}
                 </div>
                 
                 <!-- Футер -->
-                <div style="padding: 12px 20px; background: rgba(10, 15, 25, 0.3); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; border-top: 1px solid rgba(96, 165, 250, 0.15);">
-                    <span style="padding: 6px 14px; background: rgba(96, 165, 250, 0.15); border: 1px solid rgba(96, 165, 250, 0.2); border-radius: 8px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); font-weight: 500;">
+                <div style="margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                    <span style="padding: 6px 12px; background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.25); border-radius: 8px; font-size: 0.75rem; color: rgba(96, 165, 250, 0.9); font-weight: 500;">
                         🎮 ${serverName}
                     </span>
-                    <a href="${forumLink}" target="_blank" style="padding: 6px 14px; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 8px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); font-weight: 500; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(59, 130, 246, 0.25)'" onmouseout="this.style.background='rgba(59, 130, 246, 0.15)'">
-                        🌐 Открыть правила →
+                    <a href="${forumLink}" target="_blank" style="padding: 6px 12px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 8px; font-size: 0.75rem; color: rgba(59, 130, 246, 0.9); font-weight: 500; text-decoration: none; transition: all 0.2s;" onmouseover="this.style.background='rgba(59, 130, 246, 0.15)'" onmouseout="this.style.background='rgba(59, 130, 246, 0.1)'">
+                        📖 Открыть правила →
                     </a>
-                    ${sourceStatus}
+                    ${wasParsed ? '<span style="padding: 6px 12px; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.25); border-radius: 8px; font-size: 0.75rem; color: rgba(251, 191, 36, 0.9); font-weight: 500;">⚠️ Базовые знания AI</span>' : ''}
                 </div>
             </div>`;
         }
