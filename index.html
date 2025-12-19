@@ -10154,9 +10154,9 @@
            ═══════════════════════════════════════════════════════════════ */
         
         .admin-container {
-            max-width: 1600px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 2rem 2rem;
         }
 
         /* Server badges */
@@ -10193,110 +10193,103 @@
             color: #22c55e;
         }
 
-        /* Admin levels grid - горизонтальная сетка */
+        /* Убираем старую структуру */
         .admin-levels-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            display: block;
         }
 
         .admin-level-block {
-            background: rgba(20, 20, 20, 0.4);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .admin-level-block:hover {
-            background: rgba(30, 30, 30, 0.6);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.1);
+            margin-bottom: 3rem;
         }
 
         .admin-level-block .admin-level-header {
-            flex-direction: column;
-            text-align: center;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
             border-radius: 12px;
         }
 
         .admin-level-block .admin-category-title {
-            font-size: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
             margin: 0;
             border: none;
             padding: 0;
         }
 
+        /* Команды в ряд - используем всю ширину */
         .admin-level-block .admin-commands-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
         }
 
         .admin-level-block .admin-command-card {
-            padding: 1rem;
-            font-size: 0.85rem;
+            padding: 1.25rem;
         }
 
         .admin-level-block .command-name {
-            font-size: 0.8rem;
-            padding: 0.3rem 0.6rem;
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
         }
 
         .admin-level-block .command-description {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
         .admin-level-block .command-note {
-            font-size: 0.75rem;
-            padding: 0.5rem;
-            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            padding: 0.75rem;
+            margin-top: 0.75rem;
         }
 
         .admin-level-block .command-links {
-            margin-top: 0.5rem;
+            margin-top: 0.75rem;
         }
 
         .admin-level-block .admin-note-special {
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            font-size: 0.85rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .admin-level-block .admin-hotkey-info {
-            flex-direction: column;
-            gap: 0.5rem;
-            padding: 0.75rem;
-            margin-top: 1rem;
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
         }
 
         .admin-level-block .hotkey-item {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         .admin-level-block .hotkey-key {
-            min-width: 40px;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.85rem;
+            min-width: 50px;
+            padding: 0.5rem 1rem;
         }
 
         /* Responsive */
-        @media (max-width: 1400px) {
-            .admin-levels-grid {
-                grid-template-columns: repeat(2, 1fr);
+        @media (max-width: 1200px) {
+            .admin-level-block .admin-commands-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
         }
 
         @media (max-width: 768px) {
-            .admin-levels-grid {
+            .admin-container {
+                padding: 1rem;
+            }
+
+            .admin-level-block .admin-commands-grid {
                 grid-template-columns: 1fr;
             }
 
-            .admin-container {
-                max-width: 100%;
+            .admin-level-block .admin-hotkey-info {
+                flex-direction: column;
             }
         }
 
@@ -11838,8 +11831,7 @@
                 </div>
                 
                 <div class="admin-container">
-                    <!-- Уровни админа в ряд -->
-                    <div class="admin-levels-grid">
+                    <!-- Команды администрации Majestic RP -->
                         <!-- Уровень 4 -->
                         <div class="admin-level-block>
                         <div class="admin-level-header level-4">
@@ -12411,8 +12403,6 @@
                             </div>
                         </div>
                     </div>
-                    </div>
-                    <!-- Закрываем admin-levels-grid -->
 
                     <!-- Справочная информация Majestic RP -->
                     <div class="admin-category">
