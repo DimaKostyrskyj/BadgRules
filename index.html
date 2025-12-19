@@ -3177,6 +3177,154 @@
             opacity: 0.7;
         }
 
+        /* ═══════════════════════════════════════════════════════════════
+           📋 USEFUL DROPDOWN MENU STYLES
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .useful-dropdown-container {
+            position: relative;
+        }
+
+        .useful-trigger {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .useful-arrow {
+            transition: transform 0.3s ease;
+            color: currentColor;
+        }
+
+        .useful-trigger.active .useful-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Dropdown Menu */
+        .useful-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background: rgba(20, 20, 20, 0.98);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 12px;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(96, 165, 250, 0.1);
+            z-index: 1000;
+            animation: usefulSlideDown 0.3s ease;
+        }
+
+        @keyframes usefulSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .useful-menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .useful-menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.1), transparent);
+            transition: left 0.4s ease;
+        }
+
+        .useful-menu-item:hover::before {
+            left: 100%;
+        }
+
+        .useful-menu-item:hover {
+            background: rgba(96, 165, 250, 0.08);
+            transform: translateX(5px);
+        }
+
+        .useful-menu-item.premium-tab {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(251, 191, 36, 0.02) 100%);
+        }
+
+        .useful-menu-item.premium-tab:hover {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.12) 0%, rgba(251, 191, 36, 0.06) 100%);
+        }
+
+        .useful-badge {
+            background: rgba(251, 191, 36, 0.2);
+            color: rgba(251, 191, 36, 1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .useful-menu-item:hover .useful-badge {
+            background: rgba(251, 191, 36, 0.3);
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .useful-dropdown-menu {
+                position: relative;
+                top: 0;
+                left: 0;
+                width: 100%;
+                margin-top: 0;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+                animation: mobileSlideDown 0.3s ease;
+            }
+
+            @keyframes mobileSlideDown {
+                from {
+                    max-height: 0;
+                    opacity: 0;
+                }
+                to {
+                    max-height: 500px;
+                    opacity: 1;
+                }
+            }
+
+            .useful-menu-item {
+                padding: 1rem 1.5rem;
+                border-radius: 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .useful-menu-item:last-child {
+                border-bottom: none;
+            }
+        }
+
         @media (max-width: 968px) {
             .logo-menu-item {
                 padding: 0 1.5rem;
@@ -4362,6 +4510,192 @@
         .quick-question.premium-only-hidden:hover .premium-badge.exclusive {
             background: linear-gradient(135deg, rgba(147, 51, 234, 0.4) 0%, rgba(167, 139, 250, 0.4) 100%);
             box-shadow: 0 0 15px rgba(147, 51, 234, 0.4);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ⭐ PREMIUM TOGGLE BUTTON & DROPDOWN
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .premium-toggle-container {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .premium-toggle-button {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.12) 0%, rgba(251, 191, 36, 0.06) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            padding: 0.8rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-toggle-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .premium-toggle-button:hover::before {
+            left: 100%;
+        }
+
+        .premium-toggle-button:hover {
+            border-color: rgba(251, 191, 36, 0.5);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.18) 0%, rgba(251, 191, 36, 0.09) 100%);
+            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .premium-toggle-button.active {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(251, 191, 36, 0.12) 100%);
+            border-color: rgba(251, 191, 36, 0.6);
+        }
+
+        .premium-toggle-icon {
+            font-size: 1.2rem;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.15) rotate(15deg);
+                opacity: 0.8;
+            }
+        }
+
+        .premium-toggle-text {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: rgba(251, 191, 36, 1);
+            flex: 1;
+        }
+
+        .premium-toggle-arrow {
+            color: rgba(251, 191, 36, 0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .premium-toggle-button.active .premium-toggle-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Premium Features Dropdown */
+        .premium-features-dropdown {
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 16px;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            animation: slideDown 0.3s ease;
+            overflow: hidden;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                max-height: 500px;
+            }
+        }
+
+        .premium-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.1), transparent);
+            transition: left 0.4s ease;
+        }
+
+        .premium-feature-item:hover::before {
+            left: 100%;
+        }
+
+        .premium-feature-item:hover {
+            background: rgba(251, 191, 36, 0.08);
+            transform: translateX(5px);
+        }
+
+        .premium-feature-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .premium-feature-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .premium-badge-mini {
+            background: rgba(251, 191, 36, 0.2);
+            color: rgba(251, 191, 36, 1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .premium-toggle-button {
+                padding: 0.7rem 0.9rem;
+            }
+
+            .premium-toggle-text {
+                font-size: 0.9rem;
+            }
+
+            .premium-feature-item {
+                padding: 0.7rem 0.9rem;
+            }
+
+            .premium-feature-icon {
+                font-size: 1.2rem;
+            }
+
+            .premium-feature-text {
+                font-size: 0.85rem;
+            }
         }
 
         /* Recent Dialogs Section */
@@ -9998,15 +10332,6 @@
             <div class="logo-menu-item active" data-section="chat" onclick="selectLogoMenu('chat')">
                 <span>Чат с AI</span>
             </div>
-            <div class="logo-menu-item premium-tab" id="complaintsTab" data-section="complaints" onclick="selectLogoMenuPremium('complaints')">
-                <span>Анализ отката</span>
-                <span class="tab-premium-badge">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                    </svg>
-                    PRO
-                </span>
-            </div>
             <div class="logo-menu-item" data-section="history" onclick="selectLogoMenu('history')">
                 <span>История</span>
             </div>
@@ -10019,23 +10344,31 @@
             <div class="logo-menu-item" data-section="social" onclick="selectLogoMenu('social')">
                 <span>Соц. сети</span>
             </div>
-            <div class="logo-menu-item premium-tab" id="secretsTab" data-section="secrets" onclick="selectLogoMenuPremium('secrets')">
-                <span>Секреты</span>
-                <span class="tab-premium-badge">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            
+            <!-- Полезно - Выдвижная кнопка -->
+            <div class="logo-menu-item useful-dropdown-container" id="usefulDropdownContainer">
+                <div class="useful-trigger" onclick="toggleUsefulMenu(event)">
+                    <span>Полезно</span>
+                    <svg class="useful-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
-                    PRO
-                </span>
-            </div>
-            <div class="logo-menu-item premium-tab" id="adminTab" data-section="admin" onclick="selectLogoMenuPremium('admin')">
-                <span>Админ</span>
-                <span class="tab-premium-badge">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                    </svg>
-                    PRO
-                </span>
+                </div>
+                
+                <!-- Dropdown меню -->
+                <div class="useful-dropdown-menu" id="usefulDropdownMenu" style="display: none;">
+                    <div class="useful-menu-item premium-tab" onclick="handleUsefulItemClick('complaints', event)">
+                        <span>Анализ отката</span>
+                        <span class="useful-badge">PRO</span>
+                    </div>
+                    <div class="useful-menu-item premium-tab" onclick="handleUsefulItemClick('secrets', event)">
+                        <span>Секреты</span>
+                        <span class="useful-badge">PRO</span>
+                    </div>
+                    <div class="useful-menu-item premium-tab" onclick="handleUsefulItemClick('admin', event)">
+                        <span>Админ</span>
+                        <span class="useful-badge">PRO</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -11084,7 +11417,18 @@
                         <h3 class="welcome-main-title">BudgeRulse — твой помощник в сфере правил серверов GTA5.</h3>
                         <p class="welcome-subtitle-question">Чем могу помочь?</p>
 
-                        <!-- Quick questions removed - moved to menu -->
+                        <!-- Quick Questions -->
+                        <div class="quick-questions">
+                            <div class="quick-question" onclick="askQuickQuestion('Что такое DM?')">
+                                <span class="quick-question-title">Что такое DM?</span>
+                            </div>
+                            <div class="quick-question" onclick="askQuickQuestion('Что такое 5.5 ПП?')">
+                                <span class="quick-question-title">Что такое 5.5 ПП?</span>
+                            </div>
+                            <div class="quick-question" onclick="askQuickQuestion('Как обойти 5.5 ПП?')">
+                                <span class="quick-question-title">Как обойти 5.5 ПП?</span>
+                            </div>
+                        </div>
 
                         <div class="recent-dialogs">
                             <div class="recent-dialogs-header" onclick="toggleRecentDialogs(this)">
@@ -12086,6 +12430,55 @@
             // Show section
             showSection(section);
         }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 📋 USEFUL MENU FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        function toggleUsefulMenu(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('usefulDropdownMenu');
+            const trigger = event.currentTarget;
+            
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                // Close all other dropdowns first
+                document.querySelectorAll('.useful-dropdown-menu').forEach(menu => {
+                    if (menu !== dropdown) {
+                        menu.style.display = 'none';
+                    }
+                });
+                
+                dropdown.style.display = 'block';
+                trigger.classList.add('active');
+            } else {
+                dropdown.style.display = 'none';
+                trigger.classList.remove('active');
+            }
+        }
+
+        function handleUsefulItemClick(section, event) {
+            event.stopPropagation();
+            
+            // Close the dropdown
+            const dropdown = document.getElementById('usefulDropdownMenu');
+            const trigger = document.querySelector('.useful-trigger');
+            if (dropdown) dropdown.style.display = 'none';
+            if (trigger) trigger.classList.remove('active');
+            
+            // Check premium access and navigate
+            selectLogoMenuPremium(section);
+        }
+
+        // Close useful menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const container = document.getElementById('usefulDropdownContainer');
+            if (container && !container.contains(e.target)) {
+                const dropdown = document.getElementById('usefulDropdownMenu');
+                const trigger = document.querySelector('.useful-trigger');
+                if (dropdown) dropdown.style.display = 'none';
+                if (trigger) trigger.classList.remove('active');
+            }
+        });
 
         // Close logo menu when clicking outside
         document.addEventListener('click', function (e) {
@@ -14932,6 +15325,33 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             sendMessage();
         }
 
+        // Toggle Premium Features Dropdown
+        function togglePremiumFeatures() {
+            const dropdown = document.getElementById('premiumFeaturesDropdown');
+            const button = document.getElementById('premiumToggleBtn');
+            
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                button.classList.add('active');
+            } else {
+                dropdown.style.display = 'none';
+                button.classList.remove('active');
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('.premium-toggle-container');
+            if (container && !container.contains(e.target)) {
+                const dropdown = document.getElementById('premiumFeaturesDropdown');
+                const button = document.getElementById('premiumToggleBtn');
+                if (dropdown && button) {
+                    dropdown.style.display = 'none';
+                    button.classList.remove('active');
+                }
+            }
+        });
+
         function handleKeyPress(event) {
             if (event.key === 'Enter' && !event.shiftKey) {
                 event.preventDefault();
@@ -16177,6 +16597,12 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Открытие премиум-функции
         function openPremiumFeature(feature) {
+            // Закрываем dropdown
+            const dropdown = document.getElementById('premiumFeaturesDropdown');
+            const button = document.getElementById('premiumToggleBtn');
+            if (dropdown) dropdown.style.display = 'none';
+            if (button) button.classList.remove('active');
+            
             if (!hasPremiumAccess()) {
                 showPremiumModal(feature);
                 return;
@@ -16185,19 +16611,21 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             // Если есть доступ - открываем функцию
             switch(feature) {
                 case 'rollback':
-                    openRollbackAnalysis();
+                    selectLogoMenu('complaints'); // Открываем раздел анализа откатов
                     break;
                 case 'admin':
-                    openAdminTools();
+                    selectLogoMenu('admin'); // Открываем раздел админа
                     break;
                 case 'admin-secrets':
-                    openAdminSecrets();
+                    selectLogoMenu('chat');
+                    setTimeout(() => openAdminSecrets(), 300);
                     break;
                 case 'secrets':
-                    openSecretsDatabase();
+                    selectLogoMenu('secrets'); // Открываем раздел секретов
                     break;
                 case 'exclusive-insider':
-                    openExclusiveInsider();
+                    selectLogoMenu('chat');
+                    setTimeout(() => openExclusiveInsider(), 300);
                     break;
             }
         }
@@ -16213,34 +16641,18 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Обновление UI премиум-вкладок в меню
         function updatePremiumTabsUI() {
+            // Обновление UI премиум элементов при изменении статуса подписки
             const isPremium = hasPremiumAccess();
-            const complaintsTab = document.getElementById('complaintsTab');
-            const secretsTab = document.getElementById('secretsTab');
-            const adminTab = document.getElementById('adminTab');
             
-            if (complaintsTab) {
+            // Обновляем badge'ы в выдвижном меню если нужно
+            const usefulMenuItems = document.querySelectorAll('.useful-menu-item.premium-tab');
+            usefulMenuItems.forEach(item => {
                 if (isPremium) {
-                    complaintsTab.classList.remove('locked');
+                    item.classList.remove('locked');
                 } else {
-                    complaintsTab.classList.add('locked');
+                    item.classList.add('locked');
                 }
-            }
-            
-            if (secretsTab) {
-                if (isPremium) {
-                    secretsTab.classList.remove('locked');
-                } else {
-                    secretsTab.classList.add('locked');
-                }
-            }
-            
-            if (adminTab) {
-                if (isPremium) {
-                    adminTab.classList.remove('locked');
-                } else {
-                    adminTab.classList.add('locked');
-                }
-            }
+            });
         }
 
         // Показать модальное окно с предложением купить подписку
