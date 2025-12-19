@@ -4,7 +4,7 @@
  */
 
 class LoggerSender {
-    constructor(apiUrl = 'http://localhost:5000/api/website-log') {
+    constructor(apiUrl = '/api/website-log') {
         this.apiUrl = apiUrl;
         this.queue = [];
         this.sending = false;
