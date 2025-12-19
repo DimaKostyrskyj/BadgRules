@@ -10154,9 +10154,150 @@
            ═══════════════════════════════════════════════════════════════ */
         
         .admin-container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             padding: 2rem 1rem;
+        }
+
+        /* Server badges */
+        .server-badge-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .server-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .server-badge.majestic {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05));
+            border-color: rgba(251, 191, 36, 0.4);
+            color: rgba(251, 191, 36, 1);
+        }
+
+        .server-badge.updated {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+
+        /* Admin levels grid - горизонтальная сетка */
+        .admin-levels-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .admin-level-block {
+            background: rgba(20, 20, 20, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .admin-level-block:hover {
+            background: rgba(30, 30, 30, 0.6);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.1);
+        }
+
+        .admin-level-block .admin-level-header {
+            flex-direction: column;
+            text-align: center;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .admin-level-block .admin-category-title {
+            font-size: 1rem;
+            margin: 0;
+            border: none;
+            padding: 0;
+        }
+
+        .admin-level-block .admin-commands-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .admin-level-block .admin-command-card {
+            padding: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .admin-level-block .command-name {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+        }
+
+        .admin-level-block .command-description {
+            font-size: 0.8rem;
+        }
+
+        .admin-level-block .command-note {
+            font-size: 0.75rem;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .admin-level-block .command-links {
+            margin-top: 0.5rem;
+        }
+
+        .admin-level-block .admin-note-special {
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .admin-level-block .admin-hotkey-info {
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .admin-level-block .hotkey-item {
+            font-size: 0.85rem;
+        }
+
+        .admin-level-block .hotkey-key {
+            min-width: 40px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .admin-levels-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-levels-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-container {
+                max-width: 100%;
+            }
         }
 
         .admin-category {
@@ -11688,13 +11829,19 @@
         <div class="section" id="adminSection" style="display: none;">
             <div class="feature-content">
                 <div class="feature-header">
-                    <h1 class="feature-title">⚡ Функционал админа Majestic RP</h1>
-                    <p class="feature-subtitle">Полный справочник админ-команд и полезной информации</p>
+                    <h1 class="feature-title">⚡ Админ-панель Majestic RP</h1>
+                    <p class="feature-subtitle">Полный справочник команд администрации сервера Majestic RP</p>
+                    <div class="server-badge-container">
+                        <span class="server-badge majestic">🎮 Majestic RP</span>
+                        <span class="server-badge updated">📅 Обновлено: 17.11.2023</span>
+                    </div>
                 </div>
                 
                 <div class="admin-container">
-                    <!-- Уровень 4 -->
-                    <div class="admin-category">
+                    <!-- Уровни админа в ряд -->
+                    <div class="admin-levels-grid">
+                        <!-- Уровень 4 -->
+                        <div class="admin-level-block>
                         <div class="admin-level-header level-4">
                             <span class="level-badge">Уровень 4</span>
                             <h3 class="admin-category-title">👑 Команды администратора 4 уровня</h3>
@@ -11766,10 +11913,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Уровень 3 -->
-                    <div class="admin-category">
+                        <!-- Уровень 3 -->
+                        <div class="admin-level-block>
                         <div class="admin-level-header level-3">
                             <span class="level-badge">Уровень 3</span>
                             <h3 class="admin-category-title">🛡️ Команды администратора 3 уровня</h3>
@@ -11894,10 +12040,9 @@
                                 <p class="command-description">Снять блокировку оружия</p>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Уровень 2 -->
-                    <div class="admin-category">
+                        <!-- Уровень 2 -->
+                        <div class="admin-level-block>
                         <div class="admin-level-header level-2">
                             <span class="level-badge">Уровень 2</span>
                             <h3 class="admin-category-title">🔧 Команды администратора 2 уровня</h3>
@@ -12129,10 +12274,9 @@
                                 <span class="hotkey-desc">Лог убийств</span>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Уровень 1 -->
-                    <div class="admin-category">
+                        <!-- Уровень 1 -->
+                        <div class="admin-level-block">
                         <div class="admin-level-header level-1">
                             <span class="level-badge">Уровень 1</span>
                             <h3 class="admin-category-title">⭐ Команды администратора 1 уровня</h3>
@@ -12140,7 +12284,7 @@
                         
                         <div class="admin-note-special">
                             <span class="note-icon">💡</span>
-                            <p>У администраторов не тратится еда и вода</p>
+                            <p>У администраторов Majestic RP не тратится еда и вода</p>
                         </div>
                         
                         <div class="admin-commands-grid">
@@ -12267,10 +12411,12 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+                    <!-- Закрываем admin-levels-grid -->
 
-                    <!-- Справочная информация -->
+                    <!-- Справочная информация Majestic RP -->
                     <div class="admin-category">
-                        <h3 class="admin-category-title">📋 Справочная информация</h3>
+                        <h3 class="admin-category-title">📋 Справочная информация Majestic RP</h3>
                         
                         <!-- Фракции -->
                         <div class="reference-section">
