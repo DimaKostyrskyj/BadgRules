@@ -17608,11 +17608,18 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Выбор премиум вкладки меню
         function selectLogoMenuPremium(section) {
+            // Временно открываем админ раздел для всех (для тестирования)
+            // Закомментируйте эту строку и раскомментируйте блок ниже чтобы включить проверку подписки
+            selectLogoMenu(section);
+            return;
+            
+            /* Раскомментируйте этот блок чтобы включить проверку подписки:
             if (!hasPremiumAccess()) {
                 showPremiumModal('tab-' + section);
                 return;
             }
             selectLogoMenu(section);
+            */
         }
 
         // Обновление UI премиум-вкладок в меню
