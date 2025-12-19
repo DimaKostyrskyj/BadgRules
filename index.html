@@ -10263,7 +10263,7 @@
             align-items: center;
             gap: 1.5rem;
             padding: 2rem;
-            margin: -2rem -2rem 2rem -2rem;
+            margin: -2rem -2rem 0 -2rem;
             background: linear-gradient(135deg, 
                 rgba(var(--level-rgb, 96, 165, 250), 0.15) 0%, 
                 rgba(var(--level-rgb, 96, 165, 250), 0.05) 100%);
@@ -10271,6 +10271,55 @@
             border-radius: 20px 20px 0 0;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-level-block .admin-level-header:hover {
+            background: linear-gradient(135deg, 
+                rgba(var(--level-rgb, 96, 165, 250), 0.25) 0%, 
+                rgba(var(--level-rgb, 96, 165, 250), 0.1) 100%);
+        }
+
+        /* Иконка аккордеона */
+        .accordion-icon {
+            margin-left: auto;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            transition: transform 0.3s ease;
+        }
+
+        .admin-level-block.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Скрытие/показ контента - ИСПРАВЛЕНО */
+        .admin-level-block:not(.active) .admin-commands-grid,
+        .admin-level-block:not(.active) #level-1-content,
+        .admin-level-block:not(.active) #level-2-content,
+        .admin-level-block:not(.active) #level-3-content,
+        .admin-level-block:not(.active) #level-4-content {
+            display: none;
+        }
+
+        .admin-level-block.active .admin-commands-grid,
+        .admin-level-block.active #level-1-content,
+        .admin-level-block.active #level-2-content,
+        .admin-level-block.active #level-3-content,
+        .admin-level-block.active #level-4-content {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .admin-level-block:has(.level-1) .admin-level-header {
@@ -11975,12 +12024,13 @@
                 <div class="admin-container">
                     <!-- Команды администрации Majestic RP -->
                         <!-- Уровень 4 -->
-                        <div class="admin-level-block>
-                        <div class="admin-level-header level-4">
+                        <div class="admin-level-block active" data-level="4">
+                        <div class="admin-level-header level-4" onclick="toggleAdminLevel(4)">
                             <span class="level-badge">Уровень 4</span>
                             <h3 class="admin-category-title">👑 Команды администратора 4 уровня</h3>
+                            <span class="accordion-icon">▼</span>
                         </div>
-                        <div class="admin-commands-grid">
+                        <div class="admin-commands-grid" id="level-4-content">>
                             <div class="admin-command-card">
                                 <div class="command-header">
                                     <span class="command-name">/auninvite [динамик id]</span>
@@ -12049,12 +12099,13 @@
                         </div>
 
                         <!-- Уровень 3 -->
-                        <div class="admin-level-block>
-                        <div class="admin-level-header level-3">
+                        <div class="admin-level-block" data-level="3">
+                        <div class="admin-level-header level-3" onclick="toggleAdminLevel(3)">
                             <span class="level-badge">Уровень 3</span>
                             <h3 class="admin-category-title">🛡️ Команды администратора 3 уровня</h3>
+                            <span class="accordion-icon">▼</span>
                         </div>
-                        <div class="admin-commands-grid">
+                        <div class="admin-commands-grid" id="level-3-content">
                             <div class="admin-command-card">
                                 <div class="command-header">
                                     <span class="command-name">/freeze [динамик id]</span>
@@ -12176,12 +12227,13 @@
                         </div>
 
                         <!-- Уровень 2 -->
-                        <div class="admin-level-block>
-                        <div class="admin-level-header level-2">
+                        <div class="admin-level-block" data-level="2">
+                        <div class="admin-level-header level-2" onclick="toggleAdminLevel(2)">
                             <span class="level-badge">Уровень 2</span>
                             <h3 class="admin-category-title">🔧 Команды администратора 2 уровня</h3>
+                            <span class="accordion-icon">▼</span>
                         </div>
-                        <div class="admin-commands-grid">
+                        <div class="admin-commands-grid" id="level-2-content">
                             <div class="admin-command-card">
                                 <div class="command-header">
                                     <span class="command-name">/spec [динамик id] | /specoff</span>
@@ -12410,12 +12462,14 @@
                         </div>
 
                         <!-- Уровень 1 -->
-                        <div class="admin-level-block">
-                        <div class="admin-level-header level-1">
+                        <div class="admin-level-block" data-level="1">
+                        <div class="admin-level-header level-1" onclick="toggleAdminLevel(1)">
                             <span class="level-badge">Уровень 1</span>
                             <h3 class="admin-category-title">⭐ Команды администратора 1 уровня</h3>
+                            <span class="accordion-icon">▼</span>
                         </div>
                         
+                        <div id="level-1-content">
                         <div class="admin-note-special">
                             <span class="note-icon">💡</span>
                             <p>У администраторов Majestic RP не тратится еда и вода</p>
@@ -12544,6 +12598,8 @@
                                 <span class="hotkey-desc">Полет (WASD движение | Q/E вверх/вниз | R/F скорость | Shift/Ctrl ускорение)</span>
                             </div>
                         </div>
+                        </div>
+                        <!-- Закрываем level-1-content -->
                     </div>
 
                     <!-- Справочная информация Majestic RP -->
@@ -17188,6 +17244,29 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                     });
             }
         });
+
+        // Admin Level Accordion Toggle
+        function toggleAdminLevel(level) {
+            console.log('🎯 Toggle admin level:', level);
+            
+            const block = document.querySelector(`.admin-level-block[data-level="${level}"]`);
+            if (!block) return;
+            
+            const isActive = block.classList.contains('active');
+            
+            // Закрываем все уровни
+            document.querySelectorAll('.admin-level-block').forEach(b => {
+                b.classList.remove('active');
+            });
+            
+            // Если текущий уровень не был активным, открываем его
+            if (!isActive) {
+                block.classList.add('active');
+                console.log('✅ Level opened:', level);
+            } else {
+                console.log('❌ Level closed:', level);
+            }
+        }
 
         // Section Navigation
         function showSection(sectionName) {
