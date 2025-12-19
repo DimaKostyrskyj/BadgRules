@@ -10154,9 +10154,143 @@
            ═══════════════════════════════════════════════════════════════ */
         
         .admin-container {
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 2rem 2rem;
+        }
+
+        /* Server badges */
+        .server-badge-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .server-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .server-badge.majestic {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05));
+            border-color: rgba(251, 191, 36, 0.4);
+            color: rgba(251, 191, 36, 1);
+        }
+
+        .server-badge.updated {
+            background: rgba(34, 197, 94, 0.1);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+        }
+
+        /* Убираем старую структуру */
+        .admin-levels-grid {
+            display: block;
+        }
+
+        .admin-level-block {
+            margin-bottom: 3rem;
+        }
+
+        .admin-level-block .admin-level-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+        }
+
+        .admin-level-block .admin-category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin: 0;
+            border: none;
+            padding: 0;
+        }
+
+        /* Команды в ряд - используем всю ширину */
+        .admin-level-block .admin-commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .admin-level-block .admin-command-card {
+            padding: 1.25rem;
+        }
+
+        .admin-level-block .command-name {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.8rem;
+        }
+
+        .admin-level-block .command-description {
+            font-size: 0.9rem;
+        }
+
+        .admin-level-block .command-note {
+            font-size: 0.85rem;
+            padding: 0.75rem;
+            margin-top: 0.75rem;
+        }
+
+        .admin-level-block .command-links {
+            margin-top: 0.75rem;
+        }
+
+        .admin-level-block .admin-note-special {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-level-block .admin-hotkey-info {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .admin-level-block .hotkey-item {
+            font-size: 0.9rem;
+        }
+
+        .admin-level-block .hotkey-key {
+            min-width: 50px;
+            padding: 0.5rem 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .admin-level-block .admin-commands-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 1rem;
+            }
+
+            .admin-level-block .admin-commands-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-level-block .admin-hotkey-info {
+                flex-direction: column;
+            }
         }
 
         .admin-category {
@@ -10622,459 +10756,6 @@
             }
         }
 
-
-/* ═══════════════════════════════════════════════════════════════
-   ⚡ АДМИН-ПАНЕЛЬ MAJESTIC RP
-   ═══════════════════════════════════════════════════════════════ */
-
-.admin-panel-wrapper {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-.admin-header-compact {
-    text-align: center;
-    margin-bottom: 2.5rem;
-}
-
-.admin-header-compact h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 1rem;
-}
-
-.admin-header-badges {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.badge-majestic, .badge-date {
-    padding: 0.5rem 1.25rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.badge-majestic {
-    background: rgba(251, 191, 36, 0.1);
-    border: 1px solid rgba(251, 191, 36, 0.3);
-    color: #fbbf24;
-}
-
-.badge-date {
-    background: rgba(34, 197, 94, 0.1);
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    color: #22c55e;
-}
-
-/* Вкладки */
-.admin-tabs-bar {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    overflow-x: auto;
-    padding: 0.5rem;
-    background: rgba(30, 30, 30, 0.4);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-}
-
-.admin-tab-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1.5rem;
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.admin-tab-btn:hover {
-    background: rgba(40, 40, 40, 0.6);
-    color: var(--text-primary);
-}
-
-.admin-tab-btn.active {
-    background: rgba(96, 165, 250, 0.1);
-    border-color: var(--accent-primary);
-    color: var(--text-primary);
-}
-
-.tab-num {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 1rem;
-    color: white;
-}
-
-.tab-num.lv4 { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
-.tab-num.lv3 { background: linear-gradient(135deg, #a855f7, #8b5cf6); }
-.tab-num.lv2 { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
-.tab-num.lv1 { background: linear-gradient(135deg, #10b981, #22c55e); }
-.tab-num.lvinfo { 
-    background: linear-gradient(135deg, #6b7280, #4b5563); 
-    font-size: 1.2rem;
-}
-
-.tab-text {
-    font-size: 0.95rem;
-    font-weight: 600;
-}
-
-/* Панели */
-.admin-tab-panels {
-    background: rgba(30, 30, 30, 0.4);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 2rem;
-}
-
-.admin-panel {
-    display: none;
-}
-
-.admin-panel.active {
-    display: block;
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.admin-panel h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.admin-note-inline {
-    background: rgba(16, 185, 129, 0.1);
-    border-left: 3px solid #10b981;
-    padding: 0.875rem 1.25rem;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-}
-
-/* Команды */
-.cmd-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 0.875rem;
-}
-
-.cmd {
-    background: rgba(40, 40, 40, 0.4);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 1rem;
-    transition: all 0.2s ease;
-}
-
-.cmd:hover {
-    background: rgba(50, 50, 50, 0.6);
-    border-color: var(--accent-primary);
-    transform: translateY(-2px);
-}
-
-.cmd.warn {
-    border-left: 3px solid #ef4444;
-}
-
-.cmd code {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--accent-primary);
-    margin-bottom: 0.5rem;
-    background: rgba(96, 165, 250, 0.1);
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    border: 1px solid rgba(96, 165, 250, 0.2);
-}
-
-.cmd p {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-}
-
-.cmd a {
-    color: var(--accent-primary);
-    text-decoration: none;
-    font-size: 0.8rem;
-    margin-left: 0.375rem;
-}
-
-.cmd a:hover {
-    text-decoration: underline;
-}
-
-/* Справка */
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-
-.info-box {
-    background: rgba(40, 40, 40, 0.4);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 1.5rem;
-}
-
-.info-box h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--accent-primary);
-    margin-bottom: 1rem;
-}
-
-.info-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.info-tags span {
-    background: rgba(96, 165, 250, 0.1);
-    border: 1px solid rgba(96, 165, 250, 0.2);
-    padding: 0.5rem 0.875rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    transition: all 0.2s ease;
-}
-
-.info-tags span:hover {
-    background: rgba(96, 165, 250, 0.15);
-    border-color: var(--accent-primary);
-}
-
-.info-tags span.danger {
-    background: rgba(239, 68, 68, 0.1);
-    border-color: rgba(239, 68, 68, 0.3);
-    color: #ef4444;
-}
-
-.info-tags span b {
-    color: var(--accent-primary);
-    font-weight: 700;
-}
-
-/* Адаптив */
-@media (max-width: 1200px) {
-    .cmd-list {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    }
-}
-
-@media (max-width: 768px) {
-    .admin-panel-wrapper {
-        padding: 1rem;
-    }
-    
-    .admin-tabs-bar {
-        flex-direction: column;
-    }
-    
-    .admin-tab-btn {
-        width: 100%;
-        justify-content: flex-start;
-    }
-    
-    .admin-tab-panels {
-        padding: 1.25rem;
-    }
-    
-    .cmd-list {
-        grid-template-columns: 1fr;
-    }
-    
-    .info-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Scrollbar */
-.admin-tabs-bar::-webkit-scrollbar {
-    height: 6px;
-}
-
-.admin-tabs-bar::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 3px;
-}
-
-.admin-tabs-bar::-webkit-scrollbar-thumb {
-    background: var(--accent-primary);
-    border-radius: 3px;
-}
-
-}
-
-.admin-panel h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    color: #fff;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-}
-
-.admin-note-inline {
-    background: rgba(16, 185, 129, 0.1);
-    border-left: 3px solid #10b981;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1.5rem;
-    border-radius: 8px;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-/* Команды */
-.cmd-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 0.75rem;
-}
-
-.cmd {
-    background: rgba(30, 30, 35, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 1rem;
-    transition: all 0.2s ease;
-}
-
-.cmd:hover {
-    background: rgba(40, 40, 45, 0.8);
-    border-color: var(--accent-primary);
-    transform: translateY(-2px);
-}
-
-.cmd.warn {
-    border-left: 3px solid #ef4444;
-}
-
-.cmd code {
-    display: block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
-    color: var(--accent-primary);
-    margin-bottom: 0.5rem;
-    background: rgba(96, 165, 250, 0.1);
-    padding: 0.4rem 0.6rem;
-    border-radius: 6px;
-    border: 1px solid rgba(96, 165, 250, 0.2);
-}
-
-.cmd p {
-    margin: 0;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.4;
-}
-
-.cmd a {
-    color: var(--accent-primary);
-    text-decoration: none;
-    font-size: 0.8rem;
-    margin-left: 0.25rem;
-}
-
-.cmd a:hover {
-    text-decoration: underline;
-}
-
-/* Справка */
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-
-.info-box {
-    background: rgba(30, 30, 35, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.5rem;
-}
-
-.info-box h3 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: var(--accent-primary);
-}
-
-.info-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.info-tags span {
-    background: rgba(96, 165, 250, 0.1);
-    border: 1px solid rgba(96, 165, 250, 0.2);
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.info-tags span.danger {
-    background: rgba(239, 68, 68, 0.1);
-    border-color: rgba(239, 68, 68, 0.3);
-    color: #ef4444;
-}
-
-.info-tags span b {
-    color: var(--accent-primary);
-}
-
-/* Адаптив */
-@media (max-width: 768px) {
-    .admin-panel-wrapper {
-        padding: 1rem;
-    }
-    
-    .admin-tabs-bar {
-        flex-direction: column;
-    }
-    
-    .admin-tab-panels {
-        padding: 1rem;
-    }
-    
-    .cmd-list {
-        grid-template-columns: 1fr;
-    }
-    
-    .info-grid {
-        grid-template-columns: 1fr;
-    }
-}
 </style>
 </head>
 
@@ -12138,174 +11819,698 @@
         </div>
 
         <!-- Admin Section -->
-        <!-- Admin Section -->
         <div class="section" id="adminSection" style="display: none;">
-            <div class="admin-panel-wrapper">
-                <!-- Заголовок -->
-                <div class="admin-header-compact">
-                    <h1>⚡ Админ-панель Majestic RP</h1>
-                    <div class="admin-header-badges">
-                        <span class="badge-majestic">🎮 Majestic RP</span>
-                        <span class="badge-date">📅 17.11.2023</span>
+            <div class="feature-content">
+                <div class="feature-header">
+                    <h1 class="feature-title">⚡ Админ-панель Majestic RP</h1>
+                    <p class="feature-subtitle">Полный справочник команд администрации сервера Majestic RP</p>
+                    <div class="server-badge-container">
+                        <span class="server-badge majestic">🎮 Majestic RP</span>
+                        <span class="server-badge updated">📅 Обновлено: 17.11.2023</span>
                     </div>
                 </div>
-
-                <!-- Вкладки -->
-                <div class="admin-tabs-bar">
-                    <button class="admin-tab-btn active" onclick="switchAdminTab(4)">
-                        <span class="tab-num lv4">4</span>
-                        <span class="tab-text">Уровень 4</span>
-                    </button>
-                    <button class="admin-tab-btn" onclick="switchAdminTab(3)">
-                        <span class="tab-num lv3">3</span>
-                        <span class="tab-text">Уровень 3</span>
-                    </button>
-                    <button class="admin-tab-btn" onclick="switchAdminTab(2)">
-                        <span class="tab-num lv2">2</span>
-                        <span class="tab-text">Уровень 2</span>
-                    </button>
-                    <button class="admin-tab-btn" onclick="switchAdminTab(1)">
-                        <span class="tab-num lv1">1</span>
-                        <span class="tab-text">Уровень 1</span>
-                    </button>
-                    <button class="admin-tab-btn" onclick="switchAdminTab('info')">
-                        <span class="tab-num lvinfo">📋</span>
-                        <span class="tab-text">Справка</span>
-                    </button>
-                </div>
-
-                <!-- Контент -->
-                <div class="admin-tab-panels">
-                    <!-- Уровень 4 -->
-                    <div class="admin-panel active" id="panel-4">
-                        <h2>👑 Уровень 4 - Команды администратора</h2>
-                        <div class="cmd-list">
-                            <div class="cmd"><code>/auninvite [id]</code><p>Уволить из фракции</p></div>
-                            <div class="cmd"><code>/veh [name]</code><p>Заспавнить транспорт <a href="https://wiki.rage.mp/index.php?title=Vehicles" target="_blank">GTA</a> <a href="https://wiki.majestic-rp.ru/vehicles" target="_blank">IRL</a></p></div>
-                            <div class="cmd"><code>/fixcar</code><p>Меню ключика</p></div>
-                            <div class="cmd"><code>/eventon | /eventoff</code><p>ТП на ивент</p></div>
-                            <div class="cmd"><code>/templeader [id]</code><p>Временная лидерка</p></div>
-                            <div class="cmd"><code>/ainfect [id] [0-4]</code><p>Заразить (0-здоров, 1-грипп, 2-covid, 3-отравл, 4-диарея)</p></div>
-                            <div class="cmd"><code>/aclearchat</code><p>Очистить чат всем</p></div>
-                            <div class="cmd"><code>/givelic [id]</code><p>Выдать лицензию (cdla/cdlb/cdwl/drived/drivem/fh)</p></div>
+                
+                <div class="admin-container">
+                    <!-- Команды администрации Majestic RP -->
+                        <!-- Уровень 4 -->
+                        <div class="admin-level-block>
+                        <div class="admin-level-header level-4">
+                            <span class="level-badge">Уровень 4</span>
+                            <h3 class="admin-category-title">👑 Команды администратора 4 уровня</h3>
                         </div>
-                    </div>
-
-                    <!-- Уровень 3 -->
-                    <div class="admin-panel" id="panel-3">
-                        <h2>🛡️ Уровень 3 - Команды администратора</h2>
-                        <div class="cmd-list">
-                            <div class="cmd"><code>/freeze [id]</code><p>Заморозить</p></div>
-                            <div class="cmd"><code>/acuff | /auncuff [id]</code><p>Наручники</p></div>
-                            <div class="cmd"><code>/zzdebug</code><p>GZ отображение</p></div>
-                            <div class="cmd"><code>/fmaterials [id]</code><p>Баланс фракции</p></div>
-                            <div class="cmd"><code>/unescort [id]</code><p>Снять залом</p></div>
-                            <div class="cmd"><code>/fuel [id] [л]</code><p>Заправить</p></div>
-                            <div class="cmd"><code>/repair</code><p>Починить ТС</p></div>
-                            <div class="cmd"><code>/setcardim [id] [dim]</code><p>Сменить дименшн ТС</p></div>
-                            <div class="cmd"><code>/freezeveh [id]</code><p>Заморозить ТС</p></div>
-                            <div class="cmd"><code>/spawncars [id]</code><p>Респавн ТС фракции</p></div>
-                            <div class="cmd warn"><code>/skick [id]</code><p>Тихий кик</p></div>
-                            <div class="cmd warn"><code>/ban [id] [д] [причина]</code><p>Бан персонажа</p></div>
-                            <div class="cmd warn"><code>/hardban [id] [д] [причина]</code><p>Бан аккаунта</p></div>
-                            <div class="cmd warn"><code>/warn | /unwarn [id]</code><p>Варн</p></div>
-                            <div class="cmd"><code>/unjail [id]</code><p>Из деморгана</p></div>
-                            <div class="cmd warn"><code>/gunban [id] [ч]</code><p>Бан оружия</p></div>
-                            <div class="cmd"><code>/ungunban [id]</code><p>Снять бан оружия</p></div>
-                        </div>
-                    </div>
-
-                    <!-- Уровень 2 -->
-                    <div class="admin-panel" id="panel-2">
-                        <h2>🔧 Уровень 2 - Команды администратора</h2>
-                        <div class="cmd-list">
-                            <div class="cmd"><code>/spec [id] | /specoff</code><p>Слежка</p></div>
-                            <div class="cmd"><code>/setdim [id]</code><p>Сменить мир</p></div>
-                            <div class="cmd"><code>/aveh</code><p>Завести ТС</p></div>
-                            <div class="cmd"><code>/tpcar [id]</code><p>ТП к ТС</p></div>
-                            <div class="cmd"><code>/incar [id]</code><p>ТП в ТС</p></div>
-                            <div class="cmd"><code>/gtp</code><p>ТП по метке F3</p></div>
-                            <div class="cmd"><code>/tph [id]</code><p>ТП к дому</p></div>
-                            <div class="cmd"><code>/ctp [X Y Z]</code><p>ТП по коорд</p></div>
-                            <div class="cmd"><code>/netstat</code><p>Координаты</p></div>
-                            <div class="cmd"><code>/prange [м] [id]</code><p>Игроки фракции</p></div>
-                            <div class="cmd"><code>/frange [м] [id]</code><p>Игроки семьи</p></div>
-                            <div class="cmd"><code>/hp [id] [0-100]</code><p>Установить HP</p></div>
-                            <div class="cmd"><code>/rescue [id]</code><p>Возродить</p></div>
-                            <div class="cmd"><code>/pulltrunk [id]</code><p>Из багажника</p></div>
-                            <div class="cmd"><code>/aeject [id]</code><p>Из ТС</p></div>
-                            <div class="cmd"><code>/lastdriver [id]</code><p>Последний водитель</p></div>
-                            <div class="cmd"><code>/mydim</code><p>Текущий дименшн</p></div>
-                            <div class="cmd"><code>/showcheats</code><p>Триггеры читов</p></div>
-                            <div class="cmd"><code>/chide</code><p>Инвиз от читеров</p></div>
-                            <div class="cmd"><code>/removesnowman</code><p>Удалить снеговика</p></div>
-                            <div class="cmd warn"><code>/ajail [id] [м]</code><p>Деморган</p></div>
-                            <div class="cmd warn"><code>/mute [id] [м]</code><p>Мут войса</p></div>
-                            <div class="cmd warn"><code>/kick [id]</code><p>Кик</p></div>
-                            <div class="cmd"><code>/gunbancheck [id]</code><p>Проверка бана оружия</p></div>
-                            <div class="cmd"><code>/mutecheck [id]</code><p>Проверка мута</p></div>
-                            <div class="cmd"><code>/inv</code><p>Скрыть себя</p></div>
-                            <div class="cmd"><code>F9</code><p>Лог убийств</p></div>
-                        </div>
-                    </div>
-
-                    <!-- Уровень 1 -->
-                    <div class="admin-panel" id="panel-1">
-                        <h2>⭐ Уровень 1 - Команды администратора</h2>
-                        <div class="admin-note-inline">💡 У админов не тратится еда и вода</div>
-                        <div class="cmd-list">
-                            <div class="cmd"><code>/a [текст]</code><p>Админ чат</p></div>
-                            <div class="cmd"><code>/toggleachat</code><p>Вкл/выкл админ чат</p></div>
-                            <div class="cmd"><code>/esp | /esp3</code><p>Инфо (🔴медиа 🟢лидер 🟡админ)</p></div>
-                            <div class="cmd"><code>/asms [id]</code><p>Сообщение</p></div>
-                            <div class="cmd"><code>/players</code><p>Инфо об игроках</p></div>
-                            <div class="cmd"><code>/admins</code><p>Список админов</p></div>
-                            <div class="cmd"><code>/gid [static]</code><p>Узнать dynamic id</p></div>
-                            <div class="cmd"><code>/id [dynamic]</code><p>Узнать static id</p></div>
-                            <div class="cmd"><code>/gm</code><p>Бессмертие</p></div>
-                            <div class="cmd"><code>/tp [id]</code><p>ТП к игроку</p></div>
-                            <div class="cmd"><code>/gh [id]</code><p>ТП игрока</p></div>
-                            <div class="cmd"><code>/mtp</code><p>ТП по розовой метке</p></div>
-                            <div class="cmd"><code>/dl</code><p>Инфо ТС (🔴выкл 🟢вкл)</p></div>
-                            <div class="cmd"><code>/getcar [id]</code><p>ТП ТС к себе</p></div>
-                            <div class="cmd"><code>/delveh</code><p>Удалить ТС</p></div>
-                            <div class="cmd"><code>F11</code><p>Меню репортов</p></div>
-                            <div class="cmd"><code>F5</code><p>Полет (WASD, Q/E, R/F)</p></div>
-                        </div>
-                    </div>
-
-                    <!-- Справка -->
-                    <div class="admin-panel" id="panel-info">
-                        <div class="info-grid">
-                            <div class="info-box">
-                                <h3>🏢 Фракции</h3>
-                                <div class="info-tags">
-                                    <span>1-LSPD</span><span>2-EMS</span><span>3-Sheriff</span><span>4-NG</span>
-                                    <span>5-Gov</span><span>6-News</span><span>7-FIB</span><span>8-Ballas</span>
-                                    <span>9-Vagos</span><span>10-Families</span><span>11-Bloods</span><span>12-Marabunta</span>
-                                    <span>13-LCN</span><span>14-RusMafia</span><span>15-Yakuza</span><span>16-Cartel</span>
-                                    <span>17-LostMC</span><span>18-AoD</span><span>19-ArmMafia</span><span>20-Grubie</span>
-                                    <span>21-GrandClub</span><span>22-Richmane</span><span>23-Gentry</span><span>24-Continental</span>
+                        <div class="admin-commands-grid">
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/auninvite [динамик id]</span>
+                                </div>
+                                <p class="command-description">Уволить игрока из фракции</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/veh [carname]</span>
+                                </div>
+                                <p class="command-description">Заспавнить временный транспорт</p>
+                                <div class="command-links">
+                                    <a href="https://wiki.rage.mp/index.php?title=Vehicles" target="_blank" class="command-link">GTA транспорт</a>
+                                    <a href="https://wiki.majestic-rp.ru/vehicles" target="_blank" class="command-link">IRL транспорт</a>
                                 </div>
                             </div>
-                            <div class="info-box">
-                                <h3>📜 Лицензии</h3>
-                                <div class="info-tags">
-                                    <span><b>Drive D</b> - Легковой</span>
-                                    <span><b>Drive M</b> - Мото</span>
-                                    <span><b>CDL A</b> - Тягачи</span>
-                                    <span><b>CDL B</b> - Пикапы</span>
-                                    <span><b>CDWL</b> - Оружие</span>
-                                    <span><b>FH</b> - Охота/Рыбалка</span>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/fixcar</span>
+                                </div>
+                                <p class="command-description">Вызвать меню "ключика"</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/eventon | /eventoff</span>
+                                </div>
+                                <p class="command-description">Открыть/закрыть телепорт на ивент</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/templeader [id фракции]</span>
+                                </div>
+                                <p class="command-description">Временная лидерка фракции</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/ainfect [id] [0-4]</span>
+                                </div>
+                                <p class="command-description">Вылечить/заразить игрока</p>
+                                <div class="command-note">
+                                    <strong>Значения:</strong> 0 - здоровый | 1 - грипп | 2 - коронавирус | 3 - отравление | 4 - диарея
                                 </div>
                             </div>
-                            <div class="info-box">
-                                <h3>🎯 Скиллы работ</h3>
-                                <div class="info-tags">
-                                    <span>builder</span><span>butcher</span><span>trucker</span>
-                                    <span>fishing</span><span>busdriver</span><span>moneycollector</span>
-                                    <span>vineyard</span><span>lumberjack</span><span>garbagecollector</span>
-                                    <span class="danger">gangjob</span><span class="danger">mafiajob</span><span class="danger">bikerjob</span>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/aclearchat</span>
+                                </div>
+                                <p class="command-description">Очистить чат всем игрокам</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/givelic [динамик id]</span>
+                                </div>
+                                <p class="command-description">Выдать лицензию</p>
+                                <div class="command-note">
+                                    <strong>Типы:</strong> cdla (тягачи) | cdlb (пикапы) | cdwl (оружие) | drived (легковой) | drivem (мото) | fh (охота/рыбалка)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Уровень 3 -->
+                        <div class="admin-level-block>
+                        <div class="admin-level-header level-3">
+                            <span class="level-badge">Уровень 3</span>
+                            <h3 class="admin-category-title">🛡️ Команды администратора 3 уровня</h3>
+                        </div>
+                        <div class="admin-commands-grid">
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/freeze [динамик id]</span>
+                                </div>
+                                <p class="command-description">Заморозить игрока (не сможет сдвинуться с места)</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/acuff | /auncuff [id]</span>
+                                </div>
+                                <p class="command-description">Надеть/снять наручники</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/zzdebug</span>
+                                </div>
+                                <p class="command-description">Включить отображение функциональных зеленых зон</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/fmaterials [id фракции]</span>
+                                </div>
+                                <p class="command-description">Показать баланс фракции и количество материалов</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/unescort [динамик id]</span>
+                                </div>
+                                <p class="command-description">Снять залом</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/fuel [id транспорта] [литры]</span>
+                                </div>
+                                <p class="command-description">Заправить транспорт</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/repair</span>
+                                </div>
+                                <p class="command-description">Починить транспорт (нужно быть рядом)</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/setcardim [carid] [dimension]</span>
+                                </div>
+                                <p class="command-description">Поменять дименшн транспорту</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/freezeveh [id транспорта]</span>
+                                </div>
+                                <p class="command-description">Заморозить транспорт</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/spawncars [id фракции]</span>
+                                </div>
+                                <p class="command-description">Вернуть весь транспорт фракции на респ</p>
+                            </div>
+                            
+                            <div class="admin-command-card warning">
+                                <div class="command-header">
+                                    <span class="command-name">/skick [динамик id]</span>
+                                </div>
+                                <p class="command-description">Тихо кикнуть игрока (игроки не увидят в чате)</p>
+                            </div>
+                            
+                            <div class="admin-command-card warning">
+                                <div class="command-header">
+                                    <span class="command-name">/ban [статик id] [дни] [причина]</span>
+                                </div>
+                                <p class="command-description">Блокировка игрового персонажа</p>
+                            </div>
+                            
+                            <div class="admin-command-card warning">
+                                <div class="command-header">
+                                    <span class="command-name">/hardban [статик id] [дни] [причина]</span>
+                                </div>
+                                <p class="command-description">Блокировка игрового аккаунта (не сможет зайти на сервер)</p>
+                            </div>
+                            
+                            <div class="admin-command-card warning">
+                                <div class="command-header">
+                                    <span class="command-name">/warn | /unwarn [статик id] [причина]</span>
+                                </div>
+                                <p class="command-description">Выдать/снять предупреждение (будет кикнут, не сможет во фракцию/семью)</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/unjail [статик id]</span>
+                                </div>
+                                <p class="command-description">Выпустить из деморгана</p>
+                            </div>
+                            
+                            <div class="admin-command-card warning">
+                                <div class="command-header">
+                                    <span class="command-name">/gunban [статик id] [часы] [причина]</span>
+                                </div>
+                                <p class="command-description">Блокировка пользования оружием</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/ungunban [статик id] [причина]</span>
+                                </div>
+                                <p class="command-description">Снять блокировку оружия</p>
+                            </div>
+                        </div>
+
+                        <!-- Уровень 2 -->
+                        <div class="admin-level-block>
+                        <div class="admin-level-header level-2">
+                            <span class="level-badge">Уровень 2</span>
+                            <h3 class="admin-category-title">🔧 Команды администратора 2 уровня</h3>
+                        </div>
+                        <div class="admin-commands-grid">
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/spec [динамик id] | /specoff</span>
+                                </div>
+                                <p class="command-description">Следить за игроком / выйти из режима слежки</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/setdim [динамик id]</span>
+                                </div>
+                                <p class="command-description">Сменить мир игроку (0 - стандартный)</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/aveh</span>
+                                </div>
+                                <p class="command-description">Завести/заглушить транспорт (нужно быть рядом)</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/tpcar [id транспорта]</span>
+                                </div>
+                                <p class="command-description">Телепортироваться к транспорту</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/incar [id транспорта]</span>
+                                </div>
+                                <p class="command-description">Телепортироваться в транспорт</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/gtp</span>
+                                </div>
+                                <p class="command-description">Телепорт по желтой метке (через F3)</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/tph [id дома]</span>
+                                </div>
+                                <p class="command-description">Телепортироваться к дому</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/ctp [X Y Z]</span>
+                                </div>
+                                <p class="command-description">Телепортироваться по координатам</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/netstat</span>
+                                </div>
+                                <p class="command-description">Показать координаты вашего местоположения</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/prange [метры] [id фракции]</span>
+                                </div>
+                                <p class="command-description">Показать игроков фракции в радиусе</p>
+                                <div class="command-note">Без ID фракции - все игроки в радиусе 100 метров</div>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/frange [метры] [id семьи]</span>
+                                </div>
+                                <p class="command-description">Показать игроков семьи в радиусе</p>
+                                <div class="command-note">Без ID семьи - все игроки в радиусе 100 метров</div>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/hp [динамик id] [0-100]</span>
+                                </div>
+                                <p class="command-description">Установить HP игроку (0 - убить, 100 - полное HP)</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/rescue [динамик id]</span>
+                                </div>
+                                <p class="command-description">Возродить игрока</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/pulltrunk [динамик id]</span>
+                                </div>
+                                <p class="command-description">Вытащить игрока из багажника</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/aeject [динамик id]</span>
+                                </div>
+                                <p class="command-description">Вытащить игрока из транспорта</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/lastdriver [id транспорта]</span>
+                                </div>
+                                <p class="command-description">Узнать последнего водителя авто</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/mydim</span>
+                                </div>
+                                <p class="command-description">Узнать дименшн, в котором находитесь</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/showcheats</span>
+                                </div>
+                                <p class="command-description">Дополнительные триггеры на читы</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/chide</span>
+                                </div>
+                                <p class="command-description">Инвиз от читеров</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/removesnowman</span>
+                                </div>
+                                <p class="command-description">Удалить снеговика</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/addamphitheater [0-6]</span>
+                                </div>
+                                <p class="command-description">Добавить объекты на амфитеатр</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/removeamphitheater [0-6]</span>
+                                </div>
+                                <p class="command-description">Удалить объекты с амфитеатра</p>
+                            </div>
+                            
+                            <div class="admin-command-card warning">
+                                <div class="command-header">
+                                    <span class="command-name">/ajail [статик id] [мин] [причина]</span>
+                                </div>
+                                <p class="command-description">Посадить в деморган (пропадет оружие)</p>
+                            </div>
+                            
+                            <div class="admin-command-card warning">
+                                <div class="command-header">
+                                    <span class="command-name">/mute [статик id] [мин] [причина]</span>
+                                </div>
+                                <p class="command-description">Заблокировать войс чат</p>
+                            </div>
+                            
+                            <div class="admin-command-card warning">
+                                <div class="command-header">
+                                    <span class="command-name">/kick [динамик id] [причина]</span>
+                                </div>
+                                <p class="command-description">Кикнуть игрока с сервера</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/gunbancheck [статик id]</span>
+                                </div>
+                                <p class="command-description">Проверить блокировку оружия</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/mutecheck [статик id]</span>
+                                </div>
+                                <p class="command-description">Проверить активный мут (причина и время)</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/ajailcheck [статик id]</span>
+                                </div>
+                                <p class="command-description">Проверить активный деморган</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/bancheck [статик id]</span>
+                                </div>
+                                <p class="command-description">Проверить активный бан</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/inv</span>
+                                </div>
+                                <p class="command-description">Скрыть игрового персонажа</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/kickgg [динамик id]</span>
+                                </div>
+                                <p class="command-description">Кикнуть игрока с GG</p>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-hotkey-info">
+                            <div class="hotkey-item">
+                                <span class="hotkey-key">F9</span>
+                                <span class="hotkey-desc">Лог убийств</span>
+                            </div>
+                        </div>
+
+                        <!-- Уровень 1 -->
+                        <div class="admin-level-block">
+                        <div class="admin-level-header level-1">
+                            <span class="level-badge">Уровень 1</span>
+                            <h3 class="admin-category-title">⭐ Команды администратора 1 уровня</h3>
+                        </div>
+                        
+                        <div class="admin-note-special">
+                            <span class="note-icon">💡</span>
+                            <p>У администраторов Majestic RP не тратится еда и вода</p>
+                        </div>
+                        
+                        <div class="admin-commands-grid">
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/a [текст]</span>
+                                </div>
+                                <p class="command-description">Админский игровой чат</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/toggleachat</span>
+                                </div>
+                                <p class="command-description">Включить/отключить админский чат</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/esp | /esp3</span>
+                                </div>
+                                <p class="command-description">Информация о игроке (ник, HP, скорость)</p>
+                                <div class="command-note">
+                                    <strong>Цвета ESP:</strong> 🔴 медиа | 🟢 лидер | 🟡 админ
+                                </div>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/asms [динамик id]</span>
+                                </div>
+                                <p class="command-description">Написать игроку сообщение</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/players</span>
+                                </div>
+                                <p class="command-description">Информация о игроках</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/admins</span>
+                                </div>
+                                <p class="command-description">Список администрации на сервере</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/gid [статик id]</span>
+                                </div>
+                                <p class="command-description">Узнать ник и динамик ID из статик ID</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/id [динамик id]</span>
+                                </div>
+                                <p class="command-description">Узнать ник и статик ID из динамик ID</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/gm</span>
+                                </div>
+                                <p class="command-description">Включить/выключить бессмертие</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/tp [динамик id]</span>
+                                </div>
+                                <p class="command-description">Телепорт к игроку</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/gh [динамик id]</span>
+                                </div>
+                                <p class="command-description">Телепортировать игрока к себе</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/mtp</span>
+                                </div>
+                                <p class="command-description">Телепорт по розовой метке</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/dl</span>
+                                </div>
+                                <p class="command-description">Информация о машине (ID, скорость, координаты, водитель)</p>
+                                <div class="command-note">
+                                    <strong>Цвета:</strong> 🔴 двигатель заглушен | 🟢 заведен | LD: Last Driver
+                                </div>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/getcar [id транспорта]</span>
+                                </div>
+                                <p class="command-description">Телепортировать транспорт к себе</p>
+                            </div>
+                            
+                            <div class="admin-command-card">
+                                <div class="command-header">
+                                    <span class="command-name">/delveh</span>
+                                </div>
+                                <p class="command-description">Удалить транспорт (нужно быть рядом)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-hotkey-info">
+                            <div class="hotkey-item">
+                                <span class="hotkey-key">F11</span>
+                                <span class="hotkey-desc">Меню репортов</span>
+                            </div>
+                            <div class="hotkey-item">
+                                <span class="hotkey-key">F5</span>
+                                <span class="hotkey-desc">Полет (WASD движение | Q/E вверх/вниз | R/F скорость | Shift/Ctrl ускорение)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Справочная информация Majestic RP -->
+                    <div class="admin-category">
+                        <h3 class="admin-category-title">📋 Справочная информация Majestic RP</h3>
+                        
+                        <!-- Фракции -->
+                        <div class="reference-section">
+                            <h4 class="reference-title">🏢 Фракции</h4>
+                            <div class="reference-grid">
+                                <div class="reference-item"><span class="ref-id">1</span> LSPD</div>
+                                <div class="reference-item"><span class="ref-id">2</span> EMS</div>
+                                <div class="reference-item"><span class="ref-id">3</span> Sheriff</div>
+                                <div class="reference-item"><span class="ref-id">4</span> National Guard</div>
+                                <div class="reference-item"><span class="ref-id">5</span> CityHall (Gov)</div>
+                                <div class="reference-item"><span class="ref-id">6</span> Weazel News</div>
+                                <div class="reference-item"><span class="ref-id">7</span> FIB</div>
+                                <div class="reference-item"><span class="ref-id">8</span> The Ballas Gang</div>
+                                <div class="reference-item"><span class="ref-id">9</span> Los-Santos Vagos</div>
+                                <div class="reference-item"><span class="ref-id">10</span> The Famillies</div>
+                                <div class="reference-item"><span class="ref-id">11</span> The Bloods Gang</div>
+                                <div class="reference-item"><span class="ref-id">12</span> Marabunta Grande</div>
+                                <div class="reference-item"><span class="ref-id">13</span> La Cosa Nostra</div>
+                                <div class="reference-item"><span class="ref-id">14</span> Russian Mafia</div>
+                                <div class="reference-item"><span class="ref-id">15</span> Yakuza</div>
+                                <div class="reference-item"><span class="ref-id">16</span> Mexican Cartel</div>
+                                <div class="reference-item"><span class="ref-id">17</span> The Lost MC</div>
+                                <div class="reference-item"><span class="ref-id">18</span> Angel of Death MC</div>
+                                <div class="reference-item"><span class="ref-id">19</span> Armenian Mafia</div>
+                                <div class="reference-item"><span class="ref-id">20</span> Grubie Family</div>
+                                <div class="reference-item"><span class="ref-id">21</span> GrandClub</div>
+                                <div class="reference-item"><span class="ref-id">22</span> The Richmane Hotel</div>
+                                <div class="reference-item"><span class="ref-id">23</span> Gentry Manor Hotel</div>
+                                <div class="reference-item"><span class="ref-id">24</span> Continental</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Лицензии -->
+                        <div class="reference-section">
+                            <h4 class="reference-title">📜 Лицензии</h4>
+                            <div class="license-grid">
+                                <div class="license-card">
+                                    <div class="license-code">Drive D</div>
+                                    <div class="license-name">Легковой транспорт</div>
+                                </div>
+                                <div class="license-card">
+                                    <div class="license-code">Drive M</div>
+                                    <div class="license-name">Мотоциклы</div>
+                                </div>
+                                <div class="license-card">
+                                    <div class="license-code">CDL A</div>
+                                    <div class="license-name">Тягачи и моногрузовики</div>
+                                </div>
+                                <div class="license-card">
+                                    <div class="license-code">CDL B</div>
+                                    <div class="license-name">Пикапы и грузовики</div>
+                                </div>
+                                <div class="license-card">
+                                    <div class="license-code">CDWL</div>
+                                    <div class="license-name">Оружие</div>
+                                </div>
+                                <div class="license-card">
+                                    <div class="license-code">FH</div>
+                                    <div class="license-name">Охота и рыбалка</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Скиллы -->
+                        <div class="reference-section">
+                            <h4 class="reference-title">🎯 Скиллы работ</h4>
+                            <div class="skills-grid">
+                                <div class="skill-item"><span class="skill-code">builder</span> Строитель</div>
+                                <div class="skill-item"><span class="skill-code">butcher</span> Мясник</div>
+                                <div class="skill-item"><span class="skill-code">trucker</span> Дальнобойщик</div>
+                                <div class="skill-item"><span class="skill-code">fishing</span> Рыбалка</div>
+                                <div class="skill-item"><span class="skill-code">busdriver</span> Водитель автобуса</div>
+                                <div class="skill-item"><span class="skill-code">moneycollector</span> Инкассатор</div>
+                                <div class="skill-item"><span class="skill-code">vineyard</span> Виноградник</div>
+                                <div class="skill-item"><span class="skill-code">lumberjack</span> Лесоруб</div>
+                                <div class="skill-item"><span class="skill-code">garbagecollector</span> Мусорщик</div>
+                                <div class="skill-item gang"><span class="skill-code">gangjob</span> Гетто закладчик</div>
+                                <div class="skill-item gang"><span class="skill-code">mafiajob</span> Мафия закладчик</div>
+                                <div class="skill-item gang"><span class="skill-code">bikerjob</span> Байкер закладчик</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Важная информация -->
+                        <div class="reference-section">
+                            <h4 class="reference-title">ℹ️ Важная информация</h4>
+                            <div class="info-cards">
+                                <div class="info-card">
+                                    <div class="info-header">💎 Bundles (Наборы)</div>
+                                    <p>• Особо опасен<br>• Работник(ца) месяца<br>• Курьер<br>• Легендарный гонщик<br>• Сила + Энергия<br>• Повседневный набор (можно покупать неограниченно)</p>
+                                </div>
+                                
+                                <div class="info-card">
+                                    <div class="info-header">🚗 Транспорт</div>
+                                    <p>• Все машины за MC теперь за вирты (кроме спринтеров и фуры)<br>• Налога на машины больше нет<br>• Свалка после 21.06.2025: 50% от стоимости<br>• Свалка до 21.06.2025: 75% от стоимости</p>
+                                </div>
+                                
+                                <div class="info-card">
+                                    <div class="info-header">🎁 Кейсы и награды</div>
+                                    <p>• Кейс "Премиум автомобили" за траты MC<br>• На EU игроки получают награду сразу<br>• Награды за Twitch Drops в донат инвентарь<br>• Twitch: после привязки закрыть трансляцию на 1-2 мин</p>
+                                </div>
+                                
+                                <div class="info-card">
+                                    <div class="info-header">💰 Скидки</div>
+                                    <p>• Категория "Лучшие предложения" - 10 товаров<br>• Обновление каждые 12 часов<br>• Скидки не суммируются с Черной пятницей<br>• Игрок выбирает одну скидку</p>
                                 </div>
                             </div>
                         </div>
@@ -12313,6 +12518,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Chat Section -->
         <div class="section" id="chatSection">
             <div class="chat-container">
                 <div class="chat-messages" id="chatMessages">
@@ -16842,6 +17049,8 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Section Navigation
         function showSection(sectionName) {
+            console.log('🔍 showSection called with:', sectionName);
+            
             // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
@@ -16868,8 +17077,18 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             };
 
             const targetSection = document.getElementById(sectionMap[sectionName]);
+            console.log('🎯 Target section:', sectionMap[sectionName], targetSection);
+            
             if (targetSection) {
+                // Принудительно убираем display: none и добавляем active
+                targetSection.style.display = '';
                 targetSection.classList.add('active');
+                console.log('✅ Section activated:', sectionName);
+                
+                // Прокручиваем страницу вверх
+                window.scrollTo(0, 0);
+            } else {
+                console.error('❌ Section not found:', sectionName, sectionMap[sectionName]);
             }
 
             // Show/hide chat input container based on section
@@ -17537,10 +17756,16 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Выбор премиум вкладки меню
         function selectLogoMenuPremium(section) {
-            if (!hasPremiumAccess()) {
+            console.log('🔐 selectLogoMenuPremium called for:', section);
+            const hasAccess = hasPremiumAccess();
+            console.log('🎫 Has premium access:', hasAccess);
+            
+            if (!hasAccess) {
+                console.log('⚠️ No premium access, showing modal');
                 showPremiumModal('tab-' + section);
                 return;
             }
+            console.log('✅ Premium access granted, opening section');
             selectLogoMenu(section);
         }
 
@@ -20216,32 +20441,9 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTeamColors();
 });
 
-// Функция переключения вкладок админ-панели
-function switchAdminTab(tabId) {
-    console.log('Switching admin tab to:', tabId);
-    
-    // Убираем active у всех кнопок
-    document.querySelectorAll('.admin-tab-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    // Добавляем active нажатой кнопке
-    event.target.closest('.admin-tab-btn').classList.add('active');
-    
-    // Скрываем все панели
-    document.querySelectorAll('.admin-panel').forEach(panel => {
-        panel.classList.remove('active');
-    });
-    
-    // Показываем нужную панель
-    const targetPanel = document.getElementById('panel-' + tabId);
-    if (targetPanel) {
-        targetPanel.classList.add('active');
-    }
-}
-
 
 </script>
+
 
 
 </body>
