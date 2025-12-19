@@ -9747,6 +9747,184 @@
             }
         }
 
+        /* ═══════════════════════════════════════════════════════════════
+           🔐 SECRETS SECTION STYLES
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .secrets-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .secret-category {
+            margin-bottom: 3rem;
+        }
+
+        .secret-category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .secret-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .secret-item {
+            background: rgba(30, 30, 30, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .secret-item:hover {
+            background: rgba(40, 40, 40, 0.8);
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.15);
+        }
+
+        .secret-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .secret-content {
+            flex: 1;
+        }
+
+        .secret-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .secret-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ⚡ ADMIN SECTION STYLES
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .admin-category {
+            margin-bottom: 3rem;
+        }
+
+        .admin-category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .admin-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .admin-item {
+            background: rgba(30, 30, 30, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .admin-item:hover {
+            background: rgba(40, 40, 40, 0.8);
+            border-color: var(--accent-primary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.15);
+        }
+
+        .admin-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .admin-content {
+            flex: 1;
+        }
+
+        .admin-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .feature-content {
+            padding: 2rem 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .feature-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .feature-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .secret-items,
+            .admin-items {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-title {
+                font-size: 2rem;
+            }
+
+            .feature-subtitle {
+                font-size: 1rem;
+            }
+        }
+
 </style>
 </head>
 
@@ -9840,6 +10018,24 @@
             </div>
             <div class="logo-menu-item" data-section="social" onclick="selectLogoMenu('social')">
                 <span>Соц. сети</span>
+            </div>
+            <div class="logo-menu-item premium-tab" id="secretsTab" data-section="secrets" onclick="selectLogoMenuPremium('secrets')">
+                <span>Секреты</span>
+                <span class="tab-premium-badge">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    PRO
+                </span>
+            </div>
+            <div class="logo-menu-item premium-tab" id="adminTab" data-section="admin" onclick="selectLogoMenuPremium('admin')">
+                <span>Админ</span>
+                <span class="tab-premium-badge">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    PRO
+                </span>
             </div>
         </div>
 
@@ -10706,6 +10902,178 @@
             </div>
         </div>
 
+        <!-- Secrets Section -->
+        <div class="section" id="secretsSection" style="display: none;">
+            <div class="feature-content">
+                <div class="feature-header">
+                    <h1 class="feature-title">🔐 Секреты серверов GTA 5 RP</h1>
+                    <p class="feature-subtitle">Эксклюзивная информация для подписчиков PRO</p>
+                </div>
+                
+                <div class="secrets-container">
+                    <div class="secret-category">
+                        <h3 class="secret-category-title">📚 Секреты админов GTA 5 RP</h3>
+                        <div class="secret-items">
+                            <div class="secret-item">
+                                <div class="secret-icon">🔑</div>
+                                <div class="secret-content">
+                                    <h4 class="secret-title">Скрытые правила администрирования</h4>
+                                    <p class="secret-description">Узнайте о неофициальных правилах и практиках, которые используют администраторы при принятии решений.</p>
+                                </div>
+                            </div>
+                            <div class="secret-item">
+                                <div class="secret-icon">⚖️</div>
+                                <div class="secret-content">
+                                    <h4 class="secret-title">Критерии решений по откатам</h4>
+                                    <p class="secret-description">Внутренние критерии оценки жалоб и принятия решений администраторами.</p>
+                                </div>
+                            </div>
+                            <div class="secret-item">
+                                <div class="secret-icon">🎯</div>
+                                <div class="secret-content">
+                                    <h4 class="secret-title">Приоритеты рассмотрения</h4>
+                                    <p class="secret-description">Какие жалобы рассматриваются быстрее и почему.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="secret-category">
+                        <h3 class="secret-category-title">🗺️ Секретная информация серверов</h3>
+                        <div class="secret-items">
+                            <div class="secret-item">
+                                <div class="secret-icon">📍</div>
+                                <div class="secret-content">
+                                    <h4 class="secret-title">Скрытые локации</h4>
+                                    <p class="secret-description">Секретные места на картах серверов, о которых знают немногие.</p>
+                                </div>
+                            </div>
+                            <div class="secret-item">
+                                <div class="secret-icon">💰</div>
+                                <div class="secret-content">
+                                    <h4 class="secret-title">Оптимальные схемы заработка</h4>
+                                    <p class="secret-description">Наиболее эффективные методы заработка на различных серверах.</p>
+                                </div>
+                            </div>
+                            <div class="secret-item">
+                                <div class="secret-icon">🎮</div>
+                                <div class="secret-content">
+                                    <h4 class="secret-title">Игровые механики</h4>
+                                    <p class="secret-description">Недокументированные особенности игровых механик серверов.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="secret-category">
+                        <h3 class="secret-category-title">💎 Эксклюзивная информация</h3>
+                        <div class="secret-items">
+                            <div class="secret-item">
+                                <div class="secret-icon">📢</div>
+                                <div class="secret-content">
+                                    <h4 class="secret-title">Инсайдерская информация</h4>
+                                    <p class="secret-description">Информация от инсайдеров о предстоящих обновлениях и изменениях.</p>
+                                </div>
+                            </div>
+                            <div class="secret-item">
+                                <div class="secret-icon">🏆</div>
+                                <div class="secret-content">
+                                    <h4 class="secret-title">Стратегии продвинутых игроков</h4>
+                                    <p class="secret-description">Секреты успешной игры от топовых игроков серверов.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Section -->
+        <div class="section" id="adminSection" style="display: none;">
+            <div class="feature-content">
+                <div class="feature-header">
+                    <h1 class="feature-title">⚡ Функционал админа</h1>
+                    <p class="feature-subtitle">Инструменты и информация для администраторов</p>
+                </div>
+                
+                <div class="admin-container">
+                    <div class="admin-category">
+                        <h3 class="admin-category-title">🛠️ Инструменты администрирования</h3>
+                        <div class="admin-items">
+                            <div class="admin-item">
+                                <div class="admin-icon">📋</div>
+                                <div class="admin-content">
+                                    <h4 class="admin-title">Шаблоны решений</h4>
+                                    <p class="admin-description">Готовые шаблоны для различных типов нарушений и решений.</p>
+                                </div>
+                            </div>
+                            <div class="admin-item">
+                                <div class="admin-icon">🔍</div>
+                                <div class="admin-content">
+                                    <h4 class="admin-title">Анализ ситуаций</h4>
+                                    <p class="admin-description">AI-помощник для анализа сложных игровых ситуаций.</p>
+                                </div>
+                            </div>
+                            <div class="admin-item">
+                                <div class="admin-icon">📊</div>
+                                <div class="admin-content">
+                                    <h4 class="admin-title">Статистика нарушений</h4>
+                                    <p class="admin-description">Данные о типичных нарушениях и их частоте.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-category">
+                        <h3 class="admin-category-title">📚 База знаний</h3>
+                        <div class="admin-items">
+                            <div class="admin-item">
+                                <div class="admin-icon">📖</div>
+                                <div class="admin-content">
+                                    <h4 class="admin-title">Полный свод правил</h4>
+                                    <p class="admin-description">Детальная база всех правил с примерами и разъяснениями.</p>
+                                </div>
+                            </div>
+                            <div class="admin-item">
+                                <div class="admin-icon">⚖️</div>
+                                <div class="admin-content">
+                                    <h4 class="admin-title">Прецеденты решений</h4>
+                                    <p class="admin-description">Примеры решений по сложным случаям.</p>
+                                </div>
+                            </div>
+                            <div class="admin-item">
+                                <div class="admin-icon">🎓</div>
+                                <div class="admin-content">
+                                    <h4 class="admin-title">Обучающие материалы</h4>
+                                    <p class="admin-description">Гайды по администрированию и работе с игроками.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-category">
+                        <h3 class="admin-category-title">🚀 Быстрые действия</h3>
+                        <div class="admin-items">
+                            <div class="admin-item">
+                                <div class="admin-icon">⚡</div>
+                                <div class="admin-content">
+                                    <h4 class="admin-title">Быстрые команды</h4>
+                                    <p class="admin-description">Список всех админ-команд с описанием.</p>
+                                </div>
+                            </div>
+                            <div class="admin-item">
+                                <div class="admin-icon">🔧</div>
+                                <div class="admin-content">
+                                    <h4 class="admin-title">Решение проблем</h4>
+                                    <p class="admin-description">Частые проблемы и способы их решения.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Chat Section -->
         <div class="section" id="chatSection">
             <div class="chat-container">
@@ -10716,77 +11084,7 @@
                         <h3 class="welcome-main-title">BudgeRulse — твой помощник в сфере правил серверов GTA5.</h3>
                         <p class="welcome-subtitle-question">Чем могу помочь?</p>
 
-                        <div class="quick-questions">
-                            <div class="quick-question" onclick="askQuickQuestion('Что такое Metagaming?')">
-                                <span class="quick-question-title">Что такое Metagaming?</span>
-                            </div>
-                            <div class="quick-question" onclick="askQuickQuestion('Как правильно грабить игроков?')">
-                                <span class="quick-question-title">Как правильно грабить игроков?</span>
-                            </div>
-                            <div class="quick-question" onclick="askQuickQuestion('Правила взаимодействия с полицией')">
-                                <span class="quick-question-title">Правила взаимодействия с полицией</span>
-                            </div>
-                            <div class="quick-question" onclick="askQuickQuestion('Что можно делать в зелёной зоне?')">
-                                <span class="quick-question-title">Что можно делать в зелёной зоне?</span>
-                            </div>
-                            
-                            <!-- Premium Features -->
-                            <div class="quick-question premium" id="premiumRollback" onclick="openPremiumFeature('rollback')">
-                                <span class="lock-icon">🔒</span>
-                                <span class="quick-question-title">Анализ отката</span>
-                                <span class="premium-badge">
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                                    </svg>
-                                    PRO
-                                </span>
-                            </div>
-                            
-                            <div class="quick-question premium" id="premiumAdminTools" onclick="openPremiumFeature('admin')">
-                                <span class="lock-icon">🔒</span>
-                                <span class="quick-question-title">Функционал админа</span>
-                                <span class="premium-badge">
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                                    </svg>
-                                    PRO
-                                </span>
-                            </div>
-                            
-                            <div class="quick-question premium" id="premiumAdminSecrets" onclick="openPremiumFeature('admin-secrets')">
-                                <span class="lock-icon">🔒</span>
-                                <span class="quick-question-title">Секреты админов GTA 5 RP</span>
-                                <span class="premium-badge">
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                                    </svg>
-                                    PRO
-                                </span>
-                            </div>
-                            
-                            <div class="quick-question premium" id="premiumSecrets" onclick="openPremiumFeature('secrets')">
-                                <span class="lock-icon">🔒</span>
-                                <span class="quick-question-title">Секретная информация серверов</span>
-                                <span class="premium-badge">
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                                    </svg>
-                                    PRO
-                                </span>
-                            </div>
-
-                            <!-- Hidden Premium-Only Feature - Visible only with subscription -->
-                            <div class="quick-question premium premium-only-hidden" id="premiumExclusiveInsider" onclick="openPremiumFeature('exclusive-insider')" style="display: none;">
-                                <span class="lock-icon">💎</span>
-                                <span class="quick-question-title">Инсайдерская информация</span>
-                                <span class="premium-badge exclusive">
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                                    </svg>
-                                    EXCLUSIVE
-                                </span>
-                            </div>
-                        </div>
+                        <!-- Quick questions removed - moved to menu -->
 
                         <div class="recent-dialogs">
                             <div class="recent-dialogs-header" onclick="toggleRecentDialogs(this)">
@@ -15239,7 +15537,9 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 'history': 'historySection',
                 'news': 'newsSection',
                 'team': 'teamSection',
-                'social': 'socialSection'
+                'social': 'socialSection',
+                'secrets': 'secretsSection',
+                'admin': 'adminSection'
             };
 
             const targetSection = document.getElementById(sectionMap[sectionName]);
@@ -15915,12 +16215,30 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
         function updatePremiumTabsUI() {
             const isPremium = hasPremiumAccess();
             const complaintsTab = document.getElementById('complaintsTab');
+            const secretsTab = document.getElementById('secretsTab');
+            const adminTab = document.getElementById('adminTab');
             
             if (complaintsTab) {
                 if (isPremium) {
                     complaintsTab.classList.remove('locked');
                 } else {
                     complaintsTab.classList.add('locked');
+                }
+            }
+            
+            if (secretsTab) {
+                if (isPremium) {
+                    secretsTab.classList.remove('locked');
+                } else {
+                    secretsTab.classList.add('locked');
+                }
+            }
+            
+            if (adminTab) {
+                if (isPremium) {
+                    adminTab.classList.remove('locked');
+                } else {
+                    adminTab.classList.add('locked');
                 }
             }
         }
@@ -15932,7 +16250,9 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 'admin': 'Функционал админа',
                 'admin-secrets': 'Секреты админов GTA 5 RP',
                 'secrets': 'Секретная информация серверов',
-                'tab-complaints': 'Анализ откатов'
+                'tab-complaints': 'Анализ откатов',
+                'tab-secrets': 'Секреты',
+                'tab-admin': 'Админ'
             };
 
             const featureDescriptions = {
@@ -15940,7 +16260,9 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 'admin': 'Доступ к базе знаний для администраторов: команды, процедуры, шаблоны ответов и лучшие практики.',
                 'admin-secrets': 'Эксклюзивная информация для администраторов: скрытые команды, секретные процедуры, инсайдерская информация о работе администрации GTA 5 RP и Majestic RP.',
                 'secrets': 'Эксклюзивная информация о серверах GTA 5 RP и Majestic RP, недоступная обычным игрокам.',
-                'tab-complaints': 'Полноценный раздел для анализа откатов: загрузка видео, автоматический анализ нарушений, генерация жалоб с доказательствами.'
+                'tab-complaints': 'Полноценный раздел для анализа откатов: загрузка видео, автоматический анализ нарушений, генерация жалоб с доказательствами.',
+                'tab-secrets': 'Получите доступ к секретной информации серверов, скрытым локациям, оптимальным схемам заработка и инсайдерской информации.',
+                'tab-admin': 'Инструменты для администраторов: шаблоны решений, анализ ситуаций, база знаний, прецеденты и обучающие материалы.'
             };
 
             // Создаем модальное окно
