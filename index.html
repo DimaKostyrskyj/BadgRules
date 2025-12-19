@@ -3175,7 +3175,7 @@
         .container {
             position: relative;
             z-index: 5;
-            max-width: 900px;
+            max-width: 750px;
             margin: 0 auto;
             padding: 0 1.5rem;
             padding-top: 120px;
@@ -3226,7 +3226,7 @@
         }
 
         .chat-input-inner {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
@@ -3234,12 +3234,12 @@
 
 /* Modern Input Box */
 .chat-input-box {
-    background: transparent;
-    border: none;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    backdrop-filter: none;
+    backdrop-filter: blur(10px);
 }
 
 .chat-input-box::before {
@@ -3251,19 +3251,21 @@
 }
 
 .chat-input-box:hover {
-    border-color: transparent;
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
 }
 
 .chat-input-box:focus-within {
-    border-color: transparent;
-    box-shadow: none;
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(96, 165, 250, 0.3);
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
 }
 
 /* Input Area - Main */
 .chat-input-main {
-    padding: 1.25rem 1.5rem;
-    min-height: 60px;
-    border-radius: 20px 20px 0 0;
+    padding: 1rem 1.25rem;
+    min-height: 52px;
+    border-radius: 16px 16px 0 0;
     background: transparent;
 }
 
@@ -3274,8 +3276,8 @@
     padding: 0;
     color: var(--text-primary);
     font-family: 'Manrope', sans-serif;
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.5;
     resize: none;
 }
 
@@ -3284,12 +3286,12 @@
 }
 
 .chat-input::placeholder {
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.3);
     transition: color 0.3s ease;
 }
 
 .chat-input:focus::placeholder {
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.4);
 }
 
 /* Bottom Bar */
@@ -3297,10 +3299,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1.25rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.65rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
     background: transparent;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 0 16px 16px;
 }
 
 /* ... existing code ... */
@@ -3318,22 +3320,22 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.4rem 0.7rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.5rem 0.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .ai-selector-btn:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         .ai-selector-btn.open {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(96, 165, 250, 0.3);
         }
 
         .ai-selector-text {
@@ -3458,21 +3460,23 @@
             display: flex;
             align-items: center;
             gap: 0.4rem;
-            padding: 0.4rem 0.75rem;
-            background: transparent;
-            border: none;
-            border-radius: 8px;
+            padding: 0.5rem 0.9rem;
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: 'Manrope', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 500;
-            color: var(--text-secondary);
+            color: var(--accent-primary);
         }
 
         .send-button:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            background: rgba(96, 165, 250, 0.15);
+            border-color: rgba(96, 165, 250, 0.3);
+            transform: translateY(-1px);
         }
 
         .send-button:hover svg {
@@ -3490,18 +3494,11 @@
 
         /* Keyboard Shortcut Hint */
         .shortcut-hint {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            opacity: 0.5;
-            margin-left: 0.5rem;
+            display: none;
         }
 
         .shortcut-hint kbd {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.15rem 0.35rem;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.65rem;
+            display: none;
         }
 
         .message {
@@ -10485,7 +10482,6 @@
                                 </svg>
                                 <span>Отправить</span>
                             </button>
-                            <span class="shortcut-hint"><kbd>Enter</kbd></span>
                         </div>
                     </div>
                 </div>
