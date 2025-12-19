@@ -3555,7 +3555,7 @@
         .message-content {
             flex: 1;
             line-height: 1.6;
-            padding: 1rem 1.25rem;
+            padding: 0.75rem 1rem;
             background: rgba(255, 255, 255, 0.02);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -3577,6 +3577,7 @@
             border-radius: 0;
             border: none;
             color: var(--text-primary);
+            font-size: 0.95rem;
         }
 
 
@@ -3930,10 +3931,11 @@
         }
 
         .message-time {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-secondary);
-            margin-top: 0.5rem;
+            margin-top: 0.35rem;
             font-family: 'JetBrains Mono', monospace;
+            opacity: 0.7;
         }
 
         /* Welcome Screen - New Minimalist Design */
@@ -6059,9 +6061,9 @@
         /* Динамический статус загрузки */
         .typing-status {
             color: var(--accent-primary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            padding: 0.5rem 0;
+            padding: 0.25rem 0;
             transition: opacity 0.3s ease;
             opacity: 1;
             font-family: 'Manrope', sans-serif;
@@ -12331,6 +12333,18 @@
             'Генерирую ответ...'
         ];
 
+        // Функция для установки конкретного статуса
+        function setTypingStatus(status) {
+            const statusElement = document.getElementById('typingStatus');
+            if (statusElement) {
+                statusElement.style.opacity = '0';
+                setTimeout(() => {
+                    statusElement.textContent = status;
+                    statusElement.style.opacity = '1';
+                }, 150);
+            }
+        }
+
         function addTypingIndicator() {
             const typingDiv = document.createElement('div');
             typingDiv.className = 'message bot';
@@ -12338,25 +12352,14 @@
             typingDiv.innerHTML = `
                 <div class="message-avatar"><img src="images/logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 12px;"></div>
                 <div class="message-content">
-                    <div class="typing-status" id="typingStatus">${typingStatuses[0]}</div>
+                    <div class="typing-status" id="typingStatus">Думаю...</div>
                 </div>
             `;
             chatMessages.appendChild(typingDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Запускаем циклическую смену статусов
-            currentStatusIndex = 0;
-            typingInterval = setInterval(() => {
-                currentStatusIndex = (currentStatusIndex + 1) % typingStatuses.length;
-                const statusElement = document.getElementById('typingStatus');
-                if (statusElement) {
-                    statusElement.style.opacity = '0';
-                    setTimeout(() => {
-                        statusElement.textContent = typingStatuses[currentStatusIndex];
-                        statusElement.style.opacity = '1';
-                    }, 200);
-                }
-            }, 2000); // Меняем статус каждые 2 секунды
+            // Больше не используем автоматическую смену статусов
+            // Статусы будут устанавливаться вручную в процессе обработки
         }
 
         function removeTypingIndicator() {
@@ -13293,16 +13296,9 @@
 
             addMessage(message, false);
             chatInput.value = '';
-            // Показываем что AI думает
-            addTypingIndicator();
             
-            // Показываем статус загрузки в реальном времени
-            const statusMsg = addMessage('🔍 Ищу информацию на форуме...', true);
-            setTimeout(() => {
-                if (statusMsg && statusMsg.parentNode) {
-                    statusMsg.remove();
-                }
-            }, 2000);
+            // Показываем индикатор загрузки
+            addTypingIndicator();
 
             try {
                 const config = API_CONFIG[currentModel];
@@ -13321,6 +13317,7 @@
                 }
                 
                 console.log(`🤖 ${config.name} (${config.icon}) обрабатывает запрос...`);
+                setTypingStatus('Анализирую вопрос...');
                 
                 // Получаем выбранный сервер
                 const selectedServer = loadServerSelection();
@@ -13334,6 +13331,8 @@
                 
                 // AI ищет на форуме
                 console.log(`🔍 ${config.name} ищет ответ на ${forumUrl}...`);
+                setTypingStatus('Ищу информацию на форуме...');
+                
                 const aiResult = await getAIResponseFromForum(message, serverName, forumUrl);
                 
                 removeTypingIndicator();
@@ -13389,6 +13388,7 @@
             // ═══════════════════════════════════════════════════════════
             
             console.log('🔍 Ищу в базе проиндексированных страниц...');
+            setTypingStatus('Проверяю базу правил...');
             const forumResults = searchInForumDatabase(question, serverName, userServer);
             
             let forumRulesText = '';
@@ -13397,6 +13397,7 @@
             // Если нашли в базе - используем
             if (forumResults.length > 0) {
                 console.log(`✅ Использую страницы из базы (${forumResults.length} шт.)`);
+                setTypingStatus('Загружаю правила...');
                 
                 for (const page of forumResults) {
                     console.log(`📥 Загружаю: ${page.title.substring(0, 50)}...`);
@@ -13417,6 +13418,7 @@
             
             if (!forumRulesText) {
                 console.log('📄 База не помогла, использую TXT...');
+                setTypingStatus('Загружаю дополнительные правила...');
                 const relevantLinks = selectRelevantLinks(question, serverName);
                 
                 for (const link of relevantLinks) {
@@ -13480,6 +13482,8 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             try {
                 let response;
                 
+                setTypingStatus('Генерирую ответ...');
+                
                 if (config.type === 'openai') {
                     response = await callOpenAICompatible(config, prompt);
                 } else if (config.type === 'gemini') {
@@ -13489,6 +13493,7 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 }
                 
                 console.log(`✅ ${config.name} ответил успешно`);
+                setTypingStatus('Формирую ответ...');
                 
                 // Возвращаем объект с текстом и флагом парсинга
                 return {
