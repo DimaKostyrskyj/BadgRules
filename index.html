@@ -16913,6 +16913,8 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Section Navigation
         function showSection(sectionName) {
+            console.log('🔍 showSection called with:', sectionName);
+            
             // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
@@ -16939,8 +16941,13 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             };
 
             const targetSection = document.getElementById(sectionMap[sectionName]);
+            console.log('🎯 Target section:', sectionMap[sectionName], targetSection);
+            
             if (targetSection) {
                 targetSection.classList.add('active');
+                console.log('✅ Section activated:', sectionName);
+            } else {
+                console.error('❌ Section not found:', sectionName, sectionMap[sectionName]);
             }
 
             // Show/hide chat input container based on section
@@ -17608,10 +17615,16 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Выбор премиум вкладки меню
         function selectLogoMenuPremium(section) {
-            if (!hasPremiumAccess()) {
+            console.log('🔐 selectLogoMenuPremium called for:', section);
+            const hasAccess = hasPremiumAccess();
+            console.log('🎫 Has premium access:', hasAccess);
+            
+            if (!hasAccess) {
+                console.log('⚠️ No premium access, showing modal');
                 showPremiumModal('tab-' + section);
                 return;
             }
+            console.log('✅ Premium access granted, opening section');
             selectLogoMenu(section);
         }
 
