@@ -12112,18 +12112,35 @@
         </div>
 
         <!-- Admin Section -->
-        <div class="section" id="adminSection" style="display: none;">
-            <div class="feature-content">
-                <div class="feature-header">
-                    <h1 class="feature-title">⚡ Админ-панель Majestic RP</h1>
-                    <p class="feature-subtitle">Полный справочник команд администрации сервера Majestic RP</p>
-                    <div class="server-badge-container">
+        <div class="section" id="adminSection">
+            <div class="landing-section">
+                <!-- Hero -->
+                <div class="hero-section">
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                        <span>Админ-панель</span>
+                    </div>
+
+                    <h1 class="hero-title">Команды администрации<br>Majestic RP</h1>
+
+                    <p class="hero-subtitle">
+                        Полный справочник админ-команд сервера Majestic RP.
+                        Все команды отсортированы по уровням администрации.
+                    </p>
+                    
+                    <div class="server-badge-container" style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                         <span class="server-badge majestic">🎮 Majestic RP</span>
                         <span class="server-badge updated">📅 Обновлено: 19.12.2025</span>
                     </div>
                 </div>
                 
-                <div class="admin-container">
+                <!-- Admin Commands Grid -->
+                <div class="features-section">
+                    <div class="admin-container">
                     <!-- Команды администрации Majestic RP -->
                         <!-- Уровень 4 -->
                         <div class="admin-level-block>
@@ -13256,8 +13273,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                </div> <!-- Close features-section -->
+            </div> <!-- Close landing-section -->
+        </div> <!-- Close adminSection -->
 
         <!-- News Section -->
         <div class="section" id="newsSection">
@@ -13835,22 +13853,37 @@
         }
 
         function selectAiModel(model) {
-            if (!aiModels[model]) return;
+            if (!aiModels[model]) {
+                console.error('❌ Неизвестная модель:', model);
+                return;
+            }
 
             currentModel = model;
             const modelInfo = aiModels[model];
+            
+            console.log('✅ Выбрана AI модель:', modelInfo.name);
 
             // Update button text
-            document.getElementById('aiSelectorText').textContent = modelInfo.name;
+            const selectorText = document.getElementById('aiSelectorText');
+            if (selectorText) {
+                selectorText.textContent = modelInfo.name;
+            }
 
             // Update selected state in dropdown
             document.querySelectorAll('.ai-option').forEach(opt => {
+                opt.classList.remove('selected');
                 if (opt.dataset.model === model) {
                     opt.classList.add('selected');
-                } else {
-                    opt.classList.remove('selected');
                 }
             });
+
+            // Save to localStorage
+            try {
+                localStorage.setItem('badgrules_ai_model', model);
+                console.log('💾 AI модель сохранена:', model);
+            } catch (e) {
+                console.warn('⚠️ Не удалось сохранить модель');
+            }
 
             // Close dropdown
             toggleAiSelector();
@@ -14111,8 +14144,20 @@
             }
         };
 
-        // Groq ПО УМОЛЧАНИЮ - самая надёжная!
-        let currentModel = 'groq';
+        // Загружаем сохраненную модель или используем Groq по умолчанию
+        let currentModel = localStorage.getItem('badgrules_ai_model') || 'groq';
+        
+        // Применяем сохраненную модель при загрузке
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedModel = localStorage.getItem('badgrules_ai_model');
+            if (savedModel && aiModels[savedModel]) {
+                console.log('💾 Восстанавливаю сохраненную AI модель:', savedModel);
+                selectAiModel(savedModel);
+            } else {
+                console.log('✅ Используем Groq по умолчанию');
+                selectAiModel('groq');
+            }
+        });
 
         // ═══════════════════════════════════════════════════════════════
         // 📚 ЗАГРУЗКА ССЫЛОК ИЗ TXT ФАЙЛА
@@ -17205,9 +17250,9 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             // Update profile section
             updateProfileSection(user);
             
-            // Show chat section by default
-            console.log('🎯 Показываем секцию чата по умолчанию');
-            showSection('chat');
+            // НЕ показываем чат автоматически!
+            // URL Router сам определит какую секцию показать
+            console.log('✅ Интерфейс инициализирован, ждем URL Router...');
         }
 
         // Update Profile Section
@@ -18654,18 +18699,13 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Закрыть секцию подписки
         function closeSubscriptionSection() {
-            const subSection = document.getElementById('subscriptionSection');
-            const scrollIndicator = document.querySelector('.vertical-scroll-indicator');
-            
-            if (subSection) {
-                subSection.classList.add('hidden');
-                // Восстанавливаем прокрутку
-                document.body.style.overflow = '';
-                
-                // Показываем скролл-индикатор обратно
-                if (scrollIndicator) {
-                    scrollIndicator.style.display = 'flex';
-                }
+            console.log('🚪 Закрываем секцию подписки, переход на чат');
+            // Используем навигацию через URL Router
+            if (typeof URLRouter !== 'undefined' && URLRouter.navigateTo) {
+                URLRouter.navigateTo('chat');
+            } else {
+                // Fallback - используем showSection напрямую
+                showSection('chat');
             }
         }
 
@@ -21981,40 +22021,33 @@ const URLRouter = {
         
         console.log('📍 Текущий путь при загрузке:', currentPath);
         
-        // Если путь корневой (/), пытаемся восстановить последнюю секцию
+        // Определяем секцию по текущему пути
         let section = this.routes[currentPath];
         
-        if (!section || currentPath === '/') {
-            // Пытаемся восстановить последнюю секцию из localStorage
-            const lastSection = localStorage.getItem('badgrules_last_section');
-            if (lastSection && this.sectionToRoute[lastSection]) {
-                section = lastSection;
-                console.log('💾 Восстановлена последняя секция:', section);
-            } else {
-                section = 'chat';
-            }
+        // Если маршрут не найден, по умолчанию чат
+        if (!section) {
+            section = 'chat';
+            currentPath = '/';
         }
         
         console.log('🎯 Определена секция для загрузки:', section);
         
-        // Небольшая задержка чтобы дать странице полностью загрузиться
-        setTimeout(() => {
-            // Переходим к секции без добавления в историю
-            this.navigateToSection(section, false);
-            
-            // Обновляем состояние истории с правильным путем
-            const route = this.sectionToRoute[section];
-            if (route) {
-                // Если текущий путь отличается от канонического, исправляем URL
-                if (currentPath !== route) {
-                    history.replaceState({ section }, '', route);
-                    console.log('✅ URL нормализован:', route);
-                } else {
-                    history.replaceState({ section }, '', route);
-                    console.log('✅ История обновлена:', route);
-                }
-            }
-        }, 100);
+        // Переходим к секции СРАЗУ (без задержки)
+        this.navigateToSection(section, false);
+        
+        // Обновляем состояние истории с правильным путем
+        const route = this.sectionToRoute[section] || '/';
+        
+        // Если это корневой путь, заменяем на /chat-s-ai
+        const canonicalRoute = (currentPath === '/' && section === 'chat') ? '/chat-s-ai' : route;
+        
+        if (currentPath !== canonicalRoute) {
+            history.replaceState({ section }, '', canonicalRoute);
+            console.log('✅ URL нормализован:', canonicalRoute);
+        } else {
+            history.replaceState({ section }, '', canonicalRoute);
+            console.log('✅ История обновлена:', canonicalRoute);
+        }
     },
     
     // Обработка текущего роута
@@ -22223,11 +22256,10 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('👁️ MutationObserver активирован для Opera GX');
     }
     
-    // Ждем чтобы все скрипты и элементы полностью загрузились
-    setTimeout(() => {
-        URLRouter.init();
-        console.log('🔗 URL Router полностью инициализирован');
-    }, 200);
+    // Инициализируем URL Router СРАЗУ (без задержки)
+    console.log('🔗 Инициализация URL Router...');
+    URLRouter.init();
+    console.log('✅ URL Router инициализирован');
 });
 
 console.log('🔗 URL Router загружен');
