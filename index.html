@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- ═══════════════════════════════════════════════════════════════
-         🔒 FORCE HTTPS - Принудительное перенаправление на HTTPS
+         🔒 FORCE HTTPS - ОТКЛЮЧЕНО
          ═══════════════════════════════════════════════════════════════ -->
     <script>
-        // Немедленное перенаправление на HTTPS если открыт через HTTP
-        if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-            location.replace('https:' + window.location.href.substring(window.location.protocol.length));
-        }
+        console.log('🌐 Загрузка сайта...');
+        console.log('📍 Протокол:', location.protocol);
+        console.log('📍 Хост:', location.hostname);
     </script>
     
     <!-- Universal Access & SEO -->
@@ -24,6 +23,9 @@
     <!-- No Geo-blocking -->
     <meta name="geo.region" content="WORLD">
     <meta name="geo.placename" content="Global">
+    
+    <!-- Cache Control for better availability -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000">
     
     <title>BadgRules - Нейросеть по правилам GTA 5 RP</title>
     
@@ -17079,25 +17081,6 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
         window.addEventListener('DOMContentLoaded', () => {
             console.log('🚀 DOM загружен, начинаем инициализацию...');
             
-            // АВАРИЙНАЯ ЗАЩИТА: Если через 3 секунды ничего не показано - показываем логин
-            setTimeout(() => {
-                const loginScreen = document.getElementById('loginScreen');
-                const mainInterface = document.getElementById('mainInterface');
-                
-                if (loginScreen && mainInterface) {
-                    const loginVisible = window.getComputedStyle(loginScreen).display !== 'none';
-                    const mainVisible = window.getComputedStyle(mainInterface).display !== 'none';
-                    
-                    if (!loginVisible && !mainVisible) {
-                        console.warn('⚠️ АВАРИЙНЫЙ РЕЖИМ: Ничего не отображено, показываем логин');
-                        loginScreen.style.display = 'flex';
-                        // Скрываем loader если он есть
-                        const loader = document.getElementById('initialLoader');
-                        if (loader) loader.style.display = 'none';
-                    }
-                }
-            }, 3000);
-            
             // ШАГ 1: Принудительно скрываем ВСЕ секции при загрузке
             console.log('📦 Скрываем все секции...');
             document.querySelectorAll('.section').forEach(section => {
@@ -17139,38 +17122,18 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Check Login Status
         function checkLoginStatus() {
-            console.log('🔍 Проверка статуса входа...');
-            
-            try {
-                const user = localStorage.getItem('badgrules_user');
-                const selection = loadServerSelection();
-                console.log('👤 Данные пользователя:', user ? 'найдены' : 'не найдены');
-                console.log('🎮 Выбор сервера:', selection);
+            console.log('Проверка статуса входа...');
+            const user = localStorage.getItem('badgrules_user');
+            const selection = loadServerSelection();
+            console.log('Данные пользователя:', user);
+            console.log('Выбор сервера:', selection);
 
-                if (user && selection) {
-                    const userData = JSON.parse(user);
-                    console.log('✅ Пользователь найден:', userData.username);
-                    showMainInterface(userData);
-                } else {
-                    console.log('⚠️ Пользователь не найден или нет выбора сервера');
-                    console.log('🔑 Показываем экран входа');
-                    
-                    // Показываем экран входа
-                    const loginScreen = document.getElementById('loginScreen');
-                    const serverSelection = document.getElementById('serverSelection');
-                    const mainInterface = document.getElementById('mainInterface');
-                    
-                    if (loginScreen) loginScreen.style.display = 'flex';
-                    if (serverSelection) serverSelection.style.display = 'none';
-                    if (mainInterface) mainInterface.style.display = 'none';
-                    
-                    console.log('✅ Экран входа отображен');
-                }
-            } catch (error) {
-                console.error('❌ Ошибка при проверке статуса:', error);
-                // В случае ошибки показываем экран входа
-                const loginScreen = document.getElementById('loginScreen');
-                if (loginScreen) loginScreen.style.display = 'flex';
+            if (user && selection) {
+                const userData = JSON.parse(user);
+                console.log('Пользователь найден:', userData);
+                showMainInterface(userData);
+            } else {
+                console.log('Пользователь не найден или нет выбора сервера, показываем экран входа');
             }
         }
 
@@ -20476,18 +20439,6 @@ console.log('⚡ Система молний отключена');
 
 // Also ensure chat is shown on page load if user is logged in
 window.addEventListener('load', function() {
-    // Скрываем loader при полной загрузке
-    const loader = document.getElementById('initialLoader');
-    if (loader) {
-        setTimeout(() => {
-            loader.style.opacity = '0';
-            setTimeout(() => {
-                loader.style.display = 'none';
-                console.log('✅ Loader скрыт');
-            }, 300);
-        }, 500);
-    }
-    
     setTimeout(() => {
         const user = localStorage.getItem('badgrules_user');
         if (user) {
@@ -21135,6 +21086,9 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTeamColors();
 });
 
+
+console.log('🍪 Cookie Manager загружен');
+
 // ═══════════════════════════════════════════════════════════════
 // 🔗 URL ROUTING SYSTEM - Навигация с изменением URL
 // ═══════════════════════════════════════════════════════════════
@@ -21457,7 +21411,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 console.log('🔗 URL Router загружен');
 </script>
-
 
 </body>
 
