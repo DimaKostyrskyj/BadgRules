@@ -1,13 +1,17 @@
 {
-  "name": "BadgRulesTest",
+  "name": "badgrules",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "BadgRules - AI assistant for GTA 5 RP rules",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "serve .",
+    "build": "echo 'No build step required'"
   },
-  "private": true,
-  "dependencies": {
-    "express": "^5.2.1"
+  "keywords": ["gta5", "rp", "rules", "ai"],
+  "author": "BadgRules Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "serve": "^14.0.0"
   }
 }
