@@ -3,16 +3,28 @@
 # ═══════════════════════════════════════════════════════════════
 
 # Включить перезапись URL
-RewriteEngine On
-
-# Принудительное перенаправление на HTTPS
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# Или если используется переменная X-Forwarded-Proto
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Принудительное перенаправление на HTTPS (метод 1)
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Принудительное перенаправление на HTTPS (метод 2 - для облачных хостингов)
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Принудительное перенаправление на HTTPS (метод 3 - для некоторых прокси)
+    RewriteCond %{HTTP:X-Forwarded-SSL} !on
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Перенаправление с www на без www (опционально)
+    # Раскомментируй если нужно
+    # RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    # RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+</IfModule>
 
 # ═══════════════════════════════════════════════════════════════
 # 🛡️ SECURITY HEADERS
