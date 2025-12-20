@@ -12899,6 +12899,18 @@
                             <div class="ai-dropdown" id="aiDropdown">
                                 <div class="ai-dropdown-label">Выбрать нейросеть</div>
 
+                                <div class="ai-option" data-model="claude" onclick="selectAiModel('claude', true)">
+                                    <div class="ai-option-content">
+                                        <div class="ai-option-name">🧠 Claude Sonnet 4</div>
+                                        <div class="ai-option-desc">Лучшая (нужен API ключ)</div>
+                                    </div>
+                                    <div class="ai-option-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
+
                                 <div class="ai-option selected" data-model="groq" onclick="selectAiModel('groq', true)">
                                     <div class="ai-option-content">
                                         <div class="ai-option-name">Groq LLaMA</div>
@@ -13838,6 +13850,7 @@
         // ═══════════════════════════════════════════════════════════════
 
         const aiModels = {
+            claude: { name: 'Claude Sonnet 4' },
             groq: { name: 'Groq LLaMA' },
             huggingface: { name: 'HuggingFace' },
             gemini: { name: 'Gemini 2.0' }
@@ -14119,6 +14132,18 @@
         // ═══════════════════════════════════════════════════════════════
         
         const API_CONFIG = {
+            // Claude - ЛУЧШАЯ МОДЕЛЬ (ДОБАВЬТЕ API КЛЮЧ!)
+            claude: {
+                enabled: true,
+                name: 'Claude Sonnet 4',
+                apiKey: '', // ВСТАВЬТЕ СЮДА ВАШ КЛЮЧ: apiKey: 'sk-ant-api03-xxxxx',
+                endpoint: 'https://api.anthropic.com/v1/messages',
+                model: 'claude-sonnet-4-20250514',
+                type: 'anthropic',
+                icon: '🧠',
+                status: '⚠️ Требуется API ключ'
+            },
+            
             // Groq - РАБОТАЕТ 100%
             groq: {
                 enabled: true,
@@ -16283,7 +16308,9 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 
                 setTypingStatus('Генерирую ответ...');
                 
-                if (config.type === 'openai') {
+                if (config.type === 'anthropic') {
+                    response = await callAnthropicAPI(config, prompt);
+                } else if (config.type === 'openai') {
                     response = await callOpenAICompatible(config, prompt);
                 } else if (config.type === 'gemini') {
                     response = await callGeminiAPI(config, prompt);
@@ -16316,6 +16343,41 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 
                 throw new Error(`${config.name}: ${error.message}`);
             }
+        }
+
+        // 🧠 Anthropic Claude API
+        async function callAnthropicAPI(config, prompt) {
+            const response = await fetch(config.endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': config.apiKey,
+                    'anthropic-version': '2023-06-01'
+                },
+                body: JSON.stringify({
+                    model: config.model,
+                    max_tokens: 1024,
+                    messages: [{
+                        role: 'user',
+                        content: prompt
+                    }]
+                })
+            });
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Claude error:', errorText);
+                throw new Error(`Claude API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (data.content && data.content[0] && data.content[0].text) {
+                console.log('✅ Claude ответил');
+                return data.content[0].text;
+            }
+            
+            throw new Error('Неверный ответ от Claude');
         }
 
         // 🔷 Вызов OpenAI-совместимых API
