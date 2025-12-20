@@ -21582,23 +21582,48 @@ const URLRouter = {
     
     // Обработка начального роута при загрузке страницы
     handleInitialRoute: function() {
-        const currentPath = window.location.pathname;
-        console.log('📍 Текущий путь:', currentPath);
+        let currentPath = window.location.pathname;
+        
+        // Убираем слэш в конце, если это не главная страница
+        if (currentPath.length > 1 && currentPath.endsWith('/')) {
+            currentPath = currentPath.slice(0, -1);
+        }
+        
+        console.log('📍 Текущий путь при загрузке:', currentPath);
         
         // Находим соответствующую секцию, по умолчанию чат
         const section = this.routes[currentPath] || 'chat';
+        console.log('🎯 Определена секция для загрузки:', section);
         
-        // Переходим к секции без добавления в историю
-        this.navigateToSection(section, false);
-        
-        // Обновляем состояние истории
-        const route = this.sectionToRoute[section];
-        history.replaceState({ section }, '', route);
+        // Небольшая задержка чтобы дать странице полностью загрузиться
+        setTimeout(() => {
+            // Переходим к секции без добавления в историю
+            this.navigateToSection(section, false);
+            
+            // Обновляем состояние истории с правильным путем
+            const route = this.sectionToRoute[section];
+            if (route) {
+                // Если текущий путь отличается от канонического, исправляем URL
+                if (currentPath !== route) {
+                    history.replaceState({ section }, '', route);
+                    console.log('✅ URL нормализован:', route);
+                } else {
+                    history.replaceState({ section }, '', route);
+                    console.log('✅ История обновлена:', route);
+                }
+            }
+        }, 100);
     },
     
     // Обработка текущего роута
     handleCurrentRoute: function() {
-        const currentPath = window.location.pathname;
+        let currentPath = window.location.pathname;
+        
+        // Убираем слэш в конце, если это не главная страница
+        if (currentPath.length > 1 && currentPath.endsWith('/')) {
+            currentPath = currentPath.slice(0, -1);
+        }
+        
         const section = this.routes[currentPath] || 'chat';
         this.navigateToSection(section, false);
     },
@@ -21754,7 +21779,11 @@ const URLRouter = {
 
 // Инициализируем роутер после загрузки DOM
 document.addEventListener('DOMContentLoaded', function() {
-    URLRouter.init();
+    // Ждем чтобы все скрипты и элементы полностью загрузились
+    setTimeout(() => {
+        URLRouter.init();
+        console.log('🔗 URL Router полностью инициализирован');
+    }, 200);
 });
 
 console.log('🔗 URL Router загружен');
