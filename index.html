@@ -21092,9 +21092,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTeamColors();
 });
 
-
-console.log('🍪 Cookie Manager загружен');
-
 // ═══════════════════════════════════════════════════════════════
 // 🔗 URL ROUTING SYSTEM - Навигация с изменением URL
 // ═══════════════════════════════════════════════════════════════
@@ -21417,6 +21414,151 @@ document.addEventListener('DOMContentLoaded', function() {
 
 console.log('🔗 URL Router загружен');
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     🍪 COOKIEBOT SETTINGS BUTTON
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- Cookie Settings Button (Fixed) -->
+<button id="cookiebotSettingsBtn" class="cookiebot-settings-btn" onclick="Cookiebot.renew()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M12 1v6m0 6v6"></path>
+        <path d="m4.93 4.93 4.24 4.24m5.66 5.66 4.24 4.24"></path>
+        <path d="m19.07 4.93-4.24 4.24m-5.66 5.66-4.24 4.24"></path>
+    </svg>
+    <span>Cookie</span>
+</button>
+
+<script>
+// Показываем кнопку настроек Cookiebot только после того как пользователь сделал выбор
+window.addEventListener('CookiebotOnAccept', function() {
+    console.log('✅ Cookiebot: Согласие получено');
+    const btn = document.getElementById('cookiebotSettingsBtn');
+    if (btn) {
+        btn.style.display = 'flex';
+        btn.style.animation = 'fadeInUp 0.6s ease forwards';
+    }
+}, false);
+
+window.addEventListener('CookiebotOnDecline', function() {
+    console.log('❌ Cookiebot: Отказ от cookies');
+    const btn = document.getElementById('cookiebotSettingsBtn');
+    if (btn) {
+        btn.style.display = 'flex';
+        btn.style.animation = 'fadeInUp 0.6s ease forwards';
+    }
+}, false);
+
+// Если пользователь уже делал выбор ранее - показываем кнопку сразу
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        if (typeof Cookiebot !== 'undefined' && Cookiebot.consent && Cookiebot.consent.stamp) {
+            console.log('💾 Cookiebot: Загружено сохраненное согласие');
+            const btn = document.getElementById('cookiebotSettingsBtn');
+            if (btn) {
+                btn.style.display = 'flex';
+                btn.style.animation = 'fadeInUp 0.6s ease forwards';
+            }
+        }
+    }, 1000);
+});
+
+console.log('🍪 Cookiebot интегрирован');
+</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   🍪 COOKIEBOT SETTINGS BUTTON STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+.cookiebot-settings-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.15));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    color: #ffffff;
+    padding: 0.875rem 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    display: none; /* Скрыто по умолчанию */
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    z-index: 999998;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.cookiebot-settings-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(96, 165, 250, 0.4);
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.25), rgba(59, 130, 246, 0.25));
+    border-color: rgba(96, 165, 250, 0.5);
+}
+
+.cookiebot-settings-btn:active {
+    transform: translateY(-1px);
+}
+
+.cookiebot-settings-btn svg {
+    flex-shrink: 0;
+    animation: cookieRotate 4s linear infinite;
+}
+
+.cookiebot-settings-btn span {
+    font-weight: 600;
+    letter-spacing: 0.025em;
+}
+
+@keyframes cookieRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cookiebot-settings-btn {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.85rem;
+    }
+    
+    .cookiebot-settings-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cookiebot-settings-btn {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.625rem 1rem;
+    }
+    
+    .cookiebot-settings-btn span {
+        display: none;
+    }
+}
+</style>
 
 </body>
 
