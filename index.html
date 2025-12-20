@@ -17249,6 +17249,7 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 'home': 'homeSection',
                 'chat': 'chatSection',
                 'profile': 'profileSection',
+                'subscription': 'subscriptionSection',
                 'complaints': 'complaintsSection',
                 'rules': 'rulesSection',
                 'history': 'historySection',
@@ -21606,7 +21607,12 @@ const URLRouter = {
     interceptNavClicks: function() {
         // Перехватываем клики по главной навигации (logo-menu-item)
         document.querySelectorAll('.logo-menu-item[data-section]').forEach(link => {
+            // Убираем старый onclick, чтобы избежать дублирования
+            link.removeAttribute('onclick');
+            
             link.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 const section = link.getAttribute('data-section');
                 const route = this.sectionToRoute[section];
                 
@@ -21642,13 +21648,9 @@ const URLRouter = {
                 const match = originalOnClick.match(/handleUsefulItemClick\('([^']+)'/);
                 if (match) {
                     const section = match[1];
-                    item.addEventListener('click', (e) => {
-                        const route = this.sectionToRoute[section];
-                        if (route) {
-                            history.pushState({ section }, '', route);
-                            this.navigateToSection(section, true);
-                        }
-                    });
+                    
+                    // Не убираем onclick, так как там проверка премиум доступа
+                    // Вместо этого модифицируем handleUsefulItemClick
                 }
             }
         });
@@ -21698,15 +21700,9 @@ const URLRouter = {
     navigateToSection: function(sectionId, addToHistory = true) {
         console.log('🚀 Переход к секции:', sectionId);
         
-        // Скрываем все секции
-        document.querySelectorAll('.main-section').forEach(section => {
-            section.classList.remove('active');
-        });
-        
-        // Показываем нужную секцию
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.classList.add('active');
+        // Используем существующую функцию showSection
+        if (typeof showSection === 'function') {
+            showSection(sectionId);
         }
         
         // Обновляем активный пункт навигации
@@ -21717,9 +21713,6 @@ const URLRouter = {
         
         // Обновляем заголовок страницы
         this.updatePageTitle(sectionId);
-        
-        // Прокручиваем наверх
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     
     // Обновление активного пункта навигации
