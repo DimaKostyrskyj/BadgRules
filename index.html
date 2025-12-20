@@ -3455,8 +3455,13 @@
             right: 0;
             padding: 1rem 2rem 1.5rem;
             z-index: 100;
-            display: none;
-            /* Hidden by default, shown only in chat */
+            display: none !important;
+            /* Скрыт по умолчанию, показывается только в чате */
+        }
+        
+        /* Показываем только когда активна секция чата */
+        .chat-input-container.show-for-chat {
+            display: block !important;
         }
 
         .chat-input-inner {
@@ -12929,6 +12934,21 @@
             </div>
         </div>
         <!-- End Chat Section -->
+        
+        <!-- Немедленно скрываем chat-input если мы не на странице чата -->
+        <script>
+        (function() {
+            const chatInput = document.querySelector('.chat-input-container');
+            if (chatInput) {
+                // Проверяем URL - если не /chat-s-ai, то скрываем
+                const path = window.location.pathname;
+                if (path !== '/chat-s-ai' && path !== '/') {
+                    chatInput.style.display = 'none';
+                    chatInput.classList.remove('show-for-chat');
+                }
+            }
+        })();
+        </script>
 
         <!-- Profile Section - Static & Simple -->
         <div class="section" id="profileSection">
@@ -13509,6 +13529,18 @@
 
 
     <script>
+        // ═══════════════════════════════════════════════════════════════
+        // 🛡️ EARLY INITIALIZATION - Скрываем chat-input до определения секции
+        // ═══════════════════════════════════════════════════════════════
+        (function() {
+            // Немедленно скрываем chat-input-container при загрузке
+            const chatInput = document.querySelector('.chat-input-container');
+            if (chatInput) {
+                chatInput.style.display = 'none';
+                chatInput.classList.remove('show-for-chat');
+            }
+        })();
+        
         // ═══════════════════════════════════════════════════════════════
         // 🎮 SERVER DATA - GTA 5 RP & Majestic RP
         // ═══════════════════════════════════════════════════════════════
@@ -17568,9 +17600,9 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             const chatInputContainer = document.querySelector('.chat-input-container');
             if (chatInputContainer) {
                 if (sectionName === 'chat') {
-                    chatInputContainer.style.display = 'block';
+                    chatInputContainer.classList.add('show-for-chat');
                 } else {
-                    chatInputContainer.style.display = 'none';
+                    chatInputContainer.classList.remove('show-for-chat');
                 }
             }
 
