@@ -1,0 +1,106 @@
+# ═══════════════════════════════════════════════════════════════
+# 🔒 HTTPS & SSL CONFIGURATION - Исправление PR_END_OF_FILE_ERROR
+# ═══════════════════════════════════════════════════════════════
+
+# Включить перезапись URL
+RewriteEngine On
+
+# Принудительное перенаправление на HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Или если используется переменная X-Forwarded-Proto
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ═══════════════════════════════════════════════════════════════
+# 🛡️ SECURITY HEADERS
+# ═══════════════════════════════════════════════════════════════
+
+# Заголовки безопасности
+<IfModule mod_headers.c>
+    # Strict Transport Security (HSTS)
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    
+    # Предотвращение MIME-type sniffing
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # XSS Protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Frame Options
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # Referrer Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Permissions Policy
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ═══════════════════════════════════════════════════════════════
+# ⚡ PERFORMANCE & CACHING
+# ═══════════════════════════════════════════════════════════════
+
+# Сжатие GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Кэширование статических ресурсов
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Изображения
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS и JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    
+    # HTML
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# ═══════════════════════════════════════════════════════════════
+# 🔧 SSL/TLS FIX
+# ═══════════════════════════════════════════════════════════════
+
+# Исправление проблем с SSL handshake
+<IfModule mod_setenvif.c>
+    SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown
+</IfModule>
+
+# Правильные MIME типы
+<IfModule mod_mime.c>
+    AddType application/javascript js
+    AddType text/css css
+    AddType image/x-icon ico
+    AddType image/png png
+    AddType image/jpeg jpg jpeg
+    AddType image/gif gif
+    AddType image/webp webp
+    AddType image/svg+xml svg
+</IfModule>
+
+# ═══════════════════════════════════════════════════════════════
+# 📄 DEFAULT DOCUMENT
+# ═══════════════════════════════════════════════════════════════
+
+DirectoryIndex index.html
+
+# ═══════════════════════════════════════════════════════════════
+# 🚫 ERROR PAGES
+# ═══════════════════════════════════════════════════════════════
+
+ErrorDocument 404 /index.html
+ErrorDocument 403 /index.html
+ErrorDocument 500 /index.html
