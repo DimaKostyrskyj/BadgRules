@@ -11230,14 +11230,14 @@
                 <span id="dropdownServerName">Downtown</span>
             </div>
         </div>
-        <button class="dropdown-item" onclick="showSection('profile'); closeProfileMenu()">
+        <button class="dropdown-item" onclick="URLRouter.navigateTo('profile'); closeProfileMenu()">
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
             </svg>
             <span>Личный кабинет</span>
         </button>
-        <button class="dropdown-item" onclick="showSubscriptionSection(); closeProfileMenu()">
+        <button class="dropdown-item" onclick="URLRouter.navigateTo('subscription'); closeProfileMenu()">
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="8" r="7"></circle>
                 <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
@@ -13710,19 +13710,20 @@
         }
 
         function selectLogoMenu(section) {
-            // Update active state
-            document.querySelectorAll('.logo-menu-item').forEach(item => {
-                if (item.dataset.section === section) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-
-            // Не закрываем меню - горизонтальная навигация всегда видна
-
-            // Show section
-            showSection(section);
+            // Используем URL Router для навигации
+            if (typeof URLRouter !== 'undefined' && URLRouter.navigateTo) {
+                URLRouter.navigateTo(section);
+            } else {
+                // Fallback на старую логику если роутер еще не загружен
+                document.querySelectorAll('.logo-menu-item').forEach(item => {
+                    if (item.dataset.section === section) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+                showSection(section);
+            }
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -17948,7 +17949,13 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 return;
             }
             console.log('✅ Premium access granted, opening section');
-            selectLogoMenu(section);
+            
+            // Используем URL Router для навигации премиум секций
+            if (typeof URLRouter !== 'undefined' && URLRouter.navigateTo) {
+                URLRouter.navigateTo(section);
+            } else {
+                selectLogoMenu(section);
+            }
         }
 
         // Обновление UI премиум-вкладок в меню
@@ -19846,25 +19853,29 @@ console.log('⚡ Система молний отключена');
                 console.log('🖱️ Клик на скролл точку:', section);
                 
                 if (section) {
-                    // Update active dot
-                    scrollDots.forEach(d => d.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Switch section using showSection
-                    if (typeof showSection === 'function') {
-                        showSection(section);
-                        console.log('✅ Секция переключена на:', section);
-                    }
-                    
-                    // Also update logo menu
-                    const logoMenuItems = document.querySelectorAll('.logo-menu-item');
-                    logoMenuItems.forEach(item => {
-                        if (item.getAttribute('data-section') === section) {
-                            item.classList.add('active');
-                        } else {
-                            item.classList.remove('active');
+                    // Используем URL Router для навигации
+                    if (typeof URLRouter !== 'undefined' && URLRouter.navigateTo) {
+                        URLRouter.navigateTo(section);
+                        console.log('✅ Навигация через URL Router на:', section);
+                    } else {
+                        // Fallback на старую логику
+                        scrollDots.forEach(d => d.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        if (typeof showSection === 'function') {
+                            showSection(section);
+                            console.log('✅ Секция переключена на:', section);
                         }
-                    });
+                        
+                        const logoMenuItems = document.querySelectorAll('.logo-menu-item');
+                        logoMenuItems.forEach(item => {
+                            if (item.getAttribute('data-section') === section) {
+                                item.classList.add('active');
+                            } else {
+                                item.classList.remove('active');
+                            }
+                        });
+                    }
                 }
             });
         });
@@ -21499,6 +21510,261 @@ cookieAnimStyle.textContent = `
 document.head.appendChild(cookieAnimStyle);
 
 console.log('🍪 Cookie Manager загружен');
+
+// ═══════════════════════════════════════════════════════════════
+// 🔗 URL ROUTING SYSTEM - Навигация с изменением URL
+// ═══════════════════════════════════════════════════════════════
+
+const URLRouter = {
+    // Карта роутов: URL path → ID секции
+    routes: {
+        '/': 'chat',
+        '/chat-s-ai': 'chat',
+        '/istoriya': 'history',
+        '/novosti': 'news',
+        '/komanda': 'team',
+        '/soc-seti': 'social',
+        '/analiz-otkata': 'complaints',
+        '/sekrety': 'secrets',
+        '/admin': 'admin',
+        '/lichnyj-kabinet': 'profile',
+        '/podpiska': 'subscription'
+    },
+    
+    // Обратная карта: ID секции → URL path
+    sectionToRoute: {
+        'chat': '/chat-s-ai',
+        'history': '/istoriya',
+        'news': '/novosti',
+        'team': '/komanda',
+        'social': '/soc-seti',
+        'complaints': '/analiz-otkata',
+        'secrets': '/sekrety',
+        'admin': '/admin',
+        'profile': '/lichnyj-kabinet',
+        'subscription': '/podpiska'
+    },
+    
+    // Заголовки страниц для каждой секции
+    titles: {
+        'chat': 'Чат с AI - BadgRules',
+        'history': 'История - BadgRules',
+        'news': 'Новости - BadgRules',
+        'team': 'Команда - BadgRules',
+        'social': 'Соц. сети - BadgRules',
+        'complaints': 'Анализ отката - BadgRules',
+        'secrets': 'Секреты - BadgRules',
+        'admin': 'Админ - BadgRules',
+        'profile': 'Личный кабинет - BadgRules',
+        'subscription': 'Подписка - BadgRules'
+    },
+    
+    // Инициализация роутера
+    init: function() {
+        console.log('🔗 Инициализация URL Router');
+        
+        // Обработка начального URL при загрузке
+        this.handleInitialRoute();
+        
+        // Слушаем события навигации браузера (кнопки назад/вперед)
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.section) {
+                this.navigateToSection(e.state.section, false);
+            } else {
+                this.handleCurrentRoute();
+            }
+        });
+        
+        // Перехватываем клики по навигации
+        this.interceptNavClicks();
+    },
+    
+    // Обработка начального роута при загрузке страницы
+    handleInitialRoute: function() {
+        const currentPath = window.location.pathname;
+        console.log('📍 Текущий путь:', currentPath);
+        
+        // Находим соответствующую секцию, по умолчанию чат
+        const section = this.routes[currentPath] || 'chat';
+        
+        // Переходим к секции без добавления в историю
+        this.navigateToSection(section, false);
+        
+        // Обновляем состояние истории
+        const route = this.sectionToRoute[section];
+        history.replaceState({ section }, '', route);
+    },
+    
+    // Обработка текущего роута
+    handleCurrentRoute: function() {
+        const currentPath = window.location.pathname;
+        const section = this.routes[currentPath] || 'chat';
+        this.navigateToSection(section, false);
+    },
+    
+    // Перехват кликов по навигационным элементам
+    interceptNavClicks: function() {
+        // Перехватываем клики по главной навигации (logo-menu-item)
+        document.querySelectorAll('.logo-menu-item[data-section]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const section = link.getAttribute('data-section');
+                const route = this.sectionToRoute[section];
+                
+                if (route) {
+                    // Обновляем URL и историю
+                    history.pushState({ section }, '', route);
+                    
+                    // Переходим к секции
+                    this.navigateToSection(section, true);
+                }
+            });
+        });
+        
+        // Перехватываем клик по логотипу
+        const logo = document.querySelector('.logo-main');
+        if (logo) {
+            logo.style.cursor = 'pointer';
+            logo.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const section = 'chat';
+                history.pushState({ section }, '', this.sectionToRoute[section]);
+                this.navigateToSection(section, true);
+            });
+        }
+        
+        // Перехватываем клики в меню "Полезно" (complaints, secrets, admin)
+        const usefulItems = document.querySelectorAll('.useful-menu-item');
+        usefulItems.forEach(item => {
+            const originalOnClick = item.getAttribute('onclick');
+            if (originalOnClick) {
+                // Извлекаем имя секции из onclick="handleUsefulItemClick('complaints', event)"
+                const match = originalOnClick.match(/handleUsefulItemClick\('([^']+)'/);
+                if (match) {
+                    const section = match[1];
+                    item.addEventListener('click', (e) => {
+                        const route = this.sectionToRoute[section];
+                        if (route) {
+                            history.pushState({ section }, '', route);
+                            this.navigateToSection(section, true);
+                        }
+                    });
+                }
+            }
+        });
+        
+        // Добавляем обработку для элементов меню профиля
+        this.addProfileMenuHandlers();
+    },
+    
+    // Обработка кликов в меню профиля
+    addProfileMenuHandlers: function() {
+        // Ждем появления меню профиля в DOM
+        const observer = new MutationObserver((mutations) => {
+            const profileMenu = document.getElementById('profileDropdownMenu');
+            if (profileMenu) {
+                // Находим элементы "Личный кабинет" и "Подписка"
+                const menuItems = profileMenu.querySelectorAll('.profile-menu-item');
+                menuItems.forEach(item => {
+                    const text = item.textContent.trim();
+                    let section = null;
+                    
+                    if (text.includes('Личный кабинет')) {
+                        section = 'profile';
+                    } else if (text.includes('Подписка')) {
+                        section = 'subscription';
+                    }
+                    
+                    if (section) {
+                        item.addEventListener('click', (e) => {
+                            const route = this.sectionToRoute[section];
+                            if (route) {
+                                history.pushState({ section }, '', route);
+                                this.navigateToSection(section, true);
+                            }
+                        });
+                    }
+                });
+                
+                // Прекращаем наблюдение после обработки
+                observer.disconnect();
+            }
+        });
+        
+        observer.observe(document.body, { childList: true, subtree: true });
+    },
+    
+    // Навигация к секции
+    navigateToSection: function(sectionId, addToHistory = true) {
+        console.log('🚀 Переход к секции:', sectionId);
+        
+        // Скрываем все секции
+        document.querySelectorAll('.main-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        
+        // Показываем нужную секцию
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+        }
+        
+        // Обновляем активный пункт навигации
+        this.updateActiveNav(sectionId);
+        
+        // Обновляем вертикальные индикаторы
+        this.updateScrollDots(sectionId);
+        
+        // Обновляем заголовок страницы
+        this.updatePageTitle(sectionId);
+        
+        // Прокручиваем наверх
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+    
+    // Обновление активного пункта навигации
+    updateActiveNav: function(sectionId) {
+        // Обновляем главное меню
+        document.querySelectorAll('.logo-menu-item').forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('data-section') === sectionId) {
+                item.classList.add('active');
+            }
+        });
+    },
+    
+    // Обновление вертикальных индикаторов прокрутки
+    updateScrollDots: function(sectionId) {
+        document.querySelectorAll('.scroll-dot').forEach(dot => {
+            dot.classList.remove('active');
+            if (dot.getAttribute('data-section') === sectionId) {
+                dot.classList.add('active');
+            }
+        });
+    },
+    
+    // Обновление заголовка страницы
+    updatePageTitle: function(sectionId) {
+        const title = this.titles[sectionId] || 'BadgRules - Нейросеть по правилам GTA 5 RP';
+        document.title = title;
+    },
+    
+    // Программная навигация (для использования из других частей кода)
+    navigateTo: function(sectionId) {
+        const route = this.sectionToRoute[sectionId];
+        if (route) {
+            history.pushState({ section: sectionId }, '', route);
+            this.navigateToSection(sectionId, true);
+        }
+    }
+};
+
+// Инициализируем роутер после загрузки DOM
+document.addEventListener('DOMContentLoaded', function() {
+    URLRouter.init();
+});
+
+console.log('🔗 URL Router загружен');
 </script>
 
 </body>
