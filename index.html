@@ -17013,10 +17013,20 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Focus input on load
         window.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM загружен, проверяем авторизацию...');
+            console.log('🚀 DOM загружен, начинаем инициализацию...');
+            
+            // ШАГ 1: Принудительно скрываем ВСЕ секции при загрузке
+            console.log('📦 Скрываем все секции...');
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+                section.style.display = 'none'; // Принудительное скрытие
+            });
+            
+            // ШАГ 2: Проверяем авторизацию
+            console.log('🔐 Проверяем авторизацию...');
             checkLoginStatus();
             
-            // Обновить badge сразу после загрузки
+            // ШАГ 3: Обновить badge после небольшой задержки
             setTimeout(() => {
                 console.log('🔄 Инициализация badge...');
                 if (typeof updateAllSubscriptionBadges === 'function') {
@@ -17194,6 +17204,10 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
             // Update profile section
             updateProfileSection(user);
+            
+            // Show chat section by default
+            console.log('🎯 Показываем секцию чата по умолчанию');
+            showSection('chat');
         }
 
         // Update Profile Section
@@ -17592,9 +17606,10 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
         function showSection(sectionName) {
             console.log('🔍 showSection called with:', sectionName);
             
-            // Hide all sections
+            // КРИТИЧНО: Принудительно скрываем ВСЕ секции
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
+                section.style.display = 'none'; // Принудительное скрытие
             });
 
             // Remove active class from all nav buttons
