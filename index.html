@@ -30,11 +30,32 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     
     <title>BadgRules - Нейросеть по правилам GTA 5 RP</title>
+    
+    <!-- ═══════════════════════════════════════════════════════════════
+         ⚡ PERFORMANCE OPTIMIZATION - Ускорение загрузки
+         ═══════════════════════════════════════════════════════════════ -->
+    
+    <!-- Preload критичных ресурсов -->
+    <link rel="preload" href="images/logo.png" as="image">
+    <link rel="preload" href="images/badger-christmas.png" as="image">
+    
+    <!-- Preconnect для внешних ресурсов -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
+    <!-- Оптимизированная загрузка шрифтов с font-display: swap -->
     <link
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+        rel="stylesheet"
+        media="print" 
+        onload="this.media='all'">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet">
+    </noscript>
+    
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="images/1-eb88279c.ico">
     <link rel="icon" type="image/png" sizes="16x16" href="images/1-eb88279c.ico">
@@ -3808,6 +3829,60 @@
             transform: none;
         }
 
+        /* ═══════════════════════════════════════════════════════════════
+           🗑️ CLEAR CHAT BUTTON - Кнопка очистки чата
+           ═══════════════════════════════════════════════════════════════ */
+        .clear-chat-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.7rem;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #ef4444;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clear-chat-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .clear-chat-button:hover::before {
+            left: 100%;
+        }
+
+        .clear-chat-button:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.5);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 
+                0 4px 15px rgba(239, 68, 68, 0.3),
+                0 0 20px rgba(239, 68, 68, 0.2);
+        }
+
+        .clear-chat-button:active {
+            transform: translateY(0) scale(0.95);
+        }
+
+        .clear-chat-button svg {
+            transition: all 0.3s ease;
+        }
+
+        .clear-chat-button:hover svg {
+            transform: scale(1.1) rotate(5deg);
+        }
+
         /* Keyboard Shortcut Hint */
         .shortcut-hint {
             display: none;
@@ -4463,6 +4538,31 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           📢 NOTIFICATION ANIMATIONS - Анимации уведомлений
+           ═══════════════════════════════════════════════════════════════ */
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutToRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100px);
             }
         }
 
@@ -12803,7 +12903,18 @@
                             </div>
                         </div>
 
-                        <div style="display: flex; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <!-- Кнопка очистки чата -->
+                            <button class="clear-chat-button" id="clearChatButton" onclick="clearChatHistory()" title="Очистить чат">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </button>
+                            
                             <button class="send-button" id="sendButton" onclick="sendMessage()">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
@@ -14629,6 +14740,118 @@
         const welcomeScreen = document.getElementById('welcomeScreen');
         let isProcessing = false;
 
+        // ═══════════════════════════════════════════════════════════════
+        // 💾 СИСТЕМА СОХРАНЕНИЯ ЧАТА - Автосохранение в localStorage
+        // ═══════════════════════════════════════════════════════════════
+        
+        const ChatStorage = {
+            STORAGE_KEY: 'badgrules_chat_history',
+            MAX_MESSAGES: 100, // Максимум сообщений для сохранения
+            
+            // Сохранить чат
+            saveChat: function() {
+                try {
+                    const messages = [];
+                    const messageElements = chatMessages.querySelectorAll('.message');
+                    
+                    messageElements.forEach((msg, index) => {
+                        if (index >= this.MAX_MESSAGES) return; // Ограничение
+                        
+                        const isBot = msg.classList.contains('bot');
+                        const contentDiv = msg.querySelector('.message-content');
+                        const textDiv = contentDiv?.querySelector('.message-text');
+                        const timeDiv = contentDiv?.querySelector('.message-time');
+                        
+                        if (textDiv) {
+                            messages.push({
+                                isBot: isBot,
+                                content: textDiv.innerHTML,
+                                time: timeDiv?.textContent || '',
+                                isHtml: textDiv.classList.contains('html-content')
+                            });
+                        }
+                    });
+                    
+                    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(messages));
+                    console.log('💾 Чат сохранен:', messages.length, 'сообщений');
+                } catch (error) {
+                    console.error('❌ Ошибка сохранения чата:', error);
+                }
+            },
+            
+            // Загрузить чат
+            loadChat: function() {
+                try {
+                    const saved = localStorage.getItem(this.STORAGE_KEY);
+                    if (!saved) {
+                        console.log('📭 Сохраненный чат не найден');
+                        return false;
+                    }
+                    
+                    const messages = JSON.parse(saved);
+                    if (!Array.isArray(messages) || messages.length === 0) {
+                        console.log('📭 Нет сохраненных сообщений');
+                        return false;
+                    }
+                    
+                    console.log('📬 Восстанавливаю чат:', messages.length, 'сообщений');
+                    
+                    // Скрываем экран приветствия если есть сообщения
+                    if (messages.length > 0) {
+                        welcomeScreen.classList.add('hidden');
+                    }
+                    
+                    // Восстанавливаем сообщения
+                    messages.forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = `message ${msg.isBot ? 'bot' : 'user'}`;
+                        
+                        let avatarHtml = msg.isBot ? 
+                            '<img src="images/logo.png" style="width: 100%; height: 100%; object-fit: contain; border-radius: 10px;">' : 
+                            'Вы';
+                        
+                        // Пытаемся получить аватар пользователя
+                        if (!msg.isBot) {
+                            const userAvatarElement = document.getElementById('userAvatar');
+                            if (userAvatarElement) {
+                                const avatarImg = userAvatarElement.querySelector('img');
+                                if (avatarImg) {
+                                    avatarHtml = `<img src="${avatarImg.src}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">`;
+                                }
+                            }
+                        }
+                        
+                        messageDiv.innerHTML = `
+                            <div class="message-avatar">${avatarHtml}</div>
+                            <div class="message-content">
+                                <div class="message-text ${msg.isHtml ? 'html-content' : ''}">${msg.content}</div>
+                                <div class="message-time">${msg.time}</div>
+                            </div>
+                        `;
+                        
+                        chatMessages.appendChild(messageDiv);
+                    });
+                    
+                    // Прокручиваем вниз
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    console.log('✅ Чат восстановлен успешно');
+                    return true;
+                    
+                } catch (error) {
+                    console.error('❌ Ошибка загрузки чата:', error);
+                    return false;
+                }
+            },
+            
+            // Очистить чат
+            clearChat: function() {
+                localStorage.removeItem(this.STORAGE_KEY);
+                chatMessages.innerHTML = '';
+                welcomeScreen.classList.remove('hidden');
+                console.log('🗑️ Чат очищен');
+            }
+        };
+
         function getCurrentTime() {
             const now = new Date();
             return now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
@@ -14664,6 +14887,9 @@
 
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Автосохранение чата
+            ChatStorage.saveChat();
         }
 
         // Функция для добавления HTML сообщений (красивые карточки)
@@ -14697,6 +14923,73 @@
 
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Автосохранение чата
+            ChatStorage.saveChat();
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 🗑️ ФУНКЦИЯ ОЧИСТКИ ЧАТА - С подтверждением
+        // ═══════════════════════════════════════════════════════════════
+        function clearChatHistory() {
+            // Проверяем есть ли сообщения
+            const messages = chatMessages.querySelectorAll('.message');
+            if (messages.length === 0) {
+                console.log('💬 Чат уже пуст');
+                return;
+            }
+            
+            // Показываем подтверждение
+            const confirmed = confirm('Вы уверены, что хотите очистить историю чата? Это действие нельзя отменить.');
+            
+            if (confirmed) {
+                console.log('🗑️ Очистка чата...');
+                ChatStorage.clearChat();
+                
+                // Показываем уведомление
+                showClearNotification();
+            }
+        }
+        
+        // Показываем уведомление об очистке
+        function showClearNotification() {
+            // Создаем элемент уведомления
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, rgba(34, 197, 94, 0.95), rgba(22, 163, 74, 0.95));
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                font-family: 'Manrope', sans-serif;
+                font-size: 0.9rem;
+                font-weight: 600;
+                box-shadow: 0 8px 32px rgba(34, 197, 94, 0.4);
+                z-index: 999999;
+                animation: slideInFromRight 0.3s ease-out;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            `;
+            
+            notification.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>Чат успешно очищен</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Удаляем через 3 секунды
+            setTimeout(() => {
+                notification.style.animation = 'slideOutToRight 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
         }
 
         let typingInterval = null;
@@ -18307,6 +18600,11 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Инициализация подписки при загрузке
         document.addEventListener('DOMContentLoaded', () => {
+            // 💾 Восстанавливаем чат из localStorage
+            setTimeout(() => {
+                ChatStorage.loadChat();
+            }, 300);
+            
             updateSubscriptionUI();
             updatePremiumUI();
             
@@ -20495,13 +20793,18 @@ window.addEventListener('offline', () => {
     let loadTimeout;
     let errorTimeout;
     
-    // Таймаут на полную загрузку - 8 секунд
+    // Таймаут на полную загрузку - уменьшен до 5 секунд для более быстрого отображения
     loadTimeout = setTimeout(() => {
-        console.error('⚠️ Страница не загрузилась за 8 секунд');
-        if (loaderError) {
-            loaderError.classList.add('active');
+        console.warn('⚠️ Страница не загрузилась за 5 секунд, показываем контент');
+        // Все равно скрываем loader даже если не все загружено
+        if (loader) {
+            loader.style.opacity = '0';
+            loader.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 300);
         }
-    }, 8000);
+    }, 5000);
     
     // Полная загрузка страницы
     window.addEventListener('load', () => {
@@ -20511,18 +20814,30 @@ window.addEventListener('offline', () => {
         // Убираем loader с анимацией
         if (loader) {
             loader.style.opacity = '0';
-            loader.style.transition = 'opacity 0.5s ease';
+            loader.style.transition = 'opacity 0.3s ease';
             setTimeout(() => {
                 loader.style.display = 'none';
-            }, 500);
+            }, 300);
         }
     });
     
-    // DOM готов (базовая защита)
+    // DOM готов (базовая защита) - ускоренная версия
     document.addEventListener('DOMContentLoaded', () => {
         console.log('✅ DOM загружен');
         
-        // Если за 15 секунд не произошло событие load, показываем ошибку
+        // Если DOM готов, скрываем loader еще быстрее (через 2 секунды если load не произошел)
+        setTimeout(() => {
+            if (loader && loader.style.display !== 'none') {
+                console.log('⚡ Быстрое скрытие загрузчика после DOMContentLoaded');
+                loader.style.opacity = '0';
+                loader.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 300);
+            }
+        }, 2000);
+        
+        // Критическая ошибка только если прошло 10 секунд (вместо 15)
         errorTimeout = setTimeout(() => {
             if (loader && loader.style.display !== 'none') {
                 console.error('⚠️ Критическая ошибка загрузки');
@@ -20530,7 +20845,7 @@ window.addEventListener('offline', () => {
                     loaderError.classList.add('active');
                 }
             }
-        }, 15000);
+        }, 10000);
     });
     
     // Глобальный обработчик ошибок
@@ -21593,8 +21908,20 @@ const URLRouter = {
         
         console.log('📍 Текущий путь при загрузке:', currentPath);
         
-        // Находим соответствующую секцию, по умолчанию чат
-        const section = this.routes[currentPath] || 'chat';
+        // Если путь корневой (/), пытаемся восстановить последнюю секцию
+        let section = this.routes[currentPath];
+        
+        if (!section || currentPath === '/') {
+            // Пытаемся восстановить последнюю секцию из localStorage
+            const lastSection = localStorage.getItem('badgrules_last_section');
+            if (lastSection && this.sectionToRoute[lastSection]) {
+                section = lastSection;
+                console.log('💾 Восстановлена последняя секция:', section);
+            } else {
+                section = 'chat';
+            }
+        }
+        
         console.log('🎯 Определена секция для загрузки:', section);
         
         // Небольшая задержка чтобы дать странице полностью загрузиться
@@ -21726,6 +22053,13 @@ const URLRouter = {
     // Навигация к секции
     navigateToSection: function(sectionId, addToHistory = true) {
         console.log('🚀 Переход к секции:', sectionId);
+        
+        // Сохраняем текущую секцию в localStorage
+        try {
+            localStorage.setItem('badgrules_last_section', sectionId);
+        } catch (e) {
+            console.warn('⚠️ Не удалось сохранить секцию');
+        }
         
         // Используем существующую функцию showSection
         if (typeof showSection === 'function') {
