@@ -17567,14 +17567,15 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                         console.log('Processed user data:', user);
                         localStorage.setItem('badgrules_user', JSON.stringify(user));
 
-                        // Clean URL
-                        window.history.replaceState({}, document.title, window.location.pathname);
-
                         // Check if server selection exists
                         const selection = loadServerSelection();
                         if (selection && selection.project && selection.server) {
-                            showMainInterface(user);
+                            // User already has server selection - reload page without hash
+                            console.log('✅ Авторизация успешна, перезагрузка страницы...');
+                            window.location.replace(window.location.origin + window.location.pathname);
                         } else {
+                            // Clean URL and show server selection
+                            window.history.replaceState({}, document.title, window.location.pathname);
                             // Show login overlay at step 1 for server selection
                             document.getElementById('loginOverlay').classList.remove('hidden');
                             goToStep(1);
