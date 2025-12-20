@@ -14887,9 +14887,6 @@
 
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            // Автосохранение чата
-            ChatStorage.saveChat();
         }
 
         // Функция для добавления HTML сообщений (красивые карточки)
@@ -14923,9 +14920,6 @@
 
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            // Автосохранение чата
-            ChatStorage.saveChat();
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -18600,11 +18594,6 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
         // Инициализация подписки при загрузке
         document.addEventListener('DOMContentLoaded', () => {
-            // 💾 Восстанавливаем чат из localStorage
-            setTimeout(() => {
-                ChatStorage.loadChat();
-            }, 300);
-            
             updateSubscriptionUI();
             updatePremiumUI();
             
