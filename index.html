@@ -17669,7 +17669,7 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
         });
 
         // Section Navigation
-        function showSection(sectionName) {
+        function showSection(sectionName, event = null) {
             console.log('🔍 showSection called with:', sectionName);
             
             // КРИТИЧНО: Принудительно скрываем ВСЕ секции
@@ -17725,10 +17725,14 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             }
 
             // Add active class to clicked button
-            if (event && event.target) {
-                const button = event.target.closest('.nav-button');
-                if (button) {
-                    button.classList.add('active');
+            if (event && event.target && event.target.closest) {
+                try {
+                    const button = event.target.closest('.nav-button');
+                    if (button) {
+                        button.classList.add('active');
+                    }
+                } catch (error) {
+                    console.warn('⚠️ Не удалось найти кнопку навигации:', error);
                 }
             }
 
