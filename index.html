@@ -27,8 +27,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <!-- Favicon - SVG fallback -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJ1cmwoI2dyYWQpIiByeD0iNiIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzYwYTVmYTtzdG9wLW9wYWNpdHk6MSIgLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojM2I4MmY2O3N0b3Atb3BhY2l0eToxIiAvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjx0ZXh0IHg9IjE2IiB5PSIyMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkJSPC90ZXh0Pgo8L3N2Zz4=">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="1-eb88279c.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="1-eb88279c.ico">
     <style>
         /* ═══════════════════════════════════════════════════════════════
            🛡️ LOADING PROTECTION - Защита от черного экрана
@@ -20614,133 +20615,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
-     🖼️ IMAGE FALLBACK SYSTEM - Система резервных изображений
-     ═══════════════════════════════════════════════════════════════ -->
-
-<script>
-// ═══════════════════════════════════════════════════════════════
-// 🖼️ IMAGE MANAGER - Управление изображениями
-// ═══════════════════════════════════════════════════════════════
-
-const imageManager = {
-    // SVG placeholders в base64
-    placeholders: {
-        logo: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSJ1cmwoI2dyYWQpIiByeD0iMjAiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2MGE1ZmE7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzNiODJmNjtzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSI1MCIgeT0iNTUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIzNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5CUjwvdGV4dD4KPC9zdmc+',
-        
-        character: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDMwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iNDAwIiBmaWxsPSJ1cmwoI2dyYWQyKSIgcng9IjMwIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWQyIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzYwYTVmYTtzdG9wLW9wYWNpdHk6MC4zIiAvPgo8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiMzYjgyZjY7c3RvcC1vcGFjaXR5OjAuMyIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8Y2lyY2xlIGN4PSIxNTAiIGN5PSIxMjAiIHI9IjQwIiBmaWxsPSIjNjBhNWZhIiBvcGFjaXR5PSIwLjYiLz4KPHJlY3QgeD0iMTEwIiB5PSIxODAiIHdpZHRoPSI4MCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiM2MGE1ZmEiIG9wYWNpdHk9IjAuNiIgcng9IjEwIi8+Cjwvc3ZnPg==',
-        
-        avatar: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjUwIiBmaWxsPSJ1cmwoI2dyYWQzKSIvPgo8ZGVmcz4KPGxpbmVhckdyYWRpZW50IGlkPSJncmFkMyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiM2MGE1ZmE7c3RvcC1vcGFjaXR5OjEiIC8+CjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzNiODJmNjtzdG9wLW9wYWNpdHk6MSIgLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8Y2lyY2xlIGN4PSI1MCIgY3k9IjM1IiByPSIxNSIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuOCIvPgo8cGF0aCBkPSJNMjUgNzBRMjUgNTUgNTAgNTVRNzUgNTUgNzUgNzBMNzUgODVRNzUgODUgNTAgODVRMjUgODUgMjUgODVMMjUgNzBaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC44Ii8+Cjwvc3ZnPg=='
-    },
-    
-    // Замена всех изображений на placeholders
-    replaceAllImages: function() {
-        console.log('🖼️ Замена изображений на placeholders...');
-        
-        // Логотипы
-        const logos = document.querySelectorAll('img[src*="logo.png"]');
-        logos.forEach(img => {
-            if (!img.complete || img.naturalHeight === 0) {
-                img.src = this.placeholders.logo;
-            }
-        });
-        
-        // Персонаж
-        const characters = document.querySelectorAll('img[src*="logo2.png"]');
-        characters.forEach(img => {
-            if (!img.complete || img.naturalHeight === 0) {
-                img.src = this.placeholders.character;
-            }
-        });
-        
-        // Аватары команды
-        const avatars = document.querySelectorAll('img[src*="owner"], img[src*="team"]');
-        avatars.forEach(img => {
-            if (!img.complete || img.naturalHeight === 0) {
-                img.src = this.placeholders.avatar;
-            }
-        });
-        
-        console.log(`✅ Обработано изображений: ${logos.length + characters.length + avatars.length}`);
-    },
-    
-    // Добавление обработчиков ошибок для всех изображений
-    addErrorHandlers: function() {
-        const images = document.querySelectorAll('img');
-        images.forEach(img => {
-            // Если уже есть обработчик onerror, не перезаписываем
-            if (img.getAttribute('data-error-handled')) return;
-            
-            img.setAttribute('data-error-handled', 'true');
-            
-            const originalOnError = img.onerror;
-            img.onerror = function() {
-                // Выполняем оригинальный обработчик, если есть
-                if (originalOnError && typeof originalOnError === 'function') {
-                    originalOnError.call(this);
-                }
-                
-                // Определяем тип изображения
-                const src = this.getAttribute('src') || '';
-                let placeholder;
-                
-                if (src.includes('logo.png')) {
-                    placeholder = imageManager.placeholders.logo;
-                } else if (src.includes('logo2.png')) {
-                    placeholder = imageManager.placeholders.character;
-                } else {
-                    placeholder = imageManager.placeholders.avatar;
-                }
-                
-                this.src = placeholder;
-                console.log('🖼️ Изображение заменено на placeholder:', src);
-            };
-        });
-    },
-    
-    // Инициализация
-    init: function() {
-        console.log('🖼️ Инициализация Image Manager');
-        
-        // Ждем загрузки DOM
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                this.addErrorHandlers();
-                // Проверяем изображения через 2 секунды
-                setTimeout(() => this.replaceAllImages(), 2000);
-            });
-        } else {
-            this.addErrorHandlers();
-            setTimeout(() => this.replaceAllImages(), 2000);
-        }
-        
-        // Также добавляем обработчики для динамически создаваемых изображений
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach(mutation => {
-                mutation.addedNodes.forEach(node => {
-                    if (node.nodeName === 'IMG') {
-                        this.addErrorHandlers();
-                    } else if (node.querySelectorAll) {
-                        const imgs = node.querySelectorAll('img');
-                        if (imgs.length > 0) {
-                            this.addErrorHandlers();
-                        }
-                    }
-                });
-            });
-        });
-        
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    }
-};
-
-// Инициализация при загрузке
-imageManager.init();
-
-console.log('🖼️ Image Manager загружен');
-</script>
+<!-- Cookiebot -->
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="59ccbeeb-fb1a-40af-93ad-f79e51b04902" data-blockingmode="auto" type="text/javascript"></script>
 
 </body>
 
