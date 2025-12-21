@@ -1788,6 +1788,7 @@
     z-index: 9999;
     overflow-y: auto;
     animation: sectionFadeIn 0.5s ease-out;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 /* Добавляем статичное синее свечение */
@@ -1809,7 +1810,9 @@
 }
 
 .subscription-section.hidden {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 @keyframes sectionFadeIn {
@@ -1908,6 +1911,7 @@
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10000;
+    pointer-events: auto;
 }
 
 .sub-close-btn:hover {
@@ -3630,8 +3634,9 @@
         /* Dropdown Menu - Opens to the LEFT */
         .ai-dropdown {
             position: absolute;
-            bottom: 0;
-            right: calc(100% + 25px);
+            bottom: 100%;
+            left: 0;
+            margin-bottom: 8px;
             width: 240px;
             background: var(--secondary-bg);
             border: 1px solid var(--border-color);
@@ -3639,17 +3644,18 @@
             padding: 0.5rem;
             opacity: 0;
             visibility: hidden;
-            transform: translateX(10px);
-            transform-origin: right center;
+            transform: translateY(10px);
+            transform-origin: bottom left;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5),
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5),
                 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+            z-index: 1000;
         }
 
         .ai-dropdown.show {
             opacity: 1;
             visibility: visible;
-            transform: translateX(0);
+            transform: translateY(0);
         }
 
         .ai-dropdown-label {
