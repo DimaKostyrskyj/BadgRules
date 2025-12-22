@@ -3432,6 +3432,7 @@
         .chat-input-inner {
             max-width: 700px;
             margin: 0 auto;
+            position: relative;
         }
 
 /* ... existing code ... */
@@ -3496,11 +3497,11 @@
     background: transparent;
 }
 
-/* AI Model Panel - Left Side (Like in Image) */
+/* AI Model Panel - Near Search Field (Like in Image) */
 .ai-model-panel {
-    position: fixed;
-    left: 20px;
-    bottom: 90px;
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 12px);
     width: 240px;
     background: rgba(15, 15, 20, 0.98);
     border: 1px solid rgba(60, 60, 70, 0.6);
