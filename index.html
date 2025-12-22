@@ -12928,7 +12928,7 @@
                         <!-- AI Model Selector - Hidden, using panel instead -->
                         <div class="ai-selector" id="aiSelector" style="display: none;">
                             <div class="ai-selector-btn" id="aiSelectorBtn" onclick="toggleAiSelector()">
-                                <span class="ai-selector-text" id="aiSelectorText">Groq LLaMA</span>
+                                <span class="ai-selector-text" id="aiSelectorText">Groq 4.1</span>
                                 <svg class="ai-selector-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                     stroke="currentColor" stroke-width="2">
                                     <polyline points="6 9 12 15 18 9"></polyline>
@@ -12940,20 +12940,8 @@
 
                                 <div class="ai-option selected" data-model="groq" onclick="selectAiModel('groq')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">Groq LLaMA</div>
-                                        <div class="ai-option-desc">Быстрая и надёжная</div>
-                                    </div>
-                                    <div class="ai-option-check">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg>
-                                    </div>
-                                </div>
-
-                                <div class="ai-option" data-model="huggingface" onclick="selectAiModel('huggingface')">
-                                    <div class="ai-option-content">
-                                        <div class="ai-option-name">HuggingFace</div>
-                                        <div class="ai-option-desc">Бесплатная модель</div>
+                                        <div class="ai-option-name">Groq 4.1</div>
+                                        <div class="ai-option-desc">Свободная</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -12964,8 +12952,58 @@
 
                                 <div class="ai-option" data-model="gemini" onclick="selectAiModel('gemini')">
                                     <div class="ai-option-content">
-                                        <div class="ai-option-name">Gemini 2.0</div>
-                                        <div class="ai-option-desc">Может быть лимит</div>
+                                        <div class="ai-option-name">Gemini 3</div>
+                                        <div class="ai-option-desc">Быстрее</div>
+                                    </div>
+                                    <div class="ai-option-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <div class="ai-option" data-model="gpt5-premium" onclick="selectAiModel('gpt5-premium')">
+                                    <div class="ai-option-content">
+                                        <div class="ai-option-name">
+                                            GPT 5 
+                                            <span style="
+                                                display: inline-block;
+                                                background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+                                                color: white;
+                                                font-size: 10px;
+                                                padding: 2px 6px;
+                                                border-radius: 4px;
+                                                font-weight: 700;
+                                                margin-left: 6px;
+                                                vertical-align: middle;
+                                            ">PRO</span>
+                                        </div>
+                                        <div class="ai-option-desc">Умнее</div>
+                                    </div>
+                                    <div class="ai-option-check">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <div class="ai-option" data-model="gemini-premium" onclick="selectAiModel('gemini-premium')">
+                                    <div class="ai-option-content">
+                                        <div class="ai-option-name">
+                                            Gemini 3 (Premium)
+                                            <span style="
+                                                display: inline-block;
+                                                background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+                                                color: white;
+                                                font-size: 10px;
+                                                padding: 2px 6px;
+                                                border-radius: 4px;
+                                                font-weight: 700;
+                                                margin-left: 6px;
+                                                vertical-align: middle;
+                                            ">PRO</span>
+                                        </div>
+                                        <div class="ai-option-desc">Быстрее</div>
                                     </div>
                                     <div class="ai-option-check">
                                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -13806,17 +13844,18 @@
         // ═══════════════════════════════════════════════════════════════
 
         const aiModels = {
-            groq: { name: 'Groq LLaMA' },
-            huggingface: { name: 'HuggingFace' },
-            gemini: { name: 'Gemini 2.0' }
+            groq: { name: 'Groq LLaMA', description: 'Быстрая', premium: false },
+            huggingface: { name: 'HuggingFace', description: 'Умная', premium: false },
+            gemini: { name: 'Gemini 2.0', description: 'Быстрее', premium: false },
+            'gemini-premium': { name: 'Gemini 3 (Premium)', description: 'Быстрее', premium: true },
+            'gpt5-premium': { name: 'GPT 5 (Premium)', description: 'Умнее', premium: true }
         };
 
         const aiModelsPanel = {
-            groq: { name: 'Groq LLaMA' },
-            huggingface: { name: 'HuggingFace' },
-            gemini: { name: 'Google Gemini' },
-            gpt5: { name: 'GPT 5' },
-            gemini3: { name: 'Gemini 3' }
+            groq: { name: 'Groq 4.1', description: 'Свободная', premium: false },
+            gemini: { name: 'Gemini 3', description: 'Быстрее', premium: false },
+            gpt5: { name: 'GPT 5', description: 'Умнее', premium: true },
+            'gemini-premium': { name: 'Gemini 3 (Premium)', description: 'Быстрее', premium: true }
         };
 
         let isAiSelectorOpen = false;
@@ -13973,11 +14012,25 @@
         function selectAiModel(model) {
             if (!aiModels[model]) return;
 
-            currentModel = model;
             const modelInfo = aiModels[model];
+            
+            // Проверка подписки для Premium моделей
+            if (modelInfo.premium) {
+                const sub = checkSubscription();
+                if (!sub || sub.type === 'free' || !sub.type) {
+                    // Показать уведомление о необходимости подписки
+                    showPremiumRequired();
+                    return;
+                }
+            }
+
+            currentModel = model;
 
             // Update button text
-            document.getElementById('aiSelectorText').textContent = modelInfo.name;
+            const selectorText = document.getElementById('aiSelectorText');
+            if (selectorText) {
+                selectorText.textContent = modelInfo.name;
+            }
 
             // Update selected state in dropdown
             document.querySelectorAll('.ai-option').forEach(opt => {
@@ -13988,10 +14041,73 @@
                 }
             });
 
-            // Close dropdown only if it was open
+            // ВСЕГДА закрываем dropdown после выбора (если он открыт)
             if (isAiSelectorOpen) {
                 toggleAiSelector();
             }
+            
+            console.log('✅ Модель выбрана:', modelInfo.name);
+        }
+        
+        // Функция для показа уведомления о необходимости Premium
+        function showPremiumRequired() {
+            // Создаем уведомление
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, rgba(139, 92, 246, 0.95), rgba(124, 58, 237, 0.95));
+                color: white;
+                padding: 20px 24px;
+                border-radius: 12px;
+                box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4);
+                z-index: 999999;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-family: 'Manrope', sans-serif;
+                font-size: 14px;
+                font-weight: 600;
+                animation: slideInRight 0.4s ease;
+                max-width: 400px;
+            `;
+            
+            notification.innerHTML = `
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+                <div>
+                    <div style="margin-bottom: 4px;">Требуется PRO подписка</div>
+                    <div style="font-size: 12px; font-weight: 400; opacity: 0.9;">
+                        Эта модель доступна только для PRO и Lifetime пользователей
+                    </div>
+                </div>
+                <button onclick="this.parentElement.remove()" style="
+                    background: rgba(255, 255, 255, 0.2);
+                    border: none;
+                    color: white;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-left: auto;
+                    flex-shrink: 0;
+                ">×</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Автоматически убираем через 5 секунд
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.4s ease';
+                setTimeout(() => notification.remove(), 400);
+            }, 5000);
         }
 
         // Close dropdown when clicking outside
@@ -16979,7 +17095,25 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             
             // Инициализация выбора AI модели
             console.log('🤖 Инициализация выбора AI модели...');
-            selectAiModel(currentModel);
+            // Устанавливаем начальное состояние без закрытия dropdown
+            setTimeout(() => {
+                const modelInfo = aiModels[currentModel];
+                if (modelInfo) {
+                    const selectorText = document.getElementById('aiSelectorText');
+                    if (selectorText) {
+                        selectorText.textContent = modelInfo.name;
+                    }
+                    
+                    // Устанавливаем selected класс
+                    document.querySelectorAll('.ai-option').forEach(opt => {
+                        if (opt.dataset.model === currentModel) {
+                            opt.classList.add('selected');
+                        } else {
+                            opt.classList.remove('selected');
+                        }
+                    });
+                }
+            }, 100);
             
             // Обновить badge сразу после загрузки
             setTimeout(() => {
@@ -20774,6 +20908,28 @@ style.textContent = `
         to {
             opacity: 0;
             transform: translateX(-50%) translateY(-20px);
+        }
+    }
+    
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes slideOutRight {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(100px);
         }
     }
 `;
