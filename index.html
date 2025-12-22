@@ -3500,8 +3500,8 @@
 /* AI Model Panel - Near Search Field (Like in Image) */
 .ai-model-panel {
     position: absolute;
-    left: 0;
-    bottom: calc(100% + 12px);
+    left: -260px;
+    bottom: 0;
     width: 240px;
     background: rgba(15, 15, 20, 0.98);
     border: 1px solid rgba(60, 60, 70, 0.6);
@@ -3535,82 +3535,69 @@
 .ai-panel-option {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 12px 14px;
+    justify-content: flex-start;
+    padding: 12px 16px;
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    margin-bottom: 4px;
+    transition: all 0.3s ease;
+    margin-bottom: 6px;
+    border: 1.5px solid transparent;
+    background: rgba(30, 35, 45, 0.4);
 }
 
 .ai-panel-option:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(50, 55, 65, 0.6);
+    border-color: rgba(96, 165, 250, 0.3);
+    transform: translateX(3px);
 }
 
 .ai-panel-option.active {
-    background: rgba(96, 165, 250, 0.15) !important;
+    background: rgba(96, 165, 250, 0.2) !important;
+    border: 1.5px solid rgba(96, 165, 250, 0.6) !important;
+    box-shadow: 
+        0 0 0 1px rgba(96, 165, 250, 0.15) inset,
+        0 4px 12px rgba(96, 165, 250, 0.2);
+    transform: translateX(3px);
 }
 
 .ai-panel-option-name {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 0.95rem;
     font-weight: 500;
+    flex: 1;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
+.ai-panel-option.active .ai-panel-option-name {
+    color: #60a5fa !important;
+    font-weight: 600 !important;
+}
+
+.subscription-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 700;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(251, 191, 36, 0.3);
+}
+
+.ai-panel-option.active .subscription-badge {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(96, 165, 250, 0.4);
+}
+
 .ai-icon {
     font-size: 1.1rem;
     display: inline-block;
-}
-
-.ai-panel-radio {
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    position: relative;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
-
-.ai-panel-option:hover .ai-panel-radio {
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.ai-panel-option.active .ai-panel-radio {
-    border-color: #60a5fa !important;
-}
-
-.ai-panel-radio.active {
-    border-color: #60a5fa !important;
-}
-
-.ai-panel-option.active .ai-panel-radio::after {
-    content: '' !important;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
-    background: #60a5fa;
-    border-radius: 50%;
-    display: block !important;
-}
-
-.ai-panel-radio.active::after {
-    content: '' !important;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
-    background: #60a5fa;
-    border-radius: 50%;
-    display: block !important;
 }
 
 @keyframes fadeIn {
@@ -12903,22 +12890,19 @@
                     <div class="ai-panel-header">ВЫБРАТЬ НЕЙРОСЕТЬ</div>
                     <div class="ai-panel-options">
                         <div class="ai-panel-option active" data-model="groq" onclick="selectModel('groq')">
-                            <span class="ai-panel-option-name">
-                                <span class="ai-icon">⚡</span> Groq LLaMA
-                            </span>
-                            <span class="ai-panel-radio active"></span>
+                            <span class="ai-panel-option-name">Groq LLaMA</span>
                         </div>
                         <div class="ai-panel-option" data-model="huggingface" onclick="selectModel('huggingface')">
-                            <span class="ai-panel-option-name">
-                                <span class="ai-icon">🤗</span> HuggingFace
-                            </span>
-                            <span class="ai-panel-radio"></span>
+                            <span class="ai-panel-option-name">HuggingFace</span>
                         </div>
                         <div class="ai-panel-option" data-model="gemini" onclick="selectModel('gemini')">
-                            <span class="ai-panel-option-name">
-                                <span class="ai-icon">🔷</span> Google Gemini
-                            </span>
-                            <span class="ai-panel-radio"></span>
+                            <span class="ai-panel-option-name">Google Gemini</span>
+                        </div>
+                        <div class="ai-panel-option" data-model="gpt5" onclick="selectModel('gpt5')">
+                            <span class="ai-panel-option-name">GPT 5 <span class="subscription-badge">PRO</span></span>
+                        </div>
+                        <div class="ai-panel-option" data-model="gemini3" onclick="selectModel('gemini3')">
+                            <span class="ai-panel-option-name">Gemini 3 <span class="subscription-badge">PRO</span></span>
                         </div>
                     </div>
                 </div>
@@ -13830,7 +13814,9 @@
         const aiModelsPanel = {
             groq: { name: 'Groq LLaMA' },
             huggingface: { name: 'HuggingFace' },
-            gemini: { name: 'Google Gemini' }
+            gemini: { name: 'Google Gemini' },
+            gpt5: { name: 'GPT 5' },
+            gemini3: { name: 'Gemini 3' }
         };
 
         let isAiSelectorOpen = false;
@@ -13844,56 +13830,116 @@
 
             if (isAiModelPanelOpen) {
                 panel.classList.add('show');
+                
+                // Восстанавливаем выбранную модель при открытии
+                const allOptions = document.querySelectorAll('.ai-panel-option');
+                allOptions.forEach(option => {
+                    const optionModel = option.getAttribute('data-model');
+                    if (optionModel === currentSelectedModel) {
+                        option.classList.add('active');
+                    } else {
+                        option.classList.remove('active');
+                    }
+                });
+                
+                console.log('📖 Panel opened, restored selection:', currentSelectedModel);
             } else {
                 panel.classList.remove('show');
             }
         }
 
-        // Select Model from Panel
+        // Select Model from Panel - ПОЛНОСТЬЮ ПЕРЕРАБОТАННАЯ ВЕРСИЯ
         function selectModel(model) {
-            console.log('🔄 Selecting model:', model);
+            console.log('═══════════════════════════════════');
+            console.log('🔄 SELECTING MODEL:', model);
+            console.log('═══════════════════════════════════');
             
+            // Проверка модели
             if (!aiModelsPanel[model]) {
-                console.error('❌ Model not found:', model);
-                return;
+                console.error('❌ Model not found in aiModelsPanel:', model);
+                console.log('Available models:', Object.keys(aiModelsPanel));
+                return false;
             }
 
+            // Сохраняем выбор
             currentSelectedModel = model;
             currentModel = model;
             const modelInfo = aiModelsPanel[model];
+            console.log('✅ Model saved:', currentSelectedModel);
 
-            // Update button text
+            // Обновляем текст кнопки
             const btnElement = document.getElementById('currentModelName');
             if (btnElement) {
                 btnElement.textContent = modelInfo.name;
-                console.log('✅ Updated button text to:', modelInfo.name);
+                console.log('✅ Button text updated:', modelInfo.name);
+            } else {
+                console.error('❌ Button element not found!');
             }
 
-            // Update selected state in panel
-            const options = document.querySelectorAll('.ai-panel-option');
-            console.log('📋 Found', options.length, 'options');
-            
-            options.forEach(opt => {
-                const radio = opt.querySelector('.ai-panel-radio');
-                const optModel = opt.getAttribute('data-model');
+            // Находим ВСЕ опции
+            const allOptions = document.querySelectorAll('.ai-panel-option');
+            console.log('📋 Found options:', allOptions.length);
+
+            if (allOptions.length === 0) {
+                console.error('❌ No options found in DOM!');
+                return false;
+            }
+
+            // Сначала убираем active у ВСЕХ
+            let removedCount = 0;
+            allOptions.forEach((option, index) => {
+                if (option.classList.contains('active')) {
+                    option.classList.remove('active');
+                    removedCount++;
+                    console.log(`🔸 Removed active from option ${index}`);
+                }
+            });
+            console.log(`✅ Removed active from ${removedCount} options`);
+
+            // Теперь добавляем active к нужной
+            let activated = false;
+            allOptions.forEach((option, index) => {
+                const dataModel = option.getAttribute('data-model');
+                console.log(`🔍 Option ${index}: data-model="${dataModel}"`);
                 
-                if (optModel === model) {
-                    opt.classList.add('active');
-                    if (radio) {
-                        radio.classList.add('active');
-                        console.log('✅ Activated radio for:', model);
-                    }
-                } else {
-                    opt.classList.remove('active');
-                    if (radio) {
-                        radio.classList.remove('active');
-                    }
+                if (dataModel === model) {
+                    option.classList.add('active');
+                    activated = true;
+                    console.log(`✅ ACTIVATED option ${index} (${dataModel})`);
+                    console.log(`✅ Classes now:`, option.className);
                 }
             });
 
-            // Close panel
-            toggleAiModelPanel();
-            console.log('✅ Model selection complete');
+            if (!activated) {
+                console.error('❌ Failed to activate any option for model:', model);
+                return false;
+            }
+
+            // Проверяем результат
+            setTimeout(() => {
+                const activeNow = document.querySelector('.ai-panel-option.active');
+                if (activeNow) {
+                    const activeModel = activeNow.getAttribute('data-model');
+                    console.log('✅ VERIFICATION: Active model is', activeModel);
+                    
+                    if (activeModel === model) {
+                        console.log('✅✅✅ SUCCESS! Model selection confirmed!');
+                    } else {
+                        console.error('❌ MISMATCH! Expected', model, 'but got', activeModel);
+                    }
+                } else {
+                    console.error('❌ VERIFICATION FAILED: No active option found!');
+                }
+            }, 50);
+
+            // Закрываем панель с задержкой
+            setTimeout(() => {
+                toggleAiModelPanel();
+                console.log('✅ Panel closed');
+            }, 200);
+            
+            console.log('═══════════════════════════════════');
+            return true;
         }
 
         // Close panel when clicking outside
