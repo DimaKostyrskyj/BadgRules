@@ -12889,19 +12889,19 @@
                 <div class="ai-model-panel" id="aiModelPanel">
                     <div class="ai-panel-header">ВЫБРАТЬ НЕЙРОСЕТЬ</div>
                     <div class="ai-panel-options">
-                        <div class="ai-panel-option active" data-model="groq" onclick="selectModel('groq')">
+                        <div class="ai-panel-option active" data-model="groq" onclick="selectModelFromPanel('groq')">
                             <span class="ai-panel-option-name">Groq LLaMA</span>
                         </div>
-                        <div class="ai-panel-option" data-model="huggingface" onclick="selectModel('huggingface')">
+                        <div class="ai-panel-option" data-model="huggingface" onclick="selectModelFromPanel('huggingface')">
                             <span class="ai-panel-option-name">HuggingFace</span>
                         </div>
-                        <div class="ai-panel-option" data-model="gemini" onclick="selectModel('gemini')">
+                        <div class="ai-panel-option" data-model="gemini" onclick="selectModelFromPanel('gemini')">
                             <span class="ai-panel-option-name">Google Gemini</span>
                         </div>
-                        <div class="ai-panel-option" data-model="gpt5" onclick="selectModel('gpt5')">
+                        <div class="ai-panel-option" data-model="gpt5" onclick="selectModelFromPanel('gpt5')">
                             <span class="ai-panel-option-name">GPT 5 <span class="subscription-badge">PRO</span></span>
                         </div>
-                        <div class="ai-panel-option" data-model="gemini3" onclick="selectModel('gemini3')">
+                        <div class="ai-panel-option" data-model="gemini3" onclick="selectModelFromPanel('gemini3')">
                             <span class="ai-panel-option-name">Gemini 3 <span class="subscription-badge">PRO</span></span>
                         </div>
                     </div>
@@ -12965,7 +12965,7 @@
                                 <div class="ai-option" data-model="gpt5-premium" onclick="selectAiModel('gpt5-premium')">
                                     <div class="ai-option-content">
                                         <div class="ai-option-name">
-                                            GPT 5
+                                            GPT 5 
                                             <span style="
                                                 display: inline-block;
                                                 background: linear-gradient(135deg, #8b5cf6, #7c3aed);
@@ -12990,7 +12990,7 @@
                                 <div class="ai-option" data-model="gemini-premium" onclick="selectAiModel('gemini-premium')">
                                     <div class="ai-option-content">
                                         <div class="ai-option-name">
-                                            Gemini 3
+                                            Gemini 3 (Premium)
                                             <span style="
                                                 display: inline-block;
                                                 background: linear-gradient(135deg, #8b5cf6, #7c3aed);
@@ -13844,17 +13844,19 @@
         // ═══════════════════════════════════════════════════════════════
 
         const aiModels = {
-            groq: { name: 'Groq 4.1', description: 'Свободная', premium: false },
-            gemini: { name: 'Gemini 3', description: 'Быстрее', premium: false },
-            'gpt5-premium': { name: 'GPT 5', description: 'Умнее', premium: true },
-            'gemini-premium': { name: 'Gemini 3', description: 'Быстрее', premium: true }
+            groq: { name: 'Groq LLaMA', description: 'Быстрая', premium: false },
+            huggingface: { name: 'HuggingFace', description: 'Умная', premium: false },
+            gemini: { name: 'Gemini 2.0', description: 'Быстрее', premium: false },
+            'gemini-premium': { name: 'Gemini 3 (Premium)', description: 'Быстрее', premium: true },
+            'gpt5-premium': { name: 'GPT 5 (Premium)', description: 'Умнее', premium: true }
         };
 
         const aiModelsPanel = {
-            groq: { name: 'Groq 4.1', description: 'Свободная', premium: false },
-            gemini: { name: 'Gemini 3', description: 'Быстрее', premium: false },
+            groq: { name: 'Groq LLaMA', description: 'Быстрая', premium: false },
+            huggingface: { name: 'HuggingFace', description: 'Умная', premium: false },
+            gemini: { name: 'Google Gemini', description: 'Умнее', premium: false },
             gpt5: { name: 'GPT 5', description: 'Умнее', premium: true },
-            'gemini-premium': { name: 'Gemini 3 (Premium)', description: 'Быстрее', premium: true }
+            gemini3: { name: 'Gemini 3', description: 'Быстрее', premium: true }
         };
 
         let isAiSelectorOpen = false;
@@ -13980,6 +13982,74 @@
             return true;
         }
 
+        // ═══════════════════════════════════════════════════════════════
+        // 🆕 НОВАЯ ПРОСТАЯ ФУНКЦИЯ ВЫБОРА МОДЕЛИ ИЗ ПАНЕЛИ
+        // ═══════════════════════════════════════════════════════════════
+        function selectModelFromPanel(modelKey) {
+            console.log('🎯 selectModelFromPanel вызвана:', modelKey);
+            
+            // Проверяем, есть ли модель в списке
+            if (!aiModelsPanel[modelKey]) {
+                console.error('❌ Модель не найдена:', modelKey);
+                return;
+            }
+            
+            const modelInfo = aiModelsPanel[modelKey];
+            console.log('📋 Информация о модели:', modelInfo);
+            
+            // Проверка подписки для Premium моделей
+            if (modelInfo.premium) {
+                const sub = checkSubscription();
+                console.log('🔒 Проверка подписки:', sub);
+                
+                if (!sub || sub.type === 'free' || !sub.type) {
+                    console.log('⛔ Доступ запрещен - требуется PRO подписка');
+                    showPremiumRequired();
+                    // Закрываем панель
+                    if (isAiModelPanelOpen) {
+                        toggleAiModelPanel();
+                    }
+                    return;
+                }
+            }
+            
+            // Устанавливаем текущую модель
+            currentModel = modelKey;
+            currentSelectedModel = modelKey;
+            console.log('✅ Модель установлена:', modelKey);
+            
+            // Обновляем текст кнопки
+            const btnText = document.getElementById('currentModelName');
+            if (btnText) {
+                btnText.textContent = modelInfo.name;
+                console.log('✅ Текст кнопки обновлен:', modelInfo.name);
+            }
+            
+            // Обновляем активное состояние всех опций
+            const options = document.querySelectorAll('.ai-panel-option');
+            console.log('📝 Обновляем', options.length, 'опций');
+            
+            options.forEach(option => {
+                const optionModel = option.getAttribute('data-model');
+                if (optionModel === modelKey) {
+                    option.classList.add('active');
+                    console.log('✅ Активирована опция:', optionModel);
+                } else {
+                    option.classList.remove('active');
+                }
+            });
+            
+            // Закрываем панель
+            setTimeout(() => {
+                if (isAiModelPanelOpen) {
+                    toggleAiModelPanel();
+                    console.log('✅ Панель закрыта');
+                }
+            }, 150);
+            
+            console.log('✅ Выбор модели завершен успешно!');
+        }
+
         // Close panel when clicking outside
         document.addEventListener('click', function (e) {
             const panel = document.getElementById('aiModelPanel');
@@ -14009,17 +14079,13 @@
         }
 
         function selectAiModel(model) {
-            if (!aiModels[model]) {
-                console.error('❌ Модель не найдена:', model);
-                return;
-            }
+            if (!aiModels[model]) return;
 
             const modelInfo = aiModels[model];
             
             // Проверка подписки для Premium моделей
             if (modelInfo.premium) {
                 const sub = checkSubscription();
-                
                 if (!sub || sub.type === 'free' || !sub.type) {
                     // Показать уведомление о необходимости подписки
                     showPremiumRequired();
@@ -17096,10 +17162,29 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
             console.log('DOM загружен, проверяем авторизацию...');
             checkLoginStatus();
             
-            // Инициализация выбора AI модели
-            console.log('🤖 Инициализация выбора AI модели...');
-            // Устанавливаем начальное состояние без закрытия dropdown
+            // Инициализация панели выбора AI модели
+            console.log('🤖 Инициализация панели выбора AI модели...');
             setTimeout(() => {
+                // Устанавливаем текст кнопки для панели
+                const btnText = document.getElementById('currentModelName');
+                const panelModelInfo = aiModelsPanel[currentModel];
+                
+                if (btnText && panelModelInfo) {
+                    btnText.textContent = panelModelInfo.name;
+                    console.log('✅ Текст кнопки панели установлен:', panelModelInfo.name);
+                }
+                
+                // Устанавливаем active класс на правильную опцию в панели
+                document.querySelectorAll('.ai-panel-option').forEach(opt => {
+                    if (opt.dataset.model === currentModel) {
+                        opt.classList.add('active');
+                        console.log('✅ Опция панели активирована:', currentModel);
+                    } else {
+                        opt.classList.remove('active');
+                    }
+                });
+                
+                // Также инициализируем dropdown (если используется)
                 const modelInfo = aiModels[currentModel];
                 if (modelInfo) {
                     const selectorText = document.getElementById('aiSelectorText');
