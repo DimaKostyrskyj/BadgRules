@@ -3548,7 +3548,7 @@
 }
 
 .ai-panel-option.active {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(96, 165, 250, 0.15) !important;
 }
 
 .ai-panel-option-name {
@@ -3572,18 +3572,23 @@
     border-radius: 50%;
     position: relative;
     transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .ai-panel-option:hover .ai-panel-radio {
     border-color: rgba(255, 255, 255, 0.5);
 }
 
-.ai-panel-radio.active {
-    border-color: #60a5fa;
+.ai-panel-option.active .ai-panel-radio {
+    border-color: #60a5fa !important;
 }
 
-.ai-panel-radio.active::after {
-    content: '';
+.ai-panel-radio.active {
+    border-color: #60a5fa !important;
+}
+
+.ai-panel-option.active .ai-panel-radio::after {
+    content: '' !important;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -3592,6 +3597,20 @@
     height: 10px;
     background: #60a5fa;
     border-radius: 50%;
+    display: block !important;
+}
+
+.ai-panel-radio.active::after {
+    content: '' !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: #60a5fa;
+    border-radius: 50%;
+    display: block !important;
 }
 
 @keyframes fadeIn {
@@ -12885,19 +12904,19 @@
                     <div class="ai-panel-options">
                         <div class="ai-panel-option active" data-model="groq" onclick="selectModel('groq')">
                             <span class="ai-panel-option-name">
-                                <span class="ai-icon"></span> Groq LLaMA
+                                <span class="ai-icon">⚡</span> Groq LLaMA
                             </span>
                             <span class="ai-panel-radio active"></span>
                         </div>
                         <div class="ai-panel-option" data-model="huggingface" onclick="selectModel('huggingface')">
                             <span class="ai-panel-option-name">
-                                <span class="ai-icon"></span> HuggingFace
+                                <span class="ai-icon">🤗</span> HuggingFace
                             </span>
                             <span class="ai-panel-radio"></span>
                         </div>
                         <div class="ai-panel-option" data-model="gemini" onclick="selectModel('gemini')">
                             <span class="ai-panel-option-name">
-                                <span class="ai-icon"></span> Google Gemini
+                                <span class="ai-icon">🔷</span> Google Gemini
                             </span>
                             <span class="ai-panel-radio"></span>
                         </div>
@@ -13832,29 +13851,49 @@
 
         // Select Model from Panel
         function selectModel(model) {
-            if (!aiModelsPanel[model]) return;
+            console.log('🔄 Selecting model:', model);
+            
+            if (!aiModelsPanel[model]) {
+                console.error('❌ Model not found:', model);
+                return;
+            }
 
             currentSelectedModel = model;
             currentModel = model;
             const modelInfo = aiModelsPanel[model];
 
             // Update button text
-            document.getElementById('currentModelName').textContent = modelInfo.name;
+            const btnElement = document.getElementById('currentModelName');
+            if (btnElement) {
+                btnElement.textContent = modelInfo.name;
+                console.log('✅ Updated button text to:', modelInfo.name);
+            }
 
             // Update selected state in panel
-            document.querySelectorAll('.ai-panel-option').forEach(opt => {
+            const options = document.querySelectorAll('.ai-panel-option');
+            console.log('📋 Found', options.length, 'options');
+            
+            options.forEach(opt => {
                 const radio = opt.querySelector('.ai-panel-radio');
-                if (opt.dataset.model === model) {
+                const optModel = opt.getAttribute('data-model');
+                
+                if (optModel === model) {
                     opt.classList.add('active');
-                    radio.classList.add('active');
+                    if (radio) {
+                        radio.classList.add('active');
+                        console.log('✅ Activated radio for:', model);
+                    }
                 } else {
                     opt.classList.remove('active');
-                    radio.classList.remove('active');
+                    if (radio) {
+                        radio.classList.remove('active');
+                    }
                 }
             });
 
             // Close panel
             toggleAiModelPanel();
+            console.log('✅ Model selection complete');
         }
 
         // Close panel when clicking outside
