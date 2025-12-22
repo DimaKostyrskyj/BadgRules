@@ -3555,6 +3555,14 @@
     color: rgba(255, 255, 255, 0.9);
     font-size: 0.95rem;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ai-icon {
+    font-size: 1.1rem;
+    display: inline-block;
 }
 
 .ai-panel-radio {
@@ -12875,16 +12883,22 @@
                 <div class="ai-model-panel" id="aiModelPanel">
                     <div class="ai-panel-header">ВЫБРАТЬ НЕЙРОСЕТЬ</div>
                     <div class="ai-panel-options">
-                        <div class="ai-panel-option active" data-model="claude" onclick="selectModel('claude')">
-                            <span class="ai-panel-option-name">Claude Sonnet 4</span>
+                        <div class="ai-panel-option active" data-model="groq" onclick="selectModel('groq')">
+                            <span class="ai-panel-option-name">
+                                <span class="ai-icon"></span> Groq LLaMA
+                            </span>
                             <span class="ai-panel-radio active"></span>
                         </div>
-                        <div class="ai-panel-option" data-model="gemini" onclick="selectModel('gemini')">
-                            <span class="ai-panel-option-name">Gemini 2.5</span>
+                        <div class="ai-panel-option" data-model="huggingface" onclick="selectModel('huggingface')">
+                            <span class="ai-panel-option-name">
+                                <span class="ai-icon"></span> HuggingFace
+                            </span>
                             <span class="ai-panel-radio"></span>
                         </div>
-                        <div class="ai-panel-option" data-model="grok" onclick="selectModel('grok')">
-                            <span class="ai-panel-option-name">Grok 4.1</span>
+                        <div class="ai-panel-option" data-model="gemini" onclick="selectModel('gemini')">
+                            <span class="ai-panel-option-name">
+                                <span class="ai-icon"></span> Google Gemini
+                            </span>
                             <span class="ai-panel-radio"></span>
                         </div>
                     </div>
@@ -12901,7 +12915,7 @@
                     <div class="chat-input-bottom">
                         <!-- AI Model Toggle Button -->
                         <button class="ai-model-toggle-btn" id="aiModelToggleBtn" onclick="toggleAiModelPanel()">
-                            <span class="ai-model-current" id="currentModelName">Claude Sonnet 4</span>
+                            <span class="ai-model-current" id="currentModelName">Groq LLaMA</span>
                             <svg class="ai-toggle-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2">
                                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -13795,14 +13809,14 @@
         };
 
         const aiModelsPanel = {
-            claude: { name: 'Claude Sonnet 4' },
-            gemini: { name: 'Gemini 2.5' },
-            grok: { name: 'Grok 4.1' }
+            groq: { name: 'Groq LLaMA' },
+            huggingface: { name: 'HuggingFace' },
+            gemini: { name: 'Google Gemini' }
         };
 
         let isAiSelectorOpen = false;
         let isAiModelPanelOpen = false;
-        let currentSelectedModel = 'claude';
+        let currentSelectedModel = 'groq';
 
         // Toggle AI Model Panel
         function toggleAiModelPanel() {
