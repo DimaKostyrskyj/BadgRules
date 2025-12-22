@@ -12965,7 +12965,7 @@
                                 <div class="ai-option" data-model="gpt5-premium" onclick="selectAiModel('gpt5-premium')">
                                     <div class="ai-option-content">
                                         <div class="ai-option-name">
-                                            GPT 5 
+                                            GPT 5
                                             <span style="
                                                 display: inline-block;
                                                 background: linear-gradient(135deg, #8b5cf6, #7c3aed);
@@ -12990,7 +12990,7 @@
                                 <div class="ai-option" data-model="gemini-premium" onclick="selectAiModel('gemini-premium')">
                                     <div class="ai-option-content">
                                         <div class="ai-option-name">
-                                            Gemini 3 (Premium)
+                                            Gemini 3
                                             <span style="
                                                 display: inline-block;
                                                 background: linear-gradient(135deg, #8b5cf6, #7c3aed);
@@ -13844,11 +13844,10 @@
         // ═══════════════════════════════════════════════════════════════
 
         const aiModels = {
-            groq: { name: 'Groq LLaMA', description: 'Быстрая', premium: false },
-            huggingface: { name: 'HuggingFace', description: 'Умная', premium: false },
-            gemini: { name: 'Gemini 2.0', description: 'Быстрее', premium: false },
-            'gemini-premium': { name: 'Gemini 3 (Premium)', description: 'Быстрее', premium: true },
-            'gpt5-premium': { name: 'GPT 5 (Premium)', description: 'Умнее', premium: true }
+            groq: { name: 'Groq 4.1', description: 'Свободная', premium: false },
+            gemini: { name: 'Gemini 3', description: 'Быстрее', premium: false },
+            'gpt5-premium': { name: 'GPT 5', description: 'Умнее', premium: true },
+            'gemini-premium': { name: 'Gemini 3', description: 'Быстрее', premium: true }
         };
 
         const aiModelsPanel = {
@@ -14010,13 +14009,17 @@
         }
 
         function selectAiModel(model) {
-            if (!aiModels[model]) return;
+            if (!aiModels[model]) {
+                console.error('❌ Модель не найдена:', model);
+                return;
+            }
 
             const modelInfo = aiModels[model];
             
             // Проверка подписки для Premium моделей
             if (modelInfo.premium) {
                 const sub = checkSubscription();
+                
                 if (!sub || sub.type === 'free' || !sub.type) {
                     // Показать уведомление о необходимости подписки
                     showPremiumRequired();
