@@ -3496,6 +3496,106 @@
     background: transparent;
 }
 
+/* AI Model Panel - Left Side (Like in Image) */
+.ai-model-panel {
+    position: fixed;
+    left: 20px;
+    bottom: 90px;
+    width: 240px;
+    background: rgba(15, 15, 20, 0.98);
+    border: 1px solid rgba(60, 60, 70, 0.6);
+    border-radius: 16px;
+    padding: 0;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+    display: none;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+}
+
+.ai-model-panel.show {
+    display: block;
+}
+
+.ai-panel-header {
+    padding: 14px 18px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid rgba(60, 60, 70, 0.4);
+}
+
+.ai-panel-options {
+    padding: 8px;
+}
+
+.ai-panel-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 4px;
+}
+
+.ai-panel-option:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.ai-panel-option.active {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.ai-panel-option-name {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.ai-panel-radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.ai-panel-option:hover .ai-panel-radio {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.ai-panel-radio.active {
+    border-color: #60a5fa;
+}
+
+.ai-panel-radio.active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: #60a5fa;
+    border-radius: 50%;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .chat-input {
     width: 100%;
     background: transparent;
@@ -3546,6 +3646,40 @@
     border-top: 1px solid rgba(96, 165, 250, 0.08);
     background: rgba(0, 0, 0, 0.1);
     border-radius: 0 0 20px 20px;
+}
+
+/* AI Model Toggle Button */
+.ai-model-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(20, 25, 35, 0.6);
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ai-model-toggle-btn:hover {
+    background: rgba(25, 30, 40, 0.8);
+    border-color: rgba(96, 165, 250, 0.4);
+}
+
+.ai-model-current {
+    white-space: nowrap;
+}
+
+.ai-toggle-arrow {
+    opacity: 0.6;
+    transition: transform 0.3s ease;
+}
+
+.ai-model-toggle-btn:hover .ai-toggle-arrow {
+    opacity: 1;
 }
 
 /* ... existing code ... */
@@ -12736,6 +12870,25 @@
         <!-- Fixed Input at Bottom -->
         <div class="chat-input-container">
             <div class="chat-input-inner">
+                <!-- AI Model Selector Panel (Left Side) -->
+                <div class="ai-model-panel" id="aiModelPanel">
+                    <div class="ai-panel-header">ВЫБРАТЬ НЕЙРОСЕТЬ</div>
+                    <div class="ai-panel-options">
+                        <div class="ai-panel-option active" data-model="claude" onclick="selectModel('claude')">
+                            <span class="ai-panel-option-name">Claude Sonnet 4</span>
+                            <span class="ai-panel-radio active"></span>
+                        </div>
+                        <div class="ai-panel-option" data-model="gemini" onclick="selectModel('gemini')">
+                            <span class="ai-panel-option-name">Gemini 2.5</span>
+                            <span class="ai-panel-radio"></span>
+                        </div>
+                        <div class="ai-panel-option" data-model="grok" onclick="selectModel('grok')">
+                            <span class="ai-panel-option-name">Grok 4.1</span>
+                            <span class="ai-panel-radio"></span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="chat-input-box">
                     <!-- Main Input Area -->
                     <div class="chat-input-main">
@@ -12745,8 +12898,17 @@
 
                     <!-- Bottom Bar with Model & Send -->
                     <div class="chat-input-bottom">
-                        <!-- AI Model Selector -->
-                        <div class="ai-selector" id="aiSelector">
+                        <!-- AI Model Toggle Button -->
+                        <button class="ai-model-toggle-btn" id="aiModelToggleBtn" onclick="toggleAiModelPanel()">
+                            <span class="ai-model-current" id="currentModelName">Claude Sonnet 4</span>
+                            <svg class="ai-toggle-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+
+                        <!-- AI Model Selector - Hidden, using panel instead -->
+                        <div class="ai-selector" id="aiSelector" style="display: none;">
                             <div class="ai-selector-btn" id="aiSelectorBtn" onclick="toggleAiSelector()">
                                 <span class="ai-selector-text" id="aiSelectorText">Groq LLaMA</span>
                                 <svg class="ai-selector-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -13631,7 +13793,67 @@
             gemini: { name: 'Gemini 2.0' }
         };
 
+        const aiModelsPanel = {
+            claude: { name: 'Claude Sonnet 4' },
+            gemini: { name: 'Gemini 2.5' },
+            grok: { name: 'Grok 4.1' }
+        };
+
         let isAiSelectorOpen = false;
+        let isAiModelPanelOpen = false;
+        let currentSelectedModel = 'claude';
+
+        // Toggle AI Model Panel
+        function toggleAiModelPanel() {
+            const panel = document.getElementById('aiModelPanel');
+            isAiModelPanelOpen = !isAiModelPanelOpen;
+
+            if (isAiModelPanelOpen) {
+                panel.classList.add('show');
+            } else {
+                panel.classList.remove('show');
+            }
+        }
+
+        // Select Model from Panel
+        function selectModel(model) {
+            if (!aiModelsPanel[model]) return;
+
+            currentSelectedModel = model;
+            currentModel = model;
+            const modelInfo = aiModelsPanel[model];
+
+            // Update button text
+            document.getElementById('currentModelName').textContent = modelInfo.name;
+
+            // Update selected state in panel
+            document.querySelectorAll('.ai-panel-option').forEach(opt => {
+                const radio = opt.querySelector('.ai-panel-radio');
+                if (opt.dataset.model === model) {
+                    opt.classList.add('active');
+                    radio.classList.add('active');
+                } else {
+                    opt.classList.remove('active');
+                    radio.classList.remove('active');
+                }
+            });
+
+            // Close panel
+            toggleAiModelPanel();
+        }
+
+        // Close panel when clicking outside
+        document.addEventListener('click', function (e) {
+            const panel = document.getElementById('aiModelPanel');
+            const toggleBtn = document.getElementById('aiModelToggleBtn');
+            
+            if (panel && toggleBtn && 
+                !panel.contains(e.target) && 
+                !toggleBtn.contains(e.target) && 
+                isAiModelPanelOpen) {
+                toggleAiModelPanel();
+            }
+        });
 
         function toggleAiSelector() {
             const btn = document.getElementById('aiSelectorBtn');
