@@ -32,16 +32,18 @@
     <link rel="shortcut icon" type="image/x-icon" href="1-eb88279c.ico">
     <style>
         /* ═══════════════════════════════════════════════════════════════
-           🚀 MODERN PRELOADER - Современная загрузка
+           🛡️ LOADING PROTECTION - Защита от черного экрана
            ═══════════════════════════════════════════════════════════════ */
         
+        /* Минимальный экран загрузки пока не загрузятся стили */
         body {
             background: #000 !important;
             margin: 0;
             padding: 0;
         }
         
-        .modern-preloader {
+        /* Экран загрузки по умолчанию */
+        #initialLoader {
             position: fixed;
             top: 0;
             left: 0;
@@ -52,233 +54,107 @@
                 rgba(5, 10, 20, 1) 50%,
                 rgba(0, 0, 0, 1) 100%);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 999999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            color: white;
         }
         
-        .modern-preloader.fade-out {
-            opacity: 0;
-            visibility: hidden;
-        }
-        
-        .preloader-content {
+        #initialLoader .loader-content {
             text-align: center;
-            position: relative;
         }
         
-        /* Logo Animation */
-        .logo-container {
-            position: relative;
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 40px;
+        #initialLoader .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(96, 165, 250, 0.2);
+            border-top-color: #60a5fa;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
         }
         
-        .logo-rings {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .ring {
-            fill: none;
-            stroke: #60a5fa;
-            stroke-width: 2;
-            opacity: 0.2;
-            animation: ringPulse 2s ease-in-out infinite;
-        }
-        
-        .ring-1 {
-            animation-delay: 0s;
-        }
-        
-        .ring-2 {
-            animation-delay: 0.3s;
-        }
-        
-        .ring-3 {
-            animation-delay: 0.6s;
-        }
-        
-        .preloader-logo {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.6));
-            animation: logoFloat 3s ease-in-out infinite;
-        }
-        
-        /* Loading Text */
-        .brand-name {
-            font-family: 'Manrope', sans-serif;
-            font-size: 36px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #60a5fa, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-        }
-        
-        .loading-status {
-            font-family: 'Manrope', sans-serif;
-            font-size: 16px;
-            color: #a0a0a0;
-            margin-bottom: 30px;
-            animation: textFade 1.5s ease-in-out infinite;
-        }
-        
-        /* Progress Bar */
-        .progress-container {
-            width: 300px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .progress-bar {
-            flex: 1;
-            height: 6px;
-            background: rgba(96, 165, 250, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #60a5fa, #3b82f6, #60a5fa);
-            background-size: 200% 100%;
-            border-radius: 3px;
-            animation: progressSlide 1.5s ease-in-out infinite;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        
-        .progress-percent {
-            font-family: 'Manrope', sans-serif;
-            font-size: 14px;
+        #initialLoader .loader-text {
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 18px;
             font-weight: 600;
             color: #60a5fa;
-            min-width: 45px;
-            text-align: right;
+            margin-bottom: 10px;
         }
         
-        /* Error State */
-        .loader-error {
+        #initialLoader .loader-subtext {
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 14px;
+            color: #a0a0a0;
+        }
+        
+        #initialLoader .loader-error {
             display: none;
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 16px;
-            padding: 30px;
-            margin-top: 40px;
-            max-width: 400px;
-            animation: errorSlideIn 0.5s ease;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            max-width: 500px;
         }
         
-        .loader-error.active {
+        #initialLoader .loader-error.active {
             display: block;
         }
         
-        .error-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-        
-        .error-title {
+        #initialLoader .error-title {
             color: #ef4444;
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            font-family: 'Manrope', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
         
-        .error-message {
+        #initialLoader .error-message {
             color: #fca5a5;
             font-size: 14px;
-            line-height: 1.8;
-            margin-bottom: 20px;
-            font-family: 'Manrope', sans-serif;
+            line-height: 1.6;
         }
         
-        .retry-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        #initialLoader .retry-button {
+            background: #60a5fa;
             color: white;
             border: none;
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-size: 15px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 600;
-            font-family: 'Manrope', sans-serif;
             cursor: pointer;
+            margin-top: 15px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);
         }
         
-        .retry-button:hover {
+        #initialLoader .retry-button:hover {
+            background: #3b82f6;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(96, 165, 250, 0.4);
         }
         
-        /* Animations */
-        @keyframes ringPulse {
-            0%, 100% {
-                opacity: 0.2;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes loaderPulse {
+            0%, 100% { 
+                opacity: 1;
                 transform: scale(1);
             }
-            50% {
+            50% { 
                 opacity: 0.6;
                 transform: scale(1.05);
             }
         }
         
-        @keyframes logoFloat {
-            0%, 100% {
-                transform: translate(-50%, -50%) translateY(0px);
-            }
-            50% {
-                transform: translate(-50%, -50%) translateY(-10px);
-            }
-        }
-        
-        @keyframes textFade {
-            0%, 100% {
-                opacity: 0.6;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
-        
-        @keyframes progressSlide {
+        @keyframes loaderProgress {
             0% {
-                background-position: 0% 0%;
+                transform: translateX(-100%);
             }
             100% {
-                background-position: 200% 0%;
-            }
-        }
-        
-        @keyframes errorSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+                transform: translateX(100%);
             }
         }
         
@@ -11210,50 +11086,24 @@
 </head>
 
 <body>
-    <!-- 🚀 MODERN PRELOADER -->
-    <div id="initialLoader" class="modern-preloader">
-        <div class="preloader-content">
-            <!-- Animated Logo -->
-            <div class="logo-container">
-                <svg class="logo-rings" viewBox="0 0 200 200">
-                    <circle class="ring ring-1" cx="100" cy="100" r="80" />
-                    <circle class="ring ring-2" cx="100" cy="100" r="60" />
-                    <circle class="ring ring-3" cx="100" cy="100" r="40" />
-                </svg>
-                <img src="images/logo.png" alt="BadgRules" class="preloader-logo">
+    <!-- 🛡️ INITIAL LOADER - Защита от черного экрана -->
+    <div id="initialLoader">
+        <div class="loader-content">
+            <img src="images/logo.png" alt="BadgRules" class="loader-logo" style="width: 100px; height: 100px; margin: 0 auto 40px; display: block; filter: drop-shadow(0 0 40px rgba(96, 165, 250, 0.8)); animation: loaderPulse 2s ease-in-out infinite;">
+            <div class="loader-text" style="font-size: 24px; margin-bottom: 15px;">BadgRules</div>
+            <div class="loader-subtext" style="margin-bottom: 30px;">Загрузка...</div>
+            <div style="width: 200px; height: 4px; background: rgba(96, 165, 250, 0.2); border-radius: 2px; overflow: hidden; margin: 0 auto;">
+                <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #60a5fa, #3b82f6); border-radius: 2px; animation: loaderProgress 1.5s ease-in-out infinite;"></div>
             </div>
-            
-            <!-- Loading Text -->
-            <div class="loading-text">
-                <h1 class="brand-name">BadgRules</h1>
-                <p class="loading-status" id="loadingStatus">Инициализация системы...</p>
-            </div>
-            
-            <!-- Progress Bar -->
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar">
-                    <div class="progress-fill"></div>
-                </div>
-                <span class="progress-percent" id="progressPercent">0%</span>
-            </div>
-            
-            <!-- Error State -->
             <div class="loader-error" id="loaderError">
-                <div class="error-icon">⚠️</div>
-                <div class="error-title">Ошибка загрузки</div>
+                <div class="error-title">⚠️ Ошибка загрузки</div>
                 <div class="error-message">
                     Возможные причины:<br>
                     • Блокировка провайдером (попробуйте VPN)<br>
-                    • Проблемы с подключением<br>
+                    • Проблемы с подключением к Discord<br>
                     • Медленное интернет-соединение
                 </div>
-                <button class="retry-button" onclick="location.reload()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="23 4 23 10 17 10"></polyline>
-                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
-                    </svg>
-                    Перезагрузить
-                </button>
+                <button class="retry-button" onclick="location.reload()">Перезагрузить страницу</button>
             </div>
         </div>
     </div>
@@ -14550,7 +14400,7 @@
             groq: {
                 enabled: true,
                 name: 'Groq LLaMA',
-                apiKey: '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',
+                apiKey: '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',
                 endpoint: 'https://api.groq.com/openai/v1/chat/completions',
                 model: 'llama-3.3-70b-versatile',
                 type: 'openai',
@@ -14730,7 +14580,7 @@
             gta5rp: {
                 name: 'GTA 5 RP',
                 baseUrl: 'https://forum.gta5rp.com',
-                rulesSection: 'https://forum.gta5rp.com/threads/pravila-proekta.652405/',
+                rulesSection: 'https://forum.gta5rp.com/forums/pravila/',
                 servers: ['Arizona', 'Chocolate', 'Rodina', 'Phoenix', 'Mesa', 'Red-Rock', 
                          'Yuma', 'Surprise', 'Prescott', 'Glendale', 'Kingman', 'Winslow']
             },
@@ -16300,16 +16150,16 @@
 
             if (lq.includes('fear') || lq.includes('фир') || lq.includes('страх')) {
                 links.push('https://forum.majestic-rp.ru/forums/pravila-servera/');
-                links.push('https://forum.gta5rp.com/threads/pravila-proekta.652405/');
+                links.push('https://forum.gta5rp.com/forums/pravila/');
             }
             if (lq.includes('meta') || lq.includes('мета')) {
                 links.push('https://forum.majestic-rp.ru/forums/pravila-servera/');
-                links.push('https://forum.gta5rp.com/threads/pravila-proekta.652405/');
+                links.push('https://forum.gta5rp.com/forums/pravila/');
             }
 
             if (links.length === 0) {
                 links.push('https://forum.majestic-rp.ru/forums/pravila-servera/');
-                links.push('https://forum.gta5rp.com/threads/pravila-proekta.652405/');
+                links.push('https://forum.gta5rp.com/forums/pravila/');
             }
 
             return links;
@@ -16476,68 +16326,36 @@
 - VDM = убийство машиной (запрещено)
 `;
             } else {
-                console.log('✅ Правила загружены с форума:', forumRulesText.length, 'символов');
+                console.log('✅ Правила загружены!');
             }
-            
-            // 🚫 КРИТИЧЕСКАЯ ПРОВЕРКА: Если правил мало - НЕ ОТВЕЧАЕМ
-            if (forumRulesText.length < 200) {
-                console.warn('⚠️ Недостаточно данных с форума для ответа');
-                return {
-                    text: `❌ Не удалось загрузить достаточно информации с форума ${forumUrl}
-
-Попробуйте:
-1. Переформулировать вопрос
-2. Обновить страницу
-3. Задать более конкретный вопрос
-
-Или посетите форум напрямую: https://${forumUrl}`,
-                    wasParsed: false
-                };
-            }
-            
-            console.log(`✅ Загружено ${forumRulesText.length} символов правил. Отправляю к AI...`);
             
             // Информация о сервере для промпта
             const serverInfo = userServer ? `\n\n⚠️ ВАЖНО: Игрок играет на сервере ${userServer}. Если правила отличаются для разных серверов, дай ответ для ${userServer}.` : '';
             
-            // СТРОГИЙ ПРОМПТ - ТОЛЬКО ФАКТЫ С ФОРУМА
-            const prompt = `Ты - помощник по правилам ${serverName} (форум: ${forumUrl}).${serverInfo}
+            // УЛУЧШЕННЫЙ ПРОМПТ
+            const prompt = `Ты - эксперт по ${serverName} (форум: ${forumUrl}).${serverInfo}
 
-ВОПРОС ИГРОКА: "${question}"
+ВОПРОС: "${question}"
 
-ПРАВИЛА С ФОРУМА ${forumUrl}:
+ПРАВИЛА С ФОРУМА:
 ${forumRulesText}
 
-⚠️ КРИТИЧЕСКИ ВАЖНЫЕ ИНСТРУКЦИИ:
-1. ИСПОЛЬЗУЙ ТОЛЬКО информацию из правил выше
-2. НЕ придумывай, НЕ фантазируй, НЕ додумывай
-3. Если информации НЕТ в правилах - напиши: "В загруженных правилах не нашел информации по этому вопросу"
-4. НЕ используй общие знания о GTA или игровых серверах
-5. Цитируй ТОЧНЫЙ номер правила если нашел
-6. Если сомневаешься - лучше скажи что не нашел
+ИНСТРУКЦИИ:
+1. Используй ТОЛЬКО информацию из правил выше
+2. Если "можно ли..." - дай ЧЕТКИЙ ответ: ДА или НЕТ
+3. Объясни ПОЧЕМУ (1-2 предложения)
+4. Укажи номер правила если найдешь
+5. Максимум 4-5 предложений
+${userServer ? `6. Учитывай что игрок на сервере ${userServer}` : ''}
 
-ФОРМАТ ОТВЕТА:
-- Если "можно ли..." - начни с ДА или НЕТ
-- Объяснение (2-3 предложения)
-- Номер правила (если нашел)
-- Максимум 5 предложений
-
-ПРИМЕРЫ ПРАВИЛЬНЫХ ОТВЕТОВ:
-
+ПРИМЕРЫ:
 Вопрос: "Можно грабить такси?"
-✅ ПРАВИЛЬНО: "ДА, такси можно грабить. Согласно правилам, такси не является зеленой зоной. Грабеж возможен в маске. Правило 6.31."
+Ответ: "ДА, такси можно грабить. Такси не зеленая зона. Нужна маска. Правило 6.31."
 
-Вопрос: "Можно ли использовать читы?"
-❌ НЕПРАВИЛЬНО: "Нет, читы запрещены на всех серверах" (если этого нет в правилах)
-✅ ПРАВИЛЬНО: "В загруженных правилах не нашел конкретной информации про читы"
+Вопрос: "Можно убить в больнице?"
+Ответ: "НЕТ, больница (EMS) - зеленая зона. Убийства там запрещены. Правило 6.11."
 
-Вопрос: "Сколько стоит BMW?"
-❌ НЕПРАВИЛЬНО: "BMW стоит около 500,000$" (придумано)
-✅ ПРАВИЛЬНО: "В правилах нет информации о ценах на транспорт"
-
-${userServer ? `\n⚠️ УЧТИ: Игрок играет на сервере ${userServer}. Ответ должен быть для этого сервера.` : ''}
-
-ТВОЙ ОТВЕТ (строго по правилам выше):`;
+ОТВЕТЬ:`;
             
             try {
                 let response;
@@ -16696,7 +16514,7 @@ ${userServer ? `\n⚠️ УЧТИ: Игрок играет на сервере $
             
             // Определяем ссылку на форум для правил
             const forumLink = forumUrl.includes('gta5rp') ? 
-                'https://forum.gta5rp.com/threads/pravila-proekta.652405/' : 
+                'https://forum.gta5rp.com/forums/pravila/' : 
                 'https://forum.majestic-rp.ru/forums/pravila-servera/';
             
             // Выделяем ДА/НЕТ в тексте
@@ -21221,102 +21039,36 @@ window.addEventListener('offline', () => {
 
 
 // ═══════════════════════════════════════════════════════════════
-// 🚀 MODERN PRELOADER - Современная анимированная загрузка
+// 🛡️ PAGE LOAD PROTECTION - Защита от черного экрана
 // ═══════════════════════════════════════════════════════════════
 
 (function() {
     const loader = document.getElementById('initialLoader');
     const loaderError = document.getElementById('loaderError');
-    const progressBar = document.querySelector('.progress-fill');
-    const progressPercent = document.getElementById('progressPercent');
-    const loadingStatus = document.getElementById('loadingStatus');
-    
     let loadTimeout;
     let errorTimeout;
-    let progress = 0;
     
-    // Статусы загрузки
-    const loadingStages = [
-        { percent: 20, text: 'Загрузка ресурсов...' },
-        { percent: 40, text: 'Инициализация модулей...' },
-        { percent: 60, text: 'Подключение к серверу...' },
-        { percent: 80, text: 'Настройка интерфейса...' },
-        { percent: 100, text: 'Готово!' }
-    ];
-    
-    let currentStage = 0;
-    
-    // Функция обновления прогресса
-    function updateProgress(targetProgress) {
-        const interval = setInterval(() => {
-            if (progress < targetProgress) {
-                progress += 1;
-                if (progressBar) progressBar.style.width = progress + '%';
-                if (progressPercent) progressPercent.textContent = progress + '%';
-            } else {
-                clearInterval(interval);
-            }
-        }, 20);
-    }
-    
-    // Автоматическая анимация загрузки
-    function animateLoading() {
-        if (currentStage < loadingStages.length) {
-            const stage = loadingStages[currentStage];
-            
-            // Обновляем текст статуса
-            if (loadingStatus) {
-                loadingStatus.style.opacity = '0';
-                setTimeout(() => {
-                    loadingStatus.textContent = stage.text;
-                    loadingStatus.style.opacity = '1';
-                }, 200);
-            }
-            
-            // Обновляем прогресс
-            updateProgress(stage.percent);
-            
-            currentStage++;
-            
-            // Следующий этап через случайное время
-            if (currentStage < loadingStages.length) {
-                setTimeout(animateLoading, 500 + Math.random() * 800);
-            }
-        }
-    }
-    
-    // Начинаем анимацию загрузки
-    setTimeout(animateLoading, 300);
-    
-    // Таймаут на полную загрузку - 10 секунд
+    // Таймаут на полную загрузку - 8 секунд
     loadTimeout = setTimeout(() => {
-        console.error('⚠️ Страница не загрузилась за 10 секунд');
+        console.error('⚠️ Страница не загрузилась за 8 секунд');
         if (loaderError) {
             loaderError.classList.add('active');
         }
-    }, 10000);
+    }, 8000);
     
     // Полная загрузка страницы
     window.addEventListener('load', () => {
         clearTimeout(loadTimeout);
-        clearTimeout(errorTimeout);
         console.log('✅ Страница полностью загружена');
         
-        // Завершаем прогресс
-        progress = 100;
-        if (progressBar) progressBar.style.width = '100%';
-        if (progressPercent) progressPercent.textContent = '100%';
-        if (loadingStatus) loadingStatus.textContent = 'Готово!';
-        
         // Убираем loader с анимацией
-        setTimeout(() => {
-            if (loader) {
-                loader.classList.add('fade-out');
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 500);
-            }
-        }, 600);
+        if (loader) {
+            loader.style.opacity = '0';
+            loader.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        }
     });
     
     // DOM готов (базовая защита)
@@ -21325,7 +21077,7 @@ window.addEventListener('offline', () => {
         
         // Если за 15 секунд не произошло событие load, показываем ошибку
         errorTimeout = setTimeout(() => {
-            if (loader && !loader.classList.contains('fade-out')) {
+            if (loader && loader.style.display !== 'none') {
                 console.error('⚠️ Критическая ошибка загрузки');
                 if (loaderError) {
                     loaderError.classList.add('active');
