@@ -1,15 +1,20 @@
 /**
  * ═══════════════════════════════════════════════════════════════
- * FULL FORUM CRAWLER - Полный парсер форума GTA5RP
+ * ULTIMATE FORUM SCRAPER - Полный анализ всего форума
  * ═══════════════════════════════════════════════════════════════
  * 
- * Автоматически находит и парсит ВСЕ страницы форума
+ * Автоматически:
+ * 1. Находит ВСЕ разделы форума
+ * 2. Находит ВСЕ темы в каждом разделе
+ * 3. Парсит ВСЕ страницы каждой темы
+ * 4. Создает ПОЛНУЮ базу знаний
  * 
  * Использование:
- * node full-forum-crawler.js
+ * node ultimate-scraper.js
  */
 
-const https = require('https');
+const { Builder, By, until } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 const fs = require('fs');
 const path = require('path');
 
@@ -18,257 +23,122 @@ const path = require('path');
 // ═══════════════════════════════════════════════════════════════
 
 const CONFIG = {
-    // Базовый URL форума
-    forumBaseUrl: 'https://forum.gta5rp.com',
+    // Базовый URL
+    forumUrl: 'https://forum.gta5rp.com',
     
-    // Стартовые разделы для сканирования
-    startSections: [
-        '/forums/pravila/',                    // Раздел правил
-        '/forums/faq-i-otvety-na-samye-populyarnye-voprosy.1006/',  // FAQ
-        '/forums/gajdy-i-obuchenie.1004/',    // Гайды
-        '/forums/novosti-servera.1001/'       // Новости
-    ],
+    // Главная страница для старта
+    startUrl: 'https://forum.gta5rp.com',
     
-    // Максимум страниц для парсинга (чтобы не перегрузить)
-    maxPages: 50,
+    // ЛИМИТЫ (чтобы не перегрузить)
+    maxSections: 20,        // Максимум разделов
+    maxThreadsPerSection: 30, // Максимум тем на раздел
+    maxPagesPerThread: 5,   // Максимум страниц в теме
     
-    // Максимум тредов на раздел
-    maxThreadsPerSection: 20,
+    // ИЛИ убрать лимиты для ПОЛНОГО парсинга:
+    // maxSections: 999,
+    // maxThreadsPerSection: 999,
+    // maxPagesPerThread: 999,
+    
+    // Задержки (чтобы не заблокировали)
+    delayBetweenPages: 2000,    // 2 секунды между страницами
+    delayBetweenThreads: 1000,  // 1 секунда между темами
+    delayBetweenSections: 3000, // 3 секунды между разделами
     
     // Настройки чанкинга
     chunkSize: 600,
     chunkOverlap: 100,
     
-    // Выходные файлы
-    output: {
-        full: 'full-forum-database.json',
-        browser: 'forum-database-browser.json',
-        log: 'crawler.log'
-    },
-    
-    // Задержка между запросами (мс)
-    requestDelay: 1000,
-    
-    // Ключевые слова
+    // Ключевые слова для эмбеддинга
     keywords: [
+        // Правила
         'dm', 'rdm', 'vdm', 'pg', 'mg', 'nlr', 'rp', 'rk', 'tk', 'ck', 'fck',
-        'правил', 'запрещен', 'разрешен', 'можно', 'нельзя',
-        'зона', 'зелен', 'больниц', 'полиц', 'гос', 'ems', 'sheriff',
-        'граб', 'убийств', 'похищен', 'маск', 'гетто', 'банд', 'фракц',
-        'организац', 'сервер', 'игрок', 'наказан', 'варн', 'бан', 'кик',
-        'такси', 'заправк', 'магазин', 'оружи', 'транспорт', 'дом',
-        'деньг', 'работ', 'лидер', 'война', 'территор', 'база'
+        'правил', 'запрещен', 'разрешен', 'можно', 'нельзя', 'должен',
+        
+        // Места
+        'зона', 'зелен', 'больниц', 'полиц', 'гос', 'ems', 'sheriff', 'hospital',
+        'government', 'гетто', 'ghetto', 'база', 'территор',
+        
+        // Действия
+        'граб', 'убийств', 'похищен', 'маск', 'оружи', 'стрельб', 'атак',
+        'банд', 'фракц', 'организац', 'gang', 'mafia', 'capture',
+        
+        // Игровые термины
+        'сервер', 'игрок', 'админ', 'модератор', 'репорт', 'жалоб',
+        'наказан', 'варн', 'бан', 'кик', 'мут', 'warn', 'kick', 'mute',
+        
+        // Объекты
+        'такси', 'заправк', 'магазин', 'транспорт', 'дом', 'бизнес',
+        'деньг', 'работ', 'зарплат', 'лидер', 'война'
+    ],
+    
+    // Приоритетные разделы (парсятся первыми)
+    prioritySections: [
+        'pravila',
+        'faq',
+        'rules',
+        'gajdy',
+        'guide'
+    ],
+    
+    // Игнорировать разделы
+    ignoreSections: [
+        'offtop',
+        'flood',
+        'spam',
+        'archive',
+        'arxiv'
     ]
 };
 
 // ═══════════════════════════════════════════════════════════════
-// CORS ПРОКСИ
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
 // ═══════════════════════════════════════════════════════════════
 
-const CORS_PROXIES = [
-    'https://api.allorigins.win/raw?url=',
-    'https://corsproxy.io/?',
-    'https://api.codetabs.com/v1/proxy?quest='
-];
+const STATS = {
+    sectionsProcessed: 0,
+    threadsProcessed: 0,
+    pagesProcessed: 0,
+    chunksCreated: 0,
+    errors: 0,
+    startTime: Date.now()
+};
 
-let currentProxyIndex = 0;
+const VISITED = {
+    sections: new Set(),
+    threads: new Set(),
+    pages: new Set()
+};
 
 // ═══════════════════════════════════════════════════════════════
-// ЛОГИРОВАНИЕ
+// УТИЛИТЫ
 // ═══════════════════════════════════════════════════════════════
-
-const logFile = path.join(__dirname, 'forum-data', CONFIG.output.log);
 
 function log(message) {
-    const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] ${message}\n`;
-    
-    console.log(message);
-    
-    try {
-        fs.appendFileSync(logFile, logMessage);
-    } catch (e) {
-        // Игнорируем ошибки логирования
-    }
+    const timestamp = new Date().toLocaleTimeString();
+    console.log(`[${timestamp}] ${message}`);
 }
-
-// ═══════════════════════════════════════════════════════════════
-// ЗАДЕРЖКА
-// ═══════════════════════════════════════════════════════════════
 
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// ═══════════════════════════════════════════════════════════════
-// ЗАГРУЗКА СТРАНИЦЫ
-// ═══════════════════════════════════════════════════════════════
-
-function fetchPage(url) {
-    return new Promise((resolve, reject) => {
-        https.get(url, (res) => {
-            let data = '';
-            
-            res.on('data', (chunk) => {
-                data += chunk;
-            });
-            
-            res.on('end', () => {
-                resolve(data);
-            });
-        }).on('error', (err) => {
-            reject(err);
-        });
-    });
-}
-
-async function fetchWithProxy(url) {
-    const proxy = CORS_PROXIES[currentProxyIndex];
-    const proxyUrl = proxy + encodeURIComponent(url);
-    
-    try {
-        return await fetchPage(proxyUrl);
-    } catch (err) {
-        currentProxyIndex = (currentProxyIndex + 1) % CORS_PROXIES.length;
-        throw err;
-    }
-}
-
-async function safeFetch(url) {
-    try {
-        return await fetchPage(url);
-    } catch (err) {
-        log(`⚠️ Прямая загрузка не удалась, пробую прокси...`);
-        return await fetchWithProxy(url);
-    }
+function getElapsedTime() {
+    const elapsed = Date.now() - STATS.startTime;
+    const minutes = Math.floor(elapsed / 60000);
+    const seconds = Math.floor((elapsed % 60000) / 1000);
+    return `${minutes}м ${seconds}с`;
 }
 
 // ═══════════════════════════════════════════════════════════════
-// ИЗВЛЕЧЕНИЕ ССЫЛОК
+// ФУНКЦИИ ОБРАБОТКИ ТЕКСТА
 // ═══════════════════════════════════════════════════════════════
 
-function extractThreadLinks(html, baseUrl) {
-    const links = [];
-    
-    // Ищем ссылки на треды
-    // Формат: /threads/название.ID/
-    const threadRegex = /href="(\/threads\/[^"]+)"/g;
-    
-    let match;
-    while ((match = threadRegex.exec(html)) !== null) {
-        const threadPath = match[1];
-        
-        // Пропускаем дубликаты
-        if (links.find(l => l.path === threadPath)) continue;
-        
-        const fullUrl = baseUrl + threadPath;
-        
-        // Извлекаем ID треда
-        const idMatch = threadPath.match(/\.(\d+)\//);
-        const threadId = idMatch ? idMatch[1] : null;
-        
-        // Извлекаем название
-        const nameMatch = threadPath.match(/\/threads\/([^.]+)\./);
-        const threadName = nameMatch ? nameMatch[1].replace(/-/g, ' ') : 'Unknown';
-        
-        links.push({
-            path: threadPath,
-            url: fullUrl,
-            id: threadId,
-            name: threadName
-        });
-    }
-    
-    return links;
-}
-
-function extractSectionLinks(html, baseUrl) {
-    const links = [];
-    
-    // Ищем ссылки на разделы
-    // Формат: /forums/название.ID/
-    const sectionRegex = /href="(\/forums\/[^"]+)"/g;
-    
-    let match;
-    while ((match = sectionRegex.exec(html)) !== null) {
-        const sectionPath = match[1];
-        
-        if (links.find(l => l.path === sectionPath)) continue;
-        
-        const fullUrl = baseUrl + sectionPath;
-        
-        const idMatch = sectionPath.match(/\.(\d+)\//);
-        const sectionId = idMatch ? idMatch[1] : null;
-        
-        const nameMatch = sectionPath.match(/\/forums\/([^.]+)/);
-        const sectionName = nameMatch ? nameMatch[1].replace(/-/g, ' ') : 'Unknown';
-        
-        links.push({
-            path: sectionPath,
-            url: fullUrl,
-            id: sectionId,
-            name: sectionName
-        });
-    }
-    
-    return links;
-}
-
-// ═══════════════════════════════════════════════════════════════
-// ИЗВЛЕЧЕНИЕ ТЕКСТА
-// ═══════════════════════════════════════════════════════════════
-
-function extractText(html) {
-    // Удаляем скрипты и стили
-    let text = html
-        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-        .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '');
-    
-    // Ищем контент по селекторам
-    const selectors = [
-        /<div class="messageText[^>]*>(.*?)<\/div>/gs,
-        /<div class="message-body[^>]*>(.*?)<\/div>/gs,
-        /<div class="bbWrapper[^>]*>(.*?)<\/div>/gs,
-        /<article[^>]*>(.*?)<\/article>/gs
-    ];
-    
-    let content = '';
-    
-    for (const selector of selectors) {
-        const matches = text.matchAll(selector);
-        for (const match of matches) {
-            content += match[1] + '\n\n';
-        }
-    }
-    
-    // Если не нашли - берем body
-    if (content.length < 500) {
-        const bodyMatch = text.match(/<body[^>]*>(.*?)<\/body>/s);
-        if (bodyMatch) {
-            content = bodyMatch[1];
-        }
-    }
-    
-    // Очищаем
-    content = content
-        .replace(/<[^>]+>/g, ' ')
-        .replace(/&nbsp;/g, ' ')
-        .replace(/&quot;/g, '"')
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/\[.*?\]/g, '')
-        .replace(/https?:\/\/[^\s]+/g, '')
-        .replace(/[^\wа-яА-ЯёЁ\s.,!?:;-]/g, ' ')
+function cleanText(text) {
+    return text
         .replace(/\s+/g, ' ')
+        .replace(/[^\wа-яА-ЯёЁ\s.,!?:;()№-]/g, '')
         .trim();
-    
-    return content;
 }
-
-// ═══════════════════════════════════════════════════════════════
-// ЧАНКИНГ
-// ═══════════════════════════════════════════════════════════════
 
 function chunkText(text) {
     const chunks = [];
@@ -285,10 +155,6 @@ function chunkText(text) {
     return chunks;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// ЭМБЕДДИНГ
-// ═══════════════════════════════════════════════════════════════
-
 function createEmbedding(text) {
     const words = text.toLowerCase()
         .replace(/[^\wа-яё\s]/gi, ' ')
@@ -296,126 +162,264 @@ function createEmbedding(text) {
         .filter(w => w.length > 2);
     
     const freq = {};
-    words.forEach(w => {
-        freq[w] = (freq[w] || 0) + 1;
-    });
+    words.forEach(w => freq[w] = (freq[w] || 0) + 1);
     
     const embedding = {};
-    CONFIG.keywords.forEach(kw => {
-        embedding[kw] = freq[kw] || 0;
-    });
+    CONFIG.keywords.forEach(kw => embedding[kw] = freq[kw] || 0);
     
     return embedding;
 }
 
 function normalizeEmbedding(embedding) {
     let sum = 0;
-    for (const key in embedding) {
-        sum += embedding[key] * embedding[key];
-    }
+    for (const key in embedding) sum += embedding[key] * embedding[key];
     const norm = Math.sqrt(sum);
     
     if (norm === 0) return embedding;
     
     const normalized = {};
-    for (const key in embedding) {
-        normalized[key] = embedding[key] / norm;
-    }
+    for (const key in embedding) normalized[key] = embedding[key] / norm;
     return normalized;
 }
 
 // ═══════════════════════════════════════════════════════════════
-// ГЛАВНАЯ ФУНКЦИЯ КРАУЛЕРА
+// SELENIUM ФУНКЦИИ
 // ═══════════════════════════════════════════════════════════════
 
-async function crawlForum() {
-    log('🚀 Запуск полного краулера форума...');
-    log(`📍 Базовый URL: ${CONFIG.forumBaseUrl}`);
-    log(`📊 Максимум страниц: ${CONFIG.maxPages}`);
-    log('');
+async function createDriver() {
+    const options = new chrome.Options();
+    options.addArguments('--headless');
+    options.addArguments('--disable-gpu');
+    options.addArguments('--no-sandbox');
+    options.addArguments('--disable-dev-shm-usage');
+    options.addArguments('--window-size=1920,1080');
     
-    const database = {
-        chunks: [],
-        metadata: {
-            created: new Date().toISOString(),
-            baseUrl: CONFIG.forumBaseUrl,
-            totalPages: 0,
-            totalSections: 0,
-            totalThreads: 0,
-            totalChunks: 0,
-            keywords: CONFIG.keywords
-        }
-    };
+    const driver = await new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(options)
+        .build();
     
-    const visited = new Set();
-    const toVisit = [...CONFIG.startSections];
-    
-    let pageCount = 0;
-    let sectionCount = 0;
-    let threadCount = 0;
-    
-    // Обходим разделы
-    while (toVisit.length > 0 && pageCount < CONFIG.maxPages) {
-        const sectionPath = toVisit.shift();
-        
-        if (visited.has(sectionPath)) continue;
-        visited.add(sectionPath);
-        
-        const sectionUrl = CONFIG.forumBaseUrl + sectionPath;
-        
-        log(`\n[${ pageCount + 1}/${CONFIG.maxPages}] 📂 РАЗДЕЛ: ${sectionPath}`);
-        
+    return driver;
+}
+
+async function safeGet(driver, url, retries = 3) {
+    for (let i = 0; i < retries; i++) {
         try {
-            // Загружаем раздел
-            const html = await safeFetch(sectionUrl);
-            await delay(CONFIG.requestDelay);
-            
-            pageCount++;
-            sectionCount++;
-            
-            // Извлекаем треды
-            const threads = extractThreadLinks(html, CONFIG.forumBaseUrl);
-            log(`   Найдено тредов: ${threads.length}`);
-            
-            // Обрабатываем треды
-            let processedThreads = 0;
-            for (const thread of threads) {
-                if (processedThreads >= CONFIG.maxThreadsPerSection) {
-                    log(`   ⏭️ Достигнут лимит тредов (${CONFIG.maxThreadsPerSection})`);
-                    break;
-                }
+            await driver.get(url);
+            await delay(1000);
+            return true;
+        } catch (err) {
+            log(`⚠️ Попытка ${i + 1}/${retries} не удалась: ${err.message}`);
+            if (i === retries - 1) throw err;
+            await delay(2000);
+        }
+    }
+    return false;
+}
+
+async function extractText(driver) {
+    try {
+        // Ждем загрузки контента
+        await driver.wait(until.elementLocated(By.css('body')), 5000);
+        
+        // Извлекаем текст из основного контента
+        const selectors = [
+            '.messageText',
+            '.message-body',
+            '.bbWrapper',
+            '.message-content',
+            'article.message-body'
+        ];
+        
+        let text = '';
+        
+        for (const selector of selectors) {
+            try {
+                const elements = await driver.findElements(By.css(selector));
                 
-                if (visited.has(thread.path)) continue;
-                visited.add(thread.path);
-                
-                if (pageCount >= CONFIG.maxPages) {
-                    log(`   ⏭️ Достигнут лимит страниц (${CONFIG.maxPages})`);
-                    break;
-                }
-                
-                log(`   📄 Тред: ${thread.name}`);
-                
-                try {
-                    const threadHtml = await safeFetch(thread.url);
-                    await delay(CONFIG.requestDelay);
-                    
-                    pageCount++;
-                    threadCount++;
-                    processedThreads++;
-                    
-                    // Извлекаем текст
-                    const text = extractText(threadHtml);
-                    
-                    if (text.length < 200) {
-                        log(`      ⚠️ Мало текста (${text.length} символов)`);
-                        continue;
+                for (const el of elements) {
+                    const elText = await el.getText();
+                    if (elText.length > 50) {
+                        text += elText + '\n\n';
                     }
+                }
+                
+                if (text.length > 500) break;
+            } catch (e) {
+                // Игнорируем ошибки отдельных селекторов
+            }
+        }
+        
+        return cleanText(text);
+        
+    } catch (err) {
+        log(`⚠️ Ошибка извлечения текста: ${err.message}`);
+        return '';
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ПОИСК ССЫЛОК
+// ═══════════════════════════════════════════════════════════════
+
+async function findSectionLinks(driver) {
+    const links = [];
+    
+    try {
+        const elements = await driver.findElements(By.css('a[href*="/forums/"]'));
+        
+        for (const el of elements) {
+            try {
+                const href = await el.getAttribute('href');
+                const text = await el.getText();
+                
+                if (href && href.includes('/forums/') && text.length > 0) {
+                    links.push({
+                        url: href,
+                        title: text.trim()
+                    });
+                }
+            } catch (e) {
+                // Игнорируем
+            }
+        }
+    } catch (err) {
+        log(`⚠️ Ошибка поиска разделов: ${err.message}`);
+    }
+    
+    return links;
+}
+
+async function findThreadLinks(driver) {
+    const links = [];
+    
+    try {
+        const elements = await driver.findElements(By.css('a[href*="/threads/"]'));
+        
+        for (const el of elements) {
+            try {
+                const href = await el.getAttribute('href');
+                const text = await el.getText();
+                
+                if (href && href.includes('/threads/') && text.length > 0) {
+                    links.push({
+                        url: href,
+                        title: text.trim()
+                    });
+                }
+            } catch (e) {
+                // Игнорируем
+            }
+        }
+    } catch (err) {
+        log(`⚠️ Ошибка поиска тем: ${err.message}`);
+    }
+    
+    return links;
+}
+
+async function findPageLinks(driver, currentUrl) {
+    const links = [];
+    
+    try {
+        // Ищем пагинацию
+        const elements = await driver.findElements(By.css('.pageNav-page, a[href*="page-"]'));
+        
+        for (const el of elements) {
+            try {
+                const href = await el.getAttribute('href');
+                
+                if (href && !VISITED.pages.has(href)) {
+                    links.push(href);
+                }
+            } catch (e) {
+                // Игнорируем
+            }
+        }
+    } catch (err) {
+        log(`⚠️ Ошибка поиска страниц: ${err.message}`);
+    }
+    
+    return links;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ГЛАВНЫЕ ФУНКЦИИ ПАРСИНГА
+// ═══════════════════════════════════════════════════════════════
+
+async function parseThread(driver, threadUrl, database) {
+    if (VISITED.threads.has(threadUrl)) return;
+    VISITED.threads.add(threadUrl);
+    
+    log(`  📄 Тема: ${threadUrl}`);
+    
+    try {
+        await safeGet(driver, threadUrl);
+        await delay(CONFIG.delayBetweenPages);
+        
+        STATS.threadsProcessed++;
+        
+        // Получаем заголовок
+        let title = 'Unknown Thread';
+        try {
+            const titleEl = await driver.findElement(By.css('h1.p-title-value, .p-title'));
+            title = await titleEl.getText();
+        } catch (e) {
+            // Пробуем извлечь из URL
+            const match = threadUrl.match(/\/threads\/([^/]+)/);
+            if (match) title = match[1].replace(/-/g, ' ');
+        }
+        
+        // Парсим первую страницу
+        const text = await extractText(driver);
+        
+        if (text.length > 200) {
+            const chunks = chunkText(text);
+            
+            chunks.forEach((chunk, idx) => {
+                const embedding = createEmbedding(chunk);
+                const normalized = normalizeEmbedding(embedding);
+                
+                database.chunks.push({
+                    text: chunk,
+                    embedding: normalized,
+                    metadata: {
+                        source: threadUrl,
+                        title: title,
+                        category: 'forum',
+                        chunkIndex: idx,
+                        chunkTotal: chunks.length
+                    }
+                });
+                
+                STATS.chunksCreated++;
+            });
+            
+            log(`    ✅ ${chunks.length} чанков`);
+        } else {
+            log(`    ⚠️ Мало текста (${text.length} символов)`);
+        }
+        
+        // Ищем другие страницы темы
+        const pageLinks = await findPageLinks(driver, threadUrl);
+        const pagesToParse = pageLinks.slice(0, CONFIG.maxPagesPerThread - 1);
+        
+        for (const pageUrl of pagesToParse) {
+            if (VISITED.pages.has(pageUrl)) continue;
+            VISITED.pages.add(pageUrl);
+            
+            try {
+                await safeGet(driver, pageUrl);
+                await delay(CONFIG.delayBetweenPages);
+                
+                STATS.pagesProcessed++;
+                
+                const pageText = await extractText(driver);
+                
+                if (pageText.length > 200) {
+                    const pageChunks = chunkText(pageText);
                     
-                    // Создаем чанки
-                    const chunks = chunkText(text);
-                    
-                    // Создаем эмбеддинги
-                    chunks.forEach((chunk, idx) => {
+                    pageChunks.forEach((chunk, idx) => {
                         const embedding = createEmbedding(chunk);
                         const normalized = normalizeEmbedding(embedding);
                         
@@ -423,50 +427,169 @@ async function crawlForum() {
                             text: chunk,
                             embedding: normalized,
                             metadata: {
-                                source: thread.url,
-                                title: thread.name,
-                                threadId: thread.id,
+                                source: pageUrl,
+                                title: title,
                                 category: 'forum',
                                 chunkIndex: idx,
-                                chunkTotal: chunks.length
+                                chunkTotal: pageChunks.length
                             }
                         });
+                        
+                        STATS.chunksCreated++;
                     });
-                    
-                    log(`      ✅ Обработано: ${chunks.length} чанков`);
-                    
-                } catch (err) {
-                    log(`      ❌ Ошибка: ${err.message}`);
                 }
-            }
-            
-            // Извлекаем подразделы (первый уровень)
-            if (sectionPath.split('/').length <= 3) {  // Не уходим слишком глубоко
-                const subsections = extractSectionLinks(html, CONFIG.forumBaseUrl);
                 
-                for (const subsection of subsections) {
-                    if (!visited.has(subsection.path) && !toVisit.includes(subsection.path)) {
-                        toVisit.push(subsection.path);
-                    }
-                }
+            } catch (err) {
+                log(`    ❌ Ошибка страницы: ${err.message}`);
+                STATS.errors++;
             }
-            
-        } catch (err) {
-            log(`   ❌ Ошибка раздела: ${err.message}`);
+        }
+        
+    } catch (err) {
+        log(`  ❌ Ошибка темы: ${err.message}`);
+        STATS.errors++;
+    }
+}
+
+async function parseSection(driver, sectionUrl, database) {
+    if (VISITED.sections.has(sectionUrl)) return;
+    VISITED.sections.add(sectionUrl);
+    
+    // Проверяем игнорируемые разделы
+    for (const ignore of CONFIG.ignoreSections) {
+        if (sectionUrl.toLowerCase().includes(ignore)) {
+            log(`⏭️  Пропускаю (игнорируемый раздел): ${sectionUrl}`);
+            return;
         }
     }
     
-    database.metadata.totalPages = pageCount;
-    database.metadata.totalSections = sectionCount;
-    database.metadata.totalThreads = threadCount;
-    database.metadata.totalChunks = database.chunks.length;
+    log(`\n📂 РАЗДЕЛ: ${sectionUrl}`);
     
-    log('\n🎉 Краулинг завершен!');
-    log(`📊 Статистика:`);
-    log(`   Страниц обработано: ${pageCount}`);
-    log(`   Разделов: ${sectionCount}`);
-    log(`   Тредов: ${threadCount}`);
-    log(`   Чанков создано: ${database.chunks.length}`);
+    try {
+        await safeGet(driver, sectionUrl);
+        await delay(CONFIG.delayBetweenSections);
+        
+        STATS.sectionsProcessed++;
+        
+        // Получаем название раздела
+        let sectionName = 'Unknown Section';
+        try {
+            const nameEl = await driver.findElement(By.css('h1.p-title-value, .p-title'));
+            sectionName = await nameEl.getText();
+        } catch (e) {
+            const match = sectionUrl.match(/\/forums\/([^/]+)/);
+            if (match) sectionName = match[1].replace(/-/g, ' ');
+        }
+        
+        log(`  Название: ${sectionName}`);
+        
+        // Находим все темы в разделе
+        const threads = await findThreadLinks(driver);
+        log(`  Найдено тем: ${threads.length}`);
+        
+        // Парсим темы (с лимитом)
+        const threadsToProcess = threads.slice(0, CONFIG.maxThreadsPerSection);
+        
+        for (const thread of threadsToProcess) {
+            await parseThread(driver, thread.url, database);
+            await delay(CONFIG.delayBetweenThreads);
+            
+            // Печатаем прогресс
+            if (STATS.chunksCreated % 100 === 0) {
+                log(`\n📊 Прогресс: ${STATS.chunksCreated} чанков, ${getElapsedTime()}`);
+            }
+        }
+        
+    } catch (err) {
+        log(`❌ Ошибка раздела: ${err.message}`);
+        STATS.errors++;
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ГЛАВНАЯ ФУНКЦИЯ
+// ═══════════════════════════════════════════════════════════════
+
+async function scrapeEntireForum() {
+    log('🚀 Запуск полного парсера форума...\n');
+    log(`📍 Форум: ${CONFIG.forumUrl}`);
+    log(`⚙️  Лимиты:`);
+    log(`   - Разделов: ${CONFIG.maxSections}`);
+    log(`   - Тем на раздел: ${CONFIG.maxThreadsPerSection}`);
+    log(`   - Страниц на тему: ${CONFIG.maxPagesPerThread}`);
+    log('');
+    
+    const database = {
+        chunks: [],
+        metadata: {
+            created: new Date().toISOString(),
+            forumUrl: CONFIG.forumUrl,
+            keywords: CONFIG.keywords
+        }
+    };
+    
+    const driver = await createDriver();
+    
+    try {
+        // Загружаем главную страницу
+        log('📥 Загружаю главную страницу...');
+        await safeGet(driver, CONFIG.startUrl);
+        await delay(2000);
+        
+        // Находим все разделы
+        log('🔍 Ищу разделы форума...');
+        const sections = await findSectionLinks(driver);
+        log(`✅ Найдено разделов: ${sections.length}\n`);
+        
+        // Фильтруем уникальные
+        const uniqueSections = [];
+        const seenUrls = new Set();
+        
+        for (const section of sections) {
+            if (!seenUrls.has(section.url)) {
+                seenUrls.add(section.url);
+                uniqueSections.push(section);
+            }
+        }
+        
+        // Сортируем: приоритетные первыми
+        uniqueSections.sort((a, b) => {
+            const aPriority = CONFIG.prioritySections.some(p => a.url.includes(p));
+            const bPriority = CONFIG.prioritySections.some(p => b.url.includes(p));
+            
+            if (aPriority && !bPriority) return -1;
+            if (!aPriority && bPriority) return 1;
+            return 0;
+        });
+        
+        // Парсим разделы (с лимитом)
+        const sectionsToProcess = uniqueSections.slice(0, CONFIG.maxSections);
+        
+        log(`🎯 Буду парсить ${sectionsToProcess.length} разделов\n`);
+        
+        for (let i = 0; i < sectionsToProcess.length; i++) {
+            const section = sectionsToProcess[i];
+            
+            log(`\n[${ i + 1}/${sectionsToProcess.length}] ────────────────────────`);
+            
+            await parseSection(driver, section.url, database);
+        }
+        
+    } finally {
+        await driver.quit();
+    }
+    
+    // Финальная статистика
+    database.metadata.stats = {
+        sectionsProcessed: STATS.sectionsProcessed,
+        threadsProcessed: STATS.threadsProcessed,
+        pagesProcessed: STATS.pagesProcessed,
+        chunksCreated: STATS.chunksCreated,
+        errors: STATS.errors,
+        totalTime: getElapsedTime()
+    };
+    
+    database.metadata.totalChunks = database.chunks.length;
     
     return database;
 }
@@ -485,27 +608,27 @@ function saveDatabase(database) {
     }
     
     // Полная база
-    const fullPath = path.join(outputDir, CONFIG.output.full);
+    const fullPath = path.join(outputDir, 'ultimate-forum-database.json');
     fs.writeFileSync(fullPath, JSON.stringify(database, null, 2));
-    log(`✅ ${fullPath}`);
+    const fullSize = (fs.statSync(fullPath).size / 1024 / 1024).toFixed(2);
+    log(`✅ ${fullPath} (${fullSize} MB)`);
     
     // Компактная для браузера
-    const browserChunks = database.chunks.map(chunk => ({
-        text: chunk.text,
-        embedding: chunk.embedding,
-        metadata: chunk.metadata
-    }));
-    
     const browserDb = {
-        chunks: browserChunks,
+        chunks: database.chunks.map(c => ({
+            text: c.text,
+            embedding: c.embedding,
+            metadata: c.metadata
+        })),
         metadata: database.metadata
     };
     
-    const browserPath = path.join(outputDir, CONFIG.output.browser);
+    const browserPath = path.join(outputDir, 'forum-database-browser.json');
     fs.writeFileSync(browserPath, JSON.stringify(browserDb, null, 2));
-    log(`✅ ${browserPath}`);
+    const browserSize = (fs.statSync(browserPath).size / 1024 / 1024).toFixed(2);
+    log(`✅ ${browserPath} (${browserSize} MB)`);
     
-    log('\n✅ Все файлы сохранены!');
+    log('\n✅ Данные сохранены!');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -513,24 +636,30 @@ function saveDatabase(database) {
 // ═══════════════════════════════════════════════════════════════
 
 async function main() {
-    try {
-        console.log(`
+    console.log(`
 ╔═══════════════════════════════════════════════════════════╗
-║       FULL FORUM CRAWLER - GTA5RP                         ║
-║       Автоматический краулер всего форума                 ║
+║     ULTIMATE FORUM SCRAPER                                ║
+║     Полный анализ всего форума GTA5RP                     ║
 ╚═══════════════════════════════════════════════════════════╝
 `);
+    
+    try {
+        const database = await scrapeEntireForum();
         
-        // Создаем директорию
-        const outputDir = path.join(__dirname, 'forum-data');
-        if (!fs.existsSync(outputDir)) {
-            fs.mkdirSync(outputDir);
-        }
+        log('\n\n🎉 ПАРСИНГ ЗАВЕРШЕН!');
+        log('═══════════════════════════════════════');
+        log(`📊 СТАТИСТИКА:`);
+        log(`   Разделов обработано: ${STATS.sectionsProcessed}`);
+        log(`   Тем обработано: ${STATS.threadsProcessed}`);
+        log(`   Страниц обработано: ${STATS.pagesProcessed}`);
+        log(`   Чанков создано: ${STATS.chunksCreated}`);
+        log(`   Ошибок: ${STATS.errors}`);
+        log(`   Время работы: ${getElapsedTime()}`);
+        log('═══════════════════════════════════════\n');
         
-        const database = await crawlForum();
         saveDatabase(database);
         
-        log('\n✅ Готово! Данные можно использовать в RAG системе.');
+        log('\n✅ Готово! Используйте forum-database-browser.json в вашем сайте.');
         
     } catch (err) {
         log(`\n❌ Критическая ошибка: ${err.message}`);
@@ -543,9 +672,4 @@ if (require.main === module) {
     main();
 }
 
-module.exports = {
-    crawlForum,
-    extractText,
-    chunkText,
-    createEmbedding
-};
+module.exports = { scrapeEntireForum };
