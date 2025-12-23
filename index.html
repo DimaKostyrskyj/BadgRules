@@ -14814,6 +14814,39 @@
 
         // Кэш для загруженных правил (чтобы не парсить каждый раз)
         const rulesCache = {};
+        
+        // Сохранение кэша в localStorage
+        function saveRuleCacheToStorage() {
+            try {
+                const cacheData = {
+                    timestamp: Date.now(),
+                    cache: rulesCache
+                };
+                localStorage.setItem('rules_cache', JSON.stringify(cacheData));
+            } catch (e) {
+                console.warn('⚠️ Не удалось сохранить кэш в localStorage:', e);
+            }
+        }
+        
+        // Загрузка кэша из localStorage
+        function loadRuleCacheFromStorage() {
+            try {
+                const cached = localStorage.getItem('rules_cache');
+                if (cached) {
+                    const data = JSON.parse(cached);
+                    // Проверяем срок годности (7 дней)
+                    if (Date.now() - data.timestamp < 7 * 24 * 60 * 60 * 1000) {
+                        Object.assign(rulesCache, data.cache);
+                        console.log('✅ Кэш правил загружен из localStorage');
+                    }
+                }
+            } catch (e) {
+                console.warn('⚠️ Ошибка загрузки кэша:', e);
+            }
+        }
+        
+        // Загружаем кэш при старте
+        loadRuleCacheFromStorage();
 
         // ═══════════════════════════════════════════════════════════════
         // 🌐 ФУНКЦИЯ ПАРСИНГА ПРАВИЛ С ФОРУМА
