@@ -14913,6 +14913,207 @@
             clearExpiredCache();
         });
 
+        // ═══════════════════════════════════════════════════════════════
+        // 🧠 RAG СИСТЕМА - Retrieval-Augmented Generation
+        // ═══════════════════════════════════════════════════════════════
+        
+        // Глобальная векторная база данных
+        const RAG_SYSTEM = {
+            enabled: false,
+            chunks: [],
+            indexed: false,
+            lastUpdate: null,
+            
+            // Ключевые термины для эмбеддинга
+            keywords: [
+                'dm', 'rdm', 'vdm', 'pg', 'mg', 'nlr', 'rp', 'rk', 'tk', 'ck',
+                'правил', 'запрещен', 'разрешен', 'можно', 'нельзя',
+                'зона', 'зелен', 'больниц', 'полиц', 'гос', 'ems', 'sheriff',
+                'граб', 'убийств', 'похищен', 'маск', 'гетто', 'банд', 'фракц',
+                'организац', 'сервер', 'игрок', 'наказан', 'варн', 'бан', 'кик',
+                'такси', 'заправк', 'магазин', 'оружи', 'транспорт', 'дом'
+            ]
+        };
+        
+        // 1️⃣ Простой эмбеддинг (TF-IDF)
+        function createEmbedding(text) {
+            const words = text.toLowerCase()
+                .replace(/[^\wа-яё\s]/gi, ' ')
+                .split(/\s+/)
+                .filter(w => w.length > 2);
+            
+            const freq = {};
+            words.forEach(w => freq[w] = (freq[w] || 0) + 1);
+            
+            const embedding = {};
+            RAG_SYSTEM.keywords.forEach(kw => {
+                embedding[kw] = freq[kw] || 0;
+            });
+            
+            return embedding;
+        }
+        
+        // 2️⃣ Косинусное сходство
+        function similarity(emb1, emb2) {
+            let dot = 0, norm1 = 0, norm2 = 0;
+            
+            RAG_SYSTEM.keywords.forEach(kw => {
+                const v1 = emb1[kw] || 0;
+                const v2 = emb2[kw] || 0;
+                dot += v1 * v2;
+                norm1 += v1 * v1;
+                norm2 += v2 * v2;
+            });
+            
+            if (norm1 === 0 || norm2 === 0) return 0;
+            return dot / (Math.sqrt(norm1) * Math.sqrt(norm2));
+        }
+        
+        // 3️⃣ Разбиение на чанки
+        function chunkText(text) {
+            const chunks = [];
+            const size = 600;
+            const overlap = 100;
+            
+            for (let i = 0; i < text.length; i += (size - overlap)) {
+                const chunk = text.substring(i, i + size).trim();
+                if (chunk.length > 100) chunks.push(chunk);
+            }
+            
+            return chunks;
+        }
+        
+        // 4️⃣ Индексация страниц
+        async function indexPages() {
+            console.log('🧠 RAG: Начинаю индексацию...');
+            
+            const pages = [
+                {
+                    url: 'https://forum.gta5rp.com/threads/pravila-proekta.652405/',
+                    title: 'Правила проекта'
+                },
+                {
+                    url: 'https://forum.gta5rp.com/threads/zeljonye-zony.652406/',
+                    title: 'Зеленые зоны'
+                },
+                {
+                    url: 'https://forum.gta5rp.com/threads/nps-i-nekotorye-momenty.652408/',
+                    title: 'NPC и моменты'
+                }
+            ];
+            
+            RAG_SYSTEM.chunks = [];
+            
+            for (const page of pages) {
+                try {
+                    console.log(`📥 RAG: Загружаю ${page.title}...`);
+                    const content = await fetchRulesFromForum(page.url);
+                    
+                    if (!content || content.length < 100) continue;
+                    
+                    const chunks = chunkText(content);
+                    
+                    chunks.forEach((chunk, idx) => {
+                        RAG_SYSTEM.chunks.push({
+                            text: chunk,
+                            embedding: createEmbedding(chunk),
+                            url: page.url,
+                            title: page.title,
+                            index: idx
+                        });
+                    });
+                    
+                    console.log(`✅ RAG: ${page.title} → ${chunks.length} чанков`);
+                } catch (e) {
+                    console.warn(`⚠️ RAG: Ошибка индексации ${page.title}`);
+                }
+            }
+            
+            RAG_SYSTEM.indexed = true;
+            RAG_SYSTEM.lastUpdate = Date.now();
+            
+            // Сохраняем в localStorage
+            try {
+                localStorage.setItem('rag_chunks', JSON.stringify(RAG_SYSTEM.chunks));
+                localStorage.setItem('rag_meta', JSON.stringify({
+                    indexed: true,
+                    lastUpdate: RAG_SYSTEM.lastUpdate,
+                    count: RAG_SYSTEM.chunks.length
+                }));
+            } catch (e) {
+                console.warn('⚠️ RAG: Не удалось сохранить');
+            }
+            
+            console.log(`🎉 RAG: Готово! ${RAG_SYSTEM.chunks.length} чанков в базе`);
+        }
+        
+        // 5️⃣ Загрузка из кэша
+        function loadRAG() {
+            try {
+                const chunks = localStorage.getItem('rag_chunks');
+                const meta = localStorage.getItem('rag_meta');
+                
+                if (chunks && meta) {
+                    RAG_SYSTEM.chunks = JSON.parse(chunks);
+                    const m = JSON.parse(meta);
+                    RAG_SYSTEM.indexed = m.indexed;
+                    RAG_SYSTEM.lastUpdate = m.lastUpdate;
+                    
+                    console.log(`✅ RAG: Загружено ${RAG_SYSTEM.chunks.length} чанков из кэша`);
+                    return true;
+                }
+            } catch (e) {
+                console.warn('⚠️ RAG: Ошибка загрузки кэша');
+            }
+            return false;
+        }
+        
+        // 6️⃣ Векторный поиск
+        function searchRAG(query, topK = 5) {
+            if (!RAG_SYSTEM.indexed || RAG_SYSTEM.chunks.length === 0) {
+                console.warn('⚠️ RAG: База не проиндексирована');
+                return [];
+            }
+            
+            const queryEmb = createEmbedding(query);
+            
+            const results = RAG_SYSTEM.chunks.map(chunk => ({
+                ...chunk,
+                score: similarity(queryEmb, chunk.embedding)
+            }));
+            
+            results.sort((a, b) => b.score - a.score);
+            
+            const top = results.slice(0, topK).filter(r => r.score > 0.15);
+            
+            console.log(`🔍 RAG: Найдено ${top.length} релевантных чанков`);
+            top.forEach((r, i) => {
+                console.log(`  ${i+1}. ${r.title} (${(r.score * 100).toFixed(1)}%)`);
+            });
+            
+            return top;
+        }
+        
+        // 7️⃣ Инициализация RAG (фоновая)
+        async function initRAG() {
+            console.log('🚀 RAG: Инициализация...');
+            
+            // Пробуем загрузить из кэша
+            if (loadRAG()) {
+                RAG_SYSTEM.enabled = true;
+                return;
+            }
+            
+            // Если кэша нет - индексируем
+            try {
+                await indexPages();
+                RAG_SYSTEM.enabled = true;
+            } catch (e) {
+                console.error('❌ RAG: Ошибка инициализации', e);
+                RAG_SYSTEM.enabled = false;
+            }
+        }
+
         async function fetchRulesFromForum(url) {
             // 1. Проверяем память (самый быстрый)
             if (rulesCache[url]) {
@@ -16262,30 +16463,61 @@
             }
             
             // ═══════════════════════════════════════════════════════════
-            // 🌐 ИЩЕМ В АВТО-СКРАПЕРЕ (ПРИОРИТЕТ!)
+            // 🧠 RAG ПОИСК (ПРИОРИТЕТ!)
             // ═══════════════════════════════════════════════════════════
-            
-            console.log('🔍 Ищу в базе проиндексированных страниц...');
-            setTypingStatus('Проверяю базу правил...');
-            const forumResults = searchInForumDatabase(question, serverName, userServer);
             
             let forumRulesText = '';
             let loadedTopicsInfo = [];
             
-            // Если нашли в базе - используем
-            if (forumResults.length > 0) {
-                console.log(`✅ Использую страницы из базы (${forumResults.length} шт.)`);
-                setTypingStatus('Загружаю правила...');
+            // Если RAG включена - используем её
+            if (RAG_SYSTEM.enabled && RAG_SYSTEM.indexed) {
+                console.log('🧠 Использую RAG систему...');
+                setTypingStatus('Поиск в векторной базе...');
                 
-                for (const page of forumResults) {
-                    console.log(`📥 Загружаю: ${page.title.substring(0, 50)}...`);
+                const ragResults = searchRAG(question, 5);
+                
+                if (ragResults.length > 0) {
+                    console.log(`✅ RAG нашла ${ragResults.length} релевантных чанков`);
                     
-                    const rules = await fetchRulesFromForum(page.url);
+                    ragResults.forEach((chunk, i) => {
+                        forumRulesText += `\n\n=== ИСТОЧНИК ${i+1}: ${chunk.title.toUpperCase()} ===\n`;
+                        forumRulesText += `URL: ${chunk.url}\n`;
+                        forumRulesText += `Релевантность: ${(chunk.score * 100).toFixed(1)}%\n`;
+                        forumRulesText += `${chunk.text}\n`;
+                        
+                        if (!loadedTopicsInfo.includes(chunk.title)) {
+                            loadedTopicsInfo.push(chunk.title);
+                        }
+                    });
                     
-                    if (rules) {
-                        forumRulesText += `\n\n=== ${page.title.toUpperCase()} ===\n${rules}\n`;
-                        loadedTopicsInfo.push(page.title);
-                        console.log(`✅ Загружено: (${rules.length} символов)`);
+                    console.log(`✅ Собрано ${forumRulesText.length} символов из RAG`);
+                }
+            }
+            
+            // ═══════════════════════════════════════════════════════════
+            // 🌐 FALLBACK: Обычный поиск если RAG не дала результатов
+            // ═══════════════════════════════════════════════════════════
+            
+            if (!forumRulesText || forumRulesText.length < 500) {
+                console.log('🔍 RAG дала мало результатов, использую обычный поиск...');
+                setTypingStatus('Проверяю базу правил...');
+                const forumResults = searchInForumDatabase(question, serverName, userServer);
+                
+                // Если нашли в базе - используем
+                if (forumResults.length > 0) {
+                    console.log(`✅ Использую страницы из базы (${forumResults.length} шт.)`);
+                    setTypingStatus('Загружаю правила...');
+                    
+                    for (const page of forumResults) {
+                        console.log(`📥 Загружаю: ${page.title.substring(0, 50)}...`);
+                        
+                        const rules = await fetchRulesFromForum(page.url);
+                        
+                        if (rules) {
+                            forumRulesText += `\n\n=== ${page.title.toUpperCase()} ===\n${rules}\n`;
+                            loadedTopicsInfo.push(page.title);
+                            console.log(`✅ Загружено: (${rules.length} символов)`);
+                        }
                     }
                 }
             }
@@ -20555,6 +20787,18 @@ window.addEventListener('load', function() {
             }
         }
     }, 200);
+    
+    // ═══════════════════════════════════════════════════════════
+    // 🧠 ИНИЦИАЛИЗАЦИЯ RAG СИСТЕМЫ (фоновая, не блокирует сайт)
+    // ═══════════════════════════════════════════════════════════
+    setTimeout(() => {
+        console.log('🚀 Запуск фоновой инициализации RAG...');
+        initRAG().then(() => {
+            console.log('✅ RAG система готова!');
+        }).catch(err => {
+            console.warn('⚠️ RAG не инициализирована:', err);
+        });
+    }, 3000);  // Через 3 секунды после загрузки
 });
 
 
