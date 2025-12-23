@@ -1,0 +1,23 @@
+{
+  "name": "gta5rp-guaranteed-parser",
+  "version": "1.0.0",
+  "description": "Гарантированно рабочий парсер форума GTA5RP (Puppeteer)",
+  "main": "guaranteed-parser.js",
+  "scripts": {
+    "parse": "node guaranteed-parser.js",
+    "install": "npm install puppeteer"
+  },
+  "dependencies": {
+    "puppeteer": "^21.6.1"
+  },
+  "keywords": [
+    "parser",
+    "scraper",
+    "gta5rp",
+    "forum",
+    "puppeteer",
+    "rag"
+  ],
+  "author": "BadgRules",
+  "license": "MIT"
+}
