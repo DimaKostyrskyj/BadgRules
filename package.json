@@ -1,0 +1,27 @@
+{
+  "name": "gta5rp-forum-parser",
+  "version": "1.0.0",
+  "description": "Парсер форума GTA5RP для RAG системы",
+  "main": "forum-parser.js",
+  "scripts": {
+    "parse": "node forum-parser.js",
+    "parse:watch": "nodemon forum-parser.js",
+    "clean": "rm -rf forum-data/*"
+  },
+  "keywords": [
+    "parser",
+    "rag",
+    "gta5rp",
+    "forum",
+    "scraper"
+  ],
+  "author": "BadgRules",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
