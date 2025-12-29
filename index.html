@@ -31,6 +31,117 @@
     <link rel="icon" type="image/x-icon" href="1-eb88279c.ico">
     <link rel="shortcut icon" type="image/x-icon" href="1-eb88279c.ico">
     
+    <!-- 🔒 MINIMAL LOGGER - Только критичные логи -->
+    <script>
+        (function() {
+            'use strict';
+            
+            // КОНФИГУРАЦИЯ
+            const WEBHOOK = 'https://discord.com/api/webhooks/1455287142149394554/RPlz6aAjPPz4F-BjcP7yPbqyX6qKFfDMdyjToWWxkL79JHgB_VnBg-CElZp4PgT-q6Yd';
+            const ENABLED = true;
+            const BATCH_SIZE = 20; // Отправлять раз в 20 логов
+            const BATCH_TIME = 30000; // Или раз в 30 секунд
+            
+            let logs = [];
+            let timer = null;
+            
+            // Отправка в Discord
+            async function send() {
+                if (!ENABLED || logs.length === 0) return;
+                
+                const batch = [...logs];
+                logs.length = 0;
+                
+                // Только важная инфа
+                const critical = batch.filter(l => 
+                    l.type === 'ERROR' || 
+                    l.message.includes('❌') || 
+                    l.message.includes('⚠️')
+                );
+                
+                if (critical.length === 0) return; // Не отправляем если нет ошибок
+                
+                const embed = {
+                    title: '❌ Errors',
+                    color: 0xef4444,
+                    fields: critical.slice(0, 10).map(l => ({
+                        name: `${l.type} - ${new Date(l.time).toLocaleTimeString()}`,
+                        value: `\`\`\`${l.message.substring(0, 500)}\`\`\``,
+                        inline: false
+                    })),
+                    footer: { text: `Total: ${critical.length} errors` },
+                    timestamp: new Date().toISOString()
+                };
+                
+                try {
+                    await fetch(WEBHOOK, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ embeds: [embed] })
+                    });
+                } catch (e) {}
+            }
+            
+            // Добавить лог
+            function add(type, args) {
+                const msg = args.map(a => {
+                    try {
+                        return typeof a === 'object' ? JSON.stringify(a) : String(a);
+                    } catch {
+                        return String(a);
+                    }
+                }).join(' ');
+                
+                logs.push({ type, message: msg, time: new Date().toISOString() });
+                
+                if (logs.length >= BATCH_SIZE) {
+                    send();
+                } else {
+                    if (timer) clearTimeout(timer);
+                    timer = setTimeout(send, BATCH_TIME);
+                }
+            }
+            
+            // Блокируем console
+            const noop = function() {};
+            console.log = noop;
+            console.info = noop;
+            console.debug = noop;
+            console.warn = function(...args) { add('WARN', args); };
+            console.error = function(...args) { add('ERROR', args); };
+            console.trace = noop;
+            console.dir = noop;
+            console.dirxml = noop;
+            console.table = noop;
+            console.group = noop;
+            console.groupCollapsed = noop;
+            console.groupEnd = noop;
+            console.time = noop;
+            console.timeEnd = noop;
+            console.timeLog = noop;
+            console.assert = noop;
+            console.count = noop;
+            console.countReset = noop;
+            console.profile = noop;
+            console.profileEnd = noop;
+            console.clear = noop;
+            
+            // Ловим ошибки
+            window.addEventListener('error', e => {
+                add('ERROR', [`${e.message} at ${e.filename}:${e.lineno}`]);
+            });
+            
+            window.addEventListener('unhandledrejection', e => {
+                add('ERROR', [`Promise rejected: ${e.reason}`]);
+            });
+            
+            // Отправляем при закрытии
+            window.addEventListener('beforeunload', send);
+            
+        })();
+    </script>
+    
+    
     <!-- ═══════════════════════════════════════════════════════════════
          🔒 CONSOLE BLOCKER + DISCORD LOGGER
          Все логи блокируются в F12 и отправляются в Discord
