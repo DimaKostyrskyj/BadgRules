@@ -30,6 +30,198 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="1-eb88279c.ico">
     <link rel="shortcut icon" type="image/x-icon" href="1-eb88279c.ico">
+    
+    <!-- ═══════════════════════════════════════════════════════════════
+         🔒 CONSOLE BLOCKER + DISCORD LOGGER
+         Все логи блокируются в F12 и отправляются в Discord
+         ═══════════════════════════════════════════════════════════════ -->
+    <script>
+        (function() {
+            'use strict';
+            
+            // ════════════════════════════════════════════════════════════
+            // КОНФИГУРАЦИЯ - ВСТАВЬТЕ ВАШ DISCORD WEBHOOK URL
+            // ════════════════════════════════════════════════════════════
+            const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN';
+            const SEND_LOGS_TO_DISCORD = true; // true = отправлять в Discord, false = только блокировать
+            const LOG_BUFFER_SIZE = 10; // Отправлять каждые N логов
+            const LOG_BUFFER_TIME = 5000; // Или каждые 5 секунд
+            
+            // ════════════════════════════════════════════════════════════
+            // СИСТЕМА ЛОГИРОВАНИЯ В DISCORD
+            // ════════════════════════════════════════════════════════════
+            
+            const logBuffer = [];
+            let bufferTimer = null;
+            
+            // Получить информацию о браузере и устройстве
+            function getClientInfo() {
+                return {
+                    userAgent: navigator.userAgent,
+                    language: navigator.language,
+                    platform: navigator.platform,
+                    screen: `${screen.width}x${screen.height}`,
+                    url: window.location.href,
+                    timestamp: new Date().toISOString()
+                };
+            }
+            
+            // Отправить логи в Discord
+            async function sendLogsToDiscord() {
+                if (!SEND_LOGS_TO_DISCORD || logBuffer.length === 0) return;
+                
+                const logs = [...logBuffer];
+                logBuffer.length = 0; // Очищаем буфер
+                
+                const clientInfo = getClientInfo();
+                
+                // Формируем embed для Discord
+                const embed = {
+                    title: '📋 Browser Logs',
+                    color: 0x3b82f6,
+                    fields: [
+                        {
+                            name: '🌐 Client Info',
+                            value: `\`\`\`\nURL: ${clientInfo.url}\nBrowser: ${clientInfo.userAgent.substring(0, 100)}\nScreen: ${clientInfo.screen}\nTime: ${clientInfo.timestamp}\`\`\``,
+                            inline: false
+                        }
+                    ],
+                    footer: {
+                        text: 'BadgRules Logger'
+                    },
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Добавляем логи (максимум 25 полей в embed)
+                const maxLogs = Math.min(logs.length, 20);
+                for (let i = 0; i < maxLogs; i++) {
+                    const log = logs[i];
+                    const icon = log.type === 'ERROR' ? '❌' : 
+                                log.type === 'WARN' ? '⚠️' : 
+                                log.type === 'INFO' ? 'ℹ️' : '📝';
+                    
+                    embed.fields.push({
+                        name: `${icon} ${log.type} - ${new Date(log.timestamp).toLocaleTimeString()}`,
+                        value: `\`\`\`${log.message.substring(0, 1000)}\`\`\``,
+                        inline: false
+                    });
+                }
+                
+                if (logs.length > maxLogs) {
+                    embed.fields.push({
+                        name: '📊 Info',
+                        value: `Показано ${maxLogs} из ${logs.length} логов`,
+                        inline: false
+                    });
+                }
+                
+                try {
+                    await fetch(DISCORD_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: 'BadgRules Logger',
+                            embeds: [embed]
+                        })
+                    });
+                } catch (error) {
+                    // Тихо игнорируем ошибки отправки
+                }
+            }
+            
+            // Добавить лог в буфер
+            function addToBuffer(type, args) {
+                const message = args.map(arg => {
+                    if (typeof arg === 'object') {
+                        try {
+                            return JSON.stringify(arg, null, 2);
+                        } catch (e) {
+                            return String(arg);
+                        }
+                    }
+                    return String(arg);
+                }).join(' ');
+                
+                logBuffer.push({
+                    type,
+                    message,
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Отправляем если буфер заполнен
+                if (logBuffer.length >= LOG_BUFFER_SIZE) {
+                    sendLogsToDiscord();
+                } else {
+                    // Или устанавливаем таймер
+                    if (bufferTimer) clearTimeout(bufferTimer);
+                    bufferTimer = setTimeout(sendLogsToDiscord, LOG_BUFFER_TIME);
+                }
+            }
+            
+            // ════════════════════════════════════════════════════════════
+            // БЛОКИРОВКА CONSOLE
+            // ════════════════════════════════════════════════════════════
+            
+            const noOp = function() {};
+            
+            // Перехватываем и блокируем все методы console
+            const methods = ['log', 'error', 'warn', 'info', 'debug', 'trace', 
+                           'dir', 'dirxml', 'table', 'group', 'groupCollapsed', 
+                           'groupEnd', 'time', 'timeEnd', 'timeLog', 'assert', 
+                           'count', 'countReset', 'profile', 'profileEnd', 'clear'];
+            
+            methods.forEach(method => {
+                const original = console[method];
+                console[method] = function(...args) {
+                    // Отправляем в Discord, но НЕ показываем в консоли
+                    if (method === 'log') addToBuffer('LOG', args);
+                    else if (method === 'error') addToBuffer('ERROR', args);
+                    else if (method === 'warn') addToBuffer('WARN', args);
+                    else if (method === 'info') addToBuffer('INFO', args);
+                    // Остальные методы просто игнорируем
+                };
+            });
+            
+            // ════════════════════════════════════════════════════════════
+            // ПЕРЕХВАТ ОШИБОК
+            // ════════════════════════════════════════════════════════════
+            
+            // Глобальные ошибки JavaScript
+            window.addEventListener('error', function(event) {
+                addToBuffer('ERROR', [
+                    `Uncaught Error: ${event.message}`,
+                    `File: ${event.filename}:${event.lineno}:${event.colno}`,
+                    `Stack: ${event.error ? event.error.stack : 'N/A'}`
+                ]);
+            });
+            
+            // Необработанные Promise rejections
+            window.addEventListener('unhandledrejection', function(event) {
+                addToBuffer('ERROR', [
+                    `Unhandled Promise Rejection: ${event.reason}`,
+                    `Promise: ${event.promise}`
+                ]);
+            });
+            
+            // Отправляем оставшиеся логи при закрытии страницы
+            window.addEventListener('beforeunload', function() {
+                if (logBuffer.length > 0) {
+                    sendLogsToDiscord();
+                }
+            });
+            
+            // ════════════════════════════════════════════════════════════
+            // ИНФОРМАЦИЯ ПРИ ЗАГРУЗКЕ
+            // ════════════════════════════════════════════════════════════
+            
+            // Отправляем информацию о загрузке страницы
+            addToBuffer('INFO', ['🚀 BadgRules загружен']);
+            
+        })();
+    </script>
+    
     <style>
         /* ═══════════════════════════════════════════════════════════════
            🛡️ LOADING PROTECTION - Защита от черного экрана
@@ -16496,110 +16688,91 @@
             }
             
             // ═══════════════════════════════════════════════════════════
-            // 🌐 НОВЫЙ МЕТОД: ПОИСК НА ФОРУМЕ В РЕАЛЬНОМ ВРЕМЕНИ
+            // 🌐 МЕТОД 1: BACKEND - ПОИСК НА ФОРУМЕ В РЕАЛЬНОМ ВРЕМЕНИ
             // ═══════════════════════════════════════════════════════════
             
-            let forumRulesText = '';
-            let loadedTopicsInfo = [];
-            
-            // Пробуем использовать backend для поиска на форуме
-            const BACKEND_URL = 'http://localhost:3000'; // Измени на свой URL если нужно
+            const BACKEND_URL = 'http://localhost:3000';
             
             try {
                 console.log('🔍 Ищу на форуме в реальном времени через backend...');
-                setTypingStatus('Ищу на форуме GTA5RP в реальном времени...');
+                setTypingStatus('Ищу информацию на forum.gta5rp.com...');
+                
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 сек таймаут
                 
                 const backendResponse = await fetch(`${BACKEND_URL}/api/ask`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ question })
+                    body: JSON.stringify({ question }),
+                    signal: controller.signal
                 });
+                
+                clearTimeout(timeoutId);
                 
                 if (backendResponse.ok) {
                     const backendData = await backendResponse.json();
                     
                     if (backendData.answer && !backendData.error) {
-                        console.log('✅ Backend нашел информацию на форуме!');
+                        console.log('✅ Backend вернул ответ с форума!');
                         
                         // Backend уже дал готовый ответ от AI на основе форума
-                        // Возвращаем его сразу
                         return {
                             text: backendData.answer,
                             wasParsed: true,
                             sources: backendData.sources || []
                         };
+                    } else if (backendData.error) {
+                        console.warn('⚠️ Backend вернул ошибку:', backendData.error);
                     }
+                } else {
+                    console.warn('⚠️ Backend ответил с кодом:', backendResponse.status);
                 }
             } catch (backendError) {
-                console.log('ℹ️ Backend недоступен, использую локальные методы:', backendError.message);
-            }
-            
-            // ═══════════════════════════════════════════════════════════
-            // 🧠 FALLBACK 1: RAG ПОИСК
-            // ═══════════════════════════════════════════════════════════
-            
-            // Если RAG включена - используем её
-            if (RAG_SYSTEM.enabled && RAG_SYSTEM.indexed) {
-                console.log('🧠 Использую RAG систему...');
-                setTypingStatus('Поиск в векторной базе...');
-                
-                const ragResults = searchRAG(question, 5);
-                
-                if (ragResults.length > 0) {
-                    console.log(`✅ RAG нашла ${ragResults.length} релевантных чанков`);
-                    
-                    ragResults.forEach((chunk, i) => {
-                        forumRulesText += `\n\n=== ИСТОЧНИК ${i+1}: ${chunk.title.toUpperCase()} ===\n`;
-                        forumRulesText += `URL: ${chunk.url}\n`;
-                        forumRulesText += `Релевантность: ${(chunk.score * 100).toFixed(1)}%\n`;
-                        forumRulesText += `${chunk.text}\n`;
-                        
-                        if (!loadedTopicsInfo.includes(chunk.title)) {
-                            loadedTopicsInfo.push(chunk.title);
-                        }
-                    });
-                    
-                    console.log(`✅ Собрано ${forumRulesText.length} символов из RAG`);
+                if (backendError.name === 'AbortError') {
+                    console.log('⏱️ Backend не ответил за 30 секунд');
+                } else {
+                    console.log('❌ Backend недоступен:', backendError.message);
                 }
             }
             
             // ═══════════════════════════════════════════════════════════
-            // 🌐 FALLBACK: Обычный поиск если RAG не дала результатов
+            // 🌐 МЕТОД 2: ЛОКАЛЬНАЯ БАЗА ФОРУМА
             // ═══════════════════════════════════════════════════════════
             
-            if (!forumRulesText || forumRulesText.length < 500) {
-                console.log('🔍 RAG дала мало результатов, использую обычный поиск...');
-                setTypingStatus('Проверяю базу правил...');
-                const forumResults = searchInForumDatabase(question, serverName, userServer);
+            let forumRulesText = '';
+            let loadedTopicsInfo = [];
+            
+            console.log('🔍 Backend не сработал, использую локальную базу...');
+            setTypingStatus('Проверяю локальную базу правил...');
+            
+            const forumResults = searchInForumDatabase(question, serverName, userServer);
+            
+            if (forumResults.length > 0) {
+                console.log(`✅ Использую страницы из локальной базы (${forumResults.length} шт.)`);
+                setTypingStatus('Загружаю правила из базы...');
                 
-                // Если нашли в базе - используем
-                if (forumResults.length > 0) {
-                    console.log(`✅ Использую страницы из базы (${forumResults.length} шт.)`);
-                    setTypingStatus('Загружаю правила...');
+                for (const page of forumResults) {
+                    console.log(`📥 Загружаю: ${page.title.substring(0, 50)}...`);
                     
-                    for (const page of forumResults) {
-                        console.log(`📥 Загружаю: ${page.title.substring(0, 50)}...`);
-                        
-                        const rules = await fetchRulesFromForum(page.url);
-                        
-                        if (rules) {
-                            forumRulesText += `\n\n=== ${page.title.toUpperCase()} ===\n${rules}\n`;
-                            loadedTopicsInfo.push(page.title);
-                            console.log(`✅ Загружено: (${rules.length} символов)`);
-                        }
+                    const rules = await fetchRulesFromForum(page.url);
+                    
+                    if (rules) {
+                        forumRulesText += `\n\n=== ${page.title.toUpperCase()} ===\n${rules}\n`;
+                        loadedTopicsInfo.push(page.title);
+                        console.log(`✅ Загружено: (${rules.length} символов)`);
                     }
                 }
             }
             
             // ═══════════════════════════════════════════════════════════
-            // 📄 FALLBACK: TXT ФАЙЛ
+            // 📄 МЕТОД 3: TXT ФАЙЛЫ
             // ═══════════════════════════════════════════════════════════
             
             if (!forumRulesText) {
-                console.log('📄 База не помогла, использую TXT...');
-                setTypingStatus('Загружаю дополнительные правила...');
+                console.log('📄 Локальная база пуста, использую TXT файлы...');
+                setTypingStatus('Загружаю правила из TXT...');
                 const relevantLinks = selectRelevantLinks(question, serverName);
                 
                 for (const link of relevantLinks) {
@@ -16616,20 +16789,25 @@
                 }
             }
             
-            // Если совсем ничего - базовый контекст
+            // ═══════════════════════════════════════════════════════════
+            // ⚠️ БАЗОВЫЙ КОНТЕКСТ (последний резерв)
+            // ═══════════════════════════════════════════════════════════
+            
             if (!forumRulesText) {
-                console.warn('⚠️ Использую базовый контекст');
+                console.warn('⚠️ Все методы не дали результатов, использую базовый контекст');
                 forumRulesText = `
-БАЗОВЫЙ КОНТЕКСТ (правила не загружены):
+БАЗОВЫЙ КОНТЕКСТ (правила не загружены из форума):
 - Зеленая зона (Government, Police, EMS, News) - ПОЛНОСТЬЮ ЗАПРЕЩЕНЫ грабежи и убийства
 - Такси, заправки, магазины - НЕ ЗЕЛЕНАЯ ЗОНА (можно грабить с маской)
 - Гетто - разрешен криминал с RP причиной
 - Маска ОБЯЗАТЕЛЬНА для грабежей
 - DM = убийство без RP причины (запрещено)
 - VDM = убийство машиной (запрещено)
+
+⚠️ ВНИМАНИЕ: Это базовая информация. Для точных правил запусти backend сервер.
 `;
             } else {
-                console.log('✅ Правила загружены!');
+                console.log('✅ Правила загружены из локальных источников');
             }
             
             // Информация о сервере для промпта
