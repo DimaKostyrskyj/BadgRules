@@ -11408,6 +11408,165 @@
             border-color: #ef4444;
         }
 
+        /* Zoom Controls Group */
+        .zoom-controls-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(10, 10, 10, 0.6);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            border-radius: 8px;
+            padding: 0.4rem 0.75rem;
+        }
+
+        .zoom-level-display {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            min-width: 55px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .toolbar-btn.zoom-btn {
+            padding: 0.5rem;
+            background: rgba(96, 165, 250, 0.15);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            min-width: auto;
+        }
+
+        .toolbar-btn.zoom-btn:hover {
+            background: rgba(96, 165, 250, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Department Box */
+        .org-department {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.08), rgba(59, 130, 246, 0.05));
+            border: 2px dashed rgba(96, 165, 250, 0.4);
+            border-radius: 16px;
+            padding: 1rem;
+            min-width: 400px;
+            min-height: 300px;
+            z-index: 100005;
+            cursor: move;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .org-department:hover {
+            border-color: rgba(96, 165, 250, 0.6);
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.12), rgba(59, 130, 246, 0.08));
+        }
+
+        .org-department.resizing {
+            border-style: solid;
+            border-color: var(--accent-primary);
+        }
+
+        .department-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .department-title-input {
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Manrope', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+        }
+
+        .department-title-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+        }
+
+        .department-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .department-delete {
+            width: 28px;
+            height: 28px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #ef4444;
+            transition: all 0.2s ease;
+        }
+
+        .department-delete:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: #ef4444;
+            transform: scale(1.1);
+        }
+
+        .department-resize-handle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(96, 165, 250, 0.4);
+            border: 2px solid var(--accent-primary);
+            border-radius: 4px;
+            cursor: nwse-resize;
+            transition: all 0.2s ease;
+        }
+
+        .department-resize-handle:hover {
+            background: var(--accent-primary);
+            transform: scale(1.2);
+        }
+
+        .department-resize-handle.bottom-right {
+            bottom: -10px;
+            right: -10px;
+        }
+
+        .department-color-picker {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .color-option {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .color-option:hover {
+            transform: scale(1.2);
+            border-color: white;
+        }
+
+        .color-option.active {
+            border-color: white;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+
         /* Workspace */
         .org-chart-workspace {
             position: absolute;
@@ -11416,11 +11575,31 @@
             right: 0;
             bottom: 0;
             overflow: hidden;
-            background-image: 
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(96, 165, 250, 0.06) 0%, transparent 50%),
                 linear-gradient(rgba(96, 165, 250, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(96, 165, 250, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-size: 
+                100% 100%,
+                100% 100%,
+                50px 50px,
+                50px 50px;
+            background-position: 0 0, 0 0, 0 0, 0 0;
             z-index: 100001;
+            transition: background-size 0.3s ease;
+        }
+
+        .org-chart-workspace::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(rgba(96, 165, 250, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(96, 165, 250, 0.03) 1px, transparent 1px);
+            background-size: 10px 10px;
+            pointer-events: none;
+            opacity: 0.5;
         }
 
         /* SVG for connections */
@@ -11445,35 +11624,79 @@
         .org-chart-card {
             position: absolute;
             width: 280px;
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(20, 20, 20, 0.9));
-            border: 2px solid rgba(96, 165, 250, 0.3);
-            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.98), rgba(20, 20, 20, 0.95));
+            border: 2px solid rgba(96, 165, 250, 0.4);
+            border-radius: 14px;
             padding: 1.25rem;
             cursor: move;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             user-select: none;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(96, 165, 250, 0.1);
             z-index: 100012;
+            backdrop-filter: blur(10px);
+        }
+
+        .org-chart-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(59, 130, 246, 0.1));
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .org-chart-card:hover::before {
+            opacity: 1;
         }
 
         .org-chart-card:hover {
-            border-color: rgba(96, 165, 250, 0.6);
+            border-color: rgba(96, 165, 250, 0.8);
             box-shadow: 
-                0 8px 30px rgba(96, 165, 250, 0.3),
-                0 0 40px rgba(96, 165, 250, 0.1);
-            transform: translateY(-4px);
+                0 12px 40px rgba(96, 165, 250, 0.25),
+                0 0 60px rgba(96, 165, 250, 0.15),
+                0 0 0 1px rgba(96, 165, 250, 0.3);
+            transform: translateY(-6px) scale(1.02);
         }
 
         .org-chart-card.dragging {
-            opacity: 0.7;
+            opacity: 0.8;
             cursor: grabbing;
             z-index: 100020;
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 
+                0 20px 60px rgba(96, 165, 250, 0.4),
+                0 0 80px rgba(96, 165, 250, 0.2);
         }
 
         .org-chart-card.selected {
             border-color: #10b981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+            box-shadow: 
+                0 0 0 4px rgba(16, 185, 129, 0.3),
+                0 12px 40px rgba(16, 185, 129, 0.3);
             z-index: 100015;
+            animation: pulse-select 2s infinite;
+        }
+
+        @keyframes pulse-select {
+            0%, 100% {
+                box-shadow: 
+                    0 0 0 4px rgba(16, 185, 129, 0.3),
+                    0 12px 40px rgba(16, 185, 129, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    0 0 0 6px rgba(16, 185, 129, 0.4),
+                    0 12px 40px rgba(16, 185, 129, 0.4);
+            }
         }
 
         .org-card-header {
@@ -14546,12 +14769,43 @@
                             </svg>
                             Добавить
                         </button>
+                        <button class="toolbar-btn secondary" onclick="addDepartment()" title="Добавить отдел">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                <path d="M9 3v18"></path>
+                            </svg>
+                            Отдел
+                        </button>
                         <button class="toolbar-btn secondary" onclick="toggleConnectionMode()" id="connectionModeBtn" title="Режим соединений">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                             </svg>
                             Связи
                         </button>
+                        <div class="zoom-controls-group">
+                            <button class="toolbar-btn zoom-btn" onclick="zoomOut()" title="Уменьшить (Ctrl + -)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                                </svg>
+                            </button>
+                            <span class="zoom-level-display" id="zoomLevel">100%</span>
+                            <button class="toolbar-btn zoom-btn" onclick="zoomIn()" title="Увеличить (Ctrl + +)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    <line x1="11" y1="8" x2="11" y2="14"></line>
+                                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                                </svg>
+                            </button>
+                            <button class="toolbar-btn zoom-btn" onclick="resetZoom()" title="Сбросить масштаб (Ctrl + 0)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M12 6v6l4 2"></path>
+                                </svg>
+                            </button>
+                        </div>
                         <button class="toolbar-btn secondary" onclick="exportOrgChart()" title="Экспорт">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -22889,6 +23143,13 @@ let selectedCards = [];
 let draggingCard = null;
 let dragOffset = { x: 0, y: 0 };
 
+// Departments
+let departments = [];
+let departmentIdCounter = 1;
+let draggingDepartment = null;
+let resizingDepartment = null;
+let resizeStartSize = { width: 0, height: 0 };
+
 // Zoom and Pan variables
 let zoomLevel = 1;
 let panX = 0;
@@ -22967,24 +23228,20 @@ function setupZoomAndPan() {
         // Reset zoom with 0 key
         if (e.key === '0' && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
-            zoomLevel = 1;
-            panX = 0;
-            panY = 0;
-            applyTransform();
+            resetZoom();
+            showNotification('🔄 Масштаб сброшен', 'info');
         }
         
         // Zoom in with +
-        if (e.key === '+' || e.key === '=') {
+        if ((e.key === '+' || e.key === '=') && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
-            zoomLevel = Math.min(zoomLevel * 1.1, 3);
-            applyTransform();
+            zoomIn();
         }
         
         // Zoom out with -
-        if (e.key === '-' || e.key === '_') {
+        if ((e.key === '-' || e.key === '_') && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
-            zoomLevel = Math.max(zoomLevel * 0.9, 0.5);
-            applyTransform();
+            zoomOut();
         }
     });
 }
@@ -23022,6 +23279,88 @@ function updateZoomDisplay() {
     const zoomDisplay = document.getElementById('zoomLevel');
     if (zoomDisplay) {
         zoomDisplay.textContent = Math.round(zoomLevel * 100) + '%';
+    }
+}
+
+// Zoom control functions
+function zoomIn() {
+    adjustZoom(0.1);
+    showNotification('🔍 Увеличено', 'info');
+}
+
+function zoomOut() {
+    adjustZoom(-0.1);
+    showNotification('🔍 Уменьшено', 'info');
+}
+
+// Department functions
+function addDepartment() {
+    const department = {
+        id: departmentIdCounter++,
+        x: 100 + (departments.length * 50),
+        y: 100 + (departments.length * 50),
+        width: 450,
+        height: 350,
+        title: 'Новый отдел',
+        color: '#60a5fa'
+    };
+    
+    departments.push(department);
+    renderOrgChart();
+    saveOrgChartData();
+    showNotification('✅ Отдел добавлен', 'success');
+}
+
+function deleteDepartment(id) {
+    if (confirm('Удалить этот отдел?')) {
+        departments = departments.filter(d => d.id !== id);
+        renderOrgChart();
+        saveOrgChartData();
+        showNotification('✅ Отдел удален', 'success');
+    }
+}
+
+function updateDepartmentField(id, field, value) {
+    const dept = departments.find(d => d.id === id);
+    if (dept) {
+        dept[field] = value;
+        saveOrgChartData();
+    }
+}
+
+function startDepartmentDrag(e, deptId) {
+    if (e.target.closest('.department-resize-handle')) return;
+    
+    e.preventDefault();
+    const dept = departments.find(d => d.id === deptId);
+    if (!dept) return;
+    
+    draggingDepartment = deptId;
+    const rect = e.currentTarget.getBoundingClientRect();
+    dragOffset.x = (e.clientX - rect.left) / zoomLevel;
+    dragOffset.y = (e.clientY - rect.top) / zoomLevel;
+}
+
+function startDepartmentResize(e, deptId) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const dept = departments.find(d => d.id === deptId);
+    if (!dept) return;
+    
+    resizingDepartment = deptId;
+    resizeStartSize.width = dept.width;
+    resizeStartSize.height = dept.height;
+    dragOffset.x = e.clientX / zoomLevel;
+    dragOffset.y = e.clientY / zoomLevel;
+}
+
+function changeDepartmentColor(id, color) {
+    const dept = departments.find(d => d.id === id);
+    if (dept) {
+        dept.color = color;
+        renderOrgChart();
+        saveOrgChartData();
     }
 }
 
@@ -23170,24 +23509,51 @@ function startDrag(e, id) {
 }
 
 function onDrag(e) {
-    if (!draggingCard) return;
-    
     const workspace = document.getElementById('orgChartWorkspace');
     const workspaceRect = workspace.getBoundingClientRect();
     
-    const card = orgCards.find(c => c.id === draggingCard);
-    if (card) {
-        // Account for zoom and pan when dragging
-        card.x = (e.clientX - workspaceRect.left - panX) / zoomLevel - dragOffset.x;
-        card.y = (e.clientY - workspaceRect.top - panY) / zoomLevel - dragOffset.y;
-        
-        // Constrain to workspace (accounting for zoom)
-        const maxX = (workspaceRect.width / zoomLevel) - 280;
-        const maxY = (workspaceRect.height / zoomLevel) - 200;
-        card.x = Math.max(0, Math.min(card.x, maxX));
-        card.y = Math.max(0, Math.min(card.y, maxY));
-        
-        renderOrgChart();
+    // Handle card dragging
+    if (draggingCard) {
+        const card = orgCards.find(c => c.id === draggingCard);
+        if (card) {
+            card.x = (e.clientX - workspaceRect.left - panX) / zoomLevel - dragOffset.x;
+            card.y = (e.clientY - workspaceRect.top - panY) / zoomLevel - dragOffset.y;
+            
+            const maxX = (workspaceRect.width / zoomLevel) - 280;
+            const maxY = (workspaceRect.height / zoomLevel) - 200;
+            card.x = Math.max(0, Math.min(card.x, maxX));
+            card.y = Math.max(0, Math.min(card.y, maxY));
+            
+            renderOrgChart();
+        }
+    }
+    
+    // Handle department dragging
+    if (draggingDepartment) {
+        const dept = departments.find(d => d.id === draggingDepartment);
+        if (dept) {
+            dept.x = (e.clientX - workspaceRect.left - panX) / zoomLevel - dragOffset.x;
+            dept.y = (e.clientY - workspaceRect.top - panY) / zoomLevel - dragOffset.y;
+            
+            dept.x = Math.max(0, dept.x);
+            dept.y = Math.max(0, dept.y);
+            
+            renderOrgChart();
+        }
+    }
+    
+    // Handle department resizing
+    if (resizingDepartment) {
+        const dept = departments.find(d => d.id === resizingDepartment);
+        if (dept) {
+            const deltaX = (e.clientX / zoomLevel) - dragOffset.x;
+            const deltaY = (e.clientY / zoomLevel) - dragOffset.y;
+            
+            dept.width = Math.max(300, resizeStartSize.width + deltaX);
+            dept.height = Math.max(200, resizeStartSize.height + deltaY);
+            
+            renderOrgChart();
+        }
     }
 }
 
@@ -23196,6 +23562,16 @@ function stopDrag() {
         const cardEl = document.querySelector(`[data-card-id="${draggingCard}"]`);
         cardEl?.classList.remove('dragging');
         draggingCard = null;
+        saveOrgChartData();
+    }
+    
+    if (draggingDepartment) {
+        draggingDepartment = null;
+        saveOrgChartData();
+    }
+    
+    if (resizingDepartment) {
+        resizingDepartment = null;
         saveOrgChartData();
     }
     
@@ -23212,6 +23588,60 @@ function renderOrgChart() {
     // Clear
     cardsContainer.innerHTML = '';
     svg.innerHTML = '';
+    
+    // Render departments first (behind cards)
+    departments.forEach(dept => {
+        const deptEl = document.createElement('div');
+        deptEl.className = 'org-department';
+        if (resizingDepartment === dept.id) {
+            deptEl.classList.add('resizing');
+        }
+        deptEl.style.left = dept.x + 'px';
+        deptEl.style.top = dept.y + 'px';
+        deptEl.style.width = dept.width + 'px';
+        deptEl.style.height = dept.height + 'px';
+        deptEl.style.borderColor = dept.color;
+        
+        const colorOptions = ['#60a5fa', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
+        
+        deptEl.innerHTML = `
+            <div class="department-header">
+                <input type="text" class="department-title-input" value="${dept.title}" 
+                    onchange="updateDepartmentField(${dept.id}, 'title', this.value)"
+                    onclick="event.stopPropagation()">
+                <div class="department-controls">
+                    <div class="department-color-picker">
+                        ${colorOptions.map(color => `
+                            <div class="color-option ${dept.color === color ? 'active' : ''}" 
+                                style="background: ${color}"
+                                onclick="event.stopPropagation(); changeDepartmentColor(${dept.id}, '${color}')">
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="department-delete" onclick="event.stopPropagation(); deleteDepartment(${dept.id})">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="department-resize-handle bottom-right" 
+                onmousedown="startDepartmentResize(event, ${dept.id})">
+            </div>
+        `;
+        
+        deptEl.addEventListener('mousedown', (e) => {
+            if (!e.target.closest('.department-resize-handle') && 
+                !e.target.closest('input') && 
+                !e.target.closest('.department-delete') &&
+                !e.target.closest('.color-option')) {
+                startDepartmentDrag(e, dept.id);
+            }
+        });
+        
+        cardsContainer.appendChild(deptEl);
+    });
     
     // Render connections with beautiful curves
     orgConnections.forEach(conn => {
@@ -23363,7 +23793,10 @@ function saveOrgChartData() {
     const data = {
         orgName,
         cards: orgCards,
-        connections: orgConnections
+        connections: orgConnections,
+        departments: departments,
+        zoom: zoomLevel,
+        pan: { x: panX, y: panY }
     };
     
     localStorage.setItem('badgrules_orgchart_data', JSON.stringify(data));
@@ -23389,6 +23822,22 @@ function loadOrgChartData() {
                 orgConnections = data.connections;
             }
             
+            if (data.departments) {
+                departments = data.departments;
+                departmentIdCounter = Math.max(...departments.map(d => d.id), 0) + 1;
+            }
+            
+            if (data.zoom) {
+                zoomLevel = data.zoom;
+            }
+            
+            if (data.pan) {
+                panX = data.pan.x;
+                panY = data.pan.y;
+            }
+            
+            applyTransform();
+            updateZoomDisplay();
             renderOrgChart();
         } catch (e) {
             console.error('Error loading org chart:', e);
@@ -23400,7 +23849,9 @@ function clearOrgChart() {
     if (confirm('Вы уверены, что хотите очистить всю структуру?')) {
         orgCards = [];
         orgConnections = [];
+        departments = [];
         cardIdCounter = 1;
+        departmentIdCounter = 1;
         renderOrgChart();
         saveOrgChartData();
         showNotification('✅ Структура очищена', 'success');
