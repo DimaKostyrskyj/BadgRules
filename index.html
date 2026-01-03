@@ -11408,38 +11408,58 @@
             border-color: #ef4444;
         }
 
-        /* Zoom Controls Group */
-        .zoom-controls-group {
+        /* Circular Zoom Controls */
+        .zoom-controls-circular {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 100100;
+        }
+
+        .zoom-icon-btn {
+            width: 48px;
+            height: 48px;
+            background: rgba(15, 15, 15, 0.95);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            background: rgba(10, 10, 10, 0.6);
-            border: 2px solid rgba(96, 165, 250, 0.3);
-            border-radius: 8px;
-            padding: 0.4rem 0.75rem;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
-        .zoom-level-display {
-            font-size: 0.85rem;
-            font-weight: 700;
+        .zoom-icon-btn svg {
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .zoom-icon-btn:hover {
+            background: rgba(20, 20, 20, 0.98);
+            border-color: rgba(96, 165, 250, 0.6);
+            transform: scale(1.1);
+            box-shadow: 
+                0 8px 24px rgba(96, 165, 250, 0.3),
+                0 0 0 4px rgba(96, 165, 250, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .zoom-icon-btn:hover svg {
             color: var(--accent-primary);
-            min-width: 55px;
-            text-align: center;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.5px;
-        }
-
-        .toolbar-btn.zoom-btn {
-            padding: 0.5rem;
-            background: rgba(96, 165, 250, 0.15);
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            min-width: auto;
-        }
-
-        .toolbar-btn.zoom-btn:hover {
-            background: rgba(96, 165, 250, 0.3);
             transform: scale(1.1);
         }
+
+        .zoom-icon-btn:active {
+            transform: scale(0.95);
+        }
+
 
         /* Department Box */
         .org-department {
@@ -11447,7 +11467,7 @@
             background: linear-gradient(135deg, rgba(96, 165, 250, 0.08), rgba(59, 130, 246, 0.05));
             border: 2px dashed rgba(96, 165, 250, 0.4);
             border-radius: 16px;
-            padding: 1rem;
+            padding: 0;
             min-width: 400px;
             min-height: 300px;
             z-index: 100005;
@@ -11466,44 +11486,77 @@
             border-color: var(--accent-primary);
         }
 
-        .department-header {
+        .department-header-compact {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.75rem;
-            padding-bottom: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            background: rgba(10, 10, 10, 0.5);
+            border-radius: 14px 14px 0 0;
             border-bottom: 1px solid rgba(96, 165, 250, 0.2);
+            gap: 0.5rem;
         }
 
-        .department-title-input {
-            background: rgba(10, 10, 10, 0.6);
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            border-radius: 6px;
-            padding: 0.5rem 0.75rem;
+        .department-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .department-title-compact {
+            background: transparent;
+            border: none;
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: 700;
             font-family: 'Manrope', sans-serif;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            width: 100%;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            flex: 1;
+            min-width: 100px;
         }
 
-        .department-title-input:focus {
+        .department-title-compact:hover {
+            background: rgba(96, 165, 250, 0.1);
+        }
+
+        .department-title-compact:focus {
             outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+            background: rgba(96, 165, 250, 0.15);
+            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
         }
 
-        .department-controls {
+        .department-color-picker-compact {
             display: flex;
-            gap: 0.5rem;
-            align-items: center;
+            gap: 0.25rem;
         }
 
-        .department-delete {
-            width: 28px;
-            height: 28px;
+        .color-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .color-dot:hover {
+            transform: scale(1.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .color-dot.active {
+            border-color: white;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .department-delete-compact {
+            width: 24px;
+            height: 24px;
             background: rgba(239, 68, 68, 0.2);
             border: 1px solid rgba(239, 68, 68, 0.4);
             border-radius: 6px;
@@ -11513,9 +11566,10 @@
             cursor: pointer;
             color: #ef4444;
             transition: all 0.2s ease;
+            flex-shrink: 0;
         }
 
-        .department-delete:hover {
+        .department-delete-compact:hover {
             background: rgba(239, 68, 68, 0.3);
             border-color: #ef4444;
             transform: scale(1.1);
@@ -11540,30 +11594,6 @@
         .department-resize-handle.bottom-right {
             bottom: -10px;
             right: -10px;
-        }
-
-        .department-color-picker {
-            display: flex;
-            gap: 0.25rem;
-        }
-
-        .color-option {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .color-option:hover {
-            transform: scale(1.2);
-            border-color: white;
-        }
-
-        .color-option.active {
-            border-color: white;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
         }
 
 
@@ -11816,6 +11846,58 @@
         .mode-hint {
             font-size: 0.85rem;
             opacity: 0.9;
+        }
+
+        /* Zoom Level Indicator */
+        .zoom-level-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 15, 15, 0.95);
+            border: 2px solid rgba(96, 165, 250, 0.4);
+            color: var(--accent-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(96, 165, 250, 0.2);
+            z-index: 100003;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            backdrop-filter: blur(20px);
+            animation: fadeInScale 0.3s ease;
+            pointer-events: none;
+        }
+
+        .zoom-level-indicator svg {
+            color: var(--accent-primary);
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        @keyframes fadeOutScale {
+            from {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8);
+            }
         }
 
         @media (max-width: 1200px) {
@@ -14782,27 +14864,28 @@
                             </svg>
                             Связи
                         </button>
-                        <div class="zoom-controls-group">
-                            <button class="toolbar-btn zoom-btn" onclick="zoomOut()" title="Уменьшить (Ctrl + -)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="11" cy="11" r="8"></circle>
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                        <div class="zoom-controls-circular">
+                            <button class="zoom-icon-btn" onclick="resetZoom()" title="Сбросить масштаб (Ctrl + 0)">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                    <path d="M21 3v5h-5"></path>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                    <path d="M3 21v-5h5"></path>
                                 </svg>
                             </button>
-                            <span class="zoom-level-display" id="zoomLevel">100%</span>
-                            <button class="toolbar-btn zoom-btn" onclick="zoomIn()" title="Увеличить (Ctrl + +)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <button class="zoom-icon-btn" onclick="zoomIn()" title="Увеличить (Ctrl + +)">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="11" cy="11" r="8"></circle>
                                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                     <line x1="11" y1="8" x2="11" y2="14"></line>
                                     <line x1="8" y1="11" x2="14" y2="11"></line>
                                 </svg>
                             </button>
-                            <button class="toolbar-btn zoom-btn" onclick="resetZoom()" title="Сбросить масштаб (Ctrl + 0)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M12 6v6l4 2"></path>
+                            <button class="zoom-icon-btn" onclick="zoomOut()" title="Уменьшить (Ctrl + -)">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    <line x1="8" y1="11" x2="14" y2="11"></line>
                                 </svg>
                             </button>
                         </div>
@@ -14839,6 +14922,15 @@
                 <div class="connection-mode-indicator" id="connectionModeIndicator" style="display: none;">
                     <span>🔗 Режим соединений активен</span>
                     <span class="mode-hint">Нажмите на две карточки для создания связи</span>
+                </div>
+
+                <!-- Zoom Level Indicator -->
+                <div class="zoom-level-indicator" id="zoomLevelIndicator" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <span id="zoomLevel">100%</span>
                 </div>
             </div>
         </div>
@@ -23167,7 +23259,28 @@ function setupZoomAndPan() {
     const workspace = document.getElementById('orgChartWorkspace');
     if (!workspace) return;
     
-    // Zoom with mouse wheel
+    // Track space key for panning
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' && !e.repeat) {
+            const activeSection = document.querySelector('#rosterSection.active');
+            if (activeSection && !e.target.matches('input, textarea')) {
+                spacePressed = true;
+                workspace.style.cursor = 'grab';
+                e.preventDefault();
+            }
+        }
+    });
+    
+    document.addEventListener('keyup', (e) => {
+        if (e.code === 'Space') {
+            spacePressed = false;
+            if (!isPanning) {
+                workspace.style.cursor = '';
+            }
+        }
+    });
+    
+    // Zoom with mouse wheel (Ctrl + wheel)
     workspace.addEventListener('wheel', (e) => {
         if (e.ctrlKey || e.metaKey) {
             e.preventDefault();
@@ -23186,12 +23299,14 @@ function setupZoomAndPan() {
             
             zoomLevel = newZoom;
             applyTransform();
+            updateZoomDisplay();
         }
     }, { passive: false });
     
-    // Pan with middle mouse or space+drag
+    // Pan with middle mouse button or Space + left click
     workspace.addEventListener('mousedown', (e) => {
-        if (e.button === 1 || (e.button === 0 && e.spaceKey)) {
+        // Middle mouse button (button 1) or left click with space
+        if (e.button === 1 || (e.button === 0 && spacePressed)) {
             e.preventDefault();
             isPanning = true;
             panStartX = e.clientX - panX;
@@ -23200,7 +23315,8 @@ function setupZoomAndPan() {
         }
     });
     
-    workspace.addEventListener('mousemove', (e) => {
+    // Global mouse move for panning
+    document.addEventListener('mousemove', (e) => {
         if (isPanning) {
             panX = e.clientX - panStartX;
             panY = e.clientY - panStartY;
@@ -23208,16 +23324,16 @@ function setupZoomAndPan() {
         }
     });
     
-    workspace.addEventListener('mouseup', (e) => {
-        if (e.button === 1) {
+    // Global mouse up
+    document.addEventListener('mouseup', (e) => {
+        if (isPanning) {
             isPanning = false;
-            workspace.style.cursor = '';
+            workspace.style.cursor = spacePressed ? 'grab' : '';
         }
     });
     
     workspace.addEventListener('mouseleave', () => {
-        isPanning = false;
-        workspace.style.cursor = '';
+        // Don't stop panning on leave, allow dragging outside
     });
     
     // Keyboard shortcuts
@@ -23275,22 +23391,44 @@ function resetZoom() {
     updateZoomDisplay();
 }
 
+let zoomIndicatorTimeout = null;
+let spacePressed = false;
+
 function updateZoomDisplay() {
     const zoomDisplay = document.getElementById('zoomLevel');
+    const zoomIndicator = document.getElementById('zoomLevelIndicator');
+    
     if (zoomDisplay) {
         zoomDisplay.textContent = Math.round(zoomLevel * 100) + '%';
+    }
+    
+    // Show zoom indicator temporarily
+    if (zoomIndicator) {
+        zoomIndicator.style.display = 'flex';
+        zoomIndicator.style.animation = 'fadeInScale 0.3s ease';
+        
+        // Clear previous timeout
+        if (zoomIndicatorTimeout) {
+            clearTimeout(zoomIndicatorTimeout);
+        }
+        
+        // Hide after 1.5 seconds
+        zoomIndicatorTimeout = setTimeout(() => {
+            zoomIndicator.style.animation = 'fadeOutScale 0.3s ease';
+            setTimeout(() => {
+                zoomIndicator.style.display = 'none';
+            }, 300);
+        }, 1500);
     }
 }
 
 // Zoom control functions
 function zoomIn() {
     adjustZoom(0.1);
-    showNotification('🔍 Увеличено', 'info');
 }
 
 function zoomOut() {
     adjustZoom(-0.1);
-    showNotification('🔍 Уменьшено', 'info');
 }
 
 // Department functions
@@ -23605,25 +23743,27 @@ function renderOrgChart() {
         const colorOptions = ['#60a5fa', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
         
         deptEl.innerHTML = `
-            <div class="department-header">
-                <input type="text" class="department-title-input" value="${dept.title}" 
-                    onchange="updateDepartmentField(${dept.id}, 'title', this.value)"
-                    onclick="event.stopPropagation()">
-                <div class="department-controls">
-                    <div class="department-color-picker">
+            <div class="department-header-compact">
+                <div class="department-title-wrapper">
+                    <input type="text" class="department-title-compact" value="${dept.title}" 
+                        onchange="updateDepartmentField(${dept.id}, 'title', this.value)"
+                        onclick="event.stopPropagation()"
+                        placeholder="Название отдела">
+                    <div class="department-color-picker-compact">
                         ${colorOptions.map(color => `
-                            <div class="color-option ${dept.color === color ? 'active' : ''}" 
+                            <div class="color-dot ${dept.color === color ? 'active' : ''}" 
                                 style="background: ${color}"
-                                onclick="event.stopPropagation(); changeDepartmentColor(${dept.id}, '${color}')">
+                                onclick="event.stopPropagation(); changeDepartmentColor(${dept.id}, '${color}')"
+                                title="Изменить цвет">
                             </div>
                         `).join('')}
                     </div>
-                    <div class="department-delete" onclick="event.stopPropagation(); deleteDepartment(${dept.id})">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </div>
+                </div>
+                <div class="department-delete-compact" onclick="event.stopPropagation(); deleteDepartment(${dept.id})" title="Удалить отдел">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
                 </div>
             </div>
             <div class="department-resize-handle bottom-right" 
@@ -23634,8 +23774,8 @@ function renderOrgChart() {
         deptEl.addEventListener('mousedown', (e) => {
             if (!e.target.closest('.department-resize-handle') && 
                 !e.target.closest('input') && 
-                !e.target.closest('.department-delete') &&
-                !e.target.closest('.color-option')) {
+                !e.target.closest('.department-delete-compact') &&
+                !e.target.closest('.color-dot')) {
                 startDepartmentDrag(e, dept.id);
             }
         });
