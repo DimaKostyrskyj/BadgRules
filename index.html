@@ -11200,7 +11200,7 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           👥 ROSTER BUILDER STYLES
+           👥 ROSTER BUILDER STYLES - CARD GRID LAYOUT
            ═══════════════════════════════════════════════════════════════ */
         
         .roster-builder-container {
@@ -11335,6 +11335,7 @@
             box-shadow: 
                 0 10px 40px rgba(0, 0, 0, 0.4),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            min-height: 400px;
         }
 
         .roster-header {
@@ -11377,169 +11378,171 @@
             letter-spacing: 1px;
         }
 
-        .roster-table-wrapper {
+        /* Grid Layout for Position Cards */
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
             width: 100%;
-            overflow: visible;
         }
 
-        .roster-table-wide {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            table-layout: fixed;
-        }
-
-        .roster-table-wide thead {
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.25), rgba(59, 130, 246, 0.15));
-            border-radius: 16px 16px 0 0;
-        }
-
-        .roster-table-wide thead tr th:first-child {
-            border-radius: 16px 0 0 0;
-        }
-
-        .roster-table-wide thead tr th:last-child {
-            border-radius: 0 16px 0 0;
-        }
-
-        .roster-table-wide th {
-            padding: 1.5rem 1.5rem;
-            text-align: left;
-            font-weight: 800;
-            font-size: 1rem;
-            color: var(--accent-primary);
-            border-bottom: 3px solid rgba(96, 165, 250, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            white-space: nowrap;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(59, 130, 246, 0.1));
-        }
-
-        .roster-table-wide th.col-department {
-            width: 35%;
-        }
-
-        .roster-table-wide th.col-chief {
-            width: 18%;
-        }
-
-        .roster-table-wide th.col-deputy {
-            width: 18%;
-        }
-
-        .roster-table-wide th.col-assistant {
-            width: 18%;
-        }
-
-        .roster-table-wide th.col-actions {
-            width: 11%;
-            text-align: center;
-        }
-
-        .roster-table-wide tbody tr {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        .roster-position-card {
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(20, 20, 20, 0.7));
+            border: 2px solid rgba(96, 165, 250, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: move;
         }
 
-        .roster-table-wide tbody tr:hover {
-            background: linear-gradient(90deg, rgba(96, 165, 250, 0.08), rgba(96, 165, 250, 0.05));
-            transform: translateX(4px);
+        .roster-position-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #60a5fa, #3b82f6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
-        .roster-table-wide tbody tr.department-header {
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.1));
-            border-left: 4px solid var(--accent-primary);
+        .roster-position-card:hover::before {
+            transform: scaleX(1);
         }
 
-        .roster-table-wide tbody tr.department-header:hover {
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.22), rgba(59, 130, 246, 0.15));
-            box-shadow: 0 4px 15px rgba(96, 165, 250, 0.2);
-            transform: translateX(6px);
+        .roster-position-card:hover {
+            background: linear-gradient(135deg, rgba(40, 40, 40, 0.95), rgba(30, 30, 30, 0.8));
+            border-color: rgba(96, 165, 250, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 
+                0 12px 30px rgba(96, 165, 250, 0.2),
+                0 0 40px rgba(96, 165, 250, 0.1);
         }
 
-        .roster-table-wide td {
-            padding: 1.25rem 1.5rem;
-            color: var(--text-primary);
-            vertical-align: middle;
+        .roster-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
         }
 
-        .roster-table-wide td.actions-cell {
-            text-align: center;
+        .roster-card-rank {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            color: white;
+            padding: 0.375rem 0.875rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
         }
 
-        .roster-table-wide input,
-        .roster-table-wide textarea {
+        .roster-card-actions {
+            display: flex;
+            gap: 0.375rem;
+        }
+
+        .roster-card-btn {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(96, 165, 250, 0.15);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 6px;
+            color: var(--accent-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .roster-card-btn:hover {
+            background: rgba(96, 165, 250, 0.3);
+            transform: scale(1.1);
+        }
+
+        .roster-card-btn.delete {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .roster-card-btn.delete:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .roster-card-field {
+            margin-bottom: 1rem;
+        }
+
+        .roster-card-field:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .roster-card-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .roster-card-input {
             width: 100%;
-            padding: 0.875rem 1rem;
+            padding: 0.75rem;
             background: rgba(10, 10, 10, 0.8);
             border: 2px solid rgba(96, 165, 250, 0.15);
-            border-radius: 10px;
+            border-radius: 8px;
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             font-family: 'Manrope', sans-serif;
             transition: all 0.3s ease;
         }
 
-        .roster-table-wide textarea {
-            min-height: 65px;
-            resize: vertical;
-            line-height: 1.5;
-        }
-
-        .roster-table-wide input:focus,
-        .roster-table-wide textarea:focus {
+        .roster-card-input:focus {
             outline: none;
             border-color: var(--accent-primary);
             background: rgba(10, 10, 10, 0.95);
-            box-shadow: 
-                0 0 0 3px rgba(96, 165, 250, 0.2),
-                0 4px 12px rgba(96, 165, 250, 0.15);
-            transform: translateY(-1px);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
         }
 
-        .roster-row-actions {
-            display: flex;
-            gap: 0.625rem;
-            justify-content: center;
-            flex-wrap: wrap;
+        .roster-card-input.position-input {
+            font-weight: 700;
+            font-size: 1.05rem;
         }
 
-        .roster-action-btn {
-            padding: 0.625rem 0.75rem;
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(96, 165, 250, 0.1));
-            border: 2px solid rgba(96, 165, 250, 0.3);
-            border-radius: 10px;
-            color: var(--accent-primary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+        .roster-empty-state {
+            display: none;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
         }
 
-        .roster-action-btn:hover {
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(96, 165, 250, 0.2));
-            border-color: var(--accent-primary);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 4px 12px rgba(96, 165, 250, 0.4);
+        .roster-empty-state.show {
+            display: block;
         }
 
-        .roster-action-btn.delete {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.1));
-            border-color: rgba(239, 68, 68, 0.3);
-            color: #ef4444;
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
         }
 
-        .roster-action-btn.delete:hover {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(239, 68, 68, 0.2));
-            border-color: #ef4444;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        .roster-empty-state h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
         }
 
-        .department-name-input {
-            font-weight: 700 !important;
-            font-size: 1.05rem !important;
+        .roster-empty-state p {
+            font-size: 1rem;
+            color: var(--text-secondary);
         }
 
         .roster-templates-info {
@@ -11651,20 +11654,10 @@
             border-bottom: none;
         }
 
-        @media (max-width: 1400px) {
-            .roster-builder-container {
-                max-width: 1400px;
-            }
-        }
-
         @media (max-width: 1200px) {
-            .roster-builder-container {
-                max-width: 100%;
-                padding: 1.5rem;
-            }
-
-            .roster-table-wide th.col-department {
-                width: 30%;
+            .roster-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.25rem;
             }
         }
 
@@ -11691,13 +11684,8 @@
                 justify-content: center;
             }
 
-            .roster-table-wide {
-                font-size: 0.9rem;
-            }
-
-            .roster-table-wide th,
-            .roster-table-wide td {
-                padding: 1rem 0.75rem;
+            .roster-grid {
+                grid-template-columns: 1fr;
             }
 
             .roster-org-name {
@@ -14097,7 +14085,7 @@
             <div class="feature-content">
                 <div class="feature-header">
                     <h1 class="feature-title">👥 Создание состава организации</h1>
-                    <p class="feature-subtitle">Создайте профессиональный состав для гос. фракций, крайма или любой организации</p>
+                    <p class="feature-subtitle">Создайте профессиональный состав для гос. фракций, крайма или любой организации в виде структурной сетки</p>
                     <div class="server-badge-container">
                         <span class="server-badge majestic">🎮 Универсальный</span>
                         <span class="server-badge updated">📅 Обновлено: 03.01.2026</span>
@@ -14124,27 +14112,21 @@
                         </div>
 
                         <div class="roster-actions">
-                            <button class="roster-btn primary" onclick="addRosterRow()">
+                            <button class="roster-btn primary" onclick="addPositionCard()">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                                 Добавить должность
                             </button>
-                            <button class="roster-btn primary" onclick="addDepartment()">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                </svg>
-                                Добавить отдел
-                            </button>
-                            <button class="roster-btn secondary" onclick="copyRosterText()">
+                            <button class="roster-btn secondary" onclick="exportRosterAsText()">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                                 </svg>
-                                Копировать текст
+                                Экспорт
                             </button>
-                            <button class="roster-btn danger" onclick="clearRoster()">
+                            <button class="roster-btn danger" onclick="clearAllPositions()">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="3 6 5 6 21 6"></polyline>
                                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -14154,28 +14136,21 @@
                         </div>
                     </div>
 
-                    <!-- Roster Preview -->
+                    <!-- Roster Grid -->
                     <div class="roster-preview" id="rosterPreview">
                         <div class="roster-header">
                             <h2 class="roster-org-name" id="rosterOrgName">LSSD</h2>
                             <div class="roster-subtitle">Состав организации</div>
                         </div>
 
-                        <div class="roster-table-wrapper">
-                            <table class="roster-table-wide" id="rosterTable">
-                                <thead>
-                                    <tr>
-                                        <th class="col-department">Название отдела</th>
-                                        <th class="col-chief">Начальник (9 ранг)</th>
-                                        <th class="col-deputy">Зам.Начальника (8 ранг)</th>
-                                        <th class="col-assistant">Ass.Chief (9 ранг)</th>
-                                        <th class="col-actions">Действия</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="rosterTableBody">
-                                    <!-- Departments will be added here dynamically -->
-                                </tbody>
-                            </table>
+                        <div class="roster-grid" id="rosterGrid">
+                            <!-- Position cards will be added here -->
+                        </div>
+
+                        <div class="roster-empty-state" id="rosterEmptyState">
+                            <div class="empty-icon">📋</div>
+                            <h3>Состав пуст</h3>
+                            <p>Нажмите "Добавить должность" чтобы начать создание структуры организации</p>
                         </div>
                     </div>
 
@@ -14186,13 +14161,16 @@
                             <h3>Государственные фракции</h3>
                             <p>Sheriff, Police, FIB, EMS, Government</p>
                             <div class="template-example">
-                                <strong>Примеры отделов:</strong>
+                                <strong>Примеры должностей:</strong>
                                 <ul class="template-departments">
-                                    <li>Personnel Acquisition Division (PAD) - набор</li>
-                                    <li>Disciplinary and Integrity Unit (DIU) - дисциплина</li>
-                                    <li>Sheriff's Patrol Unit (SPU) - патрули</li>
-                                    <li>Wildlife Control Division (WCD) - охота, рыба</li>
-                                    <li>Special Enforcement Bureau (SEB) - поставки</li>
+                                    <li>Sheriff / Шериф</li>
+                                    <li>Deputy Sheriff / Зам.Шерифа</li>
+                                    <li>Chief of Police / Начальник полиции</li>
+                                    <li>Captain / Капитан</li>
+                                    <li>Lieutenant / Лейтенант</li>
+                                    <li>Sergeant / Сержант</li>
+                                    <li>Corporal / Капрал</li>
+                                    <li>Officer / Офицер</li>
                                 </ul>
                             </div>
                         </div>
@@ -14202,13 +14180,16 @@
                             <h3>Криминальные фракции</h3>
                             <p>Gangs, Mafia, Cartels</p>
                             <div class="template-example">
-                                <strong>Примеры структуры:</strong>
+                                <strong>Примеры должностей:</strong>
                                 <ul class="template-departments">
-                                    <li>Leadership - руководство</li>
-                                    <li>Enforcers - силовое крыло</li>
-                                    <li>Business - бизнес отдел</li>
-                                    <li>Recruitment - набор</li>
-                                    <li>Territory Control - контроль территории</li>
+                                    <li>Leader / Лидер</li>
+                                    <li>Deputy Leader / Заместитель</li>
+                                    <li>Assistant Leader / Помощник</li>
+                                    <li>Underboss / Андербосс</li>
+                                    <li>Capo / Капо</li>
+                                    <li>Enforcer / Силовик</li>
+                                    <li>Soldier / Солдат</li>
+                                    <li>Associate / Ассоциат</li>
                                 </ul>
                             </div>
                         </div>
@@ -22437,27 +22418,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ═══════════════════════════════════════════════════════════════
-// 👥 ROSTER BUILDER FUNCTIONS
+// 👥 ROSTER BUILDER FUNCTIONS - CARD GRID SYSTEM
 // ═══════════════════════════════════════════════════════════════
 
-let rosterDepartments = [];
-let departmentIdCounter = 1;
+let rosterPositions = [];
+let positionIdCounter = 1;
 
-// Шаблоны отделов для разных типов организаций
-const departmentTemplates = {
+// Шаблоны должностей для разных типов организаций
+const positionTemplates = {
     gov: [
-        { name: 'Personnel Acquisition Division (PAD) - набор', chief: '', deputy: '', assistant: '' },
-        { name: 'Disciplinary and Integrity Unit (DIU) - дисциплина', chief: '', deputy: '', assistant: '' },
-        { name: "Sheriff's Patrol Unit (SPU) - патрули", chief: '', deputy: '', assistant: '' },
-        { name: 'Wildlife Control Division (WCD) - охота, рыба', chief: '', deputy: '', assistant: '' },
-        { name: 'Special Enforcement Bureau (SEB) - поставки', chief: '', deputy: '', assistant: '' }
+        { position: 'Sheriff / Шериф', rank: '10', name: '' },
+        { position: 'Deputy Sheriff', rank: '9', name: '' },
+        { position: 'Chief of Police', rank: '9', name: '' },
+        { position: 'Captain', rank: '8', name: '' },
+        { position: 'Lieutenant', rank: '7', name: '' },
+        { position: 'Sergeant', rank: '6', name: '' },
+        { position: 'Corporal', rank: '5', name: '' },
+        { position: 'Senior Officer', rank: '4', name: '' },
+        { position: 'Officer', rank: '3', name: '' },
+        { position: 'Probationary Officer', rank: '2', name: '' },
+        { position: 'Cadet', rank: '1', name: '' }
     ],
     crime: [
-        { name: 'Leadership - руководство', chief: '', deputy: '', assistant: '' },
-        { name: 'Enforcers - силовое крыло', chief: '', deputy: '', assistant: '' },
-        { name: 'Business - бизнес отдел', chief: '', deputy: '', assistant: '' },
-        { name: 'Recruitment - набор', chief: '', deputy: '', assistant: '' },
-        { name: 'Territory Control - контроль территории', chief: '', deputy: '', assistant: '' }
+        { position: 'Leader / Лидер', rank: '10', name: '' },
+        { position: 'Deputy Leader', rank: '9', name: '' },
+        { position: 'Assistant Leader', rank: '8', name: '' },
+        { position: 'Underboss', rank: '7', name: '' },
+        { position: 'Consigliere', rank: '7', name: '' },
+        { position: 'Capo', rank: '6', name: '' },
+        { position: 'Enforcer', rank: '5', name: '' },
+        { position: 'Soldier', rank: '4', name: '' },
+        { position: 'Associate', rank: '3', name: '' },
+        { position: 'Prospect', rank: '2', name: '' },
+        { position: 'Recruit', rank: '1', name: '' }
     ],
     custom: []
 };
@@ -22481,153 +22474,122 @@ function initRosterBuilder() {
 
 function updateRosterTemplate() {
     const orgType = document.getElementById('orgType').value;
-    const template = departmentTemplates[orgType];
+    const template = positionTemplates[orgType];
     
     if (template && template.length > 0) {
         if (confirm('Загрузить шаблон? Это заменит текущие данные.')) {
             // Очищаем текущий состав
-            rosterDepartments = [];
-            departmentIdCounter = 1;
+            rosterPositions = [];
+            positionIdCounter = 1;
             
             // Загружаем шаблон
-            template.forEach(dept => {
-                rosterDepartments.push({
-                    id: departmentIdCounter++,
-                    name: dept.name,
-                    chief: dept.chief,
-                    deputy: dept.deputy,
-                    assistant: dept.assistant
+            template.forEach(pos => {
+                rosterPositions.push({
+                    id: positionIdCounter++,
+                    position: pos.position,
+                    rank: pos.rank,
+                    name: pos.name
                 });
             });
             
-            renderRosterTable();
+            renderRosterGrid();
             saveRosterData();
         }
     }
 }
 
-function addDepartment() {
-    const newDept = {
-        id: departmentIdCounter++,
-        name: '',
-        chief: '',
-        deputy: '',
-        assistant: ''
+function addPositionCard() {
+    const newPosition = {
+        id: positionIdCounter++,
+        position: '',
+        rank: '',
+        name: ''
     };
     
-    rosterDepartments.push(newDept);
-    renderRosterTable();
+    rosterPositions.push(newPosition);
+    renderRosterGrid();
     saveRosterData();
 }
 
-function addRosterRow() {
-    // Альтернативное название для addDepartment
-    addDepartment();
-}
-
-function deleteDepartment(id) {
-    if (confirm('Удалить этот отдел?')) {
-        rosterDepartments = rosterDepartments.filter(dept => dept.id !== id);
-        renderRosterTable();
+function deletePosition(id) {
+    if (confirm('Удалить эту должность?')) {
+        rosterPositions = rosterPositions.filter(pos => pos.id !== id);
+        renderRosterGrid();
         saveRosterData();
     }
 }
 
-function moveDepartmentUp(id) {
-    const index = rosterDepartments.findIndex(dept => dept.id === id);
-    if (index > 0) {
-        [rosterDepartments[index], rosterDepartments[index - 1]] = [rosterDepartments[index - 1], rosterDepartments[index]];
-        renderRosterTable();
+function updatePositionField(id, field, value) {
+    const position = rosterPositions.find(p => p.id === id);
+    if (position) {
+        position[field] = value;
         saveRosterData();
     }
 }
 
-function moveDepartmentDown(id) {
-    const index = rosterDepartments.findIndex(dept => dept.id === id);
-    if (index < rosterDepartments.length - 1) {
-        [rosterDepartments[index], rosterDepartments[index + 1]] = [rosterDepartments[index + 1], rosterDepartments[index]];
-        renderRosterTable();
-        saveRosterData();
-    }
-}
-
-function updateDepartmentField(id, field, value) {
-    const dept = rosterDepartments.find(d => d.id === id);
-    if (dept) {
-        dept[field] = value;
-        saveRosterData();
-    }
-}
-
-function renderRosterTable() {
-    const tbody = document.getElementById('rosterTableBody');
-    if (!tbody) return;
+function renderRosterGrid() {
+    const grid = document.getElementById('rosterGrid');
+    const emptyState = document.getElementById('rosterEmptyState');
     
-    tbody.innerHTML = '';
+    if (!grid || !emptyState) return;
     
-    if (rosterDepartments.length === 0) {
-        const emptyRow = document.createElement('tr');
-        emptyRow.innerHTML = `
-            <td colspan="5" style="text-align: center; padding: 3rem; color: var(--text-secondary);">
-                <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">📋</div>
-                <div>Нажмите "Добавить отдел" чтобы начать создание состава</div>
-            </td>
-        `;
-        tbody.appendChild(emptyRow);
+    // Показываем/скрываем пустое состояние
+    if (rosterPositions.length === 0) {
+        grid.style.display = 'none';
+        emptyState.classList.add('show');
         return;
+    } else {
+        grid.style.display = 'grid';
+        emptyState.classList.remove('show');
     }
     
-    rosterDepartments.forEach((dept, index) => {
-        const tr = document.createElement('tr');
-        tr.classList.add('department-header');
-        tr.innerHTML = `
-            <td>
-                <textarea class="department-name-input" 
-                    onchange="updateDepartmentField(${dept.id}, 'name', this.value)"
-                    placeholder="Название отдела"
-                    rows="2">${dept.name}</textarea>
-            </td>
-            <td>
-                <input type="text" value="${dept.chief}" 
-                    onchange="updateDepartmentField(${dept.id}, 'chief', this.value)"
-                    placeholder="Имя Фамилия">
-            </td>
-            <td>
-                <input type="text" value="${dept.deputy}" 
-                    onchange="updateDepartmentField(${dept.id}, 'deputy', this.value)"
-                    placeholder="Имя Фамилия">
-            </td>
-            <td>
-                <input type="text" value="${dept.assistant}" 
-                    onchange="updateDepartmentField(${dept.id}, 'assistant', this.value)"
-                    placeholder="Имя Фамилия">
-            </td>
-            <td class="actions-cell">
-                <div class="roster-row-actions">
-                    ${index > 0 ? `
-                        <button class="roster-action-btn" onclick="moveDepartmentUp(${dept.id})" title="Поднять вверх">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="18 15 12 9 6 15"></polyline>
-                            </svg>
-                        </button>
-                    ` : ''}
-                    ${index < rosterDepartments.length - 1 ? `
-                        <button class="roster-action-btn" onclick="moveDepartmentDown(${dept.id})" title="Опустить вниз">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                    ` : ''}
-                    <button class="roster-action-btn delete" onclick="deleteDepartment(${dept.id})" title="Удалить отдел">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    grid.innerHTML = '';
+    
+    rosterPositions.forEach(pos => {
+        const card = document.createElement('div');
+        card.className = 'roster-position-card';
+        card.innerHTML = `
+            <div class="roster-card-header">
+                <div class="roster-card-rank">${pos.rank || 'Ранг'}</div>
+                <div class="roster-card-actions">
+                    <button class="roster-card-btn delete" onclick="deletePosition(${pos.id})" title="Удалить">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
                     </button>
                 </div>
-            </td>
+            </div>
+            
+            <div class="roster-card-field">
+                <label class="roster-card-label">Должность</label>
+                <input type="text" 
+                    class="roster-card-input position-input" 
+                    value="${pos.position}" 
+                    onchange="updatePositionField(${pos.id}, 'position', this.value)"
+                    placeholder="Введите должность">
+            </div>
+            
+            <div class="roster-card-field">
+                <label class="roster-card-label">Ранг</label>
+                <input type="text" 
+                    class="roster-card-input" 
+                    value="${pos.rank}" 
+                    onchange="updatePositionField(${pos.id}, 'rank', this.value)"
+                    placeholder="1-10">
+            </div>
+            
+            <div class="roster-card-field">
+                <label class="roster-card-label">Имя Фамилия</label>
+                <input type="text" 
+                    class="roster-card-input" 
+                    value="${pos.name}" 
+                    onchange="updatePositionField(${pos.id}, 'name', this.value)"
+                    placeholder="Имя Фамилия">
+            </div>
         `;
-        tbody.appendChild(tr);
+        
+        grid.appendChild(card);
     });
 }
 
@@ -22638,7 +22600,7 @@ function saveRosterData() {
     const data = {
         orgName,
         orgType,
-        departments: rosterDepartments
+        positions: rosterPositions
     };
     
     localStorage.setItem('badgrules_roster_data', JSON.stringify(data));
@@ -22666,45 +22628,55 @@ function loadRosterData() {
                 orgTypeSelect.value = data.orgType;
             }
             
-            // Восстанавливаем отделы
-            if (data.departments && data.departments.length > 0) {
-                rosterDepartments = data.departments;
-                departmentIdCounter = Math.max(...rosterDepartments.map(d => d.id)) + 1;
-                renderRosterTable();
+            // Восстанавливаем позиции
+            if (data.positions && data.positions.length > 0) {
+                rosterPositions = data.positions;
+                positionIdCounter = Math.max(...rosterPositions.map(p => p.id)) + 1;
+                renderRosterGrid();
             } else {
-                renderRosterTable();
+                renderRosterGrid();
             }
         } catch (e) {
             console.error('Ошибка загрузки данных состава:', e);
-            renderRosterTable();
+            renderRosterGrid();
         }
     } else {
-        renderRosterTable();
+        renderRosterGrid();
     }
 }
 
-function clearRoster() {
+function clearAllPositions() {
     if (confirm('Вы уверены, что хотите очистить весь состав?')) {
-        rosterDepartments = [];
-        departmentIdCounter = 1;
-        renderRosterTable();
+        rosterPositions = [];
+        positionIdCounter = 1;
+        renderRosterGrid();
         saveRosterData();
         showNotification('✅ Состав очищен', 'success');
     }
 }
 
-function copyRosterText() {
+function exportRosterAsText() {
     const orgName = document.getElementById('orgName').value;
-    let text = `${orgName}\nСостав организации\n\n`;
-    text += '═'.repeat(80) + '\n\n';
+    let text = `╔═══════════════════════════════════════════════════════╗\n`;
+    text += `║  ${orgName.toUpperCase().padEnd(53, ' ')}║\n`;
+    text += `║  СОСТАВ ОРГАНИЗАЦИИ${' '.repeat(34)}║\n`;
+    text += `╚═══════════════════════════════════════════════════════╝\n\n`;
     
-    rosterDepartments.forEach((dept, index) => {
-        text += `${index + 1}. ${dept.name || 'Отдел'}\n`;
-        text += `   Начальник (9 ранг): ${dept.chief || '-'}\n`;
-        text += `   Зам.Начальника (8 ранг): ${dept.deputy || '-'}\n`;
-        text += `   Ass.Chief (9 ранг): ${dept.assistant || '-'}\n`;
-        text += '\n';
+    // Сортируем по рангу (от высшего к низшему)
+    const sorted = [...rosterPositions].sort((a, b) => {
+        const rankA = parseInt(a.rank) || 0;
+        const rankB = parseInt(b.rank) || 0;
+        return rankB - rankA;
     });
+    
+    sorted.forEach((pos, index) => {
+        text += `${index + 1}. [Ранг ${pos.rank || '-'}] ${pos.position || 'Должность не указана'}\n`;
+        text += `   └─ ${pos.name || 'Не назначен'}\n\n`;
+    });
+    
+    text += `\n${'═'.repeat(60)}\n`;
+    text += `Всего должностей: ${rosterPositions.length}\n`;
+    text += `Создано: ${new Date().toLocaleString('ru-RU')}\n`;
     
     navigator.clipboard.writeText(text).then(() => {
         showNotification('✅ Состав скопирован в буфер обмена!', 'success');
