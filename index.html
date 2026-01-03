@@ -11200,8 +11200,372 @@
         }
 
         /* ═══════════════════════════════════════════════════════════════
-           👥 ROSTER BUILDER STYLES - CARD GRID LAYOUT
+           👥 ORG CHART CANVAS - FULLSCREEN INTERACTIVE EDITOR
            ═══════════════════════════════════════════════════════════════ */
+        
+        .org-chart-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(30, 30, 30, 1), rgba(10, 10, 10, 1));
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        /* Toolbar */
+        .org-chart-toolbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(20, 20, 20, 0.95), rgba(15, 15, 15, 0.9));
+            border-bottom: 2px solid rgba(96, 165, 250, 0.3);
+            backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 102;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .toolbar-left,
+        .toolbar-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .toolbar-center {
+            flex: 1;
+            text-align: center;
+        }
+
+        .org-chart-title-input {
+            padding: 0.75rem 1rem;
+            background: rgba(10, 10, 10, 0.8);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Manrope', sans-serif;
+            width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .org-chart-title-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+        }
+
+        .org-chart-select {
+            padding: 0.75rem 1rem;
+            background: rgba(10, 10, 10, 0.8);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'Manrope', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .org-chart-select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .org-chart-main-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .toolbar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            font-family: 'Manrope', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .toolbar-btn.primary {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            color: white;
+        }
+
+        .toolbar-btn.primary:hover {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(96, 165, 250, 0.4);
+        }
+
+        .toolbar-btn.secondary {
+            background: rgba(96, 165, 250, 0.15);
+            color: var(--accent-primary);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .toolbar-btn.secondary:hover {
+            background: rgba(96, 165, 250, 0.25);
+            border-color: var(--accent-primary);
+        }
+
+        .toolbar-btn.secondary.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-color: #10b981;
+        }
+
+        .toolbar-btn.danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 2px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .toolbar-btn.danger:hover {
+            background: rgba(239, 68, 68, 0.25);
+            border-color: #ef4444;
+        }
+
+        /* Workspace */
+        .org-chart-workspace {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            background-image: 
+                linear-gradient(rgba(96, 165, 250, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(96, 165, 250, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* SVG for connections */
+        .org-chart-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .org-chart-cards {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
+        /* Draggable Card */
+        .org-chart-card {
+            position: absolute;
+            width: 280px;
+            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(20, 20, 20, 0.9));
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            border-radius: 12px;
+            padding: 1.25rem;
+            cursor: move;
+            transition: all 0.3s ease;
+            user-select: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .org-chart-card:hover {
+            border-color: rgba(96, 165, 250, 0.6);
+            box-shadow: 
+                0 8px 30px rgba(96, 165, 250, 0.3),
+                0 0 40px rgba(96, 165, 250, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .org-chart-card.dragging {
+            opacity: 0.7;
+            cursor: grabbing;
+            z-index: 1000;
+        }
+
+        .org-chart-card.selected {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+        }
+
+        .org-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .org-card-rank {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .org-card-delete {
+            width: 28px;
+            height: 28px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 6px;
+            color: #ef4444;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .org-card-delete:hover {
+            background: rgba(239, 68, 68, 0.4);
+            transform: scale(1.1);
+        }
+
+        .org-card-field {
+            margin-bottom: 0.875rem;
+        }
+
+        .org-card-field:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .org-card-label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .org-card-input {
+            width: 100%;
+            padding: 0.625rem 0.75rem;
+            background: rgba(10, 10, 10, 0.8);
+            border: 2px solid rgba(96, 165, 250, 0.15);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: 'Manrope', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .org-card-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            background: rgba(10, 10, 10, 0.95);
+            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.15);
+        }
+
+        .org-card-input.position-input {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* Connection lines */
+        .org-connection-line {
+            stroke: rgba(96, 165, 250, 0.6);
+            stroke-width: 2;
+            fill: none;
+            pointer-events: stroke;
+            cursor: pointer;
+        }
+
+        .org-connection-line:hover {
+            stroke: rgba(96, 165, 250, 1);
+            stroke-width: 3;
+        }
+
+        .org-connection-arrow {
+            fill: rgba(96, 165, 250, 0.6);
+        }
+
+        /* Connection Mode Indicator */
+        .connection-mode-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+            z-index: 103;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mode-hint {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .org-chart-toolbar {
+                height: auto;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.75rem;
+            }
+
+            .toolbar-left,
+            .toolbar-center,
+            .toolbar-right {
+                width: 100%;
+            }
+
+            .toolbar-right {
+                flex-wrap: wrap;
+            }
+
+            .org-chart-title-input {
+                width: 100%;
+            }
+
+            .org-chart-workspace {
+                top: auto;
+                padding-top: 200px;
+            }
+
+            .org-chart-card {
+                width: 240px;
+            }
+        }
         
         .roster-builder-container {
             max-width: 1800px;
@@ -14082,118 +14446,68 @@
 
         <!-- Roster Builder Section (Создание состава) -->
         <div class="section" id="rosterSection" style="display: none;">
-            <div class="feature-content">
-                <div class="feature-header">
-                    <h1 class="feature-title">👥 Создание состава организации</h1>
-                    <p class="feature-subtitle">Создайте профессиональный состав для гос. фракций, крайма или любой организации в виде структурной сетки</p>
-                    <div class="server-badge-container">
-                        <span class="server-badge majestic">🎮 Универсальный</span>
-                        <span class="server-badge updated">📅 Обновлено: 03.01.2026</span>
+            <!-- Fullscreen Canvas Container -->
+            <div class="org-chart-canvas" id="orgChartCanvas">
+                <!-- Top Control Bar -->
+                <div class="org-chart-toolbar">
+                    <div class="toolbar-left">
+                        <input type="text" id="orgChartName" class="org-chart-title-input" placeholder="Название организации" value="LSSD">
+                        <select id="orgChartType" class="org-chart-select">
+                            <option value="gov">Государственная</option>
+                            <option value="crime">Криминальная</option>
+                            <option value="custom">Своя</option>
+                        </select>
+                    </div>
+                    
+                    <div class="toolbar-center">
+                        <h2 class="org-chart-main-title" id="orgChartMainTitle">LSSD - Структура организации</h2>
+                    </div>
+                    
+                    <div class="toolbar-right">
+                        <button class="toolbar-btn primary" onclick="addOrgCard()" title="Добавить должность">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Добавить
+                        </button>
+                        <button class="toolbar-btn secondary" onclick="toggleConnectionMode()" id="connectionModeBtn" title="Режим соединений">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                            </svg>
+                            Связи
+                        </button>
+                        <button class="toolbar-btn secondary" onclick="exportOrgChart()" title="Экспорт">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </button>
+                        <button class="toolbar-btn danger" onclick="clearOrgChart()" title="Очистить">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
-                <div class="roster-builder-container">
-                    <!-- Control Panel -->
-                    <div class="roster-controls">
-                        <div class="roster-control-row">
-                            <div class="roster-control-group">
-                                <label class="roster-label">Название организации</label>
-                                <input type="text" id="orgName" class="roster-input" placeholder="Например: LSPD, FIB, Grove Street..." value="LSSD">
-                            </div>
-                            
-                            <div class="roster-control-group">
-                                <label class="roster-label">Тип организации</label>
-                                <select id="orgType" class="roster-select" onchange="updateRosterTemplate()">
-                                    <option value="gov">Государственная фракция</option>
-                                    <option value="crime">Криминальная фракция</option>
-                                    <option value="custom">Свой вариант</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="roster-actions">
-                            <button class="roster-btn primary" onclick="addPositionCard()">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
-                                Добавить должность
-                            </button>
-                            <button class="roster-btn secondary" onclick="exportRosterAsText()">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                </svg>
-                                Экспорт
-                            </button>
-                            <button class="roster-btn danger" onclick="clearAllPositions()">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                </svg>
-                                Очистить всё
-                            </button>
-                        </div>
+                <!-- Canvas Area -->
+                <div class="org-chart-workspace" id="orgChartWorkspace">
+                    <!-- SVG for connections -->
+                    <svg class="org-chart-svg" id="orgChartSvg"></svg>
+                    
+                    <!-- Cards Container -->
+                    <div class="org-chart-cards" id="orgChartCards">
+                        <!-- Cards will be added here dynamically -->
                     </div>
+                </div>
 
-                    <!-- Roster Grid -->
-                    <div class="roster-preview" id="rosterPreview">
-                        <div class="roster-header">
-                            <h2 class="roster-org-name" id="rosterOrgName">LSSD</h2>
-                            <div class="roster-subtitle">Состав организации</div>
-                        </div>
-
-                        <div class="roster-grid" id="rosterGrid">
-                            <!-- Position cards will be added here -->
-                        </div>
-
-                        <div class="roster-empty-state" id="rosterEmptyState">
-                            <div class="empty-icon">📋</div>
-                            <h3>Состав пуст</h3>
-                            <p>Нажмите "Добавить должность" чтобы начать создание структуры организации</p>
-                        </div>
-                    </div>
-
-                    <!-- Templates Info -->
-                    <div class="roster-templates-info">
-                        <div class="template-card">
-                            <div class="template-icon">🏛️</div>
-                            <h3>Государственные фракции</h3>
-                            <p>Sheriff, Police, FIB, EMS, Government</p>
-                            <div class="template-example">
-                                <strong>Примеры должностей:</strong>
-                                <ul class="template-departments">
-                                    <li>Sheriff / Шериф</li>
-                                    <li>Deputy Sheriff / Зам.Шерифа</li>
-                                    <li>Chief of Police / Начальник полиции</li>
-                                    <li>Captain / Капитан</li>
-                                    <li>Lieutenant / Лейтенант</li>
-                                    <li>Sergeant / Сержант</li>
-                                    <li>Corporal / Капрал</li>
-                                    <li>Officer / Офицер</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="template-card">
-                            <div class="template-icon">💀</div>
-                            <h3>Криминальные фракции</h3>
-                            <p>Gangs, Mafia, Cartels</p>
-                            <div class="template-example">
-                                <strong>Примеры должностей:</strong>
-                                <ul class="template-departments">
-                                    <li>Leader / Лидер</li>
-                                    <li>Deputy Leader / Заместитель</li>
-                                    <li>Assistant Leader / Помощник</li>
-                                    <li>Underboss / Андербосс</li>
-                                    <li>Capo / Капо</li>
-                                    <li>Enforcer / Силовик</li>
-                                    <li>Soldier / Солдат</li>
-                                    <li>Associate / Ассоциат</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Connection Mode Indicator -->
+                <div class="connection-mode-indicator" id="connectionModeIndicator" style="display: none;">
+                    <span>🔗 Режим соединений активен</span>
+                    <span class="mode-hint">Нажмите на две карточки для создания связи</span>
                 </div>
             </div>
         </div>
@@ -22418,279 +22732,368 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ═══════════════════════════════════════════════════════════════
-// 👥 ROSTER BUILDER FUNCTIONS - CARD GRID SYSTEM
+// 👥 ORG CHART CANVAS - INTERACTIVE DRAG & DROP SYSTEM
 // ═══════════════════════════════════════════════════════════════
 
-let rosterPositions = [];
-let positionIdCounter = 1;
-
-// Шаблоны должностей для разных типов организаций
-const positionTemplates = {
-    gov: [
-        { position: 'Sheriff / Шериф', rank: '10', name: '' },
-        { position: 'Deputy Sheriff', rank: '9', name: '' },
-        { position: 'Chief of Police', rank: '9', name: '' },
-        { position: 'Captain', rank: '8', name: '' },
-        { position: 'Lieutenant', rank: '7', name: '' },
-        { position: 'Sergeant', rank: '6', name: '' },
-        { position: 'Corporal', rank: '5', name: '' },
-        { position: 'Senior Officer', rank: '4', name: '' },
-        { position: 'Officer', rank: '3', name: '' },
-        { position: 'Probationary Officer', rank: '2', name: '' },
-        { position: 'Cadet', rank: '1', name: '' }
-    ],
-    crime: [
-        { position: 'Leader / Лидер', rank: '10', name: '' },
-        { position: 'Deputy Leader', rank: '9', name: '' },
-        { position: 'Assistant Leader', rank: '8', name: '' },
-        { position: 'Underboss', rank: '7', name: '' },
-        { position: 'Consigliere', rank: '7', name: '' },
-        { position: 'Capo', rank: '6', name: '' },
-        { position: 'Enforcer', rank: '5', name: '' },
-        { position: 'Soldier', rank: '4', name: '' },
-        { position: 'Associate', rank: '3', name: '' },
-        { position: 'Prospect', rank: '2', name: '' },
-        { position: 'Recruit', rank: '1', name: '' }
-    ],
-    custom: []
-};
+let orgCards = [];
+let orgConnections = [];
+let cardIdCounter = 1;
+let connectionMode = false;
+let selectedCards = [];
+let draggingCard = null;
+let dragOffset = { x: 0, y: 0 };
 
 function initRosterBuilder() {
-    // Загружаем сохраненные данные
-    loadRosterData();
-    
-    // Обновляем название при изменении
-    const orgNameInput = document.getElementById('orgName');
-    if (orgNameInput) {
-        orgNameInput.addEventListener('input', (e) => {
-            const rosterOrgName = document.getElementById('rosterOrgName');
-            if (rosterOrgName) {
-                rosterOrgName.textContent = e.target.value || 'LSSD';
-            }
-            saveRosterData();
-        });
+    loadOrgChartData();
+    setupEventListeners();
+    updateMainTitle();
+}
+
+function setupEventListeners() {
+    const titleInput = document.getElementById('orgChartName');
+    if (titleInput) {
+        titleInput.addEventListener('input', updateMainTitle);
     }
 }
 
-function updateRosterTemplate() {
-    const orgType = document.getElementById('orgType').value;
-    const template = positionTemplates[orgType];
-    
-    if (template && template.length > 0) {
-        if (confirm('Загрузить шаблон? Это заменит текущие данные.')) {
-            // Очищаем текущий состав
-            rosterPositions = [];
-            positionIdCounter = 1;
-            
-            // Загружаем шаблон
-            template.forEach(pos => {
-                rosterPositions.push({
-                    id: positionIdCounter++,
-                    position: pos.position,
-                    rank: pos.rank,
-                    name: pos.name
-                });
-            });
-            
-            renderRosterGrid();
-            saveRosterData();
-        }
+function updateMainTitle() {
+    const name = document.getElementById('orgChartName')?.value || 'LSSD';
+    const mainTitle = document.getElementById('orgChartMainTitle');
+    if (mainTitle) {
+        mainTitle.textContent = `${name} - Структура организации`;
     }
 }
 
-function addPositionCard() {
-    const newPosition = {
-        id: positionIdCounter++,
+function addOrgCard() {
+    const workspace = document.getElementById('orgChartWorkspace');
+    if (!workspace) return;
+    
+    const card = {
+        id: cardIdCounter++,
+        x: 100 + (Math.random() * 300),
+        y: 100 + (Math.random() * 300),
         position: '',
         rank: '',
         name: ''
     };
     
-    rosterPositions.push(newPosition);
-    renderRosterGrid();
-    saveRosterData();
+    orgCards.push(card);
+    renderOrgChart();
+    saveOrgChartData();
 }
 
-function deletePosition(id) {
+function deleteOrgCard(id) {
     if (confirm('Удалить эту должность?')) {
-        rosterPositions = rosterPositions.filter(pos => pos.id !== id);
-        renderRosterGrid();
-        saveRosterData();
+        orgCards = orgCards.filter(c => c.id !== id);
+        orgConnections = orgConnections.filter(conn => conn.from !== id && conn.to !== id);
+        renderOrgChart();
+        saveOrgChartData();
     }
 }
 
-function updatePositionField(id, field, value) {
-    const position = rosterPositions.find(p => p.id === id);
-    if (position) {
-        position[field] = value;
-        saveRosterData();
+function updateCardField(id, field, value) {
+    const card = orgCards.find(c => c.id === id);
+    if (card) {
+        card[field] = value;
+        saveOrgChartData();
     }
 }
 
-function renderRosterGrid() {
-    const grid = document.getElementById('rosterGrid');
-    const emptyState = document.getElementById('rosterEmptyState');
+function toggleConnectionMode() {
+    connectionMode = !connectionMode;
+    selectedCards = [];
     
-    if (!grid || !emptyState) return;
+    const btn = document.getElementById('connectionModeBtn');
+    const indicator = document.getElementById('connectionModeIndicator');
     
-    // Показываем/скрываем пустое состояние
-    if (rosterPositions.length === 0) {
-        grid.style.display = 'none';
-        emptyState.classList.add('show');
-        return;
+    if (connectionMode) {
+        btn?.classList.add('active');
+        if (indicator) indicator.style.display = 'flex';
     } else {
-        grid.style.display = 'grid';
-        emptyState.classList.remove('show');
+        btn?.classList.remove('active');
+        if (indicator) indicator.style.display = 'none';
     }
     
-    grid.innerHTML = '';
+    renderOrgChart();
+}
+
+function handleCardClick(id) {
+    if (!connectionMode) return;
     
-    rosterPositions.forEach(pos => {
-        const card = document.createElement('div');
-        card.className = 'roster-position-card';
-        card.innerHTML = `
-            <div class="roster-card-header">
-                <div class="roster-card-rank">${pos.rank || 'Ранг'}</div>
-                <div class="roster-card-actions">
-                    <button class="roster-card-btn delete" onclick="deletePosition(${pos.id})" title="Удалить">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
+    if (selectedCards.includes(id)) {
+        selectedCards = selectedCards.filter(cid => cid !== id);
+    } else {
+        selectedCards.push(id);
+    }
+    
+    if (selectedCards.length === 2) {
+        const [from, to] = selectedCards;
+        orgConnections.push({ from, to });
+        selectedCards = [];
+        saveOrgChartData();
+    }
+    
+    renderOrgChart();
+}
+
+function startDrag(e, id) {
+    if (connectionMode) return;
+    
+    draggingCard = id;
+    const card = orgCards.find(c => c.id === id);
+    const cardElement = e.currentTarget;
+    const rect = cardElement.getBoundingClientRect();
+    
+    dragOffset = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+    };
+    
+    cardElement.classList.add('dragging');
+    
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopDrag);
+}
+
+function onDrag(e) {
+    if (!draggingCard) return;
+    
+    const workspace = document.getElementById('orgChartWorkspace');
+    const workspaceRect = workspace.getBoundingClientRect();
+    
+    const card = orgCards.find(c => c.id === draggingCard);
+    if (card) {
+        card.x = e.clientX - workspaceRect.left - dragOffset.x;
+        card.y = e.clientY - workspaceRect.top - dragOffset.y;
+        
+        // Constrain to workspace
+        card.x = Math.max(0, Math.min(card.x, workspaceRect.width - 280));
+        card.y = Math.max(0, Math.min(card.y, workspaceRect.height - 200));
+        
+        renderOrgChart();
+    }
+}
+
+function stopDrag() {
+    if (draggingCard) {
+        const cardEl = document.querySelector(`[data-card-id="${draggingCard}"]`);
+        cardEl?.classList.remove('dragging');
+        draggingCard = null;
+        saveOrgChartData();
+    }
+    
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('mouseup', stopDrag);
+}
+
+function renderOrgChart() {
+    const cardsContainer = document.getElementById('orgChartCards');
+    const svg = document.getElementById('orgChartSvg');
+    
+    if (!cardsContainer || !svg) return;
+    
+    // Clear
+    cardsContainer.innerHTML = '';
+    svg.innerHTML = '';
+    
+    // Render connections
+    orgConnections.forEach(conn => {
+        const fromCard = orgCards.find(c => c.id === conn.from);
+        const toCard = orgCards.find(c => c.id === conn.to);
+        
+        if (fromCard && toCard) {
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            const fromX = fromCard.x + 140;
+            const fromY = fromCard.y + 100;
+            const toX = toCard.x + 140;
+            const toY = toCard.y;
+            
+            const d = `M ${fromX} ${fromY} Q ${fromX} ${(fromY + toY) / 2}, ${toX} ${toY}`;
+            line.setAttribute('d', d);
+            line.setAttribute('class', 'org-connection-line');
+            line.onclick = () => deleteConnection(conn.from, conn.to);
+            svg.appendChild(line);
+        }
+    });
+    
+    // Render cards
+    orgCards.forEach(card => {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'org-chart-card';
+        cardEl.setAttribute('data-card-id', card.id);
+        cardEl.style.left = card.x + 'px';
+        cardEl.style.top = card.y + 'px';
+        
+        if (selectedCards.includes(card.id)) {
+            cardEl.classList.add('selected');
+        }
+        
+        cardEl.innerHTML = `
+            <div class="org-card-header">
+                <div class="org-card-rank">${card.rank || 'Ранг'}</div>
+                <div class="org-card-delete" onclick="deleteOrgCard(${card.id})">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
                 </div>
             </div>
             
-            <div class="roster-card-field">
-                <label class="roster-card-label">Должность</label>
-                <input type="text" 
-                    class="roster-card-input position-input" 
-                    value="${pos.position}" 
-                    onchange="updatePositionField(${pos.id}, 'position', this.value)"
-                    placeholder="Введите должность">
+            <div class="org-card-field">
+                <label class="org-card-label">Должность</label>
+                <input type="text" class="org-card-input position-input" value="${card.position}" 
+                    onchange="updateCardField(${card.id}, 'position', this.value)"
+                    placeholder="Введите должность"
+                    onclick="event.stopPropagation()">
             </div>
             
-            <div class="roster-card-field">
-                <label class="roster-card-label">Ранг</label>
-                <input type="text" 
-                    class="roster-card-input" 
-                    value="${pos.rank}" 
-                    onchange="updatePositionField(${pos.id}, 'rank', this.value)"
-                    placeholder="1-10">
+            <div class="org-card-field">
+                <label class="org-card-label">Ранг</label>
+                <input type="text" class="org-card-input" value="${card.rank}" 
+                    onchange="updateCardField(${card.id}, 'rank', this.value)"
+                    placeholder="1-10"
+                    onclick="event.stopPropagation()">
             </div>
             
-            <div class="roster-card-field">
-                <label class="roster-card-label">Имя Фамилия</label>
-                <input type="text" 
-                    class="roster-card-input" 
-                    value="${pos.name}" 
-                    onchange="updatePositionField(${pos.id}, 'name', this.value)"
-                    placeholder="Имя Фамилия">
+            <div class="org-card-field">
+                <label class="org-card-label">Имя Фамилия</label>
+                <input type="text" class="org-card-input" value="${card.name}" 
+                    onchange="updateCardField(${card.id}, 'name', this.value)"
+                    placeholder="Имя Фамилия"
+                    onclick="event.stopPropagation()">
             </div>
         `;
         
-        grid.appendChild(card);
+        cardEl.addEventListener('mousedown', (e) => {
+            if (e.target.tagName !== 'INPUT') {
+                e.preventDefault();
+                if (connectionMode) {
+                    handleCardClick(card.id);
+                } else {
+                    startDrag(e, card.id);
+                }
+            }
+        });
+        
+        cardsContainer.appendChild(cardEl);
     });
 }
 
-function saveRosterData() {
-    const orgName = document.getElementById('orgName')?.value || 'LSSD';
-    const orgType = document.getElementById('orgType')?.value || 'gov';
+function deleteConnection(from, to) {
+    if (confirm('Удалить эту связь?')) {
+        orgConnections = orgConnections.filter(conn => !(conn.from === from && conn.to === to));
+        renderOrgChart();
+        saveOrgChartData();
+    }
+}
+
+function saveOrgChartData() {
+    const orgName = document.getElementById('orgChartName')?.value || 'LSSD';
+    const orgType = document.getElementById('orgChartType')?.value || 'gov';
     
     const data = {
         orgName,
         orgType,
-        positions: rosterPositions
+        cards: orgCards,
+        connections: orgConnections
     };
     
-    localStorage.setItem('badgrules_roster_data', JSON.stringify(data));
+    localStorage.setItem('badgrules_orgchart_data', JSON.stringify(data));
 }
 
-function loadRosterData() {
-    const saved = localStorage.getItem('badgrules_roster_data');
+function loadOrgChartData() {
+    const saved = localStorage.getItem('badgrules_orgchart_data');
     if (saved) {
         try {
             const data = JSON.parse(saved);
             
-            // Восстанавливаем название
-            const orgNameInput = document.getElementById('orgName');
-            const rosterOrgName = document.getElementById('rosterOrgName');
-            if (orgNameInput && data.orgName) {
-                orgNameInput.value = data.orgName;
-            }
-            if (rosterOrgName && data.orgName) {
-                rosterOrgName.textContent = data.orgName;
+            if (data.orgName) {
+                const nameInput = document.getElementById('orgChartName');
+                if (nameInput) nameInput.value = data.orgName;
             }
             
-            // Восстанавливаем тип
-            const orgTypeSelect = document.getElementById('orgType');
-            if (orgTypeSelect && data.orgType) {
-                orgTypeSelect.value = data.orgType;
+            if (data.orgType) {
+                const typeSelect = document.getElementById('orgChartType');
+                if (typeSelect) typeSelect.value = data.orgType;
             }
             
-            // Восстанавливаем позиции
-            if (data.positions && data.positions.length > 0) {
-                rosterPositions = data.positions;
-                positionIdCounter = Math.max(...rosterPositions.map(p => p.id)) + 1;
-                renderRosterGrid();
-            } else {
-                renderRosterGrid();
+            if (data.cards) {
+                orgCards = data.cards;
+                cardIdCounter = Math.max(...orgCards.map(c => c.id), 0) + 1;
             }
+            
+            if (data.connections) {
+                orgConnections = data.connections;
+            }
+            
+            updateMainTitle();
+            renderOrgChart();
         } catch (e) {
-            console.error('Ошибка загрузки данных состава:', e);
-            renderRosterGrid();
+            console.error('Error loading org chart:', e);
         }
-    } else {
-        renderRosterGrid();
     }
 }
 
-function clearAllPositions() {
-    if (confirm('Вы уверены, что хотите очистить весь состав?')) {
-        rosterPositions = [];
-        positionIdCounter = 1;
-        renderRosterGrid();
-        saveRosterData();
-        showNotification('✅ Состав очищен', 'success');
+function clearOrgChart() {
+    if (confirm('Вы уверены, что хотите очистить всю структуру?')) {
+        orgCards = [];
+        orgConnections = [];
+        cardIdCounter = 1;
+        renderOrgChart();
+        saveOrgChartData();
+        showNotification('✅ Структура очищена', 'success');
     }
 }
 
-function exportRosterAsText() {
-    const orgName = document.getElementById('orgName').value;
+function exportOrgChart() {
+    const orgName = document.getElementById('orgChartName')?.value || 'LSSD';
     let text = `╔═══════════════════════════════════════════════════════╗\n`;
     text += `║  ${orgName.toUpperCase().padEnd(53, ' ')}║\n`;
-    text += `║  СОСТАВ ОРГАНИЗАЦИИ${' '.repeat(34)}║\n`;
+    text += `║  ОРГАНИЗАЦИОННАЯ СТРУКТУРА${' '.repeat(27)}║\n`;
     text += `╚═══════════════════════════════════════════════════════╝\n\n`;
     
-    // Сортируем по рангу (от высшего к низшему)
-    const sorted = [...rosterPositions].sort((a, b) => {
+    const sorted = [...orgCards].sort((a, b) => {
         const rankA = parseInt(a.rank) || 0;
         const rankB = parseInt(b.rank) || 0;
         return rankB - rankA;
     });
     
-    sorted.forEach((pos, index) => {
-        text += `${index + 1}. [Ранг ${pos.rank || '-'}] ${pos.position || 'Должность не указана'}\n`;
-        text += `   └─ ${pos.name || 'Не назначен'}\n\n`;
+    sorted.forEach((card, index) => {
+        text += `${index + 1}. [Ранг ${card.rank || '-'}] ${card.position || 'Должность не указана'}\n`;
+        text += `   └─ ${card.name || 'Не назначен'}\n`;
+        
+        const connections = orgConnections.filter(c => c.from === card.id);
+        if (connections.length > 0) {
+            text += `   Подчиненные: `;
+            connections.forEach((conn, i) => {
+                const toCard = orgCards.find(c => c.id === conn.to);
+                if (toCard) {
+                    text += `${toCard.position || 'N/A'}`;
+                    if (i < connections.length - 1) text += ', ';
+                }
+            });
+            text += '\n';
+        }
+        text += '\n';
     });
     
     text += `\n${'═'.repeat(60)}\n`;
-    text += `Всего должностей: ${rosterPositions.length}\n`;
+    text += `Всего должностей: ${orgCards.length}\n`;
+    text += `Связей: ${orgConnections.length}\n`;
     text += `Создано: ${new Date().toLocaleString('ru-RU')}\n`;
     
     navigator.clipboard.writeText(text).then(() => {
-        showNotification('✅ Состав скопирован в буфер обмена!', 'success');
+        showNotification('✅ Структура скопирована!', 'success');
     }).catch(() => {
         showNotification('❌ Ошибка копирования', 'error');
     });
 }
 
 function showNotification(message, type = 'info') {
-    // Создаем простое уведомление
     const notification = document.createElement('div');
     notification.style.cssText = `
         position: fixed;
-        top: 20px;
+        top: 90px;
         right: 20px;
         padding: 1rem 1.5rem;
         background: ${type === 'success' ? 'rgba(34, 197, 94, 0.9)' : 
