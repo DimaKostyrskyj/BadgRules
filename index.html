@@ -11279,6 +11279,43 @@
             align-items: center;
         }
 
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(10, 10, 10, 0.6);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .zoom-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(96, 165, 250, 0.15);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-radius: 6px;
+            color: var(--accent-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(96, 165, 250, 0.3);
+            transform: scale(1.05);
+        }
+
+        .zoom-level {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            min-width: 50px;
+            text-align: center;
+        }
+
         .org-chart-title-input-center {
             padding: 0.75rem 1.5rem;
             background: rgba(10, 10, 10, 0.8);
@@ -22852,8 +22889,140 @@ let selectedCards = [];
 let draggingCard = null;
 let dragOffset = { x: 0, y: 0 };
 
+// Zoom and Pan variables
+let zoomLevel = 1;
+let panX = 0;
+let panY = 0;
+let isPanning = false;
+let panStartX = 0;
+let panStartY = 0;
+
 function initRosterBuilder() {
     loadOrgChartData();
+    setupZoomAndPan();
+}
+
+function setupZoomAndPan() {
+    const workspace = document.getElementById('orgChartWorkspace');
+    if (!workspace) return;
+    
+    // Zoom with mouse wheel
+    workspace.addEventListener('wheel', (e) => {
+        if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            
+            const delta = e.deltaY > 0 ? 0.9 : 1.1;
+            const newZoom = Math.min(Math.max(zoomLevel * delta, 0.5), 3);
+            
+            // Calculate zoom center
+            const rect = workspace.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            
+            // Adjust pan to zoom towards mouse
+            panX = mouseX - (mouseX - panX) * (newZoom / zoomLevel);
+            panY = mouseY - (mouseY - panY) * (newZoom / zoomLevel);
+            
+            zoomLevel = newZoom;
+            applyTransform();
+        }
+    }, { passive: false });
+    
+    // Pan with middle mouse or space+drag
+    workspace.addEventListener('mousedown', (e) => {
+        if (e.button === 1 || (e.button === 0 && e.spaceKey)) {
+            e.preventDefault();
+            isPanning = true;
+            panStartX = e.clientX - panX;
+            panStartY = e.clientY - panY;
+            workspace.style.cursor = 'grabbing';
+        }
+    });
+    
+    workspace.addEventListener('mousemove', (e) => {
+        if (isPanning) {
+            panX = e.clientX - panStartX;
+            panY = e.clientY - panStartY;
+            applyTransform();
+        }
+    });
+    
+    workspace.addEventListener('mouseup', (e) => {
+        if (e.button === 1) {
+            isPanning = false;
+            workspace.style.cursor = '';
+        }
+    });
+    
+    workspace.addEventListener('mouseleave', () => {
+        isPanning = false;
+        workspace.style.cursor = '';
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        const activeSection = document.querySelector('#rosterSection.active');
+        if (!activeSection) return;
+        
+        // Reset zoom with 0 key
+        if (e.key === '0' && (e.ctrlKey || e.metaKey)) {
+            e.preventDefault();
+            zoomLevel = 1;
+            panX = 0;
+            panY = 0;
+            applyTransform();
+        }
+        
+        // Zoom in with +
+        if (e.key === '+' || e.key === '=') {
+            e.preventDefault();
+            zoomLevel = Math.min(zoomLevel * 1.1, 3);
+            applyTransform();
+        }
+        
+        // Zoom out with -
+        if (e.key === '-' || e.key === '_') {
+            e.preventDefault();
+            zoomLevel = Math.max(zoomLevel * 0.9, 0.5);
+            applyTransform();
+        }
+    });
+}
+
+function applyTransform() {
+    const cardsContainer = document.getElementById('orgChartCards');
+    const svg = document.getElementById('orgChartSvg');
+    
+    if (cardsContainer) {
+        cardsContainer.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+        cardsContainer.style.transformOrigin = '0 0';
+    }
+    
+    if (svg) {
+        svg.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+        svg.style.transformOrigin = '0 0';
+    }
+}
+
+function adjustZoom(delta) {
+    zoomLevel = Math.min(Math.max(zoomLevel + delta, 0.5), 3);
+    applyTransform();
+    updateZoomDisplay();
+}
+
+function resetZoom() {
+    zoomLevel = 1;
+    panX = 0;
+    panY = 0;
+    applyTransform();
+    updateZoomDisplay();
+}
+
+function updateZoomDisplay() {
+    const zoomDisplay = document.getElementById('zoomLevel');
+    if (zoomDisplay) {
+        zoomDisplay.textContent = Math.round(zoomLevel * 100) + '%';
+    }
 }
 
 function closeOrgChart() {
@@ -22985,10 +23154,13 @@ function startDrag(e, id) {
     const card = orgCards.find(c => c.id === id);
     const cardElement = e.currentTarget;
     const rect = cardElement.getBoundingClientRect();
+    const workspace = document.getElementById('orgChartWorkspace');
+    const workspaceRect = workspace.getBoundingClientRect();
     
+    // Account for zoom and pan
     dragOffset = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
+        x: (e.clientX - rect.left) / zoomLevel,
+        y: (e.clientY - rect.top) / zoomLevel
     };
     
     cardElement.classList.add('dragging');
@@ -23005,12 +23177,15 @@ function onDrag(e) {
     
     const card = orgCards.find(c => c.id === draggingCard);
     if (card) {
-        card.x = e.clientX - workspaceRect.left - dragOffset.x;
-        card.y = e.clientY - workspaceRect.top - dragOffset.y;
+        // Account for zoom and pan when dragging
+        card.x = (e.clientX - workspaceRect.left - panX) / zoomLevel - dragOffset.x;
+        card.y = (e.clientY - workspaceRect.top - panY) / zoomLevel - dragOffset.y;
         
-        // Constrain to workspace
-        card.x = Math.max(0, Math.min(card.x, workspaceRect.width - 280));
-        card.y = Math.max(0, Math.min(card.y, workspaceRect.height - 200));
+        // Constrain to workspace (accounting for zoom)
+        const maxX = (workspaceRect.width / zoomLevel) - 280;
+        const maxY = (workspaceRect.height / zoomLevel) - 200;
+        card.x = Math.max(0, Math.min(card.x, maxX));
+        card.y = Math.max(0, Math.min(card.y, maxY));
         
         renderOrgChart();
     }
@@ -23038,23 +23213,76 @@ function renderOrgChart() {
     cardsContainer.innerHTML = '';
     svg.innerHTML = '';
     
-    // Render connections
+    // Render connections with beautiful curves
     orgConnections.forEach(conn => {
         const fromCard = orgCards.find(c => c.id === conn.from);
         const toCard = orgCards.find(c => c.id === conn.to);
         
         if (fromCard && toCard) {
-            const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            const fromX = fromCard.x + 140;
-            const fromY = fromCard.y + 100;
-            const toX = toCard.x + 140;
-            const toY = toCard.y;
+            // Calculate connection points
+            const fromX = fromCard.x + 140; // center of card
+            const fromY = fromCard.y + 200; // bottom of card
+            const toX = toCard.x + 140; // center of card
+            const toY = toCard.y; // top of card
             
-            const d = `M ${fromX} ${fromY} Q ${fromX} ${(fromY + toY) / 2}, ${toX} ${toY}`;
+            // Create smooth curved path
+            const midY = (fromY + toY) / 2;
+            const curve = Math.abs(fromY - toY) / 3;
+            
+            // Quadratic curve for smoother look
+            const d = `M ${fromX} ${fromY} C ${fromX} ${fromY + curve}, ${toX} ${toY - curve}, ${toX} ${toY}`;
+            
+            // Create gradient for line
+            const gradientId = `gradient-${conn.from}-${conn.to}`;
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const gradient = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+            gradient.setAttribute('id', gradientId);
+            gradient.setAttribute('gradientUnits', 'userSpaceOnUse');
+            gradient.setAttribute('x1', fromX);
+            gradient.setAttribute('y1', fromY);
+            gradient.setAttribute('x2', toX);
+            gradient.setAttribute('y2', toY);
+            
+            const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop1.setAttribute('offset', '0%');
+            stop1.setAttribute('style', 'stop-color:rgba(96, 165, 250, 0.8);stop-opacity:1');
+            
+            const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
+            stop2.setAttribute('offset', '100%');
+            stop2.setAttribute('style', 'stop-color:rgba(59, 130, 246, 0.6);stop-opacity:1');
+            
+            gradient.appendChild(stop1);
+            gradient.appendChild(stop2);
+            defs.appendChild(gradient);
+            svg.appendChild(defs);
+            
+            // Create line
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             line.setAttribute('d', d);
+            line.setAttribute('stroke', `url(#${gradientId})`);
+            line.setAttribute('stroke-width', '3');
+            line.setAttribute('fill', 'none');
             line.setAttribute('class', 'org-connection-line');
+            line.style.filter = 'drop-shadow(0 0 8px rgba(96, 165, 250, 0.5))';
             line.onclick = () => deleteConnection(conn.from, conn.to);
             svg.appendChild(line);
+            
+            // Add arrow at the end
+            const arrowSize = 10;
+            const angle = Math.atan2(toY - fromY, toX - fromX);
+            const arrowX = toX;
+            const arrowY = toY;
+            
+            const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            const arrowPoints = [
+                [arrowX, arrowY],
+                [arrowX - arrowSize * Math.cos(angle - Math.PI / 6), arrowY - arrowSize * Math.sin(angle - Math.PI / 6)],
+                [arrowX - arrowSize * Math.cos(angle + Math.PI / 6), arrowY - arrowSize * Math.sin(angle + Math.PI / 6)]
+            ];
+            arrow.setAttribute('points', arrowPoints.map(p => p.join(',')).join(' '));
+            arrow.setAttribute('fill', 'rgba(96, 165, 250, 0.8)');
+            arrow.setAttribute('class', 'org-connection-arrow');
+            svg.appendChild(arrow);
         }
     });
     
