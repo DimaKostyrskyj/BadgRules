@@ -11487,7 +11487,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
+            cursor: move;
+            user-select: none;
         }
 
         .org-department:hover {
@@ -11495,16 +11496,19 @@
             background: linear-gradient(135deg, rgba(96, 165, 250, 0.12), rgba(59, 130, 246, 0.08));
         }
 
+        .org-department.dragging {
+            opacity: 0.8;
+            cursor: grabbing;
+            z-index: 100020;
+            transform: scale(1.05);
+            box-shadow: 
+                0 20px 60px rgba(96, 165, 250, 0.4),
+                0 0 80px rgba(96, 165, 250, 0.2);
+        }
+
         .org-department.resizing {
             border-style: solid;
             border-color: var(--accent-primary);
-        }
-
-        .department-drag-area {
-            position: absolute;
-            inset: 0;
-            cursor: move;
-            z-index: 1;
         }
 
         .department-title-simple {
@@ -11521,8 +11525,7 @@
             width: 100%;
             cursor: text;
             transition: all 0.2s ease;
-            position: relative;
-            z-index: 2;
+            pointer-events: auto;
         }
 
         .department-title-simple:hover {
@@ -11547,7 +11550,7 @@
             border-radius: 3px;
             cursor: nwse-resize;
             transition: all 0.2s ease;
-            z-index: 3;
+            pointer-events: auto;
         }
 
         .department-resize-handle:hover {
@@ -23437,16 +23440,29 @@ function updateDepartmentField(id, field, value) {
 }
 
 function startDepartmentDrag(e, deptId) {
-    if (e.target.closest('.department-resize-handle')) return;
-    
     e.preventDefault();
+    e.stopPropagation();
+    
     const dept = departments.find(d => d.id === deptId);
     if (!dept) return;
     
     draggingDepartment = deptId;
-    const rect = e.currentTarget.getBoundingClientRect();
-    dragOffset.x = (e.clientX - rect.left) / zoomLevel;
-    dragOffset.y = (e.clientY - rect.top) / zoomLevel;
+    
+    const workspace = document.getElementById('orgChartWorkspace');
+    const workspaceRect = workspace.getBoundingClientRect();
+    const deptEl = document.querySelector(`[data-dept-id="${deptId}"]`);
+    const rect = deptEl.getBoundingClientRect();
+    
+    // Calculate offset from department position
+    dragOffset = {
+        x: (e.clientX - rect.left) / zoomLevel,
+        y: (e.clientY - rect.top) / zoomLevel
+    };
+    
+    deptEl.classList.add('dragging');
+    
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopDrag);
 }
 
 function startDepartmentResize(e, deptId) {
@@ -23461,6 +23477,9 @@ function startDepartmentResize(e, deptId) {
     resizeStartSize.height = dept.height;
     dragOffset.x = e.clientX / zoomLevel;
     dragOffset.y = e.clientY / zoomLevel;
+    
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopDrag);
 }
 
 function changeDepartmentColor(id, color) {
@@ -23674,6 +23693,8 @@ function stopDrag() {
     }
     
     if (draggingDepartment) {
+        const deptEl = document.querySelector(`[data-dept-id="${draggingDepartment}"]`);
+        deptEl?.classList.remove('dragging');
         draggingDepartment = null;
         saveOrgChartData();
     }
@@ -23701,9 +23722,15 @@ function renderOrgChart() {
     departments.forEach(dept => {
         const deptEl = document.createElement('div');
         deptEl.className = 'org-department';
+        deptEl.setAttribute('data-dept-id', dept.id);
+        
         if (resizingDepartment === dept.id) {
             deptEl.classList.add('resizing');
         }
+        if (draggingDepartment === dept.id) {
+            deptEl.classList.add('dragging');
+        }
+        
         deptEl.style.left = dept.x + 'px';
         deptEl.style.top = dept.y + 'px';
         deptEl.style.width = dept.width + 'px';
@@ -23711,17 +23738,37 @@ function renderOrgChart() {
         deptEl.style.borderColor = dept.color;
         
         deptEl.innerHTML = `
-            <div class="department-drag-area" onmousedown="event.stopPropagation(); startDepartmentDrag(event, ${dept.id})"></div>
             <input type="text" class="department-title-simple" value="${dept.title}" 
                 onchange="updateDepartmentField(${dept.id}, 'title', this.value)"
-                onclick="event.stopPropagation()"
                 placeholder="Название отдела">
-            <div class="department-resize-handle bottom-right" 
-                onmousedown="event.stopPropagation(); startDepartmentResize(event, ${dept.id})">
-            </div>
+            <div class="department-resize-handle bottom-right"></div>
         `;
         
-        // Right click menu for department
+        const input = deptEl.querySelector('.department-title-simple');
+        const resizeHandle = deptEl.querySelector('.department-resize-handle');
+        
+        // Input click - edit mode
+        input.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        
+        // Resize handle
+        resizeHandle.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            startDepartmentResize(e, dept.id);
+        });
+        
+        // Department drag
+        deptEl.addEventListener('mousedown', (e) => {
+            if (e.target.tagName === 'INPUT') return;
+            if (e.target.closest('.department-resize-handle')) return;
+            
+            e.preventDefault();
+            startDepartmentDrag(e, dept.id);
+        });
+        
+        // Right click to delete
         deptEl.addEventListener('contextmenu', (e) => {
             e.preventDefault();
             if (confirm('Удалить этот отдел?')) {
