@@ -11476,17 +11476,18 @@
             position: absolute;
             background: linear-gradient(135deg, rgba(96, 165, 250, 0.08), rgba(59, 130, 246, 0.05));
             border: 2px dashed rgba(96, 165, 250, 0.4);
-            border-radius: 16px;
-            padding: 1rem;
-            min-width: 400px;
-            min-height: 300px;
+            border-radius: 8px;
+            padding: 0;
+            min-width: 150px;
+            min-height: 40px;
+            max-height: 60px;
             z-index: 100005;
-            cursor: move;
             backdrop-filter: blur(5px);
             transition: all 0.3s ease;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
+            position: relative;
         }
 
         .org-department:hover {
@@ -11499,11 +11500,18 @@
             border-color: var(--accent-primary);
         }
 
+        .department-drag-area {
+            position: absolute;
+            inset: 0;
+            cursor: move;
+            z-index: 1;
+        }
+
         .department-title-simple {
             background: transparent;
             border: none;
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 700;
             font-family: 'Manrope', sans-serif;
             text-transform: uppercase;
@@ -11513,29 +11521,33 @@
             width: 100%;
             cursor: text;
             transition: all 0.2s ease;
+            position: relative;
+            z-index: 2;
         }
 
         .department-title-simple:hover {
             background: rgba(96, 165, 250, 0.1);
-            border-radius: 6px;
+            border-radius: 4px;
         }
 
         .department-title-simple:focus {
             outline: none;
             background: rgba(96, 165, 250, 0.15);
-            border-radius: 6px;
+            border-radius: 4px;
             box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.3);
+            cursor: text;
         }
 
         .department-resize-handle {
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             background: rgba(96, 165, 250, 0.4);
             border: 2px solid var(--accent-primary);
-            border-radius: 4px;
+            border-radius: 3px;
             cursor: nwse-resize;
             transition: all 0.2s ease;
+            z-index: 3;
         }
 
         .department-resize-handle:hover {
@@ -11544,8 +11556,8 @@
         }
 
         .department-resize-handle.bottom-right {
-            bottom: -10px;
-            right: -10px;
+            bottom: -8px;
+            right: -8px;
         }
 
 
@@ -23395,9 +23407,9 @@ function addDepartment() {
         id: departmentIdCounter++,
         x: 100 + (departments.length * 50),
         y: 100 + (departments.length * 50),
-        width: 450,
-        height: 350,
-        title: 'Новый отдел',
+        width: 200,
+        height: 50,
+        title: 'Отдел',
         color: '#60a5fa'
     };
     
@@ -23645,8 +23657,8 @@ function onDrag(e) {
             const deltaX = (e.clientX / zoomLevel) - dragOffset.x;
             const deltaY = (e.clientY / zoomLevel) - dragOffset.y;
             
-            dept.width = Math.max(300, resizeStartSize.width + deltaX);
-            dept.height = Math.max(200, resizeStartSize.height + deltaY);
+            dept.width = Math.max(150, resizeStartSize.width + deltaX);
+            dept.height = Math.max(40, Math.min(60, resizeStartSize.height + deltaY));
             
             renderOrgChart();
         }
@@ -23699,12 +23711,13 @@ function renderOrgChart() {
         deptEl.style.borderColor = dept.color;
         
         deptEl.innerHTML = `
+            <div class="department-drag-area" onmousedown="event.stopPropagation(); startDepartmentDrag(event, ${dept.id})"></div>
             <input type="text" class="department-title-simple" value="${dept.title}" 
                 onchange="updateDepartmentField(${dept.id}, 'title', this.value)"
                 onclick="event.stopPropagation()"
                 placeholder="Название отдела">
             <div class="department-resize-handle bottom-right" 
-                onmousedown="startDepartmentResize(event, ${dept.id})">
+                onmousedown="event.stopPropagation(); startDepartmentResize(event, ${dept.id})">
             </div>
         `;
         
@@ -23713,13 +23726,6 @@ function renderOrgChart() {
             e.preventDefault();
             if (confirm('Удалить этот отдел?')) {
                 deleteDepartment(dept.id);
-            }
-        });
-        
-        deptEl.addEventListener('mousedown', (e) => {
-            if (!e.target.closest('.department-resize-handle') && 
-                !e.target.closest('input')) {
-                startDepartmentDrag(e, dept.id);
             }
         });
         
