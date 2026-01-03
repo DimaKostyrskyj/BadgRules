@@ -11210,17 +11210,20 @@
             right: 0;
             bottom: 0;
             background: radial-gradient(circle at 50% 50%, rgba(30, 30, 30, 1), rgba(10, 10, 10, 1));
-            z-index: 10000;
+            z-index: 99999;
             overflow: hidden;
         }
 
-        /* Hide main navigation when org chart is active */
-        #rosterSection:not([style*="display: none"]) ~ * .navbar,
-        #rosterSection:not([style*="display: none"]) ~ * .main-nav,
-        body:has(#rosterSection:not([style*="display: none"])) .navbar,
-        body:has(#rosterSection:not([style*="display: none"])) .main-nav,
-        body:has(#rosterSection:not([style*="display: none"])) nav {
+        /* Force hide ALL navigation elements when org chart is visible */
+        body.org-chart-active nav,
+        body.org-chart-active .navbar,
+        body.org-chart-active .main-nav,
+        body.org-chart-active header,
+        body.org-chart-active .header {
             display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
         }
 
         /* Toolbar */
@@ -11237,7 +11240,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 2rem;
-            z-index: 102;
+            z-index: 100002;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
@@ -11366,6 +11369,7 @@
                 linear-gradient(rgba(96, 165, 250, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(96, 165, 250, 0.05) 1px, transparent 1px);
             background-size: 50px 50px;
+            z-index: 100001;
         }
 
         /* SVG for connections */
@@ -11376,14 +11380,14 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 100010;
         }
 
         .org-chart-cards {
             position: relative;
             width: 100%;
             height: 100%;
-            z-index: 2;
+            z-index: 100011;
         }
 
         /* Draggable Card */
@@ -11398,6 +11402,7 @@
             transition: all 0.3s ease;
             user-select: none;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            z-index: 100012;
         }
 
         .org-chart-card:hover {
@@ -11411,12 +11416,13 @@
         .org-chart-card.dragging {
             opacity: 0.7;
             cursor: grabbing;
-            z-index: 1000;
+            z-index: 100020;
         }
 
         .org-chart-card.selected {
             border-color: #10b981;
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+            z-index: 100015;
         }
 
         .org-card-header {
@@ -11527,7 +11533,7 @@
             font-weight: 700;
             font-size: 1rem;
             box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
-            z-index: 103;
+            z-index: 100003;
             display: flex;
             align-items: center;
             gap: 1rem;
@@ -19360,17 +19366,16 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 console.log('✅ Section activated:', sectionName);
                 
                 // Hide/show main navigation based on section
-                const mainNav = document.querySelector('nav');
                 if (sectionName === 'roster') {
-                    // Hide navigation for org chart
-                    if (mainNav) mainNav.style.display = 'none';
+                    // Add class to body to hide all navigation
+                    document.body.classList.add('org-chart-active');
                     // Initialize org chart
                     if (typeof initRosterBuilder === 'function') {
                         initRosterBuilder();
                     }
                 } else {
-                    // Show navigation for other sections
-                    if (mainNav) mainNav.style.display = '';
+                    // Remove class from body to show navigation
+                    document.body.classList.remove('org-chart-active');
                 }
                 
                 // Прокручиваем страницу вверх
@@ -22785,16 +22790,14 @@ function closeOrgChart() {
     // Сохраняем данные перед закрытием
     saveOrgChartData();
     
+    // Убираем класс с body для показа навигации
+    document.body.classList.remove('org-chart-active');
+    
     // Скрываем canvas
     const section = document.getElementById('rosterSection');
     if (section) {
         section.style.display = 'none';
-    }
-    
-    // Показываем навигацию обратно
-    const mainNav = document.querySelector('nav');
-    if (mainNav) {
-        mainNav.style.display = '';
+        section.classList.remove('active');
     }
     
     // Показываем главную секцию
