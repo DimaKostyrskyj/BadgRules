@@ -11220,7 +11220,10 @@
         body.org-chart-active .main-nav,
         body.org-chart-active header,
         body.org-chart-active .header,
-        body.org-chart-active #mainNavigation {
+        body.org-chart-active #mainNavigation,
+        body.org-chart-active .top-logo,
+        body.org-chart-active #topLogo,
+        body.org-chart-active .vertical-scroll-indicator {
             display: none !important;
             visibility: hidden !important;
             opacity: 0 !important;
@@ -11231,7 +11234,8 @@
         }
 
         /* Extra layer - hide by class */
-        .org-chart-active .main-nav {
+        .org-chart-active .main-nav,
+        .org-chart-active .top-logo {
             display: none !important;
             visibility: hidden !important;
         }
@@ -19389,6 +19393,19 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                         nav.style.pointerEvents = 'none';
                     }
                     
+                    // Скрываем top-logo
+                    const topLogo = document.getElementById('topLogo');
+                    if (topLogo) {
+                        topLogo.style.display = 'none';
+                        topLogo.style.visibility = 'hidden';
+                    }
+                    
+                    // Скрываем вертикальный индикатор
+                    const scrollIndicator = document.querySelector('.vertical-scroll-indicator');
+                    if (scrollIndicator) {
+                        scrollIndicator.style.display = 'none';
+                    }
+                    
                     // Скрываем все nav элементы
                     document.querySelectorAll('nav').forEach(n => {
                         n.style.display = 'none';
@@ -19410,6 +19427,19 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                         nav.style.visibility = '';
                         nav.style.opacity = '';
                         nav.style.pointerEvents = '';
+                    }
+                    
+                    // Показываем top-logo
+                    const topLogo = document.getElementById('topLogo');
+                    if (topLogo) {
+                        topLogo.style.display = '';
+                        topLogo.style.visibility = '';
+                    }
+                    
+                    // Показываем вертикальный индикатор
+                    const scrollIndicator = document.querySelector('.vertical-scroll-indicator');
+                    if (scrollIndicator) {
+                        scrollIndicator.style.display = '';
                     }
                     
                     document.querySelectorAll('nav').forEach(n => {
@@ -22840,6 +22870,19 @@ function closeOrgChart() {
         nav.style.visibility = '';
         nav.style.opacity = '';
         nav.style.pointerEvents = '';
+    }
+    
+    // Показываем top-logo
+    const topLogo = document.getElementById('topLogo');
+    if (topLogo) {
+        topLogo.style.display = '';
+        topLogo.style.visibility = '';
+    }
+    
+    // Показываем вертикальный индикатор
+    const scrollIndicator = document.querySelector('.vertical-scroll-indicator');
+    if (scrollIndicator) {
+        scrollIndicator.style.display = '';
     }
     
     document.querySelectorAll('nav').forEach(n => {
