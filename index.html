@@ -11804,6 +11804,12 @@
             font-weight: 500;
             font-family: 'Manrope', sans-serif;
             transition: all 0.3s ease;
+            cursor: text;
+            pointer-events: auto;
+        }
+
+        .org-card-input:hover {
+            border-color: rgba(96, 165, 250, 0.3);
         }
 
         .org-card-input:focus {
@@ -23903,7 +23909,7 @@ function renderOrgChart() {
         cardEl.innerHTML = `
             <div class="org-card-header">
                 <div class="org-card-rank">${card.rank || 'Ранг'}</div>
-                <div class="org-card-delete" onclick="deleteOrgCard(${card.id})">
+                <div class="org-card-delete" onclick="event.stopPropagation(); deleteOrgCard(${card.id})">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -23915,35 +23921,44 @@ function renderOrgChart() {
                 <label class="org-card-label">Должность</label>
                 <input type="text" class="org-card-input position-input" value="${card.position}" 
                     onchange="updateCardField(${card.id}, 'position', this.value)"
-                    placeholder="Введите должность"
-                    onclick="event.stopPropagation()">
+                    placeholder="Введите должность">
             </div>
             
             <div class="org-card-field">
                 <label class="org-card-label">Ранг</label>
                 <input type="text" class="org-card-input" value="${card.rank}" 
                     onchange="updateCardField(${card.id}, 'rank', this.value)"
-                    placeholder="1-10"
-                    onclick="event.stopPropagation()">
+                    placeholder="1-10">
             </div>
             
             <div class="org-card-field">
                 <label class="org-card-label">Имя Фамилия</label>
                 <input type="text" class="org-card-input" value="${card.name}" 
                     onchange="updateCardField(${card.id}, 'name', this.value)"
-                    placeholder="Имя Фамилия"
-                    onclick="event.stopPropagation()">
+                    placeholder="Имя Фамилия">
             </div>
         `;
         
+        // Right-click to delete
+        cardEl.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            if (confirm('Удалить эту карточку?')) {
+                deleteOrgCard(card.id);
+            }
+        });
+        
+        // Mousedown for dragging (but not on inputs)
         cardEl.addEventListener('mousedown', (e) => {
-            if (e.target.tagName !== 'INPUT') {
-                e.preventDefault();
-                if (connectionMode) {
-                    handleCardClick(card.id);
-                } else {
-                    startDrag(e, card.id);
-                }
+            if (e.target.tagName === 'INPUT') {
+                // Allow input to receive focus
+                return;
+            }
+            
+            e.preventDefault();
+            if (connectionMode) {
+                handleCardClick(card.id);
+            } else {
+                startDrag(e, card.id);
             }
         });
         
