@@ -11210,8 +11210,17 @@
             right: 0;
             bottom: 0;
             background: radial-gradient(circle at 50% 50%, rgba(30, 30, 30, 1), rgba(10, 10, 10, 1));
-            z-index: 100;
+            z-index: 10000;
             overflow: hidden;
+        }
+
+        /* Hide main navigation when org chart is active */
+        #rosterSection:not([style*="display: none"]) ~ * .navbar,
+        #rosterSection:not([style*="display: none"]) ~ * .main-nav,
+        body:has(#rosterSection:not([style*="display: none"])) .navbar,
+        body:has(#rosterSection:not([style*="display: none"])) .main-nav,
+        body:has(#rosterSection:not([style*="display: none"])) nav {
+            display: none !important;
         }
 
         /* Toolbar */
@@ -19350,6 +19359,20 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 targetSection.classList.add('active');
                 console.log('✅ Section activated:', sectionName);
                 
+                // Hide/show main navigation based on section
+                const mainNav = document.querySelector('nav');
+                if (sectionName === 'roster') {
+                    // Hide navigation for org chart
+                    if (mainNav) mainNav.style.display = 'none';
+                    // Initialize org chart
+                    if (typeof initRosterBuilder === 'function') {
+                        initRosterBuilder();
+                    }
+                } else {
+                    // Show navigation for other sections
+                    if (mainNav) mainNav.style.display = '';
+                }
+                
                 // Прокручиваем страницу вверх
                 window.scrollTo(0, 0);
             } else {
@@ -22766,6 +22789,12 @@ function closeOrgChart() {
     const section = document.getElementById('rosterSection');
     if (section) {
         section.style.display = 'none';
+    }
+    
+    // Показываем навигацию обратно
+    const mainNav = document.querySelector('nav');
+    if (mainNav) {
+        mainNav.style.display = '';
     }
     
     // Показываем главную секцию
