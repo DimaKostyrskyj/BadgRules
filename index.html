@@ -11214,16 +11214,26 @@
             overflow: hidden;
         }
 
-        /* Force hide ALL navigation elements when org chart is visible */
+        /* Force hide ALL navigation elements when org chart is visible - MULTIPLE LAYERS */
         body.org-chart-active nav,
         body.org-chart-active .navbar,
         body.org-chart-active .main-nav,
         body.org-chart-active header,
-        body.org-chart-active .header {
+        body.org-chart-active .header,
+        body.org-chart-active #mainNavigation {
             display: none !important;
             visibility: hidden !important;
             opacity: 0 !important;
             pointer-events: none !important;
+            position: absolute !important;
+            top: -9999px !important;
+            left: -9999px !important;
+        }
+
+        /* Extra layer - hide by class */
+        .org-chart-active .main-nav {
+            display: none !important;
+            visibility: hidden !important;
         }
 
         /* Toolbar */
@@ -12980,7 +12990,7 @@
     </div>
 
     <!-- Navigation Menu -->
-    <nav class="main-nav">
+    <nav class="main-nav" id="mainNavigation">
         <div class="nav-container">
             <a href="#" class="nav-button active" onclick="showSection('chat'); return false;">
                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -19369,6 +19379,22 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 if (sectionName === 'roster') {
                     // Add class to body to hide all navigation
                     document.body.classList.add('org-chart-active');
+                    
+                    // Агрессивное скрытие навигации
+                    const nav = document.getElementById('mainNavigation');
+                    if (nav) {
+                        nav.style.display = 'none';
+                        nav.style.visibility = 'hidden';
+                        nav.style.opacity = '0';
+                        nav.style.pointerEvents = 'none';
+                    }
+                    
+                    // Скрываем все nav элементы
+                    document.querySelectorAll('nav').forEach(n => {
+                        n.style.display = 'none';
+                        n.style.visibility = 'hidden';
+                    });
+                    
                     // Initialize org chart
                     if (typeof initRosterBuilder === 'function') {
                         initRosterBuilder();
@@ -19376,6 +19402,20 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 } else {
                     // Remove class from body to show navigation
                     document.body.classList.remove('org-chart-active');
+                    
+                    // Показываем навигацию обратно
+                    const nav = document.getElementById('mainNavigation');
+                    if (nav) {
+                        nav.style.display = '';
+                        nav.style.visibility = '';
+                        nav.style.opacity = '';
+                        nav.style.pointerEvents = '';
+                    }
+                    
+                    document.querySelectorAll('nav').forEach(n => {
+                        n.style.display = '';
+                        n.style.visibility = '';
+                    });
                 }
                 
                 // Прокручиваем страницу вверх
@@ -22792,6 +22832,20 @@ function closeOrgChart() {
     
     // Убираем класс с body для показа навигации
     document.body.classList.remove('org-chart-active');
+    
+    // Показываем навигацию обратно
+    const nav = document.getElementById('mainNavigation');
+    if (nav) {
+        nav.style.display = '';
+        nav.style.visibility = '';
+        nav.style.opacity = '';
+        nav.style.pointerEvents = '';
+    }
+    
+    document.querySelectorAll('nav').forEach(n => {
+        n.style.display = '';
+        n.style.visibility = '';
+    });
     
     // Скрываем canvas
     const section = document.getElementById('rosterSection');
