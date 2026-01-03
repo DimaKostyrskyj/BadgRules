@@ -11695,6 +11695,17 @@
             z-index: 100015;
         }
 
+        .org-chart-card.multi-selected {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+            z-index: 100014;
+        }
+
+        .org-chart-card.multi-selected .org-card-header {
+            background: rgba(139, 92, 246, 0.15);
+            border-bottom-color: rgba(139, 92, 246, 0.3);
+        }
+
         .org-card-header {
             display: flex;
             justify-content: space-between;
@@ -23218,6 +23229,17 @@ let draggingDepartment = null;
 let resizingDepartment = null;
 let resizeStartSize = { width: 0, height: 0 };
 
+// Multi-selection and grouping
+let multiSelectedCards = new Set();
+let isSelecting = false;
+let selectionStart = { x: 0, y: 0 };
+let selectionBox = null;
+
+// History for undo
+let history = [];
+let historyIndex = -1;
+const MAX_HISTORY = 50;
+
 // Zoom and Pan variables
 let zoomLevel = 1;
 let panX = 0;
@@ -23229,6 +23251,155 @@ let panStartY = 0;
 function initRosterBuilder() {
     loadOrgChartData();
     setupZoomAndPan();
+    setupSelectionBox();
+    setupKeyboardShortcuts();
+}
+
+// History management
+function saveToHistory() {
+    const state = {
+        cards: JSON.parse(JSON.stringify(orgCards)),
+        connections: JSON.parse(JSON.stringify(orgConnections)),
+        departments: JSON.parse(JSON.stringify(departments))
+    };
+    
+    // Remove future history if we're not at the end
+    if (historyIndex < history.length - 1) {
+        history = history.slice(0, historyIndex + 1);
+    }
+    
+    history.push(state);
+    
+    // Limit history size
+    if (history.length > MAX_HISTORY) {
+        history.shift();
+    } else {
+        historyIndex++;
+    }
+}
+
+function undo() {
+    if (historyIndex > 0) {
+        historyIndex--;
+        const state = history[historyIndex];
+        orgCards = JSON.parse(JSON.stringify(state.cards));
+        orgConnections = JSON.parse(JSON.stringify(state.connections));
+        departments = JSON.parse(JSON.stringify(state.departments));
+        renderOrgChart();
+        saveOrgChartData();
+        showNotification('↩️ Отменено', 'info');
+    } else {
+        showNotification('⚠️ Нечего отменять', 'info');
+    }
+}
+
+function redo() {
+    if (historyIndex < history.length - 1) {
+        historyIndex++;
+        const state = history[historyIndex];
+        orgCards = JSON.parse(JSON.stringify(state.cards));
+        orgConnections = JSON.parse(JSON.stringify(state.connections));
+        departments = JSON.parse(JSON.stringify(state.departments));
+        renderOrgChart();
+        saveOrgChartData();
+        showNotification('↪️ Повторено', 'info');
+    }
+}
+
+// Multi-selection
+function toggleCardSelection(cardId, multiSelect = false) {
+    if (multiSelect) {
+        if (multiSelectedCards.has(cardId)) {
+            multiSelectedCards.delete(cardId);
+        } else {
+            multiSelectedCards.add(cardId);
+        }
+    } else {
+        multiSelectedCards.clear();
+        multiSelectedCards.add(cardId);
+    }
+    renderOrgChart();
+}
+
+function clearSelection() {
+    multiSelectedCards.clear();
+    renderOrgChart();
+}
+
+function setupSelectionBox() {
+    const workspace = document.getElementById('orgChartWorkspace');
+    if (!workspace) return;
+    
+    // Create selection box element
+    selectionBox = document.createElement('div');
+    selectionBox.className = 'selection-box';
+    selectionBox.style.display = 'none';
+    workspace.appendChild(selectionBox);
+}
+
+function setupKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        const activeSection = document.querySelector('#rosterSection.active');
+        if (!activeSection) return;
+        
+        // Undo: Ctrl+Z
+        if (e.ctrlKey && e.key === 'z' && !e.shiftKey) {
+            e.preventDefault();
+            undo();
+        }
+        
+        // Redo: Ctrl+Shift+Z or Ctrl+Y
+        if ((e.ctrlKey && e.shiftKey && e.key === 'z') || (e.ctrlKey && e.key === 'y')) {
+            e.preventDefault();
+            redo();
+        }
+        
+        // Delete selected cards: Delete or Backspace
+        if (e.key === 'Delete' || e.key === 'Backspace') {
+            if (multiSelectedCards.size > 0 && !e.target.matches('input, textarea')) {
+                e.preventDefault();
+                deleteSelectedCards();
+            }
+        }
+        
+        // Select all: Ctrl+A
+        if (e.ctrlKey && e.key === 'a') {
+            e.preventDefault();
+            selectAllCards();
+        }
+        
+        // Deselect: Escape
+        if (e.key === 'Escape') {
+            clearSelection();
+        }
+    });
+}
+
+function deleteSelectedCards() {
+    if (multiSelectedCards.size === 0) return;
+    
+    if (confirm(`Удалить выбранные карточки (${multiSelectedCards.size})?`)) {
+        saveToHistory();
+        
+        multiSelectedCards.forEach(cardId => {
+            // Remove connections
+            orgConnections = orgConnections.filter(c => c.from !== cardId && c.to !== cardId);
+            // Remove card
+            orgCards = orgCards.filter(c => c.id !== cardId);
+        });
+        
+        multiSelectedCards.clear();
+        renderOrgChart();
+        saveOrgChartData();
+        showNotification('✅ Карточки удалены', 'success');
+    }
+}
+
+function selectAllCards() {
+    multiSelectedCards.clear();
+    orgCards.forEach(card => multiSelectedCards.add(card.id));
+    renderOrgChart();
+    showNotification(`✅ Выбрано: ${multiSelectedCards.size}`, 'info');
 }
 
 function setupZoomAndPan() {
@@ -23642,14 +23813,31 @@ function onDrag(e) {
     const workspace = document.getElementById('orgChartWorkspace');
     const workspaceRect = workspace.getBoundingClientRect();
     
-    // Handle card dragging
+    // Handle card dragging (including multi-selected)
     if (draggingCard) {
         const card = orgCards.find(c => c.id === draggingCard);
         if (card) {
-            card.x = (e.clientX - workspaceRect.left - panX) / zoomLevel - dragOffset.x;
-            card.y = (e.clientY - workspaceRect.top - panY) / zoomLevel - dragOffset.y;
+            const newX = (e.clientX - workspaceRect.left - panX) / zoomLevel - dragOffset.x;
+            const newY = (e.clientY - workspaceRect.top - panY) / zoomLevel - dragOffset.y;
             
-            // No constraints - infinite canvas
+            const deltaX = newX - card.x;
+            const deltaY = newY - card.y;
+            
+            card.x = newX;
+            card.y = newY;
+            
+            // Move all multi-selected cards together
+            if (multiSelectedCards.has(draggingCard) && multiSelectedCards.size > 1) {
+                multiSelectedCards.forEach(cardId => {
+                    if (cardId !== draggingCard) {
+                        const otherCard = orgCards.find(c => c.id === cardId);
+                        if (otherCard) {
+                            otherCard.x += deltaX;
+                            otherCard.y += deltaY;
+                        }
+                    }
+                });
+            }
             
             renderOrgChart();
         }
@@ -23661,8 +23849,6 @@ function onDrag(e) {
         if (dept) {
             dept.x = (e.clientX - workspaceRect.left - panX) / zoomLevel - dragOffset.x;
             dept.y = (e.clientY - workspaceRect.top - panY) / zoomLevel - dragOffset.y;
-            
-            // No constraints - infinite canvas
             
             renderOrgChart();
         }
@@ -23687,6 +23873,10 @@ function stopDrag() {
     if (draggingCard) {
         const cardEl = document.querySelector(`[data-card-id="${draggingCard}"]`);
         cardEl?.classList.remove('dragging');
+        
+        // Save to history when drag ends
+        saveToHistory();
+        
         draggingCard = null;
         saveOrgChartData();
     }
@@ -23694,11 +23884,15 @@ function stopDrag() {
     if (draggingDepartment) {
         const deptEl = document.querySelector(`[data-dept-id="${draggingDepartment}"]`);
         deptEl?.classList.remove('dragging');
+        
+        saveToHistory();
+        
         draggingDepartment = null;
         saveOrgChartData();
     }
     
     if (resizingDepartment) {
+        saveToHistory();
         resizingDepartment = null;
         saveOrgChartData();
     }
@@ -23778,24 +23972,34 @@ function renderOrgChart() {
         cardsContainer.appendChild(deptEl);
     });
     
-    // Render connections with beautiful curves
+    // Render connections with beautiful smooth curves
     orgConnections.forEach(conn => {
         const fromCard = orgCards.find(c => c.id === conn.from);
         const toCard = orgCards.find(c => c.id === conn.to);
         
         if (fromCard && toCard) {
-            // Calculate connection points
-            const fromX = fromCard.x + 140; // center of card
-            const fromY = fromCard.y + 200; // bottom of card
-            const toX = toCard.x + 140; // center of card
-            const toY = toCard.y; // top of card
+            // Calculate connection points (adjusted for new card width 240px)
+            const cardWidth = 240;
+            const cardHeight = 180; // approximate
             
-            // Create smooth curved path
-            const midY = (fromY + toY) / 2;
-            const curve = Math.abs(fromY - toY) / 3;
+            const fromX = fromCard.x + cardWidth / 2;
+            const fromY = fromCard.y + cardHeight;
+            const toX = toCard.x + cardWidth / 2;
+            const toY = toCard.y;
             
-            // Quadratic curve for smoother look
-            const d = `M ${fromX} ${fromY} C ${fromX} ${fromY + curve}, ${toX} ${toY - curve}, ${toX} ${toY}`;
+            // Smart bezier curve calculation
+            const dx = toX - fromX;
+            const dy = toY - fromY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            // Adaptive curve strength based on distance
+            const curveStrength = Math.min(distance * 0.4, 100);
+            
+            // Create smooth S-curve path
+            const controlPoint1Y = fromY + curveStrength;
+            const controlPoint2Y = toY - curveStrength;
+            
+            const d = `M ${fromX} ${fromY} C ${fromX} ${controlPoint1Y}, ${toX} ${controlPoint2Y}, ${toX} ${toY}`;
             
             // Create gradient for line
             const gradientId = `gradient-${conn.from}-${conn.to}`;
@@ -23810,42 +24014,49 @@ function renderOrgChart() {
             
             const stop1 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
             stop1.setAttribute('offset', '0%');
-            stop1.setAttribute('style', 'stop-color:rgba(96, 165, 250, 0.8);stop-opacity:1');
+            stop1.setAttribute('style', 'stop-color:rgba(96, 165, 250, 0.7);stop-opacity:1');
             
             const stop2 = document.createElementNS('http://www.w3.org/2000/svg', 'stop');
             stop2.setAttribute('offset', '100%');
-            stop2.setAttribute('style', 'stop-color:rgba(59, 130, 246, 0.6);stop-opacity:1');
+            stop2.setAttribute('style', 'stop-color:rgba(59, 130, 246, 0.5);stop-opacity:1');
             
             gradient.appendChild(stop1);
             gradient.appendChild(stop2);
             defs.appendChild(gradient);
             svg.appendChild(defs);
             
-            // Create line
+            // Create smooth line
             const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             line.setAttribute('d', d);
             line.setAttribute('stroke', `url(#${gradientId})`);
-            line.setAttribute('stroke-width', '3');
+            line.setAttribute('stroke-width', '2.5');
+            line.setAttribute('stroke-linecap', 'round');
             line.setAttribute('fill', 'none');
             line.setAttribute('class', 'org-connection-line');
-            line.style.filter = 'drop-shadow(0 0 8px rgba(96, 165, 250, 0.5))';
-            line.onclick = () => deleteConnection(conn.from, conn.to);
+            line.style.filter = 'drop-shadow(0 0 6px rgba(96, 165, 250, 0.4))';
+            line.onclick = () => {
+                if (confirm('Удалить связь?')) {
+                    saveToHistory();
+                    deleteConnection(conn.from, conn.to);
+                }
+            };
             svg.appendChild(line);
             
-            // Add arrow at the end
-            const arrowSize = 10;
-            const angle = Math.atan2(toY - fromY, toX - fromX);
+            // Add smooth arrow at the end
+            const arrowSize = 8;
+            // Calculate angle at the end of the curve (perpendicular to curve)
+            const angle = Math.atan2(toY - controlPoint2Y, toX - toX);
             const arrowX = toX;
             const arrowY = toY;
             
             const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
             const arrowPoints = [
                 [arrowX, arrowY],
-                [arrowX - arrowSize * Math.cos(angle - Math.PI / 6), arrowY - arrowSize * Math.sin(angle - Math.PI / 6)],
-                [arrowX - arrowSize * Math.cos(angle + Math.PI / 6), arrowY - arrowSize * Math.sin(angle + Math.PI / 6)]
+                [arrowX - arrowSize, arrowY - arrowSize * 1.5],
+                [arrowX + arrowSize, arrowY - arrowSize * 1.5]
             ];
             arrow.setAttribute('points', arrowPoints.map(p => p.join(',')).join(' '));
-            arrow.setAttribute('fill', 'rgba(96, 165, 250, 0.8)');
+            arrow.setAttribute('fill', 'rgba(96, 165, 250, 0.7)');
             arrow.setAttribute('class', 'org-connection-arrow');
             svg.appendChild(arrow);
         }
@@ -23859,8 +24070,14 @@ function renderOrgChart() {
         cardEl.style.left = card.x + 'px';
         cardEl.style.top = card.y + 'px';
         
+        // Connection mode selection
         if (selectedCards.includes(card.id)) {
             cardEl.classList.add('selected');
+        }
+        
+        // Multi-selection
+        if (multiSelectedCards.has(card.id)) {
+            cardEl.classList.add('multi-selected');
         }
         
         cardEl.innerHTML = `
@@ -23893,24 +24110,23 @@ function renderOrgChart() {
         const deleteBtn = cardEl.querySelector('.org-card-delete');
         deleteBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            saveToHistory();
             deleteOrgCard(card.id);
         });
         
         // Input handlers
         const inputs = cardEl.querySelectorAll('input');
         inputs.forEach(input => {
-            // Prevent dragging when clicking input
             input.addEventListener('mousedown', (e) => {
                 e.stopPropagation();
             });
             
-            // Save on change
             input.addEventListener('change', (e) => {
                 const field = e.target.dataset.field;
+                saveToHistory();
                 updateCardField(card.id, field, e.target.value);
             });
             
-            // Save on blur
             input.addEventListener('blur', (e) => {
                 const field = e.target.dataset.field;
                 updateCardField(card.id, field, e.target.value);
@@ -23921,13 +24137,13 @@ function renderOrgChart() {
         cardEl.addEventListener('contextmenu', (e) => {
             e.preventDefault();
             if (confirm('Удалить эту карточку?')) {
+                saveToHistory();
                 deleteOrgCard(card.id);
             }
         });
         
-        // Dragging - only on card background, not inputs
+        // Click handling with Ctrl for multi-select
         cardEl.addEventListener('mousedown', (e) => {
-            // Ignore if clicking on input or delete button
             if (e.target.tagName === 'INPUT' || 
                 e.target.closest('.org-card-delete')) {
                 return;
@@ -23938,7 +24154,15 @@ function renderOrgChart() {
             if (connectionMode) {
                 handleCardClick(card.id);
             } else {
-                startDrag(e, card.id);
+                // Multi-selection with Ctrl
+                if (e.ctrlKey || e.metaKey) {
+                    toggleCardSelection(card.id, true);
+                } else {
+                    if (!multiSelectedCards.has(card.id)) {
+                        toggleCardSelection(card.id, false);
+                    }
+                    startDrag(e, card.id);
+                }
             }
         });
         
