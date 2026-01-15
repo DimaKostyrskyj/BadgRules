@@ -3739,8 +3739,8 @@
             right: 0;
             padding: 1rem 2rem 1.5rem;
             z-index: 100;
-            display: none;
-            /* Hidden by default, shown only in chat */
+            display: block;
+            /* Shown by default for chat section */
         }
 
         .chat-input-inner {
@@ -12765,7 +12765,6 @@
     <!-- VERTICAL SCROLL INDICATOR - LEFT SIDE -->
     <div class="vertical-scroll-indicator">
         <div class="scroll-dot active" data-section="chat"></div>
-        <div class="scroll-dot" data-section="complaints"></div>
         <div class="scroll-dot" data-section="history"></div>
         <div class="scroll-dot" data-section="news"></div>
         <div class="scroll-dot" data-section="team"></div>
@@ -12835,10 +12834,6 @@
                 <div class="useful-dropdown-menu" id="usefulDropdownMenu" style="display: none;">
                     <div class="useful-menu-item premium-tab" onclick="handleUsefulItemClick('complaints', event)">
                         <span>Анализ отката</span>
-                        <span class="useful-badge">PRO</span>
-                    </div>
-                    <div class="useful-menu-item premium-tab" onclick="handleUsefulItemClick('secrets', event)">
-                        <span>Секреты</span>
                         <span class="useful-badge">PRO</span>
                     </div>
                     <div class="useful-menu-item premium-tab" onclick="handleUsefulItemClick('admin', event)">
@@ -13485,7 +13480,7 @@
 
     <div class="container">
         <!-- HOME / LANDING Section -->
-        <div class="section active" id="homeSection">
+        <div class="section" id="homeSection">
             <div class="landing-section">
                 <!-- Hero -->
                 <div class="hero-section">
@@ -13712,92 +13707,6 @@
                             <div class="social-desc">Сообщество и поддержка</div>
                         </div>
                     </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Secrets Section -->
-        <div class="section" id="secretsSection" style="display: none;">
-            <div class="feature-content">
-                <div class="feature-header">
-                    <h1 class="feature-title">🔐 Секреты серверов GTA 5 RP</h1>
-                    <p class="feature-subtitle">Эксклюзивная информация для подписчиков PRO</p>
-                </div>
-                
-                <div class="secrets-container">
-                    <div class="secret-category">
-                        <h3 class="secret-category-title">📚 Секреты админов GTA 5 RP</h3>
-                        <div class="secret-items">
-                            <div class="secret-item">
-                                <div class="secret-icon">🔑</div>
-                                <div class="secret-content">
-                                    <h4 class="secret-title">Скрытые правила администрирования</h4>
-                                    <p class="secret-description">Узнайте о неофициальных правилах и практиках, которые используют администраторы при принятии решений.</p>
-                                </div>
-                            </div>
-                            <div class="secret-item">
-                                <div class="secret-icon">⚖️</div>
-                                <div class="secret-content">
-                                    <h4 class="secret-title">Критерии решений по откатам</h4>
-                                    <p class="secret-description">Внутренние критерии оценки жалоб и принятия решений администраторами.</p>
-                                </div>
-                            </div>
-                            <div class="secret-item">
-                                <div class="secret-icon">🎯</div>
-                                <div class="secret-content">
-                                    <h4 class="secret-title">Приоритеты рассмотрения</h4>
-                                    <p class="secret-description">Какие жалобы рассматриваются быстрее и почему.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="secret-category">
-                        <h3 class="secret-category-title">🗺️ Секретная информация серверов</h3>
-                        <div class="secret-items">
-                            <div class="secret-item">
-                                <div class="secret-icon">📍</div>
-                                <div class="secret-content">
-                                    <h4 class="secret-title">Скрытые локации</h4>
-                                    <p class="secret-description">Секретные места на картах серверов, о которых знают немногие.</p>
-                                </div>
-                            </div>
-                            <div class="secret-item">
-                                <div class="secret-icon">💰</div>
-                                <div class="secret-content">
-                                    <h4 class="secret-title">Оптимальные схемы заработка</h4>
-                                    <p class="secret-description">Наиболее эффективные методы заработка на различных серверах.</p>
-                                </div>
-                            </div>
-                            <div class="secret-item">
-                                <div class="secret-icon">🎮</div>
-                                <div class="secret-content">
-                                    <h4 class="secret-title">Игровые механики</h4>
-                                    <p class="secret-description">Недокументированные особенности игровых механик серверов.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="secret-category">
-                        <h3 class="secret-category-title">💎 Эксклюзивная информация</h3>
-                        <div class="secret-items">
-                            <div class="secret-item">
-                                <div class="secret-icon">📢</div>
-                                <div class="secret-content">
-                                    <h4 class="secret-title">Инсайдерская информация</h4>
-                                    <p class="secret-description">Информация от инсайдеров о предстоящих обновлениях и изменениях.</p>
-                                </div>
-                            </div>
-                            <div class="secret-item">
-                                <div class="secret-icon">🏆</div>
-                                <div class="secret-content">
-                                    <h4 class="secret-title">Стратегии продвинутых игроков</h4>
-                                    <p class="secret-description">Секреты успешной игры от топовых игроков серверов.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -14504,7 +14413,7 @@
         </div>
 
         <!-- Chat Section -->
-        <div class="section" id="chatSection">
+        <div class="section active" id="chatSection">
             <div class="chat-container">
                 <div class="chat-messages" id="chatMessages">
                     <div class="welcome-screen" id="welcomeScreen">
@@ -19863,7 +19772,6 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
                 'news': 'newsSection',
                 'team': 'teamSection',
                 'social': 'socialSection',
-                'secrets': 'secretsSection',
                 'admin': 'adminSection',
                 'roster': 'rosterSection'
             };
@@ -20170,7 +20078,7 @@ ${userServer ? `6. Учитывай что игрок на сервере ${user
 
             const title = categoryTitles[category];
             chatInput.value = `Расскажи подробно о разделе правил: ${title}`;
-            showSection('home');
+            showSection('chat');
             setTimeout(() => sendMessage(), 300);
         }
 
@@ -23835,7 +23743,7 @@ function closeOrgChart() {
     }
     
     // Показываем главную секцию
-    showSection('home');
+    showSection('chat');
     
     // Сбрасываем режим соединений
     if (connectionMode) {
