@@ -3928,28 +3928,115 @@
 .training-input-card,
 .training-progress-card,
 .training-results-card {
-    background: rgba(15, 15, 20, 0.95);
-    border: 1px solid rgba(96, 165, 250, 0.2);
-    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(15, 15, 20, 0.98) 0%, rgba(20, 25, 35, 0.95) 100%);
+    border: 1px solid rgba(96, 165, 250, 0.25);
+    border-radius: 20px;
     padding: 2rem;
     backdrop-filter: blur(20px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(96, 165, 250, 0.1) inset;
+    transition: all 0.3s ease;
+}
+
+.training-status-card:hover,
+.training-progress-card:hover,
+.training-results-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(96, 165, 250, 0.2) inset;
+    border-color: rgba(96, 165, 250, 0.4);
+}
+
+/* AI Selection Buttons */
+.ai-select-btn {
+    padding: 1.5rem;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    text-align: center;
+    font-family: 'Manrope', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-select-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+.ai-select-btn:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+.ai-select-btn.selected {
+    border-color: rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3), 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+.ai-select-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.ai-select-btn:hover::before {
+    left: 100%;
+}
+
+/* Server Selection Buttons */
+.server-select-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6) !important;
+    border-width: 3px !important;
 }
 
 .training-stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1rem;
 }
 
 .training-stat {
-    background: rgba(96, 165, 250, 0.05);
-    border: 1px solid rgba(96, 165, 250, 0.15);
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%);
+    border: 1px solid rgba(96, 165, 250, 0.2);
     border-radius: 12px;
-    padding: 1rem;
+    padding: 1.2rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.training-stat::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #60a5fa, #3b82f6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.training-stat:hover {
+    transform: translateY(-2px);
+    border-color: rgba(96, 165, 250, 0.4);
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.12) 0%, rgba(59, 130, 246, 0.08) 100%);
+}
+
+.training-stat:hover::before {
+    opacity: 1;
 }
 
 .stat-label {
@@ -3959,7 +4046,7 @@
 }
 
 .stat-value {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: rgba(255, 255, 255, 0.95);
     font-weight: 700;
 }
@@ -3997,50 +4084,133 @@
 
 .progress-bar-container {
     width: 100%;
-    height: 8px;
+    height: 10px;
     background: rgba(96, 165, 250, 0.1);
-    border-radius: 4px;
+    border-radius: 8px;
     overflow: hidden;
     margin-bottom: 1rem;
+    position: relative;
+    box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.15) inset;
+}
+
+.progress-bar-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 100%
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 
 .progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, #60a5fa, #3b82f6);
-    border-radius: 4px;
+    background: linear-gradient(90deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+    border-radius: 8px;
     transition: width 0.5s ease;
     width: 0%;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 100%
+    );
+    animation: shimmer 1.5s infinite;
 }
 
 .progress-log {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(96, 165, 250, 0.15);
-    border-radius: 8px;
-    padding: 1rem;
-    max-height: 300px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 12px;
+    padding: 1.2rem;
+    max-height: 350px;
     overflow-y: auto;
     font-family: 'Courier New', monospace;
     font-size: 0.85rem;
+    box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.1) inset;
+}
+
+.progress-log::-webkit-scrollbar {
+    width: 8px;
+}
+
+.progress-log::-webkit-scrollbar-track {
+    background: rgba(96, 165, 250, 0.05);
+    border-radius: 4px;
+}
+
+.progress-log::-webkit-scrollbar-thumb {
+    background: rgba(96, 165, 250, 0.3);
+    border-radius: 4px;
+}
+
+.progress-log::-webkit-scrollbar-thumb:hover {
+    background: rgba(96, 165, 250, 0.5);
 }
 
 .log-entry {
     color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     display: flex;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+    animation: slideInLog 0.3s ease;
+}
+
+@keyframes slideInLog {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.log-entry:hover {
+    background: rgba(96, 165, 250, 0.05);
 }
 
 .log-entry.success {
     color: #10b981;
+    border-left: 3px solid #10b981;
+    padding-left: 0.75rem;
 }
 
 .log-entry.error {
     color: #ef4444;
+    border-left: 3px solid #ef4444;
+    padding-left: 0.75rem;
 }
 
 .log-entry.info {
     color: #60a5fa;
+    border-left: 3px solid #60a5fa;
+    padding-left: 0.75rem;
 }
 
 @keyframes fadeIn {
@@ -14899,15 +15069,124 @@
                 <div class="features-section">
                     <div class="ai-training-container" style="max-width: 900px; margin: 0 auto;">
                         
-                        <!-- Status Card -->
+                        <!-- AI Model Selection -->
                         <div class="training-status-card">
-                            <h3 style="font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.95); margin-bottom: 1rem;">
-                                📊 Статус обучения
+                            <h3 style="font-size: 1.3rem; font-weight: 700; color: rgba(255,255,255,0.95); margin-bottom: 1.5rem;">
+                                🤖 Выбор AI модели для обучения
                             </h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                                <button 
+                                    class="ai-select-btn" 
+                                    data-model="huggingface"
+                                    onclick="selectAIForTraining('huggingface')"
+                                    style="background: linear-gradient(135deg, #fbbf24, #f59e0b); border: 2px solid transparent;"
+                                >
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🤗</div>
+                                    <div style="font-weight: 700; font-size: 1rem;">HuggingFace</div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9;">Бесплатная</div>
+                                </button>
+                                
+                                <button 
+                                    class="ai-select-btn" 
+                                    data-model="gemini"
+                                    onclick="selectAIForTraining('gemini')"
+                                    style="background: linear-gradient(135deg, #60a5fa, #3b82f6); border: 2px solid transparent;"
+                                >
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔷</div>
+                                    <div style="font-weight: 700; font-size: 1rem;">Gemini</div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9;">Работает</div>
+                                </button>
+                                
+                                <button 
+                                    class="ai-select-btn" 
+                                    data-model="claude"
+                                    onclick="selectAIForTraining('claude')"
+                                    style="background: linear-gradient(135deg, #8b5cf6, #7c3aed); border: 2px solid rgba(139, 92, 246, 0.3);"
+                                >
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧠</div>
+                                    <div style="font-weight: 700; font-size: 1rem;">Claude</div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9;">PRO</div>
+                                </button>
+                                
+                                <button 
+                                    class="ai-select-btn" 
+                                    data-model="gpt"
+                                    onclick="selectAIForTraining('gpt')"
+                                    style="background: linear-gradient(135deg, #10b981, #059669); border: 2px solid rgba(16, 185, 129, 0.3);"
+                                >
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🤖</div>
+                                    <div style="font-weight: 700; font-size: 1rem;">GPT-4</div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9;">PRO</div>
+                                </button>
+                                
+                                <button 
+                                    class="ai-select-btn" 
+                                    data-model="groq"
+                                    onclick="selectAIForTraining('groq')"
+                                    style="background: linear-gradient(135deg, #ec4899, #db2777); border: 2px solid rgba(236, 72, 153, 0.3);"
+                                >
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚡</div>
+                                    <div style="font-weight: 700; font-size: 1rem;">Groq</div>
+                                    <div style="font-size: 0.75rem; opacity: 0.9;">PRO</div>
+                                </button>
+                            </div>
+                            
+                            <div id="selectedAIInfo" style="background: rgba(96, 165, 250, 0.1); border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 12px; padding: 1rem; text-align: center; display: none;">
+                                <span style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">
+                                    Выбрана модель: <strong id="selectedAIName" style="color: #60a5fa;">—</strong>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Server Selection & Status -->
+                        <div class="training-status-card">
+                            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+                                <h3 style="font-size: 1.3rem; font-weight: 700; color: rgba(255,255,255,0.95); margin: 0;">
+                                    🎮 Выбор сервера
+                                </h3>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                                <button 
+                                    class="server-select-btn"
+                                    onclick="selectServerAndTrain('https://forum.gta5rp.com/forums/pravila/', 'GTA5RP')"
+                                    style="background: linear-gradient(135deg, rgba(96, 165, 250, 0.15), rgba(59, 130, 246, 0.1)); border: 2px solid rgba(96, 165, 250, 0.4); border-radius: 16px; padding: 1.5rem; cursor: pointer; transition: all 0.3s ease; color: white; text-align: left;"
+                                >
+                                    <div style="font-size: 2rem; margin-bottom: 0.75rem;">🎮</div>
+                                    <div style="font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem;">GTA5RP</div>
+                                    <div style="font-size: 0.85rem; opacity: 0.7;">forum.gta5rp.com</div>
+                                </button>
+                                
+                                <button 
+                                    class="server-select-btn"
+                                    onclick="selectServerAndTrain('https://forum.majestic-rp.ru/forums/pravila-servera/', 'Majestic RP')"
+                                    style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(124, 58, 237, 0.1)); border: 2px solid rgba(139, 92, 246, 0.4); border-radius: 16px; padding: 1.5rem; cursor: pointer; transition: all 0.3s ease; color: white; text-align: left;"
+                                >
+                                    <div style="font-size: 2rem; margin-bottom: 0.75rem;">👑</div>
+                                    <div style="font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem;">Majestic RP</div>
+                                    <div style="font-size: 0.85rem; opacity: 0.7;">forum.majestic-rp.ru</div>
+                                </button>
+                                
+                                <button 
+                                    class="server-select-btn"
+                                    onclick="selectServerAndTrain('https://forum.arizona-rp.com/forums/pravila/', 'Arizona RP')"
+                                    style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(219, 39, 119, 0.1)); border: 2px solid rgba(236, 72, 153, 0.4); border-radius: 16px; padding: 1.5rem; cursor: pointer; transition: all 0.3s ease; color: white; text-align: left;"
+                                >
+                                    <div style="font-size: 2rem; margin-bottom: 0.75rem;">🌵</div>
+                                    <div style="font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem;">Arizona RP</div>
+                                    <div style="font-size: 0.85rem; opacity: 0.7;">forum.arizona-rp.com</div>
+                                </button>
+                            </div>
+                            
+                            <!-- Stats -->
                             <div class="training-stats">
                                 <div class="training-stat">
                                     <span class="stat-label">Статус:</span>
-                                    <span class="stat-value" id="trainingStatus">Не обучено</span>
+                                    <span class="stat-value" id="trainingStatus">❌ Не обучено</span>
+                                </div>
+                                <div class="training-stat">
+                                    <span class="stat-label">Обучена модель:</span>
+                                    <span class="stat-value" id="trainedModelName">—</span>
                                 </div>
                                 <div class="training-stat">
                                     <span class="stat-label">Правил загружено:</span>
@@ -14918,42 +15197,6 @@
                                     <span class="stat-value" id="lastUpdate">Никогда</span>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- URL Input -->
-                        <div class="training-input-card">
-                            <h3 style="font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.95); margin-bottom: 1rem;">
-                                🌐 Загрузить правила с форума
-                            </h3>
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <line x1="2" y1="12" x2="22" y2="12"></line>
-                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                                    </svg>
-                                    URL раздела правил форума
-                                </label>
-                                <input 
-                                    type="text" 
-                                    id="forumUrlInput" 
-                                    class="form-input" 
-                                    placeholder="https://forum.gta5rp.com/forums/pravila/" 
-                                    value="https://forum.gta5rp.com/forums/pravila/"
-                                >
-                                <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 0.5rem;">
-                                    Поддерживаются: GTA5RP, Majestic RP, Arizona RP
-                                </div>
-                            </div>
-
-                            <button class="training-btn primary" onclick="startAITraining()">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                    <polyline points="7 10 12 15 17 10"></polyline>
-                                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                                </svg>
-                                Загрузить и обучить
-                            </button>
                         </div>
 
                         <!-- Training Progress -->
@@ -25327,6 +25570,327 @@ function generateTrainedResponse(prompt, model) {
         // Если точных совпадений нет, используем общий анализ
         return analyzeQuestion(question, model.rawText) + 
                '\n\n📚 Источник: Обученная база правил форума (' + model.rulesCount + ' правил)';
+    }
+}
+
+// ============================================
+// AI MODEL SELECTION & TRAINING FUNCTIONS
+// ============================================
+
+let selectedAIModel = null;
+
+// Выбор AI модели для обучения
+function selectAIForTraining(modelName) {
+    selectedAIModel = modelName;
+    
+    // Убираем выделение со всех кнопок
+    document.querySelectorAll('.ai-select-btn').forEach(btn => {
+        btn.classList.remove('selected');
+    });
+    
+    // Выделяем выбранную
+    const selectedBtn = document.querySelector(`.ai-select-btn[data-model="${modelName}"]`);
+    if (selectedBtn) {
+        selectedBtn.classList.add('selected');
+    }
+    
+    // Показываем информацию
+    const infoBox = document.getElementById('selectedAIInfo');
+    const nameSpan = document.getElementById('selectedAIName');
+    
+    const modelNames = {
+        'huggingface': 'HuggingFace 🤗',
+        'gemini': 'Gemini 🔷',
+        'claude': 'Claude 🧠',
+        'gpt': 'GPT-4 🤖',
+        'groq': 'Groq ⚡'
+    };
+    
+    nameSpan.textContent = modelNames[modelName] || modelName;
+    infoBox.style.display = 'block';
+    
+    showNotification(`✅ Выбрана модель: ${modelNames[modelName]}`);
+}
+
+// Выбор сервера и начало обучения
+async function selectServerAndTrain(forumUrl, serverName) {
+    if (!selectedAIModel) {
+        showNotification('❌ Сначала выберите AI модель для обучения!');
+        
+        // Подсвечиваем секцию выбора модели
+        const aiSection = document.querySelector('.ai-training-container').firstElementChild;
+        aiSection.style.animation = 'pulse 0.5s ease';
+        setTimeout(() => {
+            aiSection.style.animation = '';
+        }, 500);
+        
+        return;
+    }
+    
+    // Подтверждение
+    const modelNames = {
+        'huggingface': 'HuggingFace',
+        'gemini': 'Gemini',
+        'claude': 'Claude',
+        'gpt': 'GPT-4',
+        'groq': 'Groq'
+    };
+    
+    showNotification(`🚀 Начинаем обучение ${modelNames[selectedAIModel]} на правилах ${serverName}...`);
+    
+    // Запускаем обучение
+    await startAITrainingWithModel(forumUrl, serverName, selectedAIModel);
+}
+
+// Начало обучения с выбранной моделью
+async function startAITrainingWithModel(forumUrl, serverName, aiModel) {
+    if (!forumUrl) {
+        showNotification('❌ URL форума не указан!');
+        return;
+    }
+    
+    // Показываем прогресс
+    const progressCard = document.getElementById('trainingProgress');
+    const resultsCard = document.getElementById('trainingResults');
+    const progressBar = document.getElementById('progressBar');
+    const progressLog = document.getElementById('progressLog');
+    
+    progressCard.style.display = 'block';
+    resultsCard.style.display = 'none';
+    progressLog.innerHTML = '';
+    progressBar.style.width = '0%';
+    progressBar.style.background = 'linear-gradient(90deg, #60a5fa, #3b82f6)';
+    
+    const modelNames = {
+        'huggingface': 'HuggingFace 🤗',
+        'gemini': 'Gemini 🔷',
+        'claude': 'Claude 🧠',
+        'gpt': 'GPT-4 🤖',
+        'groq': 'Groq ⚡'
+    };
+    
+    addLog('info', `🚀 Начало обучения AI модели: ${modelNames[aiModel]}`);
+    addLog('info', `🎮 Сервер: ${serverName}`);
+    progressBar.style.width = '10%';
+    
+    try {
+        // Шаг 1: Загрузка правил с форума
+        addLog('info', '📥 Загрузка правил с форума...');
+        addLog('info', `🌐 URL: ${forumUrl}`);
+        
+        const rulesData = await loadRulesFromForumDirect(forumUrl);
+        progressBar.style.width = '40%';
+        addLog('success', `✅ Загружено ${rulesData.sections.length} секций правил (${rulesData.text.length} символов)`);
+        
+        // Шаг 2: Парсинг правил
+        addLog('info', '🔍 Анализ и структурирование правил...');
+        const parsedRules = parseForumRules(rulesData.text);
+        progressBar.style.width = '70%';
+        addLog('success', `✅ Найдено ${parsedRules.length} пронумерованных правил`);
+        
+        // Шаг 3: Сохранение обученной модели
+        addLog('info', `💾 Сохранение обученной модели ${modelNames[aiModel]}...`);
+        saveTrainedModel(parsedRules, rulesData, aiModel, serverName);
+        progressBar.style.width = '100%';
+        addLog('success', '✅ Обучение завершено успешно!');
+        
+        // Показываем результаты
+        setTimeout(() => {
+            showTrainingResults(parsedRules, rulesData, aiModel, serverName);
+            loadTrainingStatus();
+        }, 1000);
+        
+    } catch (error) {
+        console.error('Training error:', error);
+        addLog('error', `❌ Ошибка: ${error.message}`);
+        progressBar.style.width = '100%';
+        progressBar.style.background = 'linear-gradient(90deg, #ef4444, #dc2626)';
+    }
+}
+
+// Загрузка правил с форума напрямую (с CORS proxy)
+async function loadRulesFromForumDirect(url) {
+    const corsProxy = 'https://corsproxy.io/?';
+    const proxyUrl = corsProxy + encodeURIComponent(url);
+    
+    console.log('Fetching from:', proxyUrl);
+    
+    const response = await fetch(proxyUrl, {
+        method: 'GET',
+        headers: {
+            'Accept': 'text/html',
+        }
+    });
+    
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: Не удалось загрузить страницу форума`);
+    }
+    
+    const html = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    
+    const sections = [];
+    const selectors = [
+        '.message-body',
+        '.messageText',
+        'article.message',
+        '.post-content',
+        '.content',
+        '.bbWrapper',
+        '[itemprop="text"]'
+    ];
+    
+    let allText = '';
+    let foundPosts = false;
+    
+    for (const selector of selectors) {
+        const posts = doc.querySelectorAll(selector);
+        if (posts.length > 0) {
+            console.log(`Found ${posts.length} posts with selector: ${selector}`);
+            posts.forEach(post => {
+                const text = post.textContent.replace(/\s+/g, ' ').trim();
+                if (text.length > 100) {
+                    sections.push(text);
+                    allText += text + '\n\n';
+                    foundPosts = true;
+                }
+            });
+            if (foundPosts) break;
+        }
+    }
+    
+    if (!foundPosts) {
+        console.log('Using fallback: full body text');
+        const bodyText = doc.body.textContent.replace(/\s+/g, ' ').trim();
+        if (bodyText.length > 500) {
+            allText = bodyText;
+            sections.push(bodyText);
+        }
+    }
+    
+    if (allText.length < 500) {
+        throw new Error('Не удалось извлечь правила с форума. Возможно, структура страницы не поддерживается.');
+    }
+    
+    console.log(`Extracted ${allText.length} characters from forum`);
+    
+    return {
+        text: allText,
+        sections: sections,
+        url: url
+    };
+}
+
+// Обновленная функция сохранения модели
+const originalSaveTrainedModel = saveTrainedModel;
+function saveTrainedModel(rules, rawData, aiModel, serverName) {
+    const trainingData = {
+        rules: rules,
+        rawText: rawData.text,
+        sections: rawData.sections,
+        forumUrl: rawData.url,
+        rulesCount: rules.length,
+        lastUpdate: new Date().toLocaleString('ru-RU'),
+        trainedAt: Date.now(),
+        aiModel: aiModel || 'huggingface',
+        serverName: serverName || 'Unknown'
+    };
+    
+    localStorage.setItem(AI_TRAINING_STORAGE_KEY, JSON.stringify(trainingData));
+    console.log('✅ Модель сохранена в localStorage');
+}
+
+// Обновленная функция показа результатов
+const originalShowTrainingResults = showTrainingResults;
+function showTrainingResults(rules, rawData, aiModel, serverName) {
+    const resultsCard = document.getElementById('trainingResults');
+    const resultsContent = document.getElementById('resultsContent');
+    
+    const topRules = rules.slice(0, 10);
+    
+    const modelNames = {
+        'huggingface': 'HuggingFace 🤗',
+        'gemini': 'Gemini 🔷',
+        'claude': 'Claude 🧠',
+        'gpt': 'GPT-4 🤖',
+        'groq': 'Groq ⚡'
+    };
+    
+    let html = `
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+            <div style="font-size: 1.2rem; font-weight: 700; color: #10b981; margin-bottom: 0.5rem;">
+                ✅ Обучение завершено успешно!
+            </div>
+            <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                AI модель <strong style="color: #60a5fa;">${modelNames[aiModel] || aiModel}</strong> теперь обучена на <strong>${rules.length} правилах</strong> с форума <strong>${serverName}</strong> и будет давать точные ответы с указанием пункта и наказания.
+            </div>
+        </div>
+        
+        <div style="font-size: 1rem; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 1rem;">
+            📚 Примеры загруженных правил:
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+    `;
+    
+    topRules.forEach(rule => {
+        html += `
+            <div style="background: rgba(96, 165, 250, 0.05); border: 1px solid rgba(96, 165, 250, 0.15); border-radius: 8px; padding: 1rem;">
+                <div style="font-size: 0.85rem; font-weight: 700; color: #60a5fa; margin-bottom: 0.5rem;">
+                    Правило ${rule.number}
+                </div>
+                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 0.5rem;">
+                    ${rule.text}
+                </div>
+                ${rule.punishment ? `
+                    <div style="font-size: 0.8rem; color: rgba(239, 68, 68, 0.9);">
+                        ⚠️ Наказание: ${rule.punishment}${rule.duration ? ` | ${rule.duration}` : ''}
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    });
+    
+    html += `</div>`;
+    
+    resultsContent.innerHTML = html;
+    resultsCard.style.display = 'block';
+}
+
+// Обновленная функция загрузки статуса
+const originalLoadTrainingStatus = loadTrainingStatus;
+function loadTrainingStatus() {
+    const trained = localStorage.getItem(AI_TRAINING_STORAGE_KEY);
+    
+    const modelNames = {
+        'huggingface': 'HuggingFace 🤗',
+        'gemini': 'Gemini 🔷',
+        'claude': 'Claude 🧠',
+        'gpt': 'GPT-4 🤖',
+        'groq': 'Groq ⚡'
+    };
+    
+    if (trained) {
+        const data = JSON.parse(trained);
+        document.getElementById('trainingStatus').textContent = '✅ Обучено';
+        document.getElementById('trainingStatus').style.color = '#10b981';
+        document.getElementById('rulesCount').textContent = data.rulesCount || 0;
+        document.getElementById('lastUpdate').textContent = data.lastUpdate || 'Неизвестно';
+        
+        const trainedModelEl = document.getElementById('trainedModelName');
+        if (trainedModelEl) {
+            trainedModelEl.textContent = modelNames[data.aiModel] || data.aiModel || '—';
+        }
+    } else {
+        document.getElementById('trainingStatus').textContent = '❌ Не обучено';
+        document.getElementById('trainingStatus').style.color = '#ef4444';
+        document.getElementById('rulesCount').textContent = '0';
+        document.getElementById('lastUpdate').textContent = 'Никогда';
+        
+        const trainedModelEl = document.getElementById('trainedModelName');
+        if (trainedModelEl) {
+            trainedModelEl.textContent = '—';
+        }
     }
 }
 
