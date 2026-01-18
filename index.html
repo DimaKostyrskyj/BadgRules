@@ -14456,20 +14456,26 @@
                 <div class="ai-model-panel" id="aiModelPanel">
                     <div class="ai-panel-header">ВЫБРАТЬ НЕЙРОСЕТЬ</div>
                     <div class="ai-panel-options">
-                        <div class="ai-panel-option active" data-model="groq" onclick="selectModelFromPanel('groq')">
-                            <span class="ai-panel-option-name">Groq LLaMA</span>
+                        <div class="ai-panel-option" data-model="claude" onclick="selectModelFromPanel('claude')">
+                            <span class="ai-panel-option-name">
+                                Claude <span class="subscription-badge">PRO</span>
+                            </span>
                         </div>
-                        <div class="ai-panel-option" data-model="huggingface" onclick="selectModelFromPanel('huggingface')">
+                        <div class="ai-panel-option" data-model="gpt" onclick="selectModelFromPanel('gpt')">
+                            <span class="ai-panel-option-name">
+                                GPT-4 <span class="subscription-badge">PRO</span>
+                            </span>
+                        </div>
+                        <div class="ai-panel-option" data-model="groq" onclick="selectModelFromPanel('groq')">
+                            <span class="ai-panel-option-name">
+                                Groq <span class="subscription-badge">PRO</span>
+                            </span>
+                        </div>
+                        <div class="ai-panel-option active" data-model="huggingface" onclick="selectModelFromPanel('huggingface')">
                             <span class="ai-panel-option-name">HuggingFace</span>
                         </div>
                         <div class="ai-panel-option" data-model="gemini" onclick="selectModelFromPanel('gemini')">
-                            <span class="ai-panel-option-name">Google Gemini</span>
-                        </div>
-                        <div class="ai-panel-option" data-model="gpt5" onclick="selectModelFromPanel('gpt5')">
-                            <span class="ai-panel-option-name">GPT 5 <span class="subscription-badge">PRO</span></span>
-                        </div>
-                        <div class="ai-panel-option" data-model="gemini3" onclick="selectModelFromPanel('gemini3')">
-                            <span class="ai-panel-option-name">Gemini 3 <span class="subscription-badge">PRO</span></span>
+                            <span class="ai-panel-option-name">Gemini</span>
                         </div>
                     </div>
                 </div>
@@ -14485,7 +14491,7 @@
                     <div class="chat-input-bottom">
                         <!-- AI Model Toggle Button -->
                         <button class="ai-model-toggle-btn" id="aiModelToggleBtn" onclick="toggleAiModelPanel()">
-                            <span class="ai-model-current" id="currentModelName">Groq LLaMA</span>
+                            <span class="ai-model-current" id="currentModelName">HuggingFace</span>
                             <svg class="ai-toggle-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2">
                                 <polyline points="6 9 12 15 18 9"></polyline>
@@ -15536,16 +15542,16 @@
         };
 
         const aiModelsPanel = {
-            groq: { name: 'Groq LLaMA', description: 'Быстрая', premium: false },
-            huggingface: { name: 'HuggingFace', description: 'Умная', premium: false },
-            gemini: { name: 'Google Gemini', description: 'Умнее', premium: false },
-            gpt5: { name: 'GPT 5', description: 'Умнее', premium: true },
-            gemini3: { name: 'Gemini 3', description: 'Быстрее', premium: true }
+            claude: { name: 'Claude', description: 'Самая умная', premium: true },
+            gpt: { name: 'GPT-4', description: 'Мощная', premium: true },
+            groq: { name: 'Groq', description: 'Быстрая', premium: true },
+            huggingface: { name: 'HuggingFace', description: 'Бесплатная', premium: false },
+            gemini: { name: 'Gemini', description: 'Умная', premium: false }
         };
 
         let isAiSelectorOpen = false;
         let isAiModelPanelOpen = false;
-        let currentSelectedModel = 'groq';
+        let currentSelectedModel = 'huggingface';
 
         // Toggle AI Model Panel
         function toggleAiModelPanel() {
@@ -15685,46 +15691,66 @@
             if (modelInfo.premium) {
                 console.log('🔒 PRO модель - в разработке');
                 
-                // Создаем красивое уведомление
+                // Создаем строгое уведомление
                 const notification = document.createElement('div');
                 notification.style.cssText = `
                     position: fixed;
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
-                    background: linear-gradient(135deg, rgba(26, 26, 46, 0.98) 0%, rgba(15, 15, 30, 0.98) 100%);
-                    border: 2px solid rgba(251, 191, 36, 0.5);
-                    border-radius: 24px;
-                    padding: 3rem;
-                    max-width: 500px;
+                    background: rgba(10, 10, 15, 0.98);
+                    border: 1px solid rgba(96, 165, 250, 0.3);
+                    border-radius: 12px;
+                    padding: 2rem 2.5rem;
+                    max-width: 440px;
                     z-index: 100000;
-                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 100px rgba(251, 191, 36, 0.3);
+                    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
                     text-align: center;
-                    animation: slideInScale 0.4s ease;
+                    animation: slideInScale 0.3s ease;
                 `;
                 
                 notification.innerHTML = `
-                    <div style="font-size: 4rem; margin-bottom: 1.5rem;">🚧</div>
-                    <h2 style="font-size: 1.8rem; font-weight: 800; color: #fbbf24; margin-bottom: 1rem;">
-                        В разработке
+                    <div style="
+                        width: 48px;
+                        height: 48px;
+                        margin: 0 auto 1.5rem;
+                        border-radius: 50%;
+                        border: 2px solid rgba(96, 165, 250, 0.4);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 1.5rem;
+                    ">⚠️</div>
+                    <h2 style="
+                        font-size: 1.4rem;
+                        font-weight: 700;
+                        color: rgba(255, 255, 255, 0.95);
+                        margin-bottom: 0.8rem;
+                        letter-spacing: -0.02em;
+                    ">
+                        Модель в разработке
                     </h2>
-                    <p style="font-size: 1.1rem; color: rgba(255, 255, 255, 0.8); line-height: 1.8; margin-bottom: 2rem;">
-                        <strong>${modelInfo.name}</strong> находится в разработке.<br>
-                        Пока используйте доступные бесплатные модели:<br>
-                        <span style="color: #60a5fa;">Groq LLaMA, HuggingFace, Google Gemini</span>
+                    <p style="
+                        font-size: 0.95rem;
+                        color: rgba(255, 255, 255, 0.6);
+                        line-height: 1.6;
+                        margin-bottom: 1.8rem;
+                    ">
+                        <strong style="color: rgba(255, 255, 255, 0.85);">${modelInfo.name}</strong> находится в разработке<br>и требует подписку PRO.<br><br>
+                        Доступные модели: <span style="color: #60a5fa;">HuggingFace, Gemini</span>
                     </p>
                     <button onclick="this.parentElement.remove()" style="
-                        background: linear-gradient(135deg, rgba(251, 191, 36, 0.9) 0%, rgba(251, 146, 60, 0.9) 100%);
-                        border: none;
-                        padding: 1rem 2rem;
-                        border-radius: 12px;
-                        color: #000;
-                        font-weight: 700;
-                        font-size: 1rem;
+                        background: rgba(96, 165, 250, 0.15);
+                        border: 1px solid rgba(96, 165, 250, 0.3);
+                        padding: 0.75rem 2rem;
+                        border-radius: 8px;
+                        color: #60a5fa;
+                        font-weight: 600;
+                        font-size: 0.9rem;
                         cursor: pointer;
-                        transition: all 0.3s ease;
-                        box-shadow: 0 4px 16px rgba(251, 191, 36, 0.4);
-                    " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        transition: all 0.2s ease;
+                        width: 100%;
+                    " onmouseover="this.style.background='rgba(96, 165, 250, 0.25)'" onmouseout="this.style.background='rgba(96, 165, 250, 0.15)'">
                         Понятно
                     </button>
                 `;
@@ -16140,19 +16166,49 @@
         // ═══════════════════════════════════════════════════════════════
         
         const API_CONFIG = {
-            // Groq - РАБОТАЕТ 100% | Анализирует весь официальный форум GTA5RP/Majestic
+            // 🧠 Claude - ТРЕБУЕТ ПОДПИСКУ (В РАЗРАБОТКЕ)
+            claude: {
+                enabled: false,
+                name: 'Claude Sonnet 4.5',
+                apiKey: '',
+                endpoint: 'https://api.anthropic.com/v1/messages',
+                model: 'claude-sonnet-4-20250514',
+                type: 'claude',
+                icon: '🧠',
+                status: '🔒 PRO | В разработке',
+                requiresSubscription: true,
+                inDevelopment: true
+            },
+            
+            // 🤖 GPT - ТРЕБУЕТ ПОДПИСКУ (В РАЗРАБОТКЕ)
+            gpt: {
+                enabled: false,
+                name: 'GPT-4',
+                apiKey: '',
+                endpoint: 'https://api.openai.com/v1/chat/completions',
+                model: 'gpt-4',
+                type: 'openai',
+                icon: '🤖',
+                status: '🔒 PRO | В разработке',
+                requiresSubscription: true,
+                inDevelopment: true
+            },
+            
+            // ⚡ Groq - ТРЕБУЕТ ПОДПИСКУ (В РАЗРАБОТКЕ)
             groq: {
-                enabled: true,
+                enabled: false,
                 name: 'Groq LLaMA',
-                apiKey: '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',
+                apiKey: '',
                 endpoint: 'https://api.groq.com/openai/v1/chat/completions',
                 model: 'llama-3.3-70b-versatile',
                 type: 'openai',
                 icon: '⚡',
-                status: '✅ Работает | Анализирует форум'
+                status: '🔒 PRO | В разработке',
+                requiresSubscription: true,
+                inDevelopment: true
             },
             
-            // HuggingFace - РАБОТАЕТ БЕЗ КЛЮЧА | Анализирует весь официальный форум
+            // 🤗 HuggingFace - РАБОТАЕТ | Анализирует форум
             huggingface: {
                 enabled: true,
                 name: 'HuggingFace',
@@ -16161,10 +16217,12 @@
                 model: 'meta-llama/Llama-3.2-3B-Instruct',
                 type: 'huggingface',
                 icon: '🤗',
-                status: '✅ Бесплатно | Анализирует форум'
+                status: '✅ Бесплатно | Анализирует форум',
+                requiresSubscription: false,
+                inDevelopment: false
             },
             
-            // Google Gemini - Анализирует весь официальный форум
+            // 🔷 Google Gemini - РАБОТАЕТ | Анализирует форум
             gemini: {
                 enabled: true,
                 name: 'Google Gemini',
@@ -16173,12 +16231,14 @@
                 model: 'gemini-2.0-flash-exp',
                 type: 'gemini',
                 icon: '🔷',
-                status: '✅ Работает | Анализирует форум'
+                status: '✅ Работает | Анализирует форум',
+                requiresSubscription: false,
+                inDevelopment: false
             }
         };
 
-        // Groq ПО УМОЛЧАНИЮ - самая надёжная!
-        let currentModel = 'groq';
+        // HuggingFace ПО УМОЛЧАНИЮ - бесплатная и рабочая!
+        let currentModel = 'huggingface';
 
         // ═══════════════════════════════════════════════════════════════
         // 📚 ЗАГРУЗКА ССЫЛОК ИЗ TXT ФАЙЛА
@@ -18162,6 +18222,11 @@
                 // Проверка перед запросом
                 if (!config) {
                     throw new Error(`Модель ${currentModel} не найдена`);
+                }
+                
+                // НОВАЯ ПРОВЕРКА: Модель требует подписку
+                if (config.requiresSubscription || config.inDevelopment) {
+                    throw new Error(`${config.name} находится в разработке и требует подписку PRO. Используйте HuggingFace или Gemini.`);
                 }
                 
                 if (!config.enabled) {
