@@ -3914,6 +3914,135 @@
     display: inline-block;
 }
 
+/* ============================================
+   AI TRAINING ADMIN PANEL STYLES
+   ============================================ */
+
+.ai-training-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.training-status-card,
+.training-input-card,
+.training-progress-card,
+.training-results-card {
+    background: rgba(15, 15, 20, 0.95);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.training-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.training-stat {
+    background: rgba(96, 165, 250, 0.05);
+    border: 1px solid rgba(96, 165, 250, 0.15);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 700;
+}
+
+.training-btn {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.training-btn.primary {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(96, 165, 250, 0.3);
+}
+
+.training-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(96, 165, 250, 0.4);
+}
+
+.training-btn.primary:active {
+    transform: translateY(0);
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(96, 165, 250, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #60a5fa, #3b82f6);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.progress-log {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(96, 165, 250, 0.15);
+    border-radius: 8px;
+    padding: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+}
+
+.log-entry {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.log-entry.success {
+    color: #10b981;
+}
+
+.log-entry.error {
+    color: #ef4444;
+}
+
+.log-entry.info {
+    color: #60a5fa;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -13034,6 +13163,14 @@
             </svg>
             <span>Личный кабинет</span>
         </button>
+        <button class="dropdown-item" id="aiTrainingBtn" onclick="showAITrainingPanel(); closeProfileMenu()" style="display: none;">
+            <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+            </svg>
+            <span>🔒 Обучение AI</span>
+        </button>
         <button class="dropdown-item" onclick="showSubscriptionSection(); closeProfileMenu()">
             <svg class="dropdown-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="8" r="7"></circle>
@@ -14732,6 +14869,113 @@
                         </svg>
                         Выйти из аккаунта
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Training Admin Panel (ТОЛЬКО ДЛЯ ВЛАДЕЛЬЦА) -->
+        <div class="section" id="aiTrainingSection" style="display: none;">
+            <div class="landing-section">
+                <!-- Hero -->
+                <div class="hero-section">
+                    <div class="hero-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                        <span>🔒 Админ-панель</span>
+                    </div>
+
+                    <h1 class="hero-title">Обучение AI<br>на правилах форума</h1>
+
+                    <p class="hero-subtitle">
+                        Загрузите правила форума для обучения AI-ассистента. После обучения HuggingFace 
+                        будет давать точные ответы с указанием пункта правила и времени наказания.
+                    </p>
+                </div>
+
+                <!-- Training Panel -->
+                <div class="features-section">
+                    <div class="ai-training-container" style="max-width: 900px; margin: 0 auto;">
+                        
+                        <!-- Status Card -->
+                        <div class="training-status-card">
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.95); margin-bottom: 1rem;">
+                                📊 Статус обучения
+                            </h3>
+                            <div class="training-stats">
+                                <div class="training-stat">
+                                    <span class="stat-label">Статус:</span>
+                                    <span class="stat-value" id="trainingStatus">Не обучено</span>
+                                </div>
+                                <div class="training-stat">
+                                    <span class="stat-label">Правил загружено:</span>
+                                    <span class="stat-value" id="rulesCount">0</span>
+                                </div>
+                                <div class="training-stat">
+                                    <span class="stat-label">Последнее обновление:</span>
+                                    <span class="stat-value" id="lastUpdate">Никогда</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- URL Input -->
+                        <div class="training-input-card">
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.95); margin-bottom: 1rem;">
+                                🌐 Загрузить правила с форума
+                            </h3>
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                    </svg>
+                                    URL раздела правил форума
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="forumUrlInput" 
+                                    class="form-input" 
+                                    placeholder="https://forum.gta5rp.com/forums/pravila/" 
+                                    value="https://forum.gta5rp.com/forums/pravila/"
+                                >
+                                <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 0.5rem;">
+                                    Поддерживаются: GTA5RP, Majestic RP, Arizona RP
+                                </div>
+                            </div>
+
+                            <button class="training-btn primary" onclick="startAITraining()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                Загрузить и обучить
+                            </button>
+                        </div>
+
+                        <!-- Training Progress -->
+                        <div class="training-progress-card" id="trainingProgress" style="display: none;">
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.95); margin-bottom: 1rem;">
+                                ⚙️ Процесс обучения
+                            </h3>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="progressBar"></div>
+                            </div>
+                            <div class="progress-log" id="progressLog"></div>
+                        </div>
+
+                        <!-- Training Results -->
+                        <div class="training-results-card" id="trainingResults" style="display: none;">
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: rgba(255,255,255,0.95); margin-bottom: 1rem;">
+                                ✅ Результаты обучения
+                            </h3>
+                            <div id="resultsContent"></div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -19549,6 +19793,16 @@ ${userServer ? `6. ВАЖНО: Игрок играет на сервере ${use
             console.log('DOM загружен, проверяем авторизацию...');
             checkLoginStatus();
             
+            // Показываем кнопку обучения AI только владельцу
+            const userRole = localStorage.getItem('userRole');
+            if (userRole && ['ВЛАДЕЛЕЦ', 'OWNER', 'CREATOR', 'FOUNDER'].includes(userRole.toUpperCase())) {
+                const aiTrainingBtn = document.getElementById('aiTrainingBtn');
+                if (aiTrainingBtn) {
+                    aiTrainingBtn.style.display = 'flex';
+                    console.log('🔒 Админ-панель AI доступна для владельца');
+                }
+            }
+            
             // Инициализация панели выбора AI модели
             console.log('🤖 Инициализация панели выбора AI модели...');
             setTimeout(() => {
@@ -20187,7 +20441,8 @@ ${userServer ? `6. ВАЖНО: Игрок играет на сервере ${use
                 'team': 'teamSection',
                 'social': 'socialSection',
                 'admin': 'adminSection',
-                'roster': 'rosterSection'
+                'roster': 'rosterSection',
+                'aitraining': 'aiTrainingSection'
             };
 
             const targetSection = document.getElementById(sectionMap[sectionName]);
@@ -24767,6 +25022,312 @@ function showNotification(message, type = 'info') {
         notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
+}
+
+
+// ============================================
+// AI TRAINING SYSTEM
+// ============================================
+
+// Хранилище обученных правил (LocalStorage)
+const AI_TRAINING_STORAGE_KEY = 'ai_trained_rules';
+
+// Проверка прав владельца
+function isOwner() {
+    const userRole = localStorage.getItem('userRole');
+    const ownerRoles = ['ВЛАДЕЛЕЦ', 'OWNER', 'CREATOR', 'FOUNDER'];
+    return ownerRoles.includes(userRole?.toUpperCase());
+}
+
+// Показ админ-панели (только для владельца)
+function showAITrainingPanel() {
+    if (!isOwner()) {
+        showNotification('❌ Доступ запрещен! Только для владельца сайта.');
+        return;
+    }
+    
+    // Показываем секцию
+    document.getElementById('aiTrainingSection').style.display = 'block';
+    document.getElementById('chatSection').style.display = 'none';
+    document.getElementById('profileSection').style.display = 'none';
+    document.getElementById('complaintsSection').style.display = 'none';
+    
+    // Загружаем статус
+    loadTrainingStatus();
+}
+
+// Загрузка статуса обучения
+function loadTrainingStatus() {
+    const trained = localStorage.getItem(AI_TRAINING_STORAGE_KEY);
+    
+    if (trained) {
+        const data = JSON.parse(trained);
+        document.getElementById('trainingStatus').textContent = '✅ Обучено';
+        document.getElementById('trainingStatus').style.color = '#10b981';
+        document.getElementById('rulesCount').textContent = data.rulesCount || 0;
+        document.getElementById('lastUpdate').textContent = data.lastUpdate || 'Неизвестно';
+    } else {
+        document.getElementById('trainingStatus').textContent = '❌ Не обучено';
+        document.getElementById('trainingStatus').style.color = '#ef4444';
+        document.getElementById('rulesCount').textContent = '0';
+        document.getElementById('lastUpdate').textContent = 'Никогда';
+    }
+}
+
+// Начало обучения
+async function startAITraining() {
+    const forumUrl = document.getElementById('forumUrlInput').value.trim();
+    
+    if (!forumUrl) {
+        showNotification('❌ Введите URL форума!');
+        return;
+    }
+    
+    // Показываем прогресс
+    const progressCard = document.getElementById('trainingProgress');
+    const resultsCard = document.getElementById('trainingResults');
+    const progressBar = document.getElementById('progressBar');
+    const progressLog = document.getElementById('progressLog');
+    
+    progressCard.style.display = 'block';
+    resultsCard.style.display = 'none';
+    progressLog.innerHTML = '';
+    progressBar.style.width = '0%';
+    
+    addLog('info', '🚀 Начало обучения AI...');
+    progressBar.style.width = '10%';
+    
+    try {
+        // Шаг 1: Загрузка правил с форума
+        addLog('info', '📥 Загрузка правил с форума...');
+        const rulesData = await loadRulesFromForum(forumUrl);
+        progressBar.style.width = '40%';
+        addLog('success', `✅ Загружено ${rulesData.sections.length} секций правил`);
+        
+        // Шаг 2: Парсинг правил
+        addLog('info', '🔍 Анализ и структурирование правил...');
+        const parsedRules = parseForumRules(rulesData.text);
+        progressBar.style.width = '70%';
+        addLog('success', `✅ Найдено ${parsedRules.length} пронумерованных правил`);
+        
+        // Шаг 3: Сохранение обученной модели
+        addLog('info', '💾 Сохранение обученной модели...');
+        saveTrainedModel(parsedRules, rulesData);
+        progressBar.style.width = '100%';
+        addLog('success', '✅ Обучение завершено успешно!');
+        
+        // Показываем результаты
+        setTimeout(() => {
+            showTrainingResults(parsedRules, rulesData);
+            loadTrainingStatus();
+        }, 1000);
+        
+    } catch (error) {
+        addLog('error', `❌ Ошибка: ${error.message}`);
+        progressBar.style.width = '100%';
+        progressBar.style.background = 'linear-gradient(90deg, #ef4444, #dc2626)';
+    }
+}
+
+// Загрузка правил с форума
+async function loadRulesFromForum(url) {
+    // Используем существующую функцию parseForumPage
+    const response = await fetch(`http://localhost:3000/parse-forum?url=${encodeURIComponent(url)}`);
+    
+    if (!response.ok) {
+        throw new Error('Не удалось загрузить правила с форума');
+    }
+    
+    const html = await response.text();
+    
+    // Парсим HTML
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    
+    // Извлекаем текст правил
+    const sections = [];
+    const posts = doc.querySelectorAll('.message-body, .messageText, article');
+    
+    let allText = '';
+    posts.forEach(post => {
+        const text = post.textContent.trim();
+        if (text.length > 100) {
+            sections.push(text);
+            allText += text + '\n\n';
+        }
+    });
+    
+    return {
+        text: allText,
+        sections: sections,
+        url: url
+    };
+}
+
+// Парсинг правил в структурированный формат
+function parseForumRules(text) {
+    const rules = [];
+    
+    // Ищем пронумерованные правила (формат: 5.18, 6.3, и т.д.)
+    const rulePattern = /(\d+\.\d+)\s*([^\n]+?)(?:\s*\|\s*([^\n]+?))?(?:\s*\|\s*([^\n]+?))?/g;
+    
+    let match;
+    while ((match = rulePattern.exec(text)) !== null) {
+        const ruleNumber = match[1];
+        const ruleText = match[2].trim();
+        const punishment = match[3] ? match[3].trim() : null;
+        const duration = match[4] ? match[4].trim() : null;
+        
+        rules.push({
+            number: ruleNumber,
+            text: ruleText,
+            punishment: punishment,
+            duration: duration,
+            fullText: match[0]
+        });
+    }
+    
+    return rules;
+}
+
+// Сохранение обученной модели
+function saveTrainedModel(rules, rawData) {
+    const trainingData = {
+        rules: rules,
+        rawText: rawData.text,
+        sections: rawData.sections,
+        forumUrl: rawData.url,
+        rulesCount: rules.length,
+        lastUpdate: new Date().toLocaleString('ru-RU'),
+        trainedAt: Date.now()
+    };
+    
+    localStorage.setItem(AI_TRAINING_STORAGE_KEY, JSON.stringify(trainingData));
+    console.log('✅ Модель сохранена в localStorage');
+}
+
+// Получение обученной модели
+function getTrainedModel() {
+    const data = localStorage.getItem(AI_TRAINING_STORAGE_KEY);
+    return data ? JSON.parse(data) : null;
+}
+
+// Показ результатов обучения
+function showTrainingResults(rules, rawData) {
+    const resultsCard = document.getElementById('trainingResults');
+    const resultsContent = document.getElementById('resultsContent');
+    
+    const topRules = rules.slice(0, 10);
+    
+    let html = `
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+            <div style="font-size: 1.2rem; font-weight: 700; color: #10b981; margin-bottom: 0.5rem;">
+                ✅ Обучение завершено успешно!
+            </div>
+            <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">
+                AI теперь обучен на ${rules.length} правилах с форума и будет давать точные ответы с указанием пункта и наказания.
+            </div>
+        </div>
+        
+        <div style="font-size: 1rem; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 1rem;">
+            📚 Примеры загруженных правил:
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+    `;
+    
+    topRules.forEach(rule => {
+        html += `
+            <div style="background: rgba(96, 165, 250, 0.05); border: 1px solid rgba(96, 165, 250, 0.15); border-radius: 8px; padding: 1rem;">
+                <div style="font-size: 0.85rem; font-weight: 700; color: #60a5fa; margin-bottom: 0.5rem;">
+                    Правило ${rule.number}
+                </div>
+                <div style="font-size: 0.9rem; color: rgba(255,255,255,0.85); margin-bottom: 0.5rem;">
+                    ${rule.text}
+                </div>
+                ${rule.punishment ? `
+                    <div style="font-size: 0.8rem; color: rgba(239, 68, 68, 0.9);">
+                        ⚠️ Наказание: ${rule.punishment}${rule.duration ? ` | ${rule.duration}` : ''}
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    });
+    
+    html += `</div>`;
+    
+    resultsContent.innerHTML = html;
+    resultsCard.style.display = 'block';
+}
+
+// Добавление записи в лог
+function addLog(type, message) {
+    const log = document.getElementById('progressLog');
+    const entry = document.createElement('div');
+    entry.className = `log-entry ${type}`;
+    entry.innerHTML = `<span>${new Date().toLocaleTimeString()}</span> <span>${message}</span>`;
+    log.appendChild(entry);
+    log.scrollTop = log.scrollHeight;
+}
+
+// Улучшенная функция generateLocalResponse с использованием обученной модели
+const originalGenerateLocalResponse = generateLocalResponse;
+
+function generateLocalResponse(prompt, forumRulesText) {
+    // Проверяем наличие обученной модели
+    const trainedModel = getTrainedModel();
+    
+    if (trainedModel && trainedModel.rules && trainedModel.rules.length > 0) {
+        console.log('🎓 Используем обученную модель AI');
+        return generateTrainedResponse(prompt, trainedModel);
+    } else {
+        console.log('📚 Используем базовый анализ правил');
+        return originalGenerateLocalResponse(prompt, forumRulesText);
+    }
+}
+
+// Генерация ответа на основе обученной модели
+function generateTrainedResponse(prompt, model) {
+    const questionMatch = prompt.match(/ВОПРОС ИГРОКА: "(.+?)"/);
+    const question = questionMatch ? questionMatch[1].toLowerCase() : prompt.toLowerCase();
+    
+    console.log('🔍 Поиск в обученной базе:', question);
+    
+    // Ищем релевантные правила
+    const relevantRules = model.rules.filter(rule => {
+        const ruleTextLower = rule.text.toLowerCase();
+        const keywords = extractKeywords(question);
+        
+        return keywords.some(keyword => ruleTextLower.includes(keyword));
+    });
+    
+    if (relevantRules.length > 0) {
+        // Формируем ответ с точными правилами
+        let answer = '**📖 На основе официальных правил форума:**\n\n';
+        
+        // Берем топ-3 самых релевантных
+        relevantRules.slice(0, 3).forEach(rule => {
+            answer += `**Правило ${rule.number}:**\n`;
+            answer += `${rule.text}\n`;
+            
+            if (rule.punishment) {
+                answer += `\n⚠️ **Наказание:** ${rule.punishment}`;
+                if (rule.duration) {
+                    answer += ` | **Срок:** ${rule.duration}`;
+                }
+                answer += '\n';
+            }
+            answer += '\n';
+        });
+        
+        // Добавляем конкретный ответ
+        answer += analyzeQuestion(question, model.rawText);
+        
+        return answer;
+    } else {
+        // Если точных совпадений нет, используем общий анализ
+        return analyzeQuestion(question, model.rawText) + 
+               '\n\n📚 Источник: Обученная база правил форума (' + model.rulesCount + ' правил)';
+    }
 }
 
 
