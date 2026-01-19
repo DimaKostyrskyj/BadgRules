@@ -7888,6 +7888,229 @@
             background: rgba(255, 255, 255, 0.01);
         }
 
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* VIDEO ANALYSIS SECTION - New Rollback Analysis                  */
+        /* ═══════════════════════════════════════════════════════════════ */
+
+        .video-upload-container {
+            margin-top: 2rem;
+        }
+
+        .upload-methods {
+            margin-bottom: 2rem;
+        }
+
+        .upload-method {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .upload-method:hover {
+            border-color: rgba(96, 165, 250, 0.3);
+        }
+
+        .upload-method-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-method-header svg {
+            color: var(--accent-primary);
+        }
+
+        .upload-method-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .file-drop-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .file-drop-area:hover {
+            border-color: rgba(139, 92, 246, 0.5);
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .file-drop-area.drag-over {
+            border-color: rgba(139, 92, 246, 0.8);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .drop-zone-content svg {
+            color: rgba(139, 92, 246, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        .drop-zone-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .drop-zone-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .browse-files-btn {
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(124, 58, 237, 0.9));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .browse-files-btn:hover {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 1), rgba(124, 58, 237, 1));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .drop-zone-formats {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .link-input-area {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .video-link-input {
+            flex: 1;
+            padding: 0.875rem 1.25rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .video-link-input:focus {
+            outline: none;
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .analyze-link-btn {
+            padding: 0.875rem 1.75rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(96, 165, 250, 0.9));
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analyze-link-btn:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 1), rgba(96, 165, 250, 1));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .link-supported {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.75rem;
+        }
+
+        .analysis-features {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+        }
+
+        .features-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text strong {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-text p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .upload-method {
+                padding: 1.5rem;
+            }
+
+            .file-drop-area {
+                padding: 2rem 1rem;
+            }
+
+            .link-input-area {
+                flex-direction: column;
+            }
+
+            .analyze-link-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .file-upload-area:hover {
             border-color: rgba(255, 255, 255, 0.4);
             background: rgba(255, 255, 255, 0.03);
@@ -14581,7 +14804,7 @@
                             </div>
                         </div>
 
-                        <div style="display: flex; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
                             <button class="send-button" id="sendButton" onclick="sendMessage()">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
@@ -14737,106 +14960,121 @@
                 <div class="hero-section">
                     <div class="hero-badge">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                            <line x1="12" y1="9" x2="12" y2="13"></line>
-                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            <path d="M23 7l-7 5 7 5V7z"></path>
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
                         </svg>
-                        <span>Система жалоб</span>
+                        <span>Анализ отката</span>
                     </div>
 
-                    <h1 class="hero-title">Подать жалобу<br>на нарушение</h1>
+                    <h1 class="hero-title">🎬 AI Анализ<br>видео с откатом</h1>
 
                     <p class="hero-subtitle">
-                        Заполните форму ниже для подачи жалобы на нарушение правил сервера.
-                        Все поля обязательны для заполнения. Укажите доказательства нарушения.
+                        Загрузите видео с игровой ситуацией, и AI определит все нарушения правил сервера,
+                        укажет временные метки и даст рекомендации для подачи жалобы.
                     </p>
                 </div>
 
-                <!-- Complaint Form -->
+                <!-- Video Analysis Section -->
                 <div class="features-section">
-                    <div class="complaint-form-container" style="max-width: 800px; margin: 0 auto;">
-                        <div class="complaint-form">
-                            <!-- Type -->
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
-                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                        <polyline points="14 2 14 8 20 8"></polyline>
-                                    </svg>
-                                    Тип нарушения
-                                </label>
-                                <select id="complaintType" class="form-input">
-                                    <option value="">Выберите тип нарушения</option>
-                                    <option value="dm">🔫 DM (DeathMatch)</option>
-                                    <option value="mg">🧠 MG (MetaGaming)</option>
-                                    <option value="pg">💪 PG (PowerGaming)</option>
-                                    <option value="rk">☠️ RK (Revenge Kill)</option>
-                                    <option value="fr">🎭 FailRP</option>
-                                    <option value="other">📋 Другое</option>
-                                </select>
+                    <div style="max-width: 900px; margin: 0 auto;">
+                        
+                        <!-- Upload Area -->
+                        <div class="video-upload-container">
+                            <div class="upload-methods">
+                                <!-- File Upload -->
+                                <div class="upload-method active" id="fileUploadMethod">
+                                    <div class="upload-method-header">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                            <polyline points="17 8 12 3 7 8"></polyline>
+                                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                                        </svg>
+                                        <h3>Загрузить видео файл</h3>
+                                    </div>
+                                    
+                                    <div class="file-drop-area" id="rollbackFileDropArea">
+                                        <input type="file" id="rollbackVideoInput" accept="video/*,.mp4,.avi,.mov,.webm" style="display: none;" onchange="handleRollbackVideoUpload(event)">
+                                        
+                                        <div class="drop-zone-content">
+                                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                <path d="M23 7l-7 5 7 5V7z"></path>
+                                                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                                            </svg>
+                                            <p class="drop-zone-title">Перетащите видео сюда</p>
+                                            <p class="drop-zone-subtitle">или</p>
+                                            <button class="browse-files-btn" onclick="document.getElementById('rollbackVideoInput').click()">
+                                                Выбрать файл
+                                            </button>
+                                            <p class="drop-zone-formats">MP4, AVI, MOV, WEBM • Максимум 100MB</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Link Upload -->
+                                <div class="upload-method" id="linkUploadMethod" style="margin-top: 20px;">
+                                    <div class="upload-method-header">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                        </svg>
+                                        <h3>Вставить ссылку на видео</h3>
+                                    </div>
+                                    
+                                    <div class="link-input-area">
+                                        <input type="text" id="rollbackVideoLink" class="video-link-input" placeholder="YouTube, Google Drive или прямая ссылка на видео...">
+                                        <button class="analyze-link-btn" onclick="analyzeRollbackByLink()">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="11" cy="11" r="8"></circle>
+                                                <path d="m21 21-4.35-4.35"></path>
+                                            </svg>
+                                            Анализировать
+                                        </button>
+                                    </div>
+                                    <p class="link-supported">Поддерживаются: YouTube, Google Drive, прямые ссылки (.mp4, .webm)</p>
+                                </div>
                             </div>
 
-                            <!-- Violator ID -->
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg>
-                                    ID нарушителя
-                                </label>
-                                <input type="text" id="violatorId" class="form-input" placeholder="Например: 12345">
+                            <!-- Analysis Results -->
+                            <div id="rollbackAnalysisResults" style="margin-top: 30px; display: none;">
+                                <!-- Results will be inserted here by JavaScript -->
                             </div>
 
-                            <!-- Server -->
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
-                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                                        <line x1="12" y1="17" x2="12" y2="21"></line>
-                                    </svg>
-                                    Сервер
-                                </label>
-                                <input type="text" id="serverName" class="form-input" placeholder="Например: Downtown">
+                            <!-- Features Info -->
+                            <div class="analysis-features">
+                                <h3 class="features-title">🤖 Что анализирует AI:</h3>
+                                <div class="features-grid">
+                                    <div class="feature-item">
+                                        <div class="feature-icon">⚠️</div>
+                                        <div class="feature-text">
+                                            <strong>Нарушения правил</strong>
+                                            <p>DM, VDM, PG, MG и другие</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon">📋</div>
+                                        <div class="feature-text">
+                                            <strong>Правила сервера</strong>
+                                            <p>Точные ссылки на правила форума</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon">⚖️</div>
+                                        <div class="feature-text">
+                                            <strong>Наказания</strong>
+                                            <p>Рекомендуемые меры наказания</p>
+                                        </div>
+                                    </div>
+                                    <div class="feature-item">
+                                        <div class="feature-icon">💡</div>
+                                        <div class="feature-text">
+                                            <strong>Рекомендации</strong>
+                                            <p>Советы для подачи жалобы</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
-                            <!-- Description -->
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
-                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                    </svg>
-                                    Описание инцидента
-                                </label>
-                                <textarea id="incidentDescription" class="form-textarea" rows="6" placeholder="Подробно опишите что произошло, время, место и обстоятельства нарушения..."></textarea>
-                            </div>
-
-                            <!-- Evidence -->
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
-                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                                    </svg>
-                                    Ссылка на доказательства
-                                </label>
-                                <input type="text" id="evidenceLink" class="form-input" placeholder="YouTube, Google Drive или другая ссылка на видео/скриншоты">
-                            </div>
-
-                            <!-- Submit Button -->
-                            <button onclick="submitComplaint()" class="submit-complaint-btn">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M22 2L11 13"></path>
-                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                                </svg>
-                                Отправить жалобу
-                            </button>
-
-                            <!-- Status Message -->
-                            <div id="complaintStatus" class="complaint-status"></div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -18147,6 +18385,50 @@
             const message = chatInput.value.trim();
             if (!message || isProcessing) return;
 
+            // 🛡️ Простая клиентская проверка релевантности
+            const lowerMsg = message.toLowerCase();
+            const offTopicPhrases = [
+                'как дела', 'что делаешь', 'как поживаешь', 'что нового',
+                'расскажи анекдот', 'расскажи шутку', 'пошути',
+                'помоги с домашкой', 'помоги с математикой', 'помоги с физикой',
+                'реши задачу', 'сделай домашку', 'напиши сочинение',
+                'переведи текст', 'как приготовить', 'рецепт',
+                'погода', 'время', 'дата',
+                'кто ты', 'что ты такое', 'кто тебя создал'
+            ];
+            
+            const isOffTopic = offTopicPhrases.some(phrase => lowerMsg.includes(phrase));
+            const hasGameKeywords = /правил|gta|rp|сервер|форум|дм|вдм|пг|мг|грабить|убива|зона|гетто|маска|наказ/i.test(message);
+            
+            // Если явно не по теме И нет игровых ключевых слов
+            if (isOffTopic && !hasGameKeywords) {
+                isProcessing = true;
+                sendButton.disabled = true;
+                addMessage(message, false);
+                chatInput.value = '';
+                
+                const quickReply = `<div class="ai-response-card" style="padding: 20px; background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05)); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 15px;">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                        <span style="font-size: 1.5rem;">🎮</span>
+                        <span style="font-weight: 600; color: var(--accent-primary);">BadgRules AI</span>
+                    </div>
+                    <div style="line-height: 1.7; color: var(--text-primary);">
+                        Извини, я помогаю только с правилами сервера GTA 5 RP. Задай вопрос о правилах игры! 🎮
+                        <br><br>
+                        <span style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Например: "Что такое DM?", "Можно ли грабить в больнице?", "Где находится гетто?"
+                        </span>
+                    </div>
+                </div>`;
+                
+                addMessageHtml(quickReply, true);
+                
+                isProcessing = false;
+                sendButton.disabled = false;
+                chatInput.focus();
+                return;
+            }
+
             isProcessing = true;
             sendButton.disabled = true;
 
@@ -18368,15 +18650,21 @@
             // Информация о сервере для промпта
             const serverInfo = userServer ? `\n\n⚠️ ВАЖНО: Игрок играет на сервере ${userServer}. Если правила отличаются для разных серверов, дай ответ для ${userServer}.` : '';
             
-            // УЛУЧШЕННЫЙ ПРОМПТ
-            const prompt = `Ты - эксперт по правилам ${serverName}. Ты проанализировал ВЕСЬ официальный форум ${forumUrl} и знаешь все правила.${serverInfo}
+            // УЛУЧШЕННЫЙ ПРОМПТ С ПРОВЕРКОЙ ТЕМЫ ВОПРОСА
+            const prompt = `Ты - BadgRules AI, специализированный помощник ТОЛЬКО по правилам сервера ${serverName}. Ты проанализировал ВЕСЬ официальный форум ${forumUrl} и знаешь все правила.${serverInfo}
 
 ВОПРОС ИГРОКА: "${question}"
+
+⚠️ КРИТИЧЕСКИ ВАЖНО - ПРОВЕРКА РЕЛЕВАНТНОСТИ ВОПРОСА:
+1. Сначала проверь: вопрос касается правил GTA 5 RP сервера?
+2. Если вопрос НЕ о правилах игры (например: "как дела", "что ты умеешь", "помоги с математикой", "расскажи анекдот" и т.д.), ОБЯЗАТЕЛЬНО ответь:
+   "Извини, я помогаю только с правилами сервера GTA 5 RP. Задай вопрос о правилах игры! 🎮"
+3. Только если вопрос О ПРАВИЛАХ - продолжай анализ ниже.
 
 АКТУАЛЬНЫЕ ПРАВИЛА С ОФИЦИАЛЬНОГО ФОРУМА ${forumUrl.toUpperCase()}:
 ${forumRulesText}
 
-ТВОЯ ЗАДАЧА:
+ТВОЯ ЗАДАЧА (только для вопросов о правилах):
 1. Используй ТОЛЬКО официальную информацию с форума выше
 2. Если "можно ли..." - дай ЧЕТКИЙ ответ: ДА или НЕТ
 3. Объясни ПОЧЕМУ (ссылаясь на конкретные правила)
@@ -18384,14 +18672,23 @@ ${forumRulesText}
 5. Ответ должен быть кратким: 3-5 предложений максимум
 ${userServer ? `6. ВАЖНО: Игрок играет на сервере ${userServer}, учитывай особенности этого сервера` : ''}
 
-ПРИМЕРЫ ОТВЕТОВ:
+ПРИМЕРЫ ОБРАБОТКИ ВОПРОСОВ:
+
+НЕ О ПРАВИЛАХ (отказ):
+Вопрос: "Привет, как дела?"
+Ответ: "Извини, я помогаю только с правилами сервера GTA 5 RP. Задай вопрос о правилах игры! 🎮"
+
+Вопрос: "Что ты умеешь?"
+Ответ: "Извини, я помогаю только с правилами сервера GTA 5 RP. Задай вопрос о правилах игры! 🎮"
+
+О ПРАВИЛАХ (полный ответ):
 Вопрос: "Можно грабить такси?"
 ✅ Правильный ответ: "ДА, такси можно грабить по правилам ${serverName}. Такси не является зеленой зоной. Требуется использование маски. (Правило 6.31 форума ${forumUrl})"
 
 Вопрос: "Можно убить в больнице?"
 ❌ Правильный ответ: "НЕТ, убийство в больнице (EMS) строго запрещено. Больница является зеленой зоной по правилам ${serverName}. (Правило 6.11 форума ${forumUrl})"
 
-ТВОЙ ОТВЕТ (используй только данные с официального форума ${forumUrl}):`;
+ТВОЙ ОТВЕТ (сначала проверь релевантность, потом используй данные с форума ${forumUrl}):`;
             
             try {
                 let response;
@@ -20128,6 +20425,348 @@ ${userServer ? `6. ВАЖНО: Игрок играет на сервере ${use
             document.getElementById('evidenceLink').value = '';
             document.getElementById('complaintStatus').style.display = 'none';
         }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 🎬 ROLLBACK VIDEO ANALYSIS FUNCTIONS
+        // ═══════════════════════════════════════════════════════════════
+
+        let rollbackVideoData = null;
+
+        // Drag and Drop handlers
+        function initRollbackDragDrop() {
+            const dropArea = document.getElementById('rollbackFileDropArea');
+            if (!dropArea) return;
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, () => {
+                    dropArea.classList.add('drag-over');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, () => {
+                    dropArea.classList.remove('drag-over');
+                }, false);
+            });
+
+            dropArea.addEventListener('drop', handleRollbackDrop, false);
+        }
+
+        function handleRollbackDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length > 0) {
+                handleRollbackVideoFile(files[0]);
+            }
+        }
+
+        // Handle video file upload
+        async function handleRollbackVideoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                handleRollbackVideoFile(file);
+            }
+        }
+
+        async function handleRollbackVideoFile(file) {
+            // Validate file type
+            const validTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/webm', 'video/quicktime'];
+            if (!validTypes.includes(file.type) && !file.name.match(/\.(mp4|avi|mov|webm)$/i)) {
+                showNotification('❌ Поддерживаются только видео файлы (MP4, AVI, MOV, WEBM)', 'error');
+                return;
+            }
+
+            // Validate file size (max 100MB)
+            const maxSize = 100 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showNotification('❌ Размер видео не должен превышать 100MB', 'error');
+                return;
+            }
+
+            showRollbackAnalysisLoading(file.name);
+
+            try {
+                // Extract frames from video
+                const frames = await extractVideoFrames(file, 5);
+
+                rollbackVideoData = {
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    frames: frames
+                };
+
+                // Automatically start analysis
+                await analyzeRollbackVideo();
+
+            } catch (error) {
+                console.error('Error processing video:', error);
+                showRollbackError('Ошибка обработки видео: ' + error.message);
+            }
+        }
+
+        // Analyze video by link
+        async function analyzeRollbackByLink() {
+            const linkInput = document.getElementById('rollbackVideoLink');
+            const videoUrl = linkInput.value.trim();
+
+            if (!videoUrl) {
+                showNotification('❌ Вставьте ссылку на видео', 'error');
+                return;
+            }
+
+            if (!isValidVideoUrl(videoUrl)) {
+                showNotification('❌ Неверная ссылка на видео', 'error');
+                return;
+            }
+
+            showRollbackAnalysisLoading('Видео по ссылке');
+
+            try {
+                const selectedServer = loadServerSelection();
+                const serverName = selectedServer ? 
+                    (selectedServer.project === 'gta5rp' ? 'GTA 5 RP' : 'Majestic RP') : 
+                    'GTA 5 RP';
+                
+                const forumUrl = selectedServer ? 
+                    (selectedServer.project === 'gta5rp' ? 'forum.gta5rp.com' : 'forum.majestic-rp.ru') : 
+                    'forum.gta5rp.com';
+
+                const rulesContext = await loadRulesForVideoAnalysis(serverName, forumUrl);
+                const config = API_CONFIG[currentModel];
+
+                if (!config || !config.enabled) {
+                    throw new Error('AI модель не доступна');
+                }
+
+                const analysisPrompt = `Ты - эксперт по правилам сервера ${serverName}. Проанализируй видео по ссылке и определи ВСЕ нарушения правил.
+
+ССЫЛКА НА ВИДЕО: ${videoUrl}
+
+${rulesContext}
+
+ВАЖНО: Поскольку я не могу напрямую просмотреть видео по ссылке, дай рекомендации:
+
+1. Объясни пользователю, что для полного анализа лучше загрузить видео файл напрямую
+2. Дай общие рекомендации по типичным нарушениям:
+   - DM (Death Match) - убийство без RP причины
+   - VDM (Vehicle Death Match) - убийство транспортом
+   - PG (Power Gaming) - невозможные действия
+   - Нарушения в зелёной зоне
+   - Ограбления без маски
+   
+3. Предложи описать ситуацию текстом для более точного анализа
+
+ФОРМАТ ОТВЕТА:
+⚠️ ВНИМАНИЕ
+Для точного анализа видео рекомендую загрузить файл напрямую через кнопку загрузки.
+
+Если описать ситуацию из видео, я смогу дать точный анализ по правилам ${serverName}.
+
+📋 НА ЧТО ОБРАТИТЬ ВНИМАНИЕ:
+[список типичных нарушений]
+
+💡 Опиши ситуацию из видео, и я точно скажу, какие правила нарушены.`;
+
+                let analysisResult;
+                
+                if (config.type === 'openai') {
+                    analysisResult = await callOpenAICompatible(config, analysisPrompt);
+                } else if (config.type === 'gemini') {
+                    analysisResult = await callGeminiAPI(config, analysisPrompt);
+                } else if (config.type === 'huggingface') {
+                    analysisResult = await callHuggingFaceAPI(config, analysisPrompt);
+                }
+
+                showRollbackAnalysisResult(analysisResult, { name: videoUrl, size: 0 }, serverName, forumUrl, true);
+
+            } catch (error) {
+                console.error('Error analyzing video link:', error);
+                showRollbackError('Ошибка анализа видео: ' + error.message);
+            }
+        }
+
+        // Analyze uploaded video
+        async function analyzeRollbackVideo() {
+            if (!rollbackVideoData) {
+                showNotification('❌ Сначала загрузите видео', 'error');
+                return;
+            }
+
+            try {
+                const selectedServer = loadServerSelection();
+                const serverName = selectedServer ? 
+                    (selectedServer.project === 'gta5rp' ? 'GTA 5 RP' : 'Majestic RP') : 
+                    'GTA 5 RP';
+                
+                const forumUrl = selectedServer ? 
+                    (selectedServer.project === 'gta5rp' ? 'forum.gta5rp.com' : 'forum.majestic-rp.ru') : 
+                    'forum.gta5rp.com';
+
+                const rulesContext = await loadRulesForVideoAnalysis(serverName, forumUrl);
+                const analysisPrompt = createVideoAnalysisPrompt(rollbackVideoData, serverName, forumUrl, rulesContext);
+                const config = API_CONFIG[currentModel];
+
+                if (!config || !config.enabled) {
+                    throw new Error('AI модель не доступна. Выберите доступную модель.');
+                }
+
+                let analysisResult;
+                
+                if (config.type === 'gemini') {
+                    analysisResult = await analyzeVideoWithGemini(config, analysisPrompt, rollbackVideoData.frames);
+                } else if (config.type === 'openai' && config.model.includes('gpt-4')) {
+                    analysisResult = await analyzeVideoWithOpenAI(config, analysisPrompt, rollbackVideoData.frames);
+                } else {
+                    analysisResult = await callOpenAICompatible(config, analysisPrompt);
+                }
+
+                showRollbackAnalysisResult(analysisResult, rollbackVideoData, serverName, forumUrl, false);
+
+                // Clear video data
+                rollbackVideoData = null;
+                document.getElementById('rollbackVideoInput').value = '';
+
+            } catch (error) {
+                console.error('Error analyzing video:', error);
+                showRollbackError('Ошибка анализа видео: ' + error.message);
+            }
+        }
+
+        // Show loading state
+        function showRollbackAnalysisLoading(fileName) {
+            const resultsDiv = document.getElementById('rollbackAnalysisResults');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `
+                <div style="padding: 2rem; text-align: center; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 16px;">
+                    <div style="margin-bottom: 1rem;">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v6l4 2"></path>
+                        </svg>
+                    </div>
+                    <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">Анализирую видео...</p>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">${fileName}</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 1rem;">Это может занять несколько секунд</p>
+                </div>
+            `;
+        }
+
+        // Show analysis result
+        function showRollbackAnalysisResult(analysis, videoData, serverName, forumUrl, isLink) {
+            const resultsDiv = document.getElementById('rollbackAnalysisResults');
+            const config = API_CONFIG[currentModel];
+            const modelName = config ? config.name : 'AI';
+
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `
+                <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(124, 58, 237, 0.05)); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 16px; padding: 2rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 7l-7 5 7 5V7z"></path>
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                        </svg>
+                        <div>
+                            <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0;">Результат анализа</h3>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.25rem 0 0 0;">Модель: ${modelName}</p>
+                        </div>
+                    </div>
+                    
+                    <div style="padding: 1rem; background: rgba(0, 0, 0, 0.2); border-radius: 12px; margin-bottom: 1.5rem; border-left: 3px solid rgba(139, 92, 246, 0.5);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 5px;">
+                            ${isLink ? '🔗' : '📁'} ${isLink ? 'Ссылка' : 'Файл'}: ${videoData.name}
+                        </div>
+                        ${!isLink ? `<div style="font-size: 0.85rem; color: var(--text-secondary);">📊 Размер: ${(videoData.size / 1024 / 1024).toFixed(2)} MB</div>` : ''}
+                    </div>
+
+                    <div style="line-height: 1.8; color: var(--text-primary); white-space: pre-wrap; font-size: 0.95rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.2); border-radius: 12px;">
+${analysis}
+                    </div>
+
+                    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(139, 92, 246, 0.2);">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">📍 Источник правил:</div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <span style="padding: 6px 12px; background: rgba(96, 165, 250, 0.15); border-radius: 8px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3);">
+                                🎮 ${serverName}
+                            </span>
+                            <span style="padding: 6px 12px; background: rgba(59, 130, 246, 0.15); border-radius: 8px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(59, 130, 246, 0.3);">
+                                🌐 ${forumUrl}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                        <button onclick="clearRollbackAnalysis()" style="flex: 1; padding: 0.875rem; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #ef4444; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                            🗑️ Очистить результат
+                        </button>
+                        <button onclick="copyRollbackAnalysis()" style="flex: 1; padding: 0.875rem; background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; color: #3b82f6; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                            📋 Копировать результат
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Save analysis for copying
+            window.lastRollbackAnalysis = analysis;
+        }
+
+        // Show error
+        function showRollbackError(message) {
+            const resultsDiv = document.getElementById('rollbackAnalysisResults');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `
+                <div style="padding: 2rem; background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05)); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 16px;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #ef4444;">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        <div>
+                            <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0; color: #ef4444;">Ошибка</h3>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0.5rem 0 0 0;">${message}</p>
+                        </div>
+                    </div>
+                    <button onclick="clearRollbackAnalysis()" style="width: 100%; padding: 0.875rem; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #ef4444; font-weight: 600; cursor: pointer;">
+                        Попробовать снова
+                    </button>
+                </div>
+            `;
+        }
+
+        // Clear analysis
+        function clearRollbackAnalysis() {
+            const resultsDiv = document.getElementById('rollbackAnalysisResults');
+            resultsDiv.style.display = 'none';
+            resultsDiv.innerHTML = '';
+            document.getElementById('rollbackVideoLink').value = '';
+            window.lastRollbackAnalysis = null;
+        }
+
+        // Copy analysis to clipboard
+        function copyRollbackAnalysis() {
+            if (window.lastRollbackAnalysis) {
+                navigator.clipboard.writeText(window.lastRollbackAnalysis).then(() => {
+                    showNotification('✅ Результат скопирован в буфер обмена', 'success');
+                }).catch(() => {
+                    showNotification('❌ Ошибка копирования', 'error');
+                });
+            }
+        }
+
+        // Initialize drag and drop when section loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initRollbackDragDrop();
+        });
 
         function showRuleDetails(category) {
             const categoryTitles = {
@@ -24416,6 +25055,590 @@ function showNotification(message, type = 'info') {
         notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
     }, 3000);
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// 🎬 АНАЛИЗ ВИДЕО (ОТКАТОВ) - НОВЫЙ ФУНКЦИОНАЛ
+// ═══════════════════════════════════════════════════════════════
+
+let uploadedVideoData = null; // Хранит данные загруженного видео
+
+// Открыть диалог выбора файла
+function triggerFileUpload() {
+    const fileInput = document.getElementById('videoFileInput');
+    fileInput.click();
+}
+
+// Обработка загруженного видео
+async function handleVideoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Проверка типа файла
+    const validTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/webm', 'video/quicktime'];
+    if (!validTypes.includes(file.type) && !file.name.match(/\.(mp4|avi|mov|webm)$/i)) {
+        showNotification('❌ Поддерживаются только видео файлы (MP4, AVI, MOV, WEBM)', 'error');
+        return;
+    }
+
+    // Проверка размера (максимум 100MB)
+    const maxSize = 100 * 1024 * 1024; // 100MB
+    if (file.size > maxSize) {
+        showNotification('❌ Размер видео не должен превышать 100MB', 'error');
+        return;
+    }
+
+    showNotification('📤 Загружаю видео...', 'info');
+
+    try {
+        // Конвертируем видео в base64
+        const base64Video = await fileToBase64(file);
+        
+        // Извлекаем кадры из видео для анализа
+        const frames = await extractVideoFrames(file, 5); // Извлекаем 5 кадров
+        
+        uploadedVideoData = {
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            base64: base64Video,
+            frames: frames
+        };
+
+        showNotification('✅ Видео загружено! Анализирую...', 'success');
+        
+        // Автоматически запускаем анализ
+        analyzeUploadedVideo();
+
+    } catch (error) {
+        console.error('Ошибка загрузки видео:', error);
+        showNotification('❌ Ошибка загрузки видео', 'error');
+    }
+}
+
+// Конвертация файла в base64
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+// Извлечение кадров из видео
+function extractVideoFrames(file, frameCount = 5) {
+    return new Promise((resolve, reject) => {
+        const video = document.createElement('video');
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const frames = [];
+
+        video.preload = 'metadata';
+        video.src = URL.createObjectURL(file);
+
+        video.onloadedmetadata = () => {
+            const duration = video.duration;
+            const interval = duration / (frameCount + 1);
+            let currentFrame = 0;
+
+            const captureFrame = () => {
+                if (currentFrame >= frameCount) {
+                    URL.revokeObjectURL(video.src);
+                    resolve(frames);
+                    return;
+                }
+
+                const time = interval * (currentFrame + 1);
+                video.currentTime = time;
+            };
+
+            video.onseeked = () => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0);
+                
+                const frameData = canvas.toDataURL('image/jpeg', 0.8);
+                frames.push(frameData);
+                
+                currentFrame++;
+                captureFrame();
+            };
+
+            captureFrame();
+        };
+
+        video.onerror = () => {
+            URL.revokeObjectURL(video.src);
+            reject(new Error('Ошибка загрузки видео'));
+        };
+    });
+}
+
+// Анализ загруженного видео через AI
+async function analyzeUploadedVideo() {
+    if (!uploadedVideoData) {
+        showNotification('❌ Сначала загрузите видео', 'error');
+        return;
+    }
+
+    if (isProcessing) return;
+
+    isProcessing = true;
+    sendButton.disabled = true;
+
+    // Добавляем сообщение пользователя
+    addMessage(`🎬 Анализирую видео: ${uploadedVideoData.name}`, false);
+    
+    // Показываем индикатор загрузки
+    addTypingIndicator();
+
+    try {
+        const config = API_CONFIG[currentModel];
+        
+        if (!config || !config.enabled) {
+            throw new Error('AI модель не доступна');
+        }
+
+        setTypingStatus('Анализирую видео...');
+
+        // Получаем информацию о сервере
+        const selectedServer = loadServerSelection();
+        const serverName = selectedServer ? 
+            (selectedServer.project === 'gta5rp' ? 'GTA 5 RP' : 'Majestic RP') : 
+            'GTA 5 RP';
+        
+        const forumUrl = selectedServer ? 
+            (selectedServer.project === 'gta5rp' ? 'forum.gta5rp.com' : 'forum.majestic-rp.ru') : 
+            'forum.gta5rp.com';
+
+        // Загружаем правила для контекста
+        const rulesContext = await loadRulesForVideoAnalysis(serverName, forumUrl);
+
+        // Создаём промпт для анализа видео
+        const analysisPrompt = createVideoAnalysisPrompt(uploadedVideoData, serverName, forumUrl, rulesContext);
+
+        // Отправляем запрос к AI с кадрами видео
+        let analysisResult;
+        
+        if (config.type === 'gemini') {
+            // Gemini поддерживает анализ изображений
+            analysisResult = await analyzeVideoWithGemini(config, analysisPrompt, uploadedVideoData.frames);
+        } else if (config.type === 'openai' && config.model.includes('gpt-4')) {
+            // GPT-4 Vision поддерживает изображения
+            analysisResult = await analyzeVideoWithOpenAI(config, analysisPrompt, uploadedVideoData.frames);
+        } else {
+            // Для остальных моделей используем текстовое описание
+            analysisResult = await callOpenAICompatible(config, analysisPrompt);
+        }
+
+        removeTypingIndicator();
+
+        // Форматируем и показываем результат
+        const formattedResult = formatVideoAnalysisResult(analysisResult, uploadedVideoData, serverName, forumUrl);
+        addMessageHtml(formattedResult, true);
+
+        // Очищаем данные видео
+        uploadedVideoData = null;
+        document.getElementById('videoFileInput').value = '';
+
+    } catch (error) {
+        console.error('❌ Ошибка анализа видео:', error);
+        removeTypingIndicator();
+        
+        const errorHtml = formatBeautifulError(`Ошибка анализа видео: ${error.message}`);
+        addMessageHtml(errorHtml, true);
+    } finally {
+        isProcessing = false;
+        sendButton.disabled = false;
+        chatInput.focus();
+    }
+}
+
+// Загрузка правил для анализа видео
+async function loadRulesForVideoAnalysis(serverName, forumUrl) {
+    // Используем базовые правила из базы данных
+    const rulesText = `
+ОСНОВНЫЕ ПРАВИЛА ${serverName.toUpperCase()}:
+
+1. DEATH MATCH (DM) - Убийство без RP причины
+   - Запрещено убивать игроков без весомой RP причины
+   - Наказание: Деморган 120 минут + Warn
+
+2. VEHICLE DEATH MATCH (VDM) - Убийство транспортом
+   - Запрещено намеренно давить игроков
+   - Исключение: погони с полицией
+   - Наказание: Деморган 90 минут + Warn
+
+3. POWER GAMING (PG) - Невозможные действия
+   - Запрещены действия, невозможные в реальной жизни
+   - Примеры: стрельба из машины без открытого окна, игнорирование травм
+   - Наказание: Деморган 60 минут
+
+4. META GAMING (MG) - Использование внеигровой информации
+   - Запрещено использовать информацию из Discord, OOC чата и т.д.
+   - Наказание: Деморган 60 минут
+
+5. ЗЕЛЁНАЯ ЗОНА - Безопасная территория
+   - Зоны: Government, Police, EMS, News
+   - Полностью запрещены: убийства, похищения, грабежи
+   - Наказание: Деморган 120 минут + Warn
+
+6. ГЕТТО - Криминальная зона
+   - Разрешён DM игроков из банд при наличии RP причины
+   - Маска не требуется для ограблений
+   - Действуют особые правила для банд
+
+7. ОГРАБЛЕНИЕ
+   - Обязательно использование маски (вне гетто)
+   - Нельзя грабить в зелёной зоне
+   - Нельзя грабить игроков Government, Police, EMS, News
+
+8. NON-RP BEHAVIOR - Нарушение RP
+   - Игнорирование страха за свою жизнь
+   - Неадекватное поведение без RP причины
+   - Наказание: Деморган 30-60 минут
+
+9. FAIL RP - Некачественный RP
+   - Несоответствие действий роли персонажа
+   - Игнорирование игровых ситуаций
+   - Наказание: Деморган 30 минут
+
+10. SPAWN KILL - Убийство после спавна
+    - Запрещено убивать игроков сразу после респавна
+    - Наказание: Деморган 60 минут
+`;
+
+    return rulesText;
+}
+
+// Создание промпта для анализа видео
+function createVideoAnalysisPrompt(videoData, serverName, forumUrl, rulesContext) {
+    return `Ты - эксперт по правилам сервера ${serverName}. Проанализируй видео с игровой ситуацией и определи ВСЕ нарушения правил.
+
+ВИДЕО: ${videoData.name} (${(videoData.size / 1024 / 1024).toFixed(2)} MB)
+
+${rulesContext}
+
+ТВОЯ ЗАДАЧА:
+1. Внимательно изучи кадры из видео
+2. Определи ВСЕ нарушения правил, которые видны на видео
+3. Для КАЖДОГО нарушения укажи:
+   - Название нарушения (например: "DM", "VDM", "PG")
+   - Точное описание что произошло
+   - Какое правило нарушено
+   - Рекомендуемое наказание
+
+ФОРМАТ ОТВЕТА:
+Используй такую структуру:
+
+🔍 ОБНАРУЖЕНО НАРУШЕНИЙ: [число]
+
+[Для каждого нарушения:]
+❌ НАРУШЕНИЕ #[номер]: [Название]
+📝 Описание: [что именно произошло в видео]
+📋 Правило: [какое правило нарушено]
+⚖️ Наказание: [рекомендация]
+
+ДОПОЛНИТЕЛЬНО:
+💡 Комментарий: [твой анализ ситуации]
+
+Если нарушений НЕ ОБНАРУЖЕНО, напиши:
+✅ НАРУШЕНИЙ НЕ ОБНАРУЖЕНО
+💡 Ситуация в видео соответствует правилам сервера.
+
+Анализируй СТРОГО по правилам ${serverName}.`;
+}
+
+// Анализ видео с помощью Gemini (поддержка изображений)
+async function analyzeVideoWithGemini(config, prompt, frames) {
+    const parts = [{ text: prompt }];
+    
+    // Добавляем кадры как изображения
+    frames.forEach((frame, index) => {
+        const base64Data = frame.split(',')[1]; // Убираем data:image/jpeg;base64,
+        parts.push({
+            inlineData: {
+                mimeType: 'image/jpeg',
+                data: base64Data
+            }
+        });
+    });
+
+    const response = await fetch(`${config.endpoint}?key=${config.apiKey}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            contents: [{ parts }],
+            generationConfig: {
+                temperature: 0.4,
+                maxOutputTokens: 2000
+            }
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(`Gemini API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+        return data.candidates[0].content.parts[0].text;
+    }
+
+    throw new Error('Неверный формат ответа от Gemini');
+}
+
+// Анализ видео с помощью OpenAI GPT-4 Vision
+async function analyzeVideoWithOpenAI(config, prompt, frames) {
+    const messages = [{
+        role: 'user',
+        content: [
+            { type: 'text', text: prompt }
+        ]
+    }];
+
+    // Добавляем кадры
+    frames.forEach(frame => {
+        messages[0].content.push({
+            type: 'image_url',
+            image_url: {
+                url: frame
+            }
+        });
+    });
+
+    const response = await fetch(config.endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${config.apiKey}`
+        },
+        body: JSON.stringify({
+            model: config.model,
+            messages: messages,
+            max_tokens: 2000,
+            temperature: 0.4
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(`OpenAI API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    if (data.choices && data.choices[0] && data.choices[0].message) {
+        return data.choices[0].message.content;
+    }
+
+    throw new Error('Неверный формат ответа от OpenAI');
+}
+
+// Форматирование результата анализа видео
+function formatVideoAnalysisResult(analysisText, videoData, serverName, forumUrl) {
+    const config = API_CONFIG[currentModel];
+    const modelIcon = config ? config.icon : '🤖';
+    const modelName = config ? config.name : currentModel.toUpperCase();
+
+    return `<div class="ai-response-card" style="padding: 20px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(124, 58, 237, 0.05)); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 15px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+            <span style="font-size: 1.5rem;">🎬</span>
+            <span style="font-weight: 600; color: var(--accent-primary);">Анализ видео - ${modelName}</span>
+        </div>
+        
+        <div style="padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 10px; margin-bottom: 15px; border-left: 3px solid rgba(139, 92, 246, 0.5);">
+            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 5px;">📁 Файл: ${videoData.name}</div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">📊 Размер: ${(videoData.size / 1024 / 1024).toFixed(2)} MB</div>
+        </div>
+
+        <div style="line-height: 1.8; color: var(--text-primary); white-space: pre-wrap; font-size: 0.95rem;">${analysisText}</div>
+
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(139, 92, 246, 0.2);">
+            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">📍 Источник правил:</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="padding: 6px 12px; background: rgba(96, 165, 250, 0.15); border-radius: 8px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3);">
+                    🎮 ${serverName}
+                </span>
+                <span style="padding: 6px 12px; background: rgba(59, 130, 246, 0.15); border-radius: 8px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(59, 130, 246, 0.3);">
+                    🌐 ${forumUrl}
+                </span>
+            </div>
+        </div>
+    </div>`;
+}
+
+// Запрос ссылки на видео у пользователя
+function promptVideoLink() {
+    const link = prompt('🔗 Вставьте ссылку на видео:\n\nПоддерживаются:\n• YouTube\n• Google Drive\n• Прямые ссылки на .mp4/.webm');
+    
+    if (!link || link.trim() === '') return;
+    
+    analyzeVideoByLink(link.trim());
+}
+
+// Анализ видео по ссылке
+async function analyzeVideoByLink(videoUrl) {
+    if (isProcessing) return;
+
+    // Проверка валидности ссылки
+    if (!isValidVideoUrl(videoUrl)) {
+        showNotification('❌ Неверная ссылка на видео', 'error');
+        return;
+    }
+
+    isProcessing = true;
+    sendButton.disabled = true;
+
+    // Добавляем сообщение пользователя
+    addMessage(`🔗 Анализирую видео: ${videoUrl}`, false);
+    
+    // Показываем индикатор загрузки
+    addTypingIndicator();
+
+    try {
+        const config = API_CONFIG[currentModel];
+        
+        if (!config || !config.enabled) {
+            throw new Error('AI модель не доступна');
+        }
+
+        setTypingStatus('Загружаю видео по ссылке...');
+
+        // Получаем информацию о сервере
+        const selectedServer = loadServerSelection();
+        const serverName = selectedServer ? 
+            (selectedServer.project === 'gta5rp' ? 'GTA 5 RP' : 'Majestic RP') : 
+            'GTA 5 RP';
+        
+        const forumUrl = selectedServer ? 
+            (selectedServer.project === 'gta5rp' ? 'forum.gta5rp.com' : 'forum.majestic-rp.ru') : 
+            'forum.gta5rp.com';
+
+        // Загружаем правила для контекста
+        const rulesContext = await loadRulesForVideoAnalysis(serverName, forumUrl);
+
+        setTypingStatus('Анализирую видео...');
+
+        // Создаём промпт для анализа
+        const analysisPrompt = `Ты - эксперт по правилам сервера ${serverName}. Проанализируй видео по ссылке и определи ВСЕ нарушения правил.
+
+ССЫЛКА НА ВИДЕО: ${videoUrl}
+
+${rulesContext}
+
+ВАЖНО: Поскольку я не могу напрямую просмотреть видео по ссылке, проанализируй контекст и дай рекомендации:
+
+1. Объясни пользователю, что для полного анализа лучше загрузить видео файл напрямую
+2. Дай общие рекомендации по типичным нарушениям, на которые стоит обратить внимание:
+   - DM (Death Match) - убийство без RP причины
+   - VDM (Vehicle Death Match) - убийство транспортом
+   - PG (Power Gaming) - невозможные действия
+   - Нарушения в зелёной зоне
+   - Ограбления без маски
+   
+3. Предложи описать ситуацию текстом для более точного анализа
+
+ФОРМАТ ОТВЕТА:
+⚠️ ВНИМАНИЕ
+Для точного анализа видео рекомендую загрузить файл напрямую через кнопку загрузки.
+
+Если описать ситуацию из видео, я смогу дать точный анализ по правилам ${serverName}.
+
+📋 НА ЧТО ОБРАТИТЬ ВНИМАНИЕ:
+[список типичных нарушений]
+
+💡 Опиши ситуацию из видео, и я точно скажу, какие правила нарушены.`;
+
+        // Отправляем запрос
+        let analysisResult;
+        
+        if (config.type === 'openai') {
+            analysisResult = await callOpenAICompatible(config, analysisPrompt);
+        } else if (config.type === 'gemini') {
+            analysisResult = await callGeminiAPI(config, analysisPrompt);
+        } else if (config.type === 'huggingface') {
+            analysisResult = await callHuggingFaceAPI(config, analysisPrompt);
+        }
+
+        removeTypingIndicator();
+
+        // Форматируем и показываем результат
+        const formattedResult = formatVideoLinkAnalysisResult(analysisResult, videoUrl, serverName, forumUrl);
+        addMessageHtml(formattedResult, true);
+
+    } catch (error) {
+        console.error('❌ Ошибка анализа видео:', error);
+        removeTypingIndicator();
+        
+        const errorHtml = formatBeautifulError(`Ошибка анализа видео по ссылке: ${error.message}`);
+        addMessageHtml(errorHtml, true);
+    } finally {
+        isProcessing = false;
+        sendButton.disabled = false;
+        chatInput.focus();
+    }
+}
+
+// Проверка валидности URL видео
+function isValidVideoUrl(url) {
+    try {
+        const urlObj = new URL(url);
+        
+        // YouTube
+        if (urlObj.hostname.includes('youtube.com') || urlObj.hostname.includes('youtu.be')) {
+            return true;
+        }
+        
+        // Google Drive
+        if (urlObj.hostname.includes('drive.google.com')) {
+            return true;
+        }
+        
+        // Прямые ссылки на видео
+        if (url.match(/\.(mp4|webm|avi|mov)(\?.*)?$/i)) {
+            return true;
+        }
+        
+        return false;
+    } catch {
+        return false;
+    }
+}
+
+// Форматирование результата анализа видео по ссылке
+function formatVideoLinkAnalysisResult(analysisText, videoUrl, serverName, forumUrl) {
+    const config = API_CONFIG[currentModel];
+    const modelName = config ? config.name : currentModel.toUpperCase();
+
+    return `<div class="ai-response-card" style="padding: 20px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.05)); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 15px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+            <span style="font-size: 1.5rem;">🔗</span>
+            <span style="font-weight: 600; color: var(--accent-primary);">Анализ видео - ${modelName}</span>
+        </div>
+        
+        <div style="padding: 12px; background: rgba(0, 0, 0, 0.2); border-radius: 10px; margin-bottom: 15px; border-left: 3px solid rgba(59, 130, 246, 0.5);">
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">🔗 Ссылка: <a href="${videoUrl}" target="_blank" style="color: var(--accent-primary); text-decoration: none;">${videoUrl.substring(0, 60)}...</a></div>
+        </div>
+
+        <div style="line-height: 1.8; color: var(--text-primary); white-space: pre-wrap; font-size: 0.95rem;">${analysisText}</div>
+
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(59, 130, 246, 0.2);">
+            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">📍 Источник правил:</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span style="padding: 6px 12px; background: rgba(96, 165, 250, 0.15); border-radius: 8px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(96, 165, 250, 0.3);">
+                    🎮 ${serverName}
+                </span>
+                <span style="padding: 6px 12px; background: rgba(59, 130, 246, 0.15); border-radius: 8px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(59, 130, 246, 0.3);">
+                    🌐 ${forumUrl}
+                </span>
+            </div>
+        </div>
+    </div>`;
 }
 
 
