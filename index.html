@@ -352,10 +352,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at 50% 50%, 
-                rgba(10, 20, 35, 1) 0%,
-                rgba(5, 10, 20, 1) 50%,
-                rgba(0, 0, 0, 1) 100%);
+            background: linear-gradient(180deg, 
+                #000000 0%,
+                #0a0e1a 50%,
+                #000000 100%
+            );
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -498,16 +499,19 @@
 
         body {
             font-family: 'Manrope', sans-serif;
-            background: radial-gradient(ellipse at 50% 50%, 
-                rgba(10, 20, 35, 1) 0%,
-                rgba(5, 10, 20, 1) 50%,
-                rgba(0, 0, 0, 1) 100%);
+            background: linear-gradient(180deg, 
+                #000000 0%,
+                #0a0e1a 50%,
+                #000000 100%
+            );
+            background-attachment: fixed;
             color: var(--text-primary);
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
         }
 
+        /* Тонкий синий градиент-оверлей */
         body::before {
             content: '';
             position: fixed;
@@ -515,110 +519,47 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%,
-                rgba(20, 50, 100, 0.04) 0%,
-                rgba(15, 40, 80, 0.02) 40%,
+            background: radial-gradient(ellipse at 50% 20%, 
+                rgba(59, 130, 246, 0.08) 0%,
+                rgba(96, 165, 250, 0.04) 30%,
                 transparent 70%
             );
             pointer-events: none;
             z-index: 0;
         }
 
-        /* ═══════════════════════════════════════════════════════════════
-           🌊 ГОЛУБОЕ ГЛОБАЛЬНОЕ СВЕЧЕНИЕ НА ВЕСЬ САЙТ
-           ═══════════════════════════════════════════════════════════════ */
+        /* УБИРАЕМ ВСЕ ГЛОБАЛЬНЫЕ ЭФФЕКТЫ И СВЕЧЕНИЯ */
 
         .global-gradient-mesh {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-            display: block; /* ВКЛЮЧЕНО */
+            display: none !important;
         }
 
-        /* Дополнительный синий слой на весь экран - более темный */
         .global-gradient-mesh::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%,
-                rgba(60, 110, 180, 0.04) 0%,
-                rgba(50, 100, 170, 0.03) 20%,
-                rgba(40, 90, 160, 0.02) 40%,
-                rgba(30, 80, 150, 0.01) 60%,
-                transparent 80%
-            );
-            animation: globalBlueRotate 30s linear infinite;
+            display: none !important;
         }
 
-        @keyframes globalBlueRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Основное голубо-серое свечение от персонажа */
         .global-blue-ambient {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at 70% 45%,
-                rgba(60, 100, 160, 0.06) 0%,
-                rgba(50, 90, 150, 0.04) 25%,
-                rgba(40, 80, 140, 0.03) 45%,
-                rgba(30, 70, 130, 0.02) 65%,
-                rgba(20, 60, 120, 0.01) 80%,
-                transparent 100%
-            );
-            opacity: 0.8;
-            filter: blur(100px);
+            display: none !important;
         }
 
         .global-mesh-gradient {
-            display: none; /* СКРЫТО */
+            display: none !important;
         }
 
         .global-gradient-1 {
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, var(--accent-primary), transparent);
-            top: -300px;
-            left: -300px;
+            display: none !important;
         }
 
         .global-gradient-2 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--accent-secondary), transparent);
-            top: 20%;
-            right: -200px;
-            animation-delay: -8s;
+            display: none !important;
         }
 
         .global-gradient-3 {
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, var(--accent-primary), transparent);
-            bottom: -250px;
-            left: 40%;
-            animation-delay: -16s;
+            display: none !important;
         }
 
         .global-gradient-4 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--accent-success), transparent);
-            top: 50%;
-            left: -150px;
-            animation-delay: -12s;
+            display: none !important;
         }
 
         @keyframes globalMeshFloat {
@@ -634,79 +575,27 @@
         
         /* ВИДИМЫЙ СВЕТЯЩИЙСЯ КРУГ ЗА ПЕРСОНАЖЕМ - ТОЧНАЯ КОПИЯ */
         .hero-background-circle {
-            position: fixed;
-            top: 35%;
-            right: 12%;
-            transform: translate(0, -50%);
-            width: 850px;
-            height: 850px;
-            z-index: 1;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: none !important;
         }
 
         /* Внутренний синий круг с приглушенным свечением */
         .hero-background-circle::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center,
-                rgba(70, 120, 200, 0.08) 0%,
-                rgba(70, 120, 200, 0.06) 30%,
-                rgba(60, 110, 190, 0.04) 50%,
-                rgba(50, 100, 180, 0.02) 70%,
-                transparent 100%
-            );
-            border-radius: 50%;
-            border: 3px solid rgba(70, 120, 200, 0.3);
-            box-shadow: 
-                inset 0 0 100px rgba(70, 120, 200, 0.12),
-                inset 0 0 50px rgba(60, 110, 190, 0.08),
-                0 0 60px rgba(70, 120, 200, 0.2),
-                0 0 120px rgba(60, 110, 190, 0.15);
+            display: none !important;
         }
 
         /* Внешнее синее свечение от круга - более темное */
         .hero-background-circle::after {
-            content: '';
-            position: absolute;
-            width: 250%;
-            height: 250%;
-            background: radial-gradient(circle at center,
-                rgba(70, 120, 200, 0.10) 0%,
-                rgba(60, 110, 190, 0.08) 15%,
-                rgba(50, 100, 180, 0.06) 25%,
-                rgba(45, 95, 170, 0.04) 40%,
-                rgba(40, 90, 160, 0.03) 55%,
-                rgba(35, 80, 150, 0.02) 70%,
-                rgba(30, 70, 140, 0.01) 85%,
-                transparent 100%
-            );
-            border-radius: 50%;
-            filter: blur(150px);
+            display: none !important;
         }
 
         /* Canvas для молний - СКРЫТО */
         .lightning-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            display: none; /* СКРЫТО */
+            display: none !important;
         }
 
         .hero-character-badger {
-            position: fixed;
-            top: 60%;
-            right: 10%;
-            transform: translateY(-50%);
-            width: 650px;
+            display: none !important;
+        }
             height: 100vh;
             max-height: 900px;
             z-index: 2;
@@ -2125,67 +2014,32 @@
 
 /* Particles Canvas */
 .particles-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    display: none; /* ОТКЛЮЧЕНО */
+    display: none !important;
 }
 
 /* Gradient Mesh Background */
 .gradient-mesh {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 1;
-    pointer-events: none;
+    display: none !important;
 }
 
 .mesh-gradient {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(150px);
-    opacity: 0.4;
-    /* animation: meshFloat 20s ease-in-out infinite; */ /* ОТКЛЮЧЕНО */
+    display: none !important;
 }
 
 .gradient-1 {
-    width: 700px;
-    height: 700px;
-    background: radial-gradient(circle, rgba(60, 110, 180, 0.12) 0%, transparent 70%);
-    top: 10%;
-    left: 10%;
+    display: none !important;
 }
 
 .gradient-2 {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(50, 100, 170, 0.10) 0%, transparent 70%);
-    bottom: 10%;
-    right: 10%;
+    display: none !important;
 }
 
 .gradient-3 {
-    width: 650px;
-    height: 650px;
-    background: radial-gradient(circle, rgba(55, 105, 175, 0.08) 0%, transparent 70%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: none !important;
 }
 
 .gradient-4 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(45, 95, 165, 0.06) 0%, transparent 70%);
-    top: 20%;
-    right: 20%;
+    display: none !important;
 }
 
 /* Анимация отключена */
